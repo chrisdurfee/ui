@@ -1,5 +1,5 @@
 import { A, Div, Nav, Span } from '@base-framework/atoms';
-import { Component, Data, Jot } from '@base-framework/base';
+import { Data, Jot } from '@base-framework/base';
 import { Icon } from '../../atoms/icon.js';
 import { Icons } from '../../icons/icons.js';
 
@@ -52,8 +52,9 @@ const BreadcrumbItem = (item) => (
  *
  * This will render a Breadcrumb component.
  *
- * @class
- * @extends {Component}
+ * @param {object} props
+ * @param {array} children
+ * @returns {ComponentConstructor}
  */
 export const Breadcrumb = Jot(
 {
@@ -65,6 +66,7 @@ export const Breadcrumb = Jot(
     setData()
     {
         return new Data({
+            // @ts-ignore
             items: this.items || []
         });
     },
@@ -76,6 +78,7 @@ export const Breadcrumb = Jot(
      */
     render()
     {
+        // @ts-ignore
         const length = this.data.items.length - 1;
         return Nav(
             {

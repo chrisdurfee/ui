@@ -1,5 +1,5 @@
 import { Div, Span } from '@base-framework/atoms';
-import { Component, Data, Jot } from '@base-framework/base';
+import { Data, Jot } from '@base-framework/base';
 
 /**
  * This will store the sizes for the avatar.
@@ -28,7 +28,7 @@ const getSize = (size) => sizeMap[size] || sizeMap.default;
 /**
  * This will create a dot for the dots indicator.
  *
- * @param {number} index
+ * @param {object} props
  * @returns {object}
  */
 const Dot = ({ index, size }) => (
@@ -57,7 +57,7 @@ const Dot = ({ index, size }) => (
  *
  * @param {number} count
  * @param {string} size
- * @returns {array<object>}
+ * @returns {Array<object>}
  */
 const getDots = (count, size) => Array.from({ length: count }, (_, index) => Dot({
     index,
@@ -69,8 +69,8 @@ const getDots = (count, size) => Array.from({ length: count }, (_, index) => Dot
  *
  * Renders a row of circular dots, one of which is "active."
  *
- * @class
- * @extends Component
+ * @param {object} props
+ * @returns {ComponentConstructor}
  * @example
  *   new DotsIndicator({ count: 4, activeIndex: 0 })
  */
@@ -84,7 +84,9 @@ export const DotsIndicator = Jot(
     setData()
     {
         return new Data({
-            count: this.count || 4,         // total dots
+            // @ts-ignore
+            count: this.count || 4, // total dots
+            // @ts-ignore
             activeIndex: this.activeIndex || 0
         });
     },
@@ -96,8 +98,11 @@ export const DotsIndicator = Jot(
      */
     render()
     {
+        // @ts-ignore
         const gap = this.gap || "gap-2";
+        // @ts-ignore
         const size = getSize(this.size || 'sm');
+        // @ts-ignore
         const dots = getDots(this.data.count, size);
         return Div({ class: 'flex justify-center items-center py-2' },
         [
