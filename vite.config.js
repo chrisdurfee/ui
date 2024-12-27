@@ -8,12 +8,12 @@ export default defineConfig({
 			entry: {
 				// The main entry for "@base-framework/ui"
 				index: path.resolve(__dirname, 'src/ui.js'),
-				// For "@base-framework/ui/atoms"
-				atoms: path.resolve(__dirname, 'src/components/atoms/index.js'),
-				// For "@base-framework/ui/molecules"
-				molecules: path.resolve(__dirname, 'src/components/molecules/index.js'),
-				// For "@base-framework/ui/organisms"
-				organisms: path.resolve(__dirname, 'src/components/organisms/index.js'),
+				atoms: path.resolve(__dirname, 'src/components/atoms/atoms.js'),
+				icons: path.resolve(__dirname, 'src/components/icons/icons.js'),
+				molecules: path.resolve(__dirname, 'src/components/molecules/molecules.js'),
+				organisms: path.resolve(__dirname, 'src/components/organisms/organisms.js'),
+				pages: path.resolve(__dirname, 'src/components/pages/pages.js'),
+				templates: path.resolve(__dirname, 'src/components/templates/templates.js'),
 			},
 
 			// If you only want ES modules, specify just ["es"].
