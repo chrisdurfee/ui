@@ -9,6 +9,20 @@ import { Component } from "@base-framework/base";
  */
 export class NavButtonLink extends Component
 {
+	/**
+	 * This will set the class.
+	 * @member {string} class
+	 * @default ''
+	 */
+	class = '';
+
+	/**
+	 * This will set the check callback.
+	 * @member {function} checkCallBack
+	 * @default null
+	 */
+	checkCallBack = null;
+
     /**
      * This will render the component.
      *
@@ -38,7 +52,7 @@ export class NavButtonLink extends Component
                     return;
 				}
 
-                const active = (value)? this : null;
+                const active = (state.active)? this : null;
                 this.checkCallBack(active);
 			},
 			children: this.children

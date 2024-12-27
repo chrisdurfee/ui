@@ -1,6 +1,6 @@
 import { Div, Span } from '@base-framework/atoms';
-import { Button } from '@components/atoms/buttons/buttons.js';
-import { Icons } from '@components/icons/icons.js';
+import { Button } from '../../../atoms/buttons/buttons.js';
+import { Icons } from '../../../icons/icons.js';
 
 /**
  * This will create a navigation button for the calendar.
@@ -8,7 +8,7 @@ import { Icons } from '@components/icons/icons.js';
  * @param {object} props
  * @returns {object}
  */
-export const NavigationButton = ({ label, click }) => (
+const NavigationButton = ({ label, click }) => (
     Button(
         {
             class: `

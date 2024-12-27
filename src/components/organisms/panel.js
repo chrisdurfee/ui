@@ -12,6 +12,11 @@ import { Component } from "@base-framework/base";
 export class Panel extends Component
 {
 	/**
+	 * @member {string} class
+	 */
+	class = null;
+
+	/**
 	 * This will render the component.
 	 *
 	 * @returns {object}
@@ -21,3 +26,5 @@ export class Panel extends Component
 		return Div({ class: this.class || '' }, this.children);
 	}
 }
+
+export default Panel;

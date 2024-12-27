@@ -117,6 +117,20 @@ const isLinkActive = (link, url) =>
 export class SubNavigation extends InlineNavigation
 {
 	/**
+	 * This will set the parent link.
+	 * @member {object} parentLink
+	 * @default null
+	 */
+	parentLink = null;
+
+	/**
+	 * This will set the main class name.
+	 * @member {string} mainClassName
+	 * @default ''
+	 */
+	mainClassName = '';
+
+	/**
 	 * This will render the component.
 	 *
 	 * @returns {object}
@@ -163,7 +177,7 @@ export class SubNavigation extends InlineNavigation
 	/**
 	 * This will set up the states.
 	 *
-	 * @returns {array}
+	 * @returns {object}
 	 */
 	setupStates()
 	{

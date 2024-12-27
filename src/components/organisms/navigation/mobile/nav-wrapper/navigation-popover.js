@@ -29,6 +29,12 @@ export const Backdrop = () => (
 export class NavigationPopover extends Component
 {
     /**
+     * This will set the title.
+     * @member {string} title
+     */
+    title = '';
+
+    /**
 	 * This will render the modal component.
 	 *
 	 * @returns {object}
@@ -105,6 +111,7 @@ export class NavigationPopover extends Component
      */
     setContainer(container)
     {
+        // @ts-ignore
         this.container = app.root;
     }
 }

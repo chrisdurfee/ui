@@ -6,9 +6,10 @@ import { Icons } from "../../../../icons/icons.js";
 /**
  * This will create a navigation button.
  *
+ * @param {object} props
  * @returns {object}
  */
-export const NavButton = () => (
+export const NavButton = (props) => (
     Button({ class: 'm-2', variant: 'ghost', addState()
 		{
 			return {
