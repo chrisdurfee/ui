@@ -8,16 +8,15 @@ import { Icons } from '../../icons/icons.js';
  * @param {object} defaultProps
  * @returns {object}
  */
-const DefaultVariant = (defaultProps) =>
-{
-	return Atom((props, children) => (
+const DefaultVariant = (defaultProps) => (
+	Atom((props, children) => (
 		BaseButton({
 			...defaultProps,
 			...props,
 			class: `bttn ${defaultProps.class} ${props.class || ''}`
 		}, children)
-	));
-};
+	))
+);
 
 /**
  * This will create a button with an icon.
@@ -25,19 +24,19 @@ const DefaultVariant = (defaultProps) =>
  * @param {object} defaultProps
  * @returns {object}
  */
-const WithIconVariant = (defaultProps) =>
-{
-	return Atom((props, children) => (
+const WithIconVariant = (defaultProps) => (
+	Atom((props, children) => (
 		BaseButton({
 			...defaultProps,
 			...props,
 			class: `bttn ${defaultProps.class} ${props.class || ''}`
 		}, [
-			props.icon ? I({ class: props.animation ?? null, html: props.icon }) : null,
-			...(children || [])
+			props.icon && props.position !== 'right' ? I({ class: props.animation ?? null, html: props.icon }) : null,
+			...(children || []),
+			props.icon && props.position === 'right' ? I({ class: props.animation ?? null, html: props.icon }) : null
 		])
-	));
-};
+	))
+);
 
 /**
  * This will set upt the variants for the button.
