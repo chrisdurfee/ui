@@ -21,3 +21,5 @@ export const StatusIndicator = ({ propName = 'status' } = {}) => (
         }]
     })
 );
+
+export default StatusIndicator;

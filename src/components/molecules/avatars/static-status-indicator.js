@@ -15,3 +15,5 @@ export const StaticStatusIndicator = (status) => (
         class: `absolute bottom-0 right-0 w-3 h-3 border-2 rounded-full ${getStatusClass(status)}`,
     })
 );
+
+export default StaticStatusIndicator;

@@ -8,7 +8,7 @@ import { VeilJot } from '../../atoms/veil.js';
  *
  * @param {object} props
  * @param {array} children
- * @returns {object}
+ * @returns {ComponentConstructor}
  */
 export const Toggle = VeilJot(
 {

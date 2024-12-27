@@ -43,7 +43,7 @@ const typeStyles =
 /**
  * This will get the title bar
  *
- * @param {object} titleBar
+ * @param {object} title
  * @returns Header
  */
 const TitleBar = (title) => (
@@ -90,7 +90,50 @@ const NotificationButton = Atom(({ close, class: customClass }, children) => (
  */
 export class Notification extends DelayComponent
 {
+    /**
+     * @member {stirng} removingClass}
+     */
     removingClass = 'pullRight';
+
+    /**
+     * @member {function|null} secondaryAction
+     */
+    secondaryAction = null;
+
+    /**
+     * @member {function|null} primaryAction
+     */
+    primaryAction = null;
+
+    /**
+     * @member {boolean} primary
+     */
+    primary = false;
+
+    /**
+     * @member {boolean} secondary
+     */
+    secondary = false;
+
+    /**
+     * @member {string} title
+     */
+    title = null;
+
+    /**
+     * @member {string} description
+     */
+    description = null;
+
+    /**
+     * @member {string} icon
+     */
+    icon = null;
+
+    /**
+     * @member {function} onClick
+     */
+    onClick = null;
 
     /**
      * This will be called when the component is created.
@@ -110,8 +153,8 @@ export class Notification extends DelayComponent
     render()
     {
         const { bgColor, borderColor, iconColor } = this.getTypeStyles();
+        // @ts-ignore
         const href = this.href || null;
-
         const notificationContent = this.getChildren(iconColor);
 
         /**
@@ -153,6 +196,7 @@ export class Notification extends DelayComponent
      */
     getTypeStyles()
     {
+        // @ts-ignore
         const type = this.type || 'default';
         return typeStyles[type] || typeStyles.default;
     }
@@ -226,3 +270,5 @@ export class Notification extends DelayComponent
         this.destroy();
     }
 }
+
+export default Notification;

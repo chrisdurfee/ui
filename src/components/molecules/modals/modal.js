@@ -9,6 +9,7 @@ import { ModalContainer } from "./modal-container.js";
  * @param {object} component
  * @returns {object}
  */
+// @ts-ignore
 const render = (component) => { return Builder.render(component, app.root); };
 
 /**
@@ -22,6 +23,59 @@ const render = (component) => { return Builder.render(component, app.root); };
  */
 export class Modal extends Component
 {
+	/**
+	 * @member {string} title
+	 */
+	title = null;
+
+	/**
+	 * @member {string} description
+	 */
+	description = null;
+
+	/**
+	 * @member {string} size
+	 * @default 'md'
+	 * @values 'sm', 'md', 'lg', 'xl'
+	 */
+	size = 'md';
+
+	/**
+	 * @member {string} type
+	 * @default ''
+	 * @values 'right', 'left'
+	 * @description This will set the type of modal.
+	 */
+	type = '';
+
+	/**
+	 * @member {boolean} hidePrimaryButton
+	 * @default false
+	 * @description This will hide the primary button.
+	 * @values true, false
+	 */
+	hidePrimaryButton = false;
+
+	/**
+	 * @member {string} icon
+	 */
+	icon = null;
+
+	/**
+	 * @member {function|nll} onSubmit
+	 */
+	onSubmit = null;
+
+	/**
+	 * @member {function|null} onClose
+	 */
+	onClose = null;
+
+	/**
+	 * @member {boolean} back
+	 */
+	back = false;
+
 	/**
 	 * This will render the modal component.
 	 *
@@ -80,7 +134,7 @@ export class Modal extends Component
 	/**
 	 * This will get the header options.
 	 *
-	 * @returns {array<object>}
+	 * @returns {Array<object>}
 	 */
 	headerOptions()
 	{
@@ -166,6 +220,7 @@ export class Modal extends Component
      */
     setContainer(container)
     {
+		// @ts-ignore
         this.container = app.root;
     }
 

@@ -52,6 +52,7 @@ export class NotificationContainer extends Component
          * The notice needs to have the remove callback set to remove the notice.
          */
         props.callBack = () => this.removeNotice(props);
+        // @ts-ignore
         this.list.append([ props ]);
 
         /**
@@ -71,6 +72,9 @@ export class NotificationContainer extends Component
      */
     removeNotice(notice)
     {
+        // @ts-ignore
         this.list.delete(notice.id);
     }
 }
+
+export default NotificationContainer;
