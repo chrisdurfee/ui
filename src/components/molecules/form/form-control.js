@@ -19,7 +19,7 @@ const isInput = (child) =>
  * @param {array} children
  * @param {function} handleInput
  * @param {function} handleInvalid
- * @returns {void}
+ * @returns {Array<object>}
  */
 const enhanceChildren = (children, handleInput, handleInvalid) =>
 {

@@ -8,6 +8,7 @@ import { DialogContainer } from "./dialog-container.js";
  * @param {object} component
  * @returns {object}
  */
+// @ts-ignore
 const render = (component) => { return Builder.render(component, app.root); };
 
 /**
@@ -54,6 +55,43 @@ const typeStyles = {
  */
 export class Dialog extends Component
 {
+    /**
+	 * @member {string} title
+	 */
+	title = null;
+
+	/**
+	 * @member {string} description
+	 */
+	description = null;
+
+	/**
+	 * @member {string} Type
+     * @default ''
+     * @values 'info', 'warning', 'destructive', 'success', 'default'
+	 */
+	type = '';
+
+	/**
+	 * @member {string} icon
+	 */
+	icon = null;
+
+	/**
+	 * @member {function|null} onClose
+	 */
+	onClose = null;
+
+    /**
+     * @member {boolean} hideFooter
+     */
+    hideFooter = false;
+
+	/**
+	 * @member {Array|null} buttons
+	 */
+	buttons = null;
+
 	/**
 	 * This will render the modal component.
 	 *

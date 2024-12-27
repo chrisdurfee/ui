@@ -8,8 +8,9 @@ import { FormControl } from "./form-control.js";
  *
  * Handles controlled form fields with accessibility.
  *
- * @class
- * @extends {VeilJot}
+ * @param {object} props
+ * @param {array} children
+ * @returns {ComponentConstructor}
  */
 export const FormField = VeilJot(
 {

@@ -55,6 +55,27 @@ const DropdownContainer = ({ onSelect }) => (
 export class DropdownMenu extends Component
 {
     /**
+     * @member {string} label
+     */
+    label = null;
+
+    /**
+     * @member {string} icon
+     * @default null
+     */
+    icon = null;
+
+    /**
+     * @member {function} onSelect
+     */
+    onSelect = null;
+
+    /**
+     * @member {array} groups
+     */
+    groups = [];
+
+    /**
      * Initializes component data.
      *
      * @returns {Data}

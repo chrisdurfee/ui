@@ -1,9 +1,9 @@
 import { Div, Footer, H2, Header } from "@base-framework/atoms";
 import { Atom } from "@base-framework/base";
-import { Form } from "@components/molecules/form/form.js";
 import { Button } from "../../atoms/buttons/buttons.js";
 import { Icon } from "../../atoms/icon.js";
 import { Icons } from "../../icons/icons.js";
+import { Form } from "../form/form.js";
 
 /**
  * This will create a dialog header.

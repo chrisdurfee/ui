@@ -12,6 +12,16 @@ import { Dialog } from "./dialog.js";
  */
 export class Confirmation extends Dialog
 {
+    /**
+     * @member {string} confirmTextLabel
+     */
+    confirmTextLabel = null;
+
+    /**
+     * @member {function} confirmed
+     */
+    confirmed = null;
+
 	/**
      * This will get the buttons for the modal.
      *
