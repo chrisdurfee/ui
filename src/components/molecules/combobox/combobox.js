@@ -1,5 +1,5 @@
 import { Button, Div, I, Input, Li, OnState, Span, Ul } from '@base-framework/atoms';
-import { Component, Data, Jot } from '@base-framework/base';
+import { Data, Jot } from '@base-framework/base';
 import { Icons } from '../../icons/icons.js';
 import { PopOver } from '../popover.js';
 
@@ -77,11 +77,9 @@ const DropdownContainer = ({ onSelect }) => (
  *
  * This will render a combobox component.
  *
- * @property {array} items - The items to display in the combobox.
- * @property {string} name - The name of the hidden input.
- *
- * @class
- * @extends {Component}
+ * @param {object} props
+ * @param {array} children *
+ * @returns {ComponentConstructor}
  */
 export const Combobox = Jot(
 {
@@ -93,6 +91,7 @@ export const Combobox = Jot(
     setData()
     {
         return new Data({
+            // @ts-ignore
             items: this.items || []
         });
     },
@@ -116,13 +115,16 @@ export const Combobox = Jot(
      */
     handleSelect(item)
     {
+        // @ts-ignore
         const state = this.state;
         state.selectedValue = item.value;
         state.selectedLabel = item.label;
         state.open = false;
 
+        // @ts-ignore
         if (typeof this.onSelect === 'function')
         {
+            // @ts-ignore
             this.onSelect(item);
         }
     },
@@ -134,6 +136,7 @@ export const Combobox = Jot(
      */
     toggleDropdown()
     {
+        // @ts-ignore
         this.state.toggle('open');
     },
 
@@ -145,6 +148,7 @@ export const Combobox = Jot(
     render()
     {
         const handleSelect = (item) => {
+            // @ts-ignore
             const state = this.state;
             state.selectedValue = item.value;
             state.selectedLabel = item.label;
@@ -152,16 +156,20 @@ export const Combobox = Jot(
         };
 
         return Div({ class: 'relative w-full flex flex-auto flex-col max-w-[250px]' }, [
+            // @ts-ignore
             DropdownButton({ toggleDropdown: this.toggleDropdown.bind(this) }),
             DropdownContainer({ onSelect: handleSelect }),
 
             // Hidden required input for form validation
+            // @ts-ignore
             this.required &&
             Input({
                 class: 'opacity-0 absolute top-0 left-0 z-[1]',
                 type: 'text',
+                // @ts-ignore
                 name: this.name,
                 required: true,
+                // @ts-ignore
                 value: ['[[selectedValue]]', this.state]
             })
         ]);

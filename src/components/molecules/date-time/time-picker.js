@@ -1,5 +1,5 @@
 import { Button, Div, I, Input, OnState, Span } from '@base-framework/atoms';
-import { Veil, VeilJot } from '../../atoms/veil.js';
+import { VeilJot } from '../../atoms/veil.js';
 import { Icons } from '../../icons/icons.js';
 import { PopOver } from '../popover.js';
 
@@ -200,8 +200,8 @@ function parseAndSetTime(time)
  *
  * This will create a time picker component.
  *
- * @class
- * @extends {Veil}
+ * @param {object} props
+ * @returns {ComponentConstructor}
  */
 export const TimePicker = VeilJot(
 {

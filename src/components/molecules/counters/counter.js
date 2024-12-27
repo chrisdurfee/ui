@@ -7,8 +7,9 @@ import { CountDisplay, MinusButton, PlusButton } from './atoms.js';
  *
  * This creates a counter component with an input for count and buttons to increment and decrement.
  *
- * @class
- * @extends {VeilJot}
+ * @param {object} props
+ * @param {array} children
+ * @returns {ComponentConstructor}
  */
 export const Counter = VeilJot(
 {
