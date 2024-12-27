@@ -2,34 +2,35 @@ import path from 'path';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-	// Turn on "library mode"
 	build: {
 		lib: {
-			// The main entry file of your library
-			entry: path.resolve(__dirname, 'src/ui.js'),
+			// Multiple entry points for subpath imports
+			entry: {
+				// The main entry for "@base-framework/ui"
+				index: path.resolve(__dirname, 'src/ui.js'),
+				// For "@base-framework/ui/atoms"
+				atoms: path.resolve(__dirname, 'src/components/atoms/index.js'),
+				// For "@base-framework/ui/molecules"
+				molecules: path.resolve(__dirname, 'src/components/molecules/index.js'),
+				// For "@base-framework/ui/organisms"
+				organisms: path.resolve(__dirname, 'src/components/organisms/index.js'),
+			},
 
-			// The global name of your library (for UMD/IIFE builds),
-			// can be anything or omitted if you only want ESM/CJS
-			name: 'BaseFrameworkUI',
+			// If you only want ES modules, specify just ["es"].
+			formats: ["es"],
 
-			// The output file name without extension;
-			// final bundle will be something like:
-			// dist/my-library.es.js and dist/my-library.umd.js
-			fileName: 'ui',
-
-			// Which formats to generate
-			// You can do ['es', 'cjs', 'umd', 'iife'] etc.
-			formats: ['es', 'cjs']
+			// Customize filenames, e.g. "index.es.js", "atoms.es.js", etc.
+			fileName: (format, entryName) => {
+				return `${entryName}.es.js`;
+			},
 		},
-
-		// Mark external libraries that you don't want to bundle
-		// (they will be imported at runtime).
 		rollupOptions: {
+			// Mark external deps so they're not bundled
 			external: [
 				'@base-framework/base',
 				'@base-framework/atoms',
 				'@base-framework/organisms'
-			]
+			],
 		}
 	}
 });

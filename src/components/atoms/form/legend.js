@@ -15,3 +15,5 @@ export const Legend = Atom((props, children) =>
         class: ` font-medium bg-background -mt-4 -mx-1 px-2 py-2 ${props.class || ''}`,
     }, children)
 });
+
+export default Legend;

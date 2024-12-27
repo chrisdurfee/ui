@@ -1,5 +1,5 @@
 import { Th, UseParent } from '@base-framework/atoms';
-import { Checkbox } from '../../atoms/form/checkbox.js';
+import { Checkbox } from '../../atoms/form/inputs/checkbox.js';
 
 /**
  * CheckboxCol Atom

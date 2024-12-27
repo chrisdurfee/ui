@@ -1,6 +1,6 @@
 import { Div } from '@base-framework/atoms';
 import { Atom } from '@base-framework/base';
-import { Input } from "../../atoms/form/input.js";
+import { Input } from "../../atoms/form/inputs/inputs.js";
 import { Icon } from "../../atoms/icon.js";
 
 const CLOSE_DELAY = 100;

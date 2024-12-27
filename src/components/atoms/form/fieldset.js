@@ -20,3 +20,5 @@ export const Fieldset = Atom((props, children) =>
         Div({ class: 'flex flex-auto flex-col space-y-6' }, children)
     ])
 });
+
+export default Fieldset;
