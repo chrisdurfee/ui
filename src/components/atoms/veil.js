@@ -48,6 +48,6 @@ export class Veil extends Component
  * This will create a Veil component.
  *
  * @param  {*} props
- * @returns {object}
+ * @returns {import("node_modules/@base-framework/base/dist/types/modules/component/jot").ComponentConstructor}
  */
 export const VeilJot = (props) => Jot(props, Veil);
