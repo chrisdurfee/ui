@@ -4,8 +4,9 @@
 	"description": "This is a UI package that adds components and atoms that use Tailwind CSS and a theme based on Shadcn.",
 	"main": "./dist/ui.js",
 	"scripts": {
-		"build": "node ./esbuild.js && tsc",
-		"prepublishOnly": "node ./esbuild.js"
+		"dev": "vite",
+		"build": "vite build",
+		"preview": "vite preview"
 	},
 	"type": "module",
 	"keywords": [
@@ -25,13 +26,19 @@
 		"url": "https://github.com/chrisdurfee/ui/issues"
 	},
 	"devDependencies": {
+		"autoprefixer": "^10.4.20",
 		"esbuild": "^0.15.7",
-		"typescript": "^5.4.2"
+		"postcss": "^8.4.47",
+		"tailwindcss": "^3.4.13"
 	},
 	"dependencies": {
 		"@base-framework/base": "^3.0.122",
 		"@base-framework/atoms": "^1.0.20",
-		"@base-framework/organisms": "1.0.54"
+		"@base-framework/organisms": "1.0.54",
+		"d3": "^7.9.0",
+		"tailwindcss-animate": "^1.0.7",
+		"typescript": "^5.4.2",
+		"vite": "^5.4.9"
 	},
 	"types": "dist/types/ui.d.ts",
 	"files": [
