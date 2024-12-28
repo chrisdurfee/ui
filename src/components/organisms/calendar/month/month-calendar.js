@@ -7,8 +7,6 @@ import { NavigationButton } from './navigation-button.js';
  * This will create the calendar header.
  *
  * @param {object} props
- * @param {function} next
- * @param {function} previous
  * @returns {object}
  */
 const CalendarHeader = ({ next, previous }) => (

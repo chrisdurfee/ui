@@ -39,6 +39,7 @@ export const calculateWeekNumber = (date) =>
     firstThursday.setDate(firstThursday.getDate() - ((firstThursday.getDay() + 6) % 7));
 
     // Calculate difference in weeks
+    // @ts-ignore
     const weekNumber = Math.ceil((target - firstThursday) / 604800000) + 1; // 604800000ms = 7 days
 
     // If we exceed 52 weeks and the year doesn't have 53 weeks, the ISO week belongs to next year

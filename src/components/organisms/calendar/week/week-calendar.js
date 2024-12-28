@@ -14,6 +14,27 @@ import { WeekHeader } from './week-header.js';
 export class WeekCalendar extends Component
 {
     /**
+     * The selected date.
+     * @member {string} selectedDate
+     * @default null
+     */
+    selectedDate = null;
+
+    /**
+     * The selected week.
+     * @member {number} selectedWeek
+     * @default null
+     */
+    selectedWeek = null;
+
+    /**
+     * The selected call back.
+     * @member {function} selectedCallBack
+     * @default null
+     */
+    selectedCallBack = null;
+
+    /**
      * Initializes the calendar data.
      *
      * @returns {Data}
@@ -63,6 +84,8 @@ export class WeekCalendar extends Component
         {
             target.setMonth(0, 1 + ((4 - target.getDay() + 7) % 7));
         }
+
+        // @ts-ignore
         return 1 + Math.ceil((firstThursday - target) / 604800000);
     }
 
