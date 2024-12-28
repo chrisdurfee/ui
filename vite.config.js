@@ -13,7 +13,7 @@ export default defineConfig({
 				molecules: path.resolve(__dirname, 'src/components/molecules/molecules.js'),
 				organisms: path.resolve(__dirname, 'src/components/organisms/organisms.js'),
 				pages: path.resolve(__dirname, 'src/components/pages/pages.js'),
-				templates: path.resolve(__dirname, 'src/components/templates/templates.js'),
+				templates: path.resolve(__dirname, 'src/components/pages/templates/templates.js'),
 			},
 
 			// If you only want ES modules, specify just ["es"].
