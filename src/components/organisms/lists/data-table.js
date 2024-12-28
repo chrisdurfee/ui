@@ -34,12 +34,17 @@ export const DataTable = Jot(
      */
     toggleAllSelectedRows()
     {
+        // @ts-ignore
         const tableRows = this.table.getRows();
+        // @ts-ignore
         const select = this.data.selectedRows.length === tableRows.length;
         const selectedRows = select ? [] : tableRows;
+        // @ts-ignore
         this.data.selectedRows = selectedRows;
 
+        // @ts-ignore
         this.updateSelected();
+        // @ts-ignore
         this.updateTable(!select);
     },
 
@@ -50,17 +55,20 @@ export const DataTable = Jot(
      */
     updateSelected()
     {
+        // @ts-ignore
         const selectedRows = this.data.get('selectedRows');
+        // @ts-ignore
         this.data.selected = (selectedRows.length > 0);
     },
 
     /**
      * This will get the selected rows.
      *
-     * @returns {array<object>}
+     * @returns {Array<object>}
      */
     getSelectedRows()
     {
+        // @ts-ignore
         return this.data.get('selectedRows');
     },
 
@@ -73,8 +81,10 @@ export const DataTable = Jot(
      */
     updateTable(selected)
     {
+        // @ts-ignore
         const rows = this.table.getRows();
         rows.forEach(row => row.selected = selected);
+        // @ts-ignore
         this.table.setRows(rows);
     },
 
@@ -88,6 +98,7 @@ export const DataTable = Jot(
         const isSelected = row.selected ?? false;
         row.selected = !isSelected;
 
+        // @ts-ignore
         const previouslySelected = this.data.get('selectedRows');
         const selectedRows = row.selected
 
@@ -97,7 +108,9 @@ export const DataTable = Jot(
             // This will remove the row from the selected rows.
             : previouslySelected.filter(selected => selected !== row);
 
+        // @ts-ignore
         this.data.selectedRows = selectedRows;
+        // @ts-ignore
         this.updateSelected();
     },
 
@@ -108,18 +121,25 @@ export const DataTable = Jot(
      */
     render()
     {
+        // @ts-ignore
         const currentRows = this.rows;
+        // @ts-ignore
         const border = this.border !== false ? 'border' : '';
 
         return Div({ class: 'w-full' }, [
             Div({ class: `w-full rounded-md ${border} overflow-x-auto` }, [
                 Table({ class: 'w-full' }, [
+                    // @ts-ignore
                     this.headers && TableHeader({ headers: this.headers, sort: (key) => this.sortRows(key) }),
+                    // @ts-ignore
                     this.customHeader ?? null,
                     DataTableBody({
+                        // @ts-ignore
                         key: this.key,
                         rows: currentRows,
+                        // @ts-ignore
                         selectRow: this.selectRow.bind(this),
+                        // @ts-ignore
                         rowItem: this.rowItem
                     })
                 ])
@@ -136,6 +156,7 @@ export const DataTable = Jot(
      */
     remove(items)
     {
+        // @ts-ignore
         this.table.remove(items);
     },
 
@@ -148,6 +169,7 @@ export const DataTable = Jot(
      */
     setRows(rows)
     {
+        // @ts-ignore
         this.table.setRows(rows);
     },
 
@@ -160,6 +182,7 @@ export const DataTable = Jot(
      */
     append(items)
     {
+        // @ts-ignore
         this.table.append(items);
     },
 
@@ -173,6 +196,7 @@ export const DataTable = Jot(
      */
     mingle(newItems, withDelete = false)
     {
+        // @ts-ignore
         this.table.mingle(newItems, withDelete);
     },
 
@@ -185,6 +209,7 @@ export const DataTable = Jot(
      */
     prepend(items)
     {
+        // @ts-ignore
         this.table.prepend(items);
     },
 
@@ -195,6 +220,7 @@ export const DataTable = Jot(
      */
     beforeDestroy()
     {
+        // @ts-ignore
         this.data.selectedRows = [];
     }
 });

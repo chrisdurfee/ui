@@ -1,5 +1,5 @@
 import { Div } from '@base-framework/atoms';
-import { Component, Data, Jot } from '@base-framework/base';
+import { Data, Jot } from '@base-framework/base';
 import { PopOver } from "../../molecules/popover.js";
 import { Dropdown } from "./dropdown.js";
 import { SearchInput } from "./search-input.js";
@@ -35,8 +35,8 @@ const DropdownContainer = (props) => (
  *
  * This will create a search dropdown.
  *
- * @class
- * @augments Component
+ * @param {object} props - The properties of the component.
+ * @returns {ComponentConstructor} - The search dropdown component.
  */
 export const SearchDropdown = Jot(
 {
@@ -47,6 +47,7 @@ export const SearchDropdown = Jot(
 	 */
 	setData()
 	{
+		// @ts-ignore
 		const options = this.options || [];
 		return new Data({
 			options,
@@ -71,17 +72,20 @@ export const SearchDropdown = Jot(
 	/**
 	 * This will set the selected index by query.
 	 *
-	 * @returns {number|null}
+	 * @returns {void}
 	 */
 	setSelectedIndexByQuery()
 	{
+		// @ts-ignore
 		const filteredOptions = this.data.filteredOptions;
+		// @ts-ignore
 		let { searchQuery } = this.state;
 		searchQuery = searchQuery.toLowerCase();
 
 		const index = filteredOptions.findIndex(option => option.label.toLowerCase() === searchQuery);
 		if (index >= 0)
 		{
+			// @ts-ignore
 			this.state.selectedIndex = index;
 		}
 	},
@@ -93,14 +97,18 @@ export const SearchDropdown = Jot(
 	 */
 	filterOptions()
 	{
+		// @ts-ignore
 		const query = this.state.searchQuery.toLowerCase();
 		if (query === '' || query.length === 0)
 		{
+			// @ts-ignore
 			this.data.filteredOptions = this.data.options;
 			return;
 		}
 
+		// @ts-ignore
 		const options = this.data.get('options');
+		// @ts-ignore
 		this.data.filteredOptions = options.filter(option =>
 			option.label.toLowerCase().includes(query)
 		);
@@ -113,12 +121,14 @@ export const SearchDropdown = Jot(
 	 */
 	getValue()
 	{
+		// @ts-ignore
 		const { selectedIndex } = this.state;
 		if (selectedIndex < 0)
 		{
 			return null;
 		}
 
+		// @ts-ignore
 		return this.data.get(`filteredOptions[${selectedIndex}]`);
 	},
 
@@ -130,13 +140,19 @@ export const SearchDropdown = Jot(
 	 */
 	selectOption(index)
 	{
+		// @ts-ignore
 		this.state.selectedIndex = index;
+		// @ts-ignore
 		const selection = this.data.get(`filteredOptions[${index}]`);
+		// @ts-ignore
 		this.state.searchQuery = selection.label;
+		// @ts-ignore
 		this.state.open = false;
 
+		// @ts-ignore
 		if (typeof this.onSelect === 'function')
 		{
+			// @ts-ignore
 			this.onSelect(selection);
 		}
 	},
@@ -146,10 +162,13 @@ export const SearchDropdown = Jot(
      */
     toggleDropdown()
     {
+		// @ts-ignore
         this.state.toggle('open');
 
+		// @ts-ignore
         if (this.state.open)
         {
+			// @ts-ignore
 			this.setSelectedIndexByQuery();
         }
     },
@@ -162,21 +181,26 @@ export const SearchDropdown = Jot(
 	 */
 	handleKeyDown(event)
 	{
+		// @ts-ignore
 		const filteredOptions = this.data.filteredOptions;
+		// @ts-ignore
 		const { selectedIndex } = this.state;
 		if (event.key === 'ArrowDown')
 		{
 			event.preventDefault();
+			// @ts-ignore
 			this.state.selectedIndex = Math.min(selectedIndex + 1, filteredOptions.length - 1);
 		}
 		else if (event.key === 'ArrowUp')
 		{
 			event.preventDefault();
+			// @ts-ignore
 			this.state.selectedIndex = Math.max(selectedIndex - 1, 0);
 		}
 		else if (event.key === 'Enter' && selectedIndex >= 0)
 		{
 			event.preventDefault();
+			// @ts-ignore
 			this.selectOption(selectedIndex);
 		}
 	},
@@ -191,16 +215,24 @@ export const SearchDropdown = Jot(
 		return Div({ class: 'relative w-full max-w-md' }, [
 
 			SearchInput({
+				// @ts-ignore
 				state: this.state,
+				// @ts-ignore
 				icon: this.icon,
+				// @ts-ignore
 				placeholder: this.placeholder,
+				// @ts-ignore
 				filterOptions: this.filterOptions.bind(this),
+				// @ts-ignore
 				handleKeyDown: this.handleKeyDown.bind(this),
 			}),
 
 			DropdownContainer({
+				// @ts-ignore
 				state: this.state,
+				// @ts-ignore
 				setSelected: this.setSelectedIndexByQuery.bind(this),
+				// @ts-ignore
 				selectOption: this.selectOption.bind(this),
 			})
 		]);

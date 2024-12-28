@@ -22,3 +22,5 @@ export const HeaderCol = ({ align, sortable, key, label, sort, class: className}
         ])
     ]);
 };
+
+export default HeaderCol;
