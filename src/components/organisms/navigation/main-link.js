@@ -104,9 +104,9 @@ export class MainLink extends Component
 
 		/**
 		 * This will set the options.
-		 * @member {array} options
+		 * @member {array|null} options
 		 */
-		this.options = [];
+		this.options = null;
 
 		/**
 		 * This will set the content.
