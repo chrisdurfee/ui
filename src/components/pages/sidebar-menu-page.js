@@ -16,24 +16,34 @@ import { AsideTemplate } from './templates/aside-template.js';
 export class SidebarMenuPage extends BasicPage
 {
 	/**
-	 * @member {array} routes
+	 * This will declare the props for the compiler.
+	 *
+	 * @returns {void}
 	 */
-	routes = [];
+	declareProps()
+	{
+		super.declareProps();
 
-	/**
-	 * @member {array} switch
-	 */
-	switch = [];
+		/**
+		 * @member {array} routes
+		 */
+		this.routes = [];
 
-	/**
-	 * @member {array} links
-	 */
-	links = [];
+		/**
+		 * @member {array} switch
+		 */
+		this.switch = [];
 
-	/**
-	 * @member {string} title
-	 */
-	title = '';
+		/**
+		 * @member {array} links
+		 */
+		this.links = [];
+
+		/**
+		 * @member {string} title
+		 */
+		this.title = '';
+	}
 
 	/**
 	 * This will render the page.

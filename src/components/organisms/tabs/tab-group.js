@@ -62,24 +62,32 @@ const Navigation = (props) => (
 export class TabGroup extends Component
 {
     /**
-     * This will set the options.
-     * @member {array} options
-     * @default []
-     */
-    options = [];
+	 * This will declare the props for the compiler.
+	 *
+	 * @returns {void}
+	 */
+	declareProps()
+	{
+		/**
+         * This will set the options.
+         * @member {array} options
+         * @default []
+         */
+        this.options = [];
 
-    /**
-     * This will set the class.
-     * @member {string} class
-     * @default ''
-     */
-    class = '';
+        /**
+         * This will set the class.
+         * @member {string} class
+         * @default ''
+         */
+        this.class = '';
 
-    /**
-     * This will set the on select call back.
-     * @member {function} onSelect
-     */
-    onSelect = null;
+        /**
+         * This will set the select call back.
+         * @member {function} callBack
+         */
+        this.onSelect = null;
+	}
 
     /**
      * This will render the component.

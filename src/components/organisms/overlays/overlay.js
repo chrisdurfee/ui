@@ -48,10 +48,18 @@ export const BackButton = Atom((props) =>
 export class Overlay extends Component
 {
     /**
-     * @member {string} class
-     * @default ''
-     */
-    class = '';
+	 * This will declare the props for the compiler.
+	 *
+	 * @returns {void}
+	 */
+	declareProps()
+	{
+		/**
+         * @member {string} class
+         * @default ''
+         */
+        this.class = '';
+	}
 
     /**
      * This will render the component.

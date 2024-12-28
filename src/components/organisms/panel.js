@@ -12,9 +12,19 @@ import { Component } from "@base-framework/base";
 export class Panel extends Component
 {
 	/**
-	 * @member {string} class
+	 * This will declare the props for the compiler.
+	 *
+	 * @returns {void}
 	 */
-	class = null;
+	declareProps()
+	{
+		/**
+         * This will set the class.
+         * @member {string} class
+         * @default ''
+         */
+        this.class = '';
+	}
 
 	/**
 	 * This will render the component.

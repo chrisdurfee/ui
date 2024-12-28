@@ -12,7 +12,17 @@ import { Component } from '@base-framework/base';
 export class Page extends Component
 {
     /**
-     * @member {string} class
-     */
-    class = '';
+	 * This will declare the props for the compiler.
+	 *
+	 * @returns {void}
+	 */
+	declareProps()
+	{
+		/**
+         * This will set the class.
+         * @member {string} class
+         * @default ''
+         */
+        this.class = '';
+	}
 }

@@ -29,10 +29,18 @@ export const Backdrop = () => (
 export class NavigationPopover extends Component
 {
     /**
-     * This will set the title.
-     * @member {string} title
-     */
-    title = '';
+	 * This will declare the props for the compiler.
+	 *
+	 * @returns {void}
+	 */
+	declareProps()
+	{
+		/**
+         * This will set the title.
+         * @member {string} title
+         */
+        this.title = '';
+	}
 
     /**
 	 * This will render the modal component.

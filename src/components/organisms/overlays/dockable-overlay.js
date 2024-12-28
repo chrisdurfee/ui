@@ -12,12 +12,6 @@ import { Overlay } from "./overlay.js";
 export class DockableOverlay extends Overlay
 {
     /**
-     * @member {string} class
-     * @default ''
-     */
-    class = '';
-
-    /**
      * This will stop presistence.
      *
      * @returns {void}

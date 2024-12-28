@@ -28,14 +28,24 @@ const PageHeader = Atom(({ title, description}) => (
 export class FullPage extends BasicPage
 {
 	/**
-	 * @member {string} title
+	 * This will declare the props for the compiler.
+	 *
+	 * @returns {void}
 	 */
-	title = '';
+	declareProps()
+	{
+		super.declareProps();
 
-	/**
-	 * @member {string} description
-	 */
-	description = '';
+		/**
+		 * @member {string} title
+		 */
+		this.title = '';
+
+		/**
+		 * @member {string} description
+		 */
+		this.description = '';
+	}
 
 	/**
 	 * This will render the page.
