@@ -12,23 +12,31 @@ import { NavigationGroup } from "./navigation-atoms.js";
 export class Navigation extends Component
 {
 	/**
-	 * This will set the options.
-	 * @member {array} options
+	 * This will declare the props for the compiler.
+	 *
+	 * @returns {void}
 	 */
-	options = [];
+	declareProps()
+	{
+		/**
+		 * This will set the options.
+		 * @member {array} options
+		 */
+		this.options = [];
 
-	/**
-	 * This will set the class.
-	 * @member {string} class
-	 */
-	class = '';
+		/**
+		 * This will set the class.
+		 * @member {string} class
+		 */
+		this.class = '';
 
-	/**
-	 * This will set the mobile border.
-	 * @member {boolean} mobileBorder
-	 * @default false
-	 */
-	mobileBorder = false;
+		/**
+		 * This will set the mobile border.
+		 * @member {boolean} mobileBorder
+		 * @default false
+		 */
+		this.mobileBorder = false;
+	}
 
 	/**
 	 * This will render the component.

@@ -68,63 +68,71 @@ const LinkContent = (label, icon = null, hasChildren = false) => [
 export class MainLink extends Component
 {
 	/**
-	 * This will set the label.
-	 * @member {string} label
-	 * @default ''
+	 * This will declare the props for the compiler.
+	 *
+	 * @returns {void}
 	 */
-	label = '';
+	declareProps()
+	{
+		/**
+		 * This will set the label.
+		 * @member {string} label
+		 * @default ''
+		 */
+		this.label = '';
 
-	/**
-	 * This will set the icon.
-	 * @member {string} icon
-	 * @default null
-	 */
-	icon = null;
+		/**
+		 * This will set the icon.
+		 * @member {string} icon
+		 * @default null
+		 */
+		this.icon = null;
 
-	/**
-	 * This will set the href.
-	 * @member {string} href
-	 * @default null
-	 */
-	href = null;
+		/**
+		 * This will set the href.
+		 * @member {string} href
+		 * @default null
+		 */
+		this.href = null;
 
-	/**
-	 * This will set the exact.
-	 * @member {boolean} exact
-	 * @default false
-	 */
-	exact = false;
+		/**
+		 * This will set the exact.
+		 * @member {boolean} exact
+		 * @default false
+		 */
+		this.exact = false;
 
-	/**
-	 * This will set the options.
-	 * @member {array} options
-	 */
-	options = [];
+		/**
+		 * This will set the options.
+		 * @member {array} options
+		 */
+		this.options = [];
 
-	/**
-	 * This will set the content.
-	 * @member {array} content
-	 * @default null
-	 */
-	content = null;
+		/**
+		 * This will set the content.
+		 * @member {array} content
+		 * @default null
+		 */
+		this.content = null;
 
-	/**
-	 * This will set the call back.
-	 * @member {function} callBack
-	 */
-	callBack = null;
+		/**
+		 * This will set the call back.
+		 * @member {function} callBack
+		 */
+		this.callBack = null;
 
-	/**
-	 * This will set the check call back.
-	 * @member {function} checkCallBack
-	 */
-	checkCallBack = null;
+		/**
+		 * This will set the check call back.
+		 * @member {function} checkCallBack
+		 */
+		this.checkCallBack = null;
 
-	/**
-	 * This will set the link.
-	 * @member {object} link
-	 */
-	link = null;
+		/**
+		 * This will set the link.
+		 * @member {object} link
+		 */
+		this.link = null;
+	}
 
 	/**
 	 * This will render the component.

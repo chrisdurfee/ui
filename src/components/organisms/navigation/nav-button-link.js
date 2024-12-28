@@ -10,18 +10,26 @@ import { Component } from "@base-framework/base";
 export class NavButtonLink extends Component
 {
 	/**
-	 * This will set the class.
-	 * @member {string} class
-	 * @default ''
+	 * This will declare the props for the compiler.
+	 *
+	 * @returns {void}
 	 */
-	class = '';
+	declareProps()
+	{
+		/**
+		 * This will set the class.
+		 * @member {string} class
+		 * @default ''
+		 */
+		this.class = '';
 
-	/**
-	 * This will set the check callback.
-	 * @member {function} checkCallBack
-	 * @default null
-	 */
-	checkCallBack = null;
+		/**
+		 * This will set the check callback.
+		 * @member {function} checkCallBack
+		 * @default null
+		 */
+		this.checkCallBack = null;
+	}
 
     /**
      * This will render the component.
