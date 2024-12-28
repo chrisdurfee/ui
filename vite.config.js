@@ -25,6 +25,20 @@ export default defineConfig({
 			},
 		},
 		rollupOptions: {
+			input: {
+				index: path.resolve(__dirname, "src/ui.js"),
+				atoms: path.resolve(__dirname, "src/components/atoms/atoms.js"),
+				icons: path.resolve(__dirname, "src/components/icons/icons.js"),
+				molecules: path.resolve(__dirname, "src/components/molecules/molecules.js"),
+				organisms: path.resolve(__dirname, "src/components/organisms/organisms.js"),
+				pages: path.resolve(__dirname, "src/components/pages/pages.js"),
+				templates: path.resolve(__dirname, "src/components/pages/templates/templates.js"),
+			},
+			output: {
+				entryFileNames: `[name].es.js`, // Output files named based on the entry keys
+				chunkFileNames: `chunks/[name]-[hash].js`,
+				assetFileNames: `assets/[name]-[hash][extname]`,
+			},
 			// Mark external deps so they're not bundled
 			external: [
 				'@base-framework/base',
