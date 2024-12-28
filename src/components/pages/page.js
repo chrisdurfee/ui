@@ -11,5 +11,8 @@ import { Component } from '@base-framework/base';
  */
 export class Page extends Component
 {
-
+    /**
+     * @member {string} class
+     */
+    class = '';
 }

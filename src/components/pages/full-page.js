@@ -28,6 +28,16 @@ const PageHeader = Atom(({ title, description}) => (
 export class FullPage extends BasicPage
 {
 	/**
+	 * @member {string} title
+	 */
+	title = '';
+
+	/**
+	 * @member {string} description
+	 */
+	description = '';
+
+	/**
 	 * This will render the page.
 	 *
 	 * @returns {object}
