@@ -13,6 +13,20 @@ import { TabNavigation } from "./tab-navigation.js";
 export class Tab extends Component
 {
 	/**
+     * This will set the options.
+     * @member {array} options
+     * @default []
+     */
+    options = [];
+
+    /**
+     * This will set the class.
+     * @member {string} class
+     * @default ''
+     */
+    class = '';
+
+	/**
 	 * This will render the component.
 	 *
 	 * @returns {object}

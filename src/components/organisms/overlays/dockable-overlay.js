@@ -12,12 +12,19 @@ import { Overlay } from "./overlay.js";
 export class DockableOverlay extends Overlay
 {
     /**
+     * @member {string} class
+     * @default ''
+     */
+    class = '';
+
+    /**
      * This will stop presistence.
      *
      * @returns {void}
      */
     onCreated()
     {
+        // @ts-ignore
         this.dockSize = this.maxSize || 1024;
     }
 
@@ -51,6 +58,7 @@ export class DockableOverlay extends Overlay
                         else
                         {
                             ele.className = this.getClassName();
+                            // @ts-ignore
                             app.root.appendChild(ele);
 
                             /**
@@ -115,7 +123,7 @@ export class DockableOverlay extends Overlay
     /**
      * This will setup the overlay events.
      *
-     * @returns {array<object>}
+     * @returns {Array<object>}
      */
     setupEvents()
     {

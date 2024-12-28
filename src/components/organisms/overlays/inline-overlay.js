@@ -11,6 +11,12 @@ import { Overlay } from './overlay.js';
 export class InlineOverlay extends Overlay
 {
     /**
+     * @member {string} class
+     * @default ''
+     */
+    class = '';
+
+    /**
      * This will get the overlay type.
      *
      * @returns {string}

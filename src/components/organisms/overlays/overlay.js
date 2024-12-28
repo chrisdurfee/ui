@@ -27,6 +27,7 @@ export const BackButton = Atom((props) =>
 
                 if (props.backUrl)
                 {
+                    // @ts-ignore
                     app.navigate(props.backUrl);
                 }
             }
@@ -46,6 +47,12 @@ export const BackButton = Atom((props) =>
  */
 export class Overlay extends Component
 {
+    /**
+     * @member {string} class
+     * @default ''
+     */
+    class = '';
+
     /**
      * This will render the component.
      *
@@ -84,6 +91,7 @@ export class Overlay extends Component
 	 */
 	setContainer(container)
     {
+        // @ts-ignore
         this.container = app.root;
     }
 

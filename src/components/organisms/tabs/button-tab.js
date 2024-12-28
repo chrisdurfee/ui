@@ -60,6 +60,26 @@ const Navigation = (props) => (
 export class ButtonTab extends Component
 {
     /**
+     * This will set the options.
+     * @member {array} options
+     * @default []
+     */
+    options = [];
+
+    /**
+     * This will set the class.
+     * @member {string} class
+     * @default ''
+     */
+    class = '';
+
+    /**
+     * This will set the call back.
+     * @member {function} callBack
+     */
+    callBack = null;
+
+    /**
      * This will render the component.
      *
      * @returns {object}
