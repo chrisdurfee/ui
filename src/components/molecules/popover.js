@@ -80,21 +80,28 @@ export class PopOver extends Component
      */
     getSize()
     {
+        // @ts-ignore
         const size = this.size || 'lg';
         switch (size)
         {
+            // @ts-ignore
             case 'sm':
                 return 'w-48';
+            // @ts-ignore
             case 'md':
                 return 'w-64';
             case 'lg':
                 return 'w-[250px]';
+            // @ts-ignore
             case 'xl':
                 return 'w-96';
+            // @ts-ignore
             case '2xl':
                 return 'w-[400px]';
+            // @ts-ignore
             case 'fit':
                 return 'w-fit';
+            // @ts-ignore
             case 'full':
                 return 'w-full';
         }
@@ -147,6 +154,7 @@ export class PopOver extends Component
      */
     updatePosition()
     {
+        // @ts-ignore
         const input = this.button ?? null;
         const dropdown = this.panel;
         const position = getPosition(input, dropdown);
@@ -174,6 +182,7 @@ export class PopOver extends Component
      */
     isOutsideClick(element)
     {
+        // @ts-ignore
         return (!this.panel.contains(element) && (this.button && !this.button.contains(element)));
     }
 
@@ -204,6 +213,7 @@ export class PopOver extends Component
      */
     setContainer(container)
     {
+        // @ts-ignore
         this.container = app.root;
     }
 

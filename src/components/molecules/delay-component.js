@@ -13,6 +13,12 @@ import { base, Component, Dom, Html } from "@base-framework/base";
 export class DelayComponent extends Component
 {
     /**
+     * @member {string} removingClass
+     * @default ''
+     */
+    removingClass = '';
+
+    /**
      * This will remove the component from the DOM after a delay.
      *
      * @returns {void}
@@ -31,6 +37,7 @@ export class DelayComponent extends Component
         }
 
         Dom.addClass(panel, className);
+        // @ts-ignore
         base.on('animationend', panel, (e) => Html.removeElement(panel));
     }
 }
