@@ -123,6 +123,8 @@ export class SubNavigation extends InlineNavigation
 	 */
 	declareProps()
 	{
+		super.declareProps();
+
 		/**
 		 * This will set the parent link.
 		 * @member {object} parentLink

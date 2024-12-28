@@ -13,18 +13,26 @@ import { addTime, pad } from './utils.js';
 export class Calendar extends Component
 {
     /**
-     * This will set the selected date.
-     * @member {string} selectedDate
-     * @default null
-     */
-    selectedDate = null;
+	 * This will declare the props for the compiler.
+	 *
+	 * @returns {void}
+	 */
+	declareProps()
+	{
+		/**
+         * This will set the selected date.
+         * @member {string} selectedDate
+         * @default null
+         */
+        this.selectedDate = null;
 
-    /**
-     * This will set the selected call back.
-     * @member {function} selectedCallBack
-     * @default null
-     */
-    selectedCallBack = null;
+        /**
+         * This will set the selected call back.
+         * @member {function} selectedCallBack
+         * @default null
+         */
+        this.selectedCallBack = null;
+	}
 
     /**
      * This will get the selected data.

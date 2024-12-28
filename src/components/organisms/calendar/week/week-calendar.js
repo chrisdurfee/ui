@@ -14,25 +14,33 @@ import { WeekHeader } from './week-header.js';
 export class WeekCalendar extends Component
 {
     /**
-     * The selected date.
-     * @member {string} selectedDate
-     * @default null
-     */
-    selectedDate = null;
+	 * This will declare the props for the compiler.
+	 *
+	 * @returns {void}
+	 */
+	declareProps()
+	{
+		/**
+         * The selected date.
+         * @member {string} selectedDate
+         * @default null
+         */
+        this.selectedDate = null;
 
-    /**
-     * The selected week.
-     * @member {number} selectedWeek
-     * @default null
-     */
-    selectedWeek = null;
+        /**
+         * The selected week.
+         * @member {number} selectedWeek
+         * @default null
+         */
+        this.selectedWeek = null;
 
-    /**
-     * The selected call back.
-     * @member {function} selectedCallBack
-     * @default null
-     */
-    selectedCallBack = null;
+        /**
+         * The selected call back.
+         * @member {function} selectedCallBack
+         * @default null
+         */
+        this.selectedCallBack = null;
+	}
 
     /**
      * Initializes the calendar data.
