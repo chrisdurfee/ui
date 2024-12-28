@@ -1,6 +1,6 @@
 {
 	"name": "@base-framework/ui",
-	"version": "0.0.0",
+	"version": "0.0.1",
 	"description": "This is a UI package that adds components and atoms that use Tailwind CSS and a theme based on Shadcn.",
 	"main": "./dist/index.es.js",
 	"scripts": {
@@ -49,8 +49,32 @@
 	"exports": {
 		"./package.json": "./package.json",
 		".": {
-			"import": "./dist/ui.es.js",
-      		"require": "./dist/ui.cjs"
+			"import": "./dist/index.es.js",
+			"require": "./dist/index.cjs"
+		},
+		"./atoms": {
+			"import": "./dist/atoms.es.js",
+			"require": "./dist/atoms.cjs"
+		},
+		"./icons": {
+			"import": "./dist/icons.es.js",
+			"require": "./dist/icons.cjs"
+		},
+		"./molecules": {
+			"import": "./dist/molecules.es.js",
+			"require": "./dist/molecules.cjs"
+		},
+		"./organisms": {
+			"import": "./dist/organisms.es.js",
+			"require": "./dist/organisms.cjs"
+		},
+		"./pages": {
+			"import": "./dist/pages.es.js",
+			"require": "./dist/pages.cjs"
+		},
+		"./templates": {
+			"import": "./dist/templates.es.js",
+			"require": "./dist/templates.cjs"
 		}
 	},
 	"homepage": "https://github.com/chrisdurfee/organisms#readme"
