@@ -55,25 +55,33 @@ const DropdownContainer = ({ onSelect }) => (
 export class DropdownMenu extends Component
 {
     /**
-     * @member {string} label
-     */
-    label = null;
+	 * This will declare the props for the compiler.
+	 *
+	 * @returns {void}
+	 */
+	declareProps()
+	{
+		/**
+         * @member {string} label
+         */
+        this.label = null;
 
-    /**
-     * @member {string} icon
-     * @default null
-     */
-    icon = null;
+        /**
+         * @member {string} icon
+         * @default null
+         */
+        this.icon = null;
 
-    /**
-     * @member {function} onSelect
-     */
-    onSelect = null;
+        /**
+         * @member {function} onSelect
+         */
+        this.onSelect = null;
 
-    /**
-     * @member {array} groups
-     */
-    groups = [];
+        /**
+         * @member {array} groups
+         */
+        this.groups = [];
+	}
 
     /**
      * Initializes component data.

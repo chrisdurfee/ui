@@ -13,10 +13,18 @@ import { base, Component, Dom, Html } from "@base-framework/base";
 export class DelayComponent extends Component
 {
     /**
-     * @member {string} removingClass
-     * @default ''
-     */
-    removingClass = '';
+	 * This will declare the props for the compiler.
+	 *
+	 * @returns {void}
+	 */
+	declareProps()
+	{
+		/**
+         * @member {string} removingClass
+         * @default ''
+         */
+        this.removingClass = '';
+	}
 
     /**
      * This will remove the component from the DOM after a delay.

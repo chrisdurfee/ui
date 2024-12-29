@@ -24,57 +24,65 @@ const render = (component) => { return Builder.render(component, app.root); };
 export class Modal extends Component
 {
 	/**
-	 * @member {string} title
+	 * This will declare the props for the compiler.
+	 *
+	 * @returns {void}
 	 */
-	title = null;
+	declareProps()
+	{
+		/**
+		 * @member {string} title
+		 */
+		this.title = null;
 
-	/**
-	 * @member {string} description
-	 */
-	description = null;
+		/**
+		 * @member {string} description
+		 */
+		this.description = null;
 
-	/**
-	 * @member {string} size
-	 * @default 'md'
-	 * @values 'sm', 'md', 'lg', 'xl'
-	 */
-	size = 'md';
+		/**
+		 * @member {string|null} size
+		 * @default null
+		 * @values 'sm', 'md', 'lg', 'xl'
+		 */
+		this.size = null;
 
-	/**
-	 * @member {string} type
-	 * @default ''
-	 * @values 'right', 'left'
-	 * @description This will set the type of modal.
-	 */
-	type = '';
+		/**
+		 * @member {string|null} type
+		 * @default null
+		 * @values 'right', 'left'
+		 * @description This will set the type of modal.
+		 */
+		this.type = null;
 
-	/**
-	 * @member {boolean} hidePrimaryButton
-	 * @default false
-	 * @description This will hide the primary button.
-	 * @values true, false
-	 */
-	hidePrimaryButton = false;
+		/**
+		 * @member {boolean} hidePrimaryButton
+		 * @default false
+		 * @description This will hide the primary button.
+		 * @values true, false
+		 */
+		this.hidePrimaryButton = false;
 
-	/**
-	 * @member {string} icon
-	 */
-	icon = null;
+		/**
+		 * @member {string} icon
+		 */
+		this.icon = null;
 
-	/**
-	 * @member {function|nll} onSubmit
-	 */
-	onSubmit = null;
+		/**
+		 * @member {function|nll} onSubmit
+		 */
+		this.onSubmit = null;
 
-	/**
-	 * @member {function|null} onClose
-	 */
-	onClose = null;
+		/**
+		 * @member {function|null} onClose
+		 */
+		this.onClose = null;
 
-	/**
-	 * @member {boolean} back
-	 */
-	back = false;
+		/**
+		 * @member {boolean} back
+		 */
+		this.back = false;
+	}
 
 	/**
 	 * This will render the modal component.

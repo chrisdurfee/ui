@@ -56,41 +56,49 @@ const typeStyles = {
 export class Dialog extends Component
 {
     /**
-	 * @member {string} title
+	 * This will declare the props for the compiler.
+	 *
+	 * @returns {void}
 	 */
-	title = null;
+	declareProps()
+	{
+		/**
+		 * @member {string} title
+		 */
+		this.title = null;
 
-	/**
-	 * @member {string} description
-	 */
-	description = null;
+		/**
+		 * @member {string} description
+		 */
+		this.description = null;
 
-	/**
-	 * @member {string} Type
-     * @default ''
-     * @values 'info', 'warning', 'destructive', 'success', 'default'
-	 */
-	type = '';
+		/**
+		 * @member {string} Type
+		 * @default ''
+		 * @values 'info', 'warning', 'destructive', 'success', 'default'
+		 */
+		this.type = '';
 
-	/**
-	 * @member {string} icon
-	 */
-	icon = null;
+		/**
+		 * @member {string} icon
+		 */
+		this.icon = null;
 
-	/**
-	 * @member {function|null} onClose
-	 */
-	onClose = null;
+		/**
+		 * @member {function|null} onClose
+		 */
+		this.onClose = null;
 
-    /**
-     * @member {boolean} hideFooter
-     */
-    hideFooter = false;
+		/**
+		 * @member {boolean} hideFooter
+		 */
+		this.hideFooter = false;
 
-	/**
-	 * @member {Array|null} buttons
-	 */
-	buttons = null;
+		/**
+		 * @member {Array|null} buttons
+		 */
+		this.buttons = null;
+	}
 
 	/**
 	 * This will render the modal component.

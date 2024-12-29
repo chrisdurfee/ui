@@ -91,49 +91,57 @@ const NotificationButton = Atom(({ close, class: customClass }, children) => (
 export class Notification extends DelayComponent
 {
     /**
-     * @member {stirng} removingClass}
-     */
-    removingClass = 'pullRight';
+	 * This will declare the props for the compiler.
+	 *
+	 * @returns {void}
+	 */
+	declareProps()
+	{
+		/**
+         * @member {stirng} removingClass}
+         */
+        this.removingClass = 'pullRight';
 
-    /**
-     * @member {function|null} secondaryAction
-     */
-    secondaryAction = null;
+        /**
+         * @member {function|null} secondaryAction
+         */
+        this.secondaryAction = null;
 
-    /**
-     * @member {function|null} primaryAction
-     */
-    primaryAction = null;
+        /**
+         * @member {function|null} primaryAction
+         */
+        this.primaryAction = null;
 
-    /**
-     * @member {boolean} primary
-     */
-    primary = false;
+        /**
+         * @member {boolean} primary
+         */
+        this.primary = false;
 
-    /**
-     * @member {boolean} secondary
-     */
-    secondary = false;
+        /**
+         * @member {boolean} secondary
+         */
+        this.secondary = false;
 
-    /**
-     * @member {string} title
-     */
-    title = null;
+        /**
+         * @member {string} title
+         */
+        this.title = null;
 
-    /**
-     * @member {string} description
-     */
-    description = null;
+        /**
+         * @member {string} description
+         */
+        this.description = null;
 
-    /**
-     * @member {string} icon
-     */
-    icon = null;
+        /**
+         * @member {string} icon
+         */
+        this.icon = null;
 
-    /**
-     * @member {function} onClick
-     */
-    onClick = null;
+        /**
+         * @member {function} onClick
+         */
+        this.onClick = null;
+	}
 
     /**
      * This will be called when the component is created.

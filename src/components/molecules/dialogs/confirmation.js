@@ -13,14 +13,22 @@ import { Dialog } from "./dialog.js";
 export class Confirmation extends Dialog
 {
     /**
-     * @member {string} confirmTextLabel
-     */
-    confirmTextLabel = null;
+	 * This will declare the props for the compiler.
+	 *
+	 * @returns {void}
+	 */
+	declareProps()
+	{
+		/**
+         * @member {string} confirmTextLabel
+         */
+        this.confirmTextLabel = null;
 
-    /**
-     * @member {function} confirmed
-     */
-    confirmed = null;
+        /**
+         * @member {function} confirmed
+         */
+        this.confirmed = null;
+	}
 
 	/**
      * This will get the buttons for the modal.
