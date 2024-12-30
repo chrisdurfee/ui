@@ -14,6 +14,7 @@ export default defineConfig({
 				organisms: path.resolve(__dirname, 'src/components/organisms/organisms.js'),
 				pages: path.resolve(__dirname, 'src/components/pages/pages.js'),
 				templates: path.resolve(__dirname, 'src/components/pages/templates/templates.js'),
+				utils: path.resolve(__dirname, 'src/utils/utils.js'),
 			},
 
 			// If you only want ES modules, specify just ["es"].

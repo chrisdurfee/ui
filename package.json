@@ -68,6 +68,10 @@
 			"import": "./dist/organisms.es.js",
 			"require": "./dist/organisms.cjs"
 		},
+		"./utils": {
+			"import": "./dist/utils.es.js",
+			"require": "./dist/utils.cjs"
+		},
 		"./pages": {
 			"import": "./dist/pages.es.js",
 			"require": "./dist/pages.cjs"
