@@ -2,6 +2,13 @@ import path from 'path';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
+	base: '/',
+	resolve: {
+		alias: {
+			'@components': path.resolve(__dirname, 'src/components'),
+			'@utils': path.resolve(__dirname, 'src/utils'),
+		}
+	},
 	build: {
 		lib: {
 			// Multiple entry points for subpath imports
