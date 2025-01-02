@@ -28,7 +28,7 @@ export class SignatureCanvas extends Component
         // Manages an animation/drawing loop
         this.status = 'stopped';
         const duration = 1000 / 60;
-        this.timer = new IntervalTimer(duration, base.bind(this, this.draw));
+        this.timer = new IntervalTimer(duration, this.draw.bind(this));
 
         this.width = 0;
         this.height = 0;
@@ -92,10 +92,10 @@ export class SignatureCanvas extends Component
     setupEvents()
     {
         const panel = this.panel,
-        callBackPos = base.bind(this, this.pointerPosition),
-        callBackUp = base.bind(this, this.pointerUp),
-        callBackDown = base.bind(this, this.pointerDown),
-        resize = base.bind(this, this.resize);
+        callBackPos = this.pointerPosition.bind(this),
+        callBackUp = this.pointerUp.bind(this),
+        callBackDown = this.pointerDown.bind(this),
+        resize = this.resize.bind(this);
 
         return [
             ['pointermove', panel, callBackPos],
