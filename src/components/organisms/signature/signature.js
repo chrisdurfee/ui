@@ -38,17 +38,6 @@ export class SignaturePanel extends Component
     }
 
     /**
-     * This will run once the component is created, before rendering.
-     * Sets a default line color if not provided.
-     *
-     * @returns {void}
-     */
-    onCreated()
-    {
-        this.lineColor = this.lineColor || '#00aeef';
-    }
-
-    /**
      * Renders the main layout for the signature panel,
      * including a hidden input and a reset button.
      *
@@ -56,13 +45,13 @@ export class SignaturePanel extends Component
      */
     render()
     {
-        return Div({ class: 'signature-panel' }, [
+        return Div({ class: 'signature-panel relative flex flex-auto' }, [
             HiddenInput({
                 cache: 'hiddenInput',
                 required: true,
                 bind: this.path + '.data'
             }),
-            Div({ class: 'signature-button-panel' }, [
+            Div({ class: 'absolute top-2 right-2' }, [
                 Button({
                     variant: 'icon',
                     icon: Icons.circleX,
