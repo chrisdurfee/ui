@@ -1,5 +1,5 @@
 import { Div } from "@base-framework/atoms";
-import { Component, base } from "@base-framework/base";
+import { Component } from "@base-framework/base";
 import { Button } from "../../atoms/buttons/buttons.js";
 import { HiddenInput } from "../../atoms/form/inputs/inputs.js";
 import { Icons } from "../../icons/icons.js";
@@ -66,7 +66,7 @@ export class SignaturePanel extends Component
                 Button({
                     variant: 'icon',
                     icon: Icons.circleX,
-                    click: base.bind(this, this.reset)
+                    click: this.reset.bind(this)
                 })
             ]),
             new SignatureCanvas({

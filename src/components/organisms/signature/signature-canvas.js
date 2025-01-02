@@ -92,10 +92,10 @@ export class SignatureCanvas extends Component
     setupEvents()
     {
         const panel = this.panel,
-              callBackPos = base.bind(this, this.pointerPosition),
-              callBackUp = base.bind(this, this.pointerUp),
-              callBackDown = base.bind(this, this.pointerDown),
-              resize = base.bind(this, this.resize);
+        callBackPos = base.bind(this, this.pointerPosition),
+        callBackUp = base.bind(this, this.pointerUp),
+        callBackDown = base.bind(this, this.pointerDown),
+        resize = base.bind(this, this.resize);
 
         return [
             ['pointermove', panel, callBackPos],
@@ -117,8 +117,8 @@ export class SignatureCanvas extends Component
         let eX, eY;
 
         const canvas = this.canvas,
-              scale = canvas.width / parseInt(canvas.style.width),
-              rect = canvas.getBoundingClientRect();
+        scale = canvas.width / parseInt(canvas.style.width),
+        rect = canvas.getBoundingClientRect();
 
         // @ts-ignore
         if (e.touches && e.touches.length)
@@ -274,7 +274,7 @@ export class SignatureCanvas extends Component
         height = targetSize.height;
 
         let widthStyle = width + 'px',
-            heightStyle = height + 'px';
+        heightStyle = height + 'px';
 
         this.width = canvas.width = width;
         this.height = canvas.height = height;
