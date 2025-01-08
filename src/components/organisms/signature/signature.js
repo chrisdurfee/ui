@@ -22,7 +22,7 @@ export class SignaturePanel extends Component
      *
      * @returns {void}
      */
-    setupProps()
+    declareProps()
     {
         this.data = null;
         this.lineColor = null;

@@ -384,7 +384,7 @@ export class SignatureCanvas extends Component
      */
     setupBackground(ctx)
     {
-        ctx.fillStyle = '';
+        ctx.fillStyle = 'transparent';
         ctx.fillRect(0, 0, this.width, this.height);
 
         this.drawBottomLine(ctx);
