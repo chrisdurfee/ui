@@ -1,3 +1,4 @@
+import { Div } from '@base-framework/atoms';
 import { Component } from '@base-framework/base';
 
 /**
@@ -24,5 +25,15 @@ export class Page extends Component
          * @default ''
          */
         this.class = '';
+	}
+
+	/**
+	 * This will render the page.
+	 *
+	 * @returns {object}
+	 */
+	render()
+	{
+		return Div({ class: `${this.class || ''}` }, this.children);
 	}
 }
