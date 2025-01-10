@@ -1,5 +1,6 @@
 import { Button, Div, I, Input, Li, OnState, Span, Ul } from '@base-framework/atoms';
 import { Data, Jot } from '@base-framework/base';
+import { Icon } from '../../atoms/icon.js';
 import { Icons } from '../../icons/icons.js';
 import { PopOver } from '../popover.js';
 
@@ -34,7 +35,7 @@ const ComboboxItem = (item, onSelect, state) => {
         click: () => onSelect(item),
         onState: [state, 'selectedValue', { 'bg-secondary': item.value }]
     }, [
-        item.icon && Span({ class: 'mr-2 flex items-baseline' }, [I({ class: 'flex w-4 h-4', html: item.icon})]),
+        item.icon && Span({ class: 'mr-2 flex items-baseline' }, [ Icon({ size: 'xs' }, item.icon)]),
         Span(item.label),
     ]);
 };
