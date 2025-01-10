@@ -22,3 +22,5 @@ export class BasicPage extends Page
 
 	}
 }
+
+export default BasicPage;

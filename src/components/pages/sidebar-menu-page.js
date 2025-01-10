@@ -25,22 +25,23 @@ export class SidebarMenuPage extends BasicPage
 		super.declareProps();
 
 		/**
-		 * @member {array} routes
+		 * @member {Array<object>} routes
 		 */
 		this.routes = [];
 
 		/**
-		 * @member {array} switch
+		 * @member {Array<object>} switch
 		 */
 		this.switch = [];
 
 		/**
-		 * @member {array} links
+		 * @member {Array<object>} links
 		 */
 		this.links = [];
 
 		/**
 		 * @member {string} title
+		 * @default ''
 		 */
 		this.title = '';
 	}

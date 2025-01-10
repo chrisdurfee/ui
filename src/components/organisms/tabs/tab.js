@@ -78,3 +78,5 @@ export class Tab extends Component
 		return switches;
     }
 }
+
+export default Tab;

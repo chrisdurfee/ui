@@ -192,3 +192,5 @@ export class ButtonTab extends Component
         };
     }
 }
+
+export default ButtonTab;

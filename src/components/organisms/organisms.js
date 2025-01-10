@@ -56,5 +56,5 @@ export * from "./tabs/tab-group.js";
 export * from "./tabs/tab-navigation.js";
 export * from "./tabs/tab.js";
 
-export * from "./signature/signature.js";
+export * from "./signature/signature-panel.js";
 

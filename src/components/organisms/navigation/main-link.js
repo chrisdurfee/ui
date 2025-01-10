@@ -194,3 +194,5 @@ export class MainLink extends Component
 		this.link.update(selected);
 	}
 }
+
+export default MainLink;

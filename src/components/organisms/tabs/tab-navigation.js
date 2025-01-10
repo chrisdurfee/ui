@@ -197,3 +197,5 @@ export class TabNavigation extends Component
 		this.links = [];
 	}
 }
+
+export default TabNavigation;

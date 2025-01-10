@@ -16,3 +16,5 @@ export const Row = Atom((props, children) =>
         children
     };
 });
+
+export default Row;

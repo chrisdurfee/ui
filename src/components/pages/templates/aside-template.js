@@ -23,3 +23,5 @@ export const AsideTemplate = Atom((props, children) =>
 		])
 	]);
 });
+
+export default AsideTemplate;

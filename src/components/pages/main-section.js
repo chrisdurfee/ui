@@ -17,3 +17,5 @@ export const MainSection = Atom((props, children) =>
         children
     };
 });
+
+export default MainSection;

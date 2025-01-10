@@ -23,3 +23,5 @@ export const BsideTemplate = Atom((props, children) =>
 		])
 	]);
 });
+
+export default BsideTemplate;

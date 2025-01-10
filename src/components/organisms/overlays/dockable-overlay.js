@@ -157,4 +157,4 @@ export class DockableOverlay extends Overlay
     }
 }
 
-export default Overlay;
+export default DockableOverlay;

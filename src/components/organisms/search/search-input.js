@@ -36,3 +36,5 @@ export const SearchInput = Atom((props) => (
 		])
 	])
 ));
+
+export default SearchInput;

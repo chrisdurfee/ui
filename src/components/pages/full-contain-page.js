@@ -27,3 +27,5 @@ export class FullContainPage extends BasicPage
 		]);
 	}
 }
+
+export default FullContainPage;

@@ -106,3 +106,5 @@ export class Navigation extends Component
 		return new MainLink(option);
 	}
 }
+
+export default Navigation;

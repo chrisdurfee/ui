@@ -156,6 +156,7 @@ export class SignatureCanvas extends Component
     pointerDown(e)
     {
         e.preventDefault();
+        e.stopPropagation();
 
         this.getEventPosition(e);
         const { ctx, mouse } = this;
@@ -177,6 +178,7 @@ export class SignatureCanvas extends Component
     pointerUp(e)
     {
         e.preventDefault();
+        e.stopPropagation();
 
         this.ctx.closePath();
         this.mouse.status = 'up';
@@ -196,6 +198,7 @@ export class SignatureCanvas extends Component
         if (this.mouse.status === 'down')
         {
             e.preventDefault();
+            e.stopPropagation();
         }
     }
 
@@ -414,3 +417,5 @@ export class SignatureCanvas extends Component
         this.status = 'stopped';
     }
 }
+
+export default SignatureCanvas;

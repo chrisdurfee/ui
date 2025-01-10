@@ -22,3 +22,5 @@ export class FullscreenPage extends Page
         return Div({ class: `flex flex-col flex-auto ${className}` }, this.children);
     }
 }
+
+export default FullscreenPage;

@@ -24,3 +24,5 @@ export class BlankPage extends BasicPage
         ]);
 	}
 }
+
+export default BlankPage;

@@ -32,3 +32,5 @@ export class InlineOverlay extends Overlay
 		this.initialize();
 	}
 }
+
+export default InlineOverlay;

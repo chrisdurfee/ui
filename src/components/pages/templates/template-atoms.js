@@ -31,3 +31,5 @@ export const MainColumn = Atom((props, children) =>
         children
 	};
 });
+
+export default MainColumn;

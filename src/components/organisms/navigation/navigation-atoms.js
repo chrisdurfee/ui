@@ -14,3 +14,5 @@ export const NavigationGroup = Atom(({ map }, children) =>
 		H4({ class: 'text-muted-foreground text-sm py-0 px-4 whitespace-nowrap' }, children)
 	]);
 });
+
+export default NavigationGroup;

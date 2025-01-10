@@ -15,3 +15,5 @@ export const Template = Atom((props, children) =>
 		children
 	};
 });
+
+export default Template;

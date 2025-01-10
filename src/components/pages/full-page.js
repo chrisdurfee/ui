@@ -63,3 +63,5 @@ export class FullPage extends BasicPage
 		]);
 	}
 }
+
+export default FullPage;

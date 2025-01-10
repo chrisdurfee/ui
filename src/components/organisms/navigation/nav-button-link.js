@@ -96,3 +96,5 @@ export class NavButtonLink extends Component
 		});
 	}
 }
+
+export default NavButtonLink;

@@ -37,3 +37,5 @@ export class Page extends Component
 		return Div({ class: `${this.class || ''}` }, this.children);
 	}
 }
+
+export default Page;

@@ -15,3 +15,5 @@ export const FullTemplate = Atom((props, children) =>
 		...props,
 	}, children);
 });
+
+export default FullTemplate;

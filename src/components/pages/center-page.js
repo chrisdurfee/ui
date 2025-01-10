@@ -24,3 +24,5 @@ export class CenterPage extends BasicPage
         ]);
 	}
 }
+
+export default CenterPage;

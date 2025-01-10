@@ -121,3 +121,5 @@ export class SignaturePanel extends Component
         }
     }
 }
+
+export default SignaturePanel;
