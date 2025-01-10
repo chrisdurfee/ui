@@ -28,11 +28,11 @@ const DropdownButton = ({ toggleDropdown }) => (
  * @param {function} onSelect
  * @returns {object}
  */
-const ComboboxItem = (item, onSelect) => {
+const ComboboxItem = (item, onSelect, state) => {
     return Li({
         class: 'flex flex-auto items-center cursor-pointer p-2 hover:bg-muted/50 rounded-sm',
         click: () => onSelect(item),
-        onState: ['selectedValue', { 'bg-secondary': item.value }]
+        onState: [state, 'selectedValue', { 'bg-secondary': item.value }]
     }, [
         item.icon && Span({ class: 'mr-2 flex items-baseline' }, [I({ class: 'flex w-4 h-4', html: item.icon})]),
         Span(item.label),
@@ -43,11 +43,12 @@ const ComboboxItem = (item, onSelect) => {
  * ComboboxDropdown Atom
  *
  * @param {function} handleSelect
+ * @param {object} state
  * @returns {object}
  */
-const ComboboxDropdown = (handleSelect) => (
+const ComboboxDropdown = (handleSelect, state) => (
     Div({ class: 'w-full border rounded-md' }, [
-        Ul({ class: 'max-h-60 overflow-y-auto p-2 grid gap-1', for: ['items', (item) => ComboboxItem(item, handleSelect) ] }),
+        Ul({ class: 'max-h-60 overflow-y-auto p-2 grid gap-1', for: ['items', (item) => ComboboxItem(item, handleSelect, state) ] }),
     ])
 );
 
@@ -57,7 +58,7 @@ const ComboboxDropdown = (handleSelect) => (
  * @param {object} props
  * @returns {object}
  */
-const DropdownContainer = ({ onSelect }) => (
+const DropdownContainer = ({ onSelect, state }) => (
     Div({ class: 'flex flex-auto flex-col' }, [
         OnState('open', (isOpen, ele, parent) => (!isOpen)
             ? null
@@ -66,7 +67,7 @@ const DropdownContainer = ({ onSelect }) => (
                 parent: parent,
                 button: parent.button,
             }, [
-                ComboboxDropdown(onSelect)
+                ComboboxDropdown(onSelect, state)
             ])
         )
     ])
@@ -153,8 +154,12 @@ export const Combobox = Jot(
         return Div({ class: 'relative w-full flex flex-auto flex-col max-w-[250px]' }, [
             // @ts-ignore
             DropdownButton({ toggleDropdown: this.toggleDropdown.bind(this) }),
-            // @ts-ignore
-            DropdownContainer({ onSelect: this.handleSelect.bind(this) }),
+            DropdownContainer({
+                // @ts-ignore
+                state: this.state,
+                // @ts-ignore
+                onSelect: this.handleSelect.bind(this)
+            }),
 
             // Hidden required input for form validation
             // @ts-ignore
