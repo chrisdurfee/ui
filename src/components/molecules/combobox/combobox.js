@@ -78,7 +78,7 @@ const DropdownContainer = ({ onSelect }) => (
  * This will render a combobox component.
  *
  * @param {object} props
- * @param {array} children *
+ * @param {array} children
  * @returns {ComponentConstructor}
  */
 export const Combobox = Jot(
@@ -101,10 +101,13 @@ export const Combobox = Jot(
      *
      * @returns {object}
      */
-    state: {
-        open: false,
-        selectedLabel: '',
-        selectedValue: ''
+    state()
+    {
+        return {
+            open: false,
+            selectedLabel: '',
+            selectedValue: ''
+        };
     },
 
     /**
@@ -147,18 +150,11 @@ export const Combobox = Jot(
      */
     render()
     {
-        const handleSelect = (item) => {
-            // @ts-ignore
-            const state = this.state;
-            state.selectedValue = item.value;
-            state.selectedLabel = item.label;
-            state.open = false;
-        };
-
         return Div({ class: 'relative w-full flex flex-auto flex-col max-w-[250px]' }, [
             // @ts-ignore
             DropdownButton({ toggleDropdown: this.toggleDropdown.bind(this) }),
-            DropdownContainer({ onSelect: handleSelect }),
+            // @ts-ignore
+            DropdownContainer({ onSelect: this.handleSelect.bind(this) }),
 
             // Hidden required input for form validation
             // @ts-ignore
