@@ -1,6 +1,7 @@
-import { Button as BaseButton, I } from '@base-framework/atoms';
+import { Button as BaseButton } from '@base-framework/atoms';
 import { Atom } from '@base-framework/base';
 import { Icons } from '../../icons/icons.js';
+import { Icon } from '../icon.js';
 
 /**
  * This will create a button.
@@ -31,9 +32,9 @@ const WithIconVariant = (defaultProps) => (
 			...props,
 			class: `bttn ${defaultProps.class} ${props.class || ''}`
 		}, [
-			props.icon && props.position !== 'right' ? I({ class: props.animation ?? null, html: props.icon }) : null,
+			props.icon && props.position !== 'right' ? Icon({ size: 'xs', class: props.animation ?? null }, props.icon) : null,
 			...(children || []),
-			props.icon && props.position === 'right' ? I({ class: props.animation ?? null, html: props.icon }) : null
+			props.icon && props.position === 'right' ? Icon({ size: 'xs', class: props.animation ?? null }, props.icon) : null
 		])
 	))
 );
