@@ -32,9 +32,9 @@ const WithIconVariant = (defaultProps) => (
 			...props,
 			class: `bttn ${defaultProps.class} ${props.class || ''}`
 		}, [
-			props.icon && props.position !== 'right' ? Icon({ size: 'xs', class: props.animation ?? null }, props.icon) : null,
+			props.icon && props.position !== 'right' ? Icon({ size: 'sm', class: props.animation ?? null }, props.icon) : null,
 			...(children || []),
-			props.icon && props.position === 'right' ? Icon({ size: 'xs', class: props.animation ?? null }, props.icon) : null
+			props.icon && props.position === 'right' ? Icon({ size: 'sm', class: props.animation ?? null }, props.icon) : null
 		])
 	))
 );

@@ -1,3 +1,4 @@
+import { Canvas } from "@base-framework/atoms";
 import { base, Component, Dom } from "@base-framework/base";
 import { IntervalTimer } from "@base-framework/organisms";
 
@@ -49,9 +50,9 @@ export class SignatureCanvas extends Component
      */
     render()
     {
-        return {
-            tag: 'canvas'
-        };
+        return Canvas({
+            style: 'touch-action: none; -webkit-user-select: none; -webkit-touch-callout: none;'
+        });
     }
 
     /**
@@ -96,11 +97,12 @@ export class SignatureCanvas extends Component
         callBackUp = this.pointerUp.bind(this),
         callBackDown = this.pointerDown.bind(this),
         resize = this.resize.bind(this);
+        const options = { passive: false };
 
         return [
-            ['pointermove', panel, callBackPos],
+            ['pointermove', panel, callBackPos, options],
             ['pointerup', panel, callBackUp],
-            ['pointerdown', panel, callBackDown],
+            ['pointerdown', panel, callBackDown, options],
             ['pointerout', panel, callBackUp],
             ['resize', window, resize]
         ];

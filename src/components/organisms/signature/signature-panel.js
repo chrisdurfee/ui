@@ -45,7 +45,7 @@ export class SignaturePanel extends Component
      */
     render()
     {
-        return Div({ class: 'signature-panel relative flex flex-auto' }, [
+        return Div({ class: 'signature-panel relative flex flex-auto overflow-hidden select-none' }, [
             HiddenInput({
                 cache: 'hiddenInput',
                 required: true,
