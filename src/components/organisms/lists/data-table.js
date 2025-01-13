@@ -30,15 +30,15 @@ export const DataTable = Jot(
     /**
      * This will toggle all selected rows.
      *
-     * @returns {void}
+     * @returns {boolean}
      */
     toggleAllSelectedRows()
     {
         // @ts-ignore
         const tableRows = this.table.getRows();
         // @ts-ignore
-        const select = this.data.selectedRows.length === tableRows.length;
-        const selectedRows = select ? [] : tableRows;
+        const isSelected = this.data.selectedRows.length === tableRows.length;
+        const selectedRows = isSelected ? [] : tableRows;
         // @ts-ignore
         this.data.selectedRows = selectedRows;
 
@@ -46,6 +46,7 @@ export const DataTable = Jot(
         this.updateSelected();
         // @ts-ignore
         this.updateTable(!select);
+		return isSelected;
     },
 
     /**

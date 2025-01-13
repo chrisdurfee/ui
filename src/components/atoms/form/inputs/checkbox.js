@@ -124,16 +124,17 @@ export const Checkbox = VeilJot(
 	/**
 	 * This will handle the click event for the checkbox.
 	 *
+	 * @param {object} e
 	 * @returns {void}
 	 */
-	clickHandler()
+	clickHandler(e)
 	{
 		this.state.toggle('checked');
 		this.checkbox.checked = this.state.checked;
 
 		if (typeof this.onChange === 'function')
 		{
-			this.onChange(this.state.checked);
+			this.onChange(e, this, this.state.checked);
 		}
 	},
 
@@ -152,7 +153,7 @@ export const Checkbox = VeilJot(
 				bind: this.bind,
 				checked: this.state.checked,
 				required: this.required,
-				clickHandler: () => this.clickHandler()
+				clickHandler: (e) => this.clickHandler(e)
 			}),
 			this.label && CheckboxLabel({ id, label: this.label, clickHandler: () => this.clickHandler() })
 		]);
