@@ -45,7 +45,7 @@ const CalendarButton = ({ bind, required, toggleOpen }) => (
  * @param {object} props
  * @returns {object}
  */
-const CalendarContainer = ({ handleDateSelect }) => (
+const CalendarContainer = ({ handleDateSelect, blockPriorDates }) => (
     Div({ class: 'absolute mt-1 z-10 bg-background rounded-md shadow-lg' }, [
         OnState('open', (value, ele, parent ) => (!value)
             ? null
@@ -57,7 +57,8 @@ const CalendarContainer = ({ handleDateSelect }) => (
             }, [
                 new Calendar({
                     selectedDate: parent.state.selectedDate,
-                    selectedCallBack: handleDateSelect
+                    selectedCallBack: handleDateSelect,
+                    blockPriorDates
                 })
             ])
         )
@@ -126,7 +127,8 @@ export const DatePicker = VeilJot(
                 required: this.required
             }),
             CalendarContainer({
-                handleDateSelect
+                handleDateSelect,
+                blockPriorDates: this.blockPriorDates || false
             })
         ]);
     }
