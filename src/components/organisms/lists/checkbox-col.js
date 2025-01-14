@@ -1,17 +1,17 @@
-import { Th } from '@base-framework/atoms';
+import { Th, UseParent } from '@base-framework/atoms';
 import { Checkbox } from '../../atoms/form/inputs/checkbox.js';
 
 /**
  * This will toggle the checkbox.
  *
- * @param {object} e
  * @param {object} parent
+ * @param {object} checkbox
  * @returns {void}
  */
-const toggleCheckbox = (e, parent) =>
+const toggleCheckbox = (parent, checkbox) =>
 {
     const isSelected = parent.toggleAllSelectedRows();
-    e.target.checked =(!isSelected);
+    checkbox.state.checked =(!isSelected);
 };
 
 /**
@@ -24,6 +24,6 @@ const toggleCheckbox = (e, parent) =>
  */
 export const CheckboxCol = (props) => (
     Th({ class: `cursor-pointer py-3 px-4 text-base w-10 ${props.class || '' }` }, [
-        new Checkbox({ class: 'mr-2', onChange: toggleCheckbox }),
+        UseParent((parent) => new Checkbox({ class: 'mr-2', onChange: (checked, checkbox) => toggleCheckbox(parent, checkbox) })),
     ])
 );

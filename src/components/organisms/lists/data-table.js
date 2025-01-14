@@ -45,7 +45,7 @@ export const DataTable = Jot(
         // @ts-ignore
         this.updateSelected();
         // @ts-ignore
-        this.updateTable(!select);
+        this.updateTable(!isSelected);
 		return isSelected;
     },
 

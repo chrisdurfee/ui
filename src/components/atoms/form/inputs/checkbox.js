@@ -134,7 +134,7 @@ export const Checkbox = VeilJot(
 
 		if (typeof this.onChange === 'function')
 		{
-			this.onChange(e, this, this.state.checked);
+			this.onChange(this.state.checked, this);
 		}
 	},
 
