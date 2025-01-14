@@ -11,16 +11,16 @@ import { NavigationButton } from './navigation-button.js';
  */
 const CalendarHeader = ({ next, previous }) => (
     Div({ class: 'flex flex-auto min-h-12 text-sm font-medium relative justify-center items-center' }, [
-        Span('[[monthName]] [[current.year]]'),
-        NavigationButton({
-            label: 'Previous',
-            click: previous
-        }),
-        NavigationButton({
-            label: 'Next',
-            click: next
-        })
-    ])
+		Span('[[monthName]] [[current.year]]'),
+		NavigationButton({
+			label: 'Previous',
+			click: previous
+		}),
+		NavigationButton({
+			label: 'Next',
+			click: next
+		})
+	])
 );
 
 /**
@@ -30,30 +30,42 @@ const CalendarHeader = ({ next, previous }) => (
  */
 const HeaderCells = () =>
 {
-    const daysOfWeek = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
-    return daysOfWeek.map(DayHeader);
+	const daysOfWeek = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+	return daysOfWeek.map(DayHeader);
 };
 
 /**
  * This will create the month calendar.
+ *
+ * If `props.blockPriorDates` is true, any date before today's date is disabled.
  *
  * @param {object} props
  * @returns {object}
  */
 export const MonthCalendar = (props) => (
     Div({ class: 'rdp w-full space-y-1' }, [
-        CalendarHeader({
-            next: props.next,
-            previous: props.previous
-        }),
-        Div({ class: 'flex flex-auto flex-col w-full', onSet: ['currentDate', () => [
-                Div({ class: 'grid grid-cols-7' }, HeaderCells()),
-                Div({ class: 'grid grid-cols-7' }, CalendarCells(
-                    props.current,
-                    props.today,
-                    props.select
-                ))
-            ]]
-        })
-    ])
+		CalendarHeader({
+			next: props.next,
+			previous: props.previous
+		}),
+		Div({
+			class: 'flex flex-auto flex-col w-full',
+			onSet: [
+				'currentDate',
+				() =>
+				[
+					Div({ class: 'grid grid-cols-7' }, HeaderCells()),
+					Div(
+						{ class: 'grid grid-cols-7' },
+						CalendarCells(
+							props.current,
+							props.today,
+							props.select,
+							props.blockPriorDates
+						)
+					)
+				]
+			]
+		})
+	])
 );

@@ -45,44 +45,57 @@ const getCurrentDateClass = (currentDate, date) => (isCurrentDate(currentDate, d
  */
 const getClasses = (isToday, currentDate, isOutsideMonth, date) =>
 {
-    const currentDateClass = getCurrentDateClass(currentDate, date);
-    if (currentDateClass)
-    {
-        return currentDateClass;
-    }
+	const currentDateClass = getCurrentDateClass(currentDate, date);
+	if (currentDateClass)
+	{
+		return currentDateClass;
+	}
 
-    const todayClass = getTodayClass(isToday);
-    if(isToday)
-    {
-        return todayClass;
-    }
+	if (isToday)
+	{
+		return getTodayClass(isToday);
+	}
 
-    const outsideMonthClass = getOutsideMonthClass(isOutsideMonth);
-    if(isOutsideMonth)
-    {
-        return outsideMonthClass;
-    }
-    return 'text-foreground';
+	if (isOutsideMonth)
+	{
+		return getOutsideMonthClass(isOutsideMonth);
+	}
+
+	return 'text-foreground';
 };
 
 /**
  * This will render a day cell in a calendar.
  *
  * @param {object} props - The properties for the day cell.
+ *   { day, currentDate, date, isToday, isOutsideMonth, select, disabled }
  * @returns {object}
  */
-export const DayCell = ({ day, currentDate, date, isToday, isOutsideMonth, select }) => (
-    Button(
-        {
-            class: `
-        flex items-center justify-center h-9 w-auto p-0 font-normal text-sm rounded-md
-        ${getClasses(isToday, currentDate, isOutsideMonth, date)}
-        hover:bg-muted/50 focus:z-10
-      `,
-            disabled: day === null,
-            'aria-label': day ? `Day ${day}` : null,
-            click: () => select(date),
-        },
-        day.toString()
-    )
-);
+export const DayCell = (props) =>
+{
+	const {
+		day,
+		currentDate,
+		date,
+		isToday,
+		isOutsideMonth,
+		select,
+		disabled
+	} = props;
+
+	return Button(
+		{
+			class: `
+				flex items-center justify-center h-9 w-auto p-0 font-normal text-sm rounded-md
+				${getClasses(isToday, currentDate, isOutsideMonth, date)}
+				hover:bg-muted/50 hover:text-muted-foreground focus:z-10
+			`,
+			disabled: disabled || day === null,
+			'aria-label': day ? `Day ${day}` : null,
+
+			// Only call select if it's not disabled.
+			click: () => !disabled && select(date)
+		},
+		day.toString()
+	);
+};

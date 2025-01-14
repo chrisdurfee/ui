@@ -32,6 +32,14 @@ export class Calendar extends Component
          * @default null
          */
         this.selectedCallBack = null;
+
+        /**
+         * This will block prior dates.
+         *
+         * @member {boolean} blockPriorDates
+         * @default false
+         */
+        this.blockPriorDates = false;
 	}
 
     /**
@@ -187,7 +195,8 @@ export class Calendar extends Component
                 today: this.data.today,
                 select: (date) => this.selectDate(date),
                 next: () => this.goToNextMonth(),
-                previous: () => this.goToPreviousMonth()
+                previous: () => this.goToPreviousMonth(),
+                blockPriorDates: this.blockPriorDates || false
             })
         ]);
     }
