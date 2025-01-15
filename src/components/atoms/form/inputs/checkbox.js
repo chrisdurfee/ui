@@ -1,6 +1,6 @@
 import { Checkbox as BaseCheckbox, Div, I, Label, OnState, Span } from '@base-framework/atoms';
+import { Jot } from '@base-framework/base';
 import { Icons } from '../../../icons/icons.js';
-import { VeilJot } from '../../veil.js';
 import { borderClass, disabledClass, focusClass } from './input-classes.js';
 
 /**
@@ -96,7 +96,7 @@ const CheckboxLabel = ({ id, label, clickHandler }) => (
  * @param {object} props
  * @returns {object}
  */
-export const Checkbox = VeilJot(
+export const Checkbox = Jot(
 {
 	/**
 	 * This will initialize the state of the checkbox.
@@ -106,6 +106,7 @@ export const Checkbox = VeilJot(
 	state()
 	{
 		return {
+			// @ts-ignore
 			checked: this.checked ?? false
 		};
 	},
@@ -118,6 +119,7 @@ export const Checkbox = VeilJot(
 	 */
 	after()
 	{
+		// @ts-ignore
 		this.state.checked = this.checkbox.checked;
 	},
 
@@ -129,11 +131,15 @@ export const Checkbox = VeilJot(
 	 */
 	clickHandler(e)
 	{
+		// @ts-ignore
 		this.state.toggle('checked');
+		// @ts-ignore
 		this.checkbox.checked = this.state.checked;
 
+		// @ts-ignore
 		if (typeof this.onChange === 'function')
 		{
+			// @ts-ignore
 			this.onChange(this.state.checked, this);
 		}
 	},
@@ -145,16 +151,23 @@ export const Checkbox = VeilJot(
 	 */
 	render()
 	{
+		// @ts-ignore
 		const id = this.getId();
 
+		// @ts-ignore
 		return Div({ class: `flex items-center space-x-2 cursor-pointer ${this.class || ''}` }, [
 			CustomCheckbox({
 				id,
+				// @ts-ignore
 				bind: this.bind,
+				// @ts-ignore
 				checked: this.state.checked,
+				// @ts-ignore
 				required: this.required,
+				// @ts-ignore
 				clickHandler: (e) => this.clickHandler(e)
 			}),
+			// @ts-ignore
 			this.label && CheckboxLabel({ id, label: this.label, clickHandler: () => this.clickHandler() })
 		]);
 	}
