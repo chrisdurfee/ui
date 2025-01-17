@@ -12,7 +12,7 @@ import { base, Component, Dom, Html } from "@base-framework/base";
  */
 export class DelayComponent extends Component
 {
-    /**
+	/**
 	 * This will declare the props for the compiler.
 	 *
 	 * @returns {void}
@@ -20,32 +20,32 @@ export class DelayComponent extends Component
 	declareProps()
 	{
 		/**
-         * @member {string} removingClass
-         * @default ''
-         */
-        this.removingClass = '';
+		 * @member {string} removingClass
+		 * @default ''
+		 */
+		this.removingClass = '';
 	}
 
-    /**
-     * This will remove the component from the DOM after a delay.
-     *
-     * @returns {void}
-     */
-    remove()
-    {
-        this.prepareDestroy();
+	/**
+	 * This will remove the component from the DOM after a delay.
+	 *
+	 * @returns {void}
+	 */
+	remove()
+	{
+		this.prepareDestroy();
 		this.removeContext();
 
-        const panel = this.panel,
-        className = this.removingClass;
-        if (!className)
-        {
-            Html.removeElement(panel);
-            return;
-        }
+		const panel = this.panel,
+		className = this.removingClass;
+		if (!className)
+		{
+			Html.removeElement(panel);
+			return;
+		}
 
-        Dom.addClass(panel, className);
-        // @ts-ignore
-        base.on('animationend', panel, (e) => Html.removeElement(panel));
-    }
+		Dom.addClass(panel, className);
+		// @ts-ignore
+		base.on('animationend', panel, (e) => Html.removeElement(panel));
+	}
 }

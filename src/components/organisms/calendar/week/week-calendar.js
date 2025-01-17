@@ -13,7 +13,7 @@ import { WeekHeader } from './week-header.js';
  */
 export class WeekCalendar extends Component
 {
-    /**
+	/**
 	 * This will declare the props for the compiler.
 	 *
 	 * @returns {void}
@@ -21,195 +21,195 @@ export class WeekCalendar extends Component
 	declareProps()
 	{
 		/**
-         * The selected date.
-         * @member {string} selectedDate
-         * @default null
-         */
-        this.selectedDate = null;
+		 * The selected date.
+		 * @member {string} selectedDate
+		 * @default null
+		 */
+		this.selectedDate = null;
 
-        /**
-         * The selected week.
-         * @member {number} selectedWeek
-         * @default null
-         */
-        this.selectedWeek = null;
+		/**
+		 * The selected week.
+		 * @member {number} selectedWeek
+		 * @default null
+		 */
+		this.selectedWeek = null;
 
-        /**
-         * The selected call back.
-         * @member {function} selectedCallBack
-         * @default null
-         */
-        this.selectedCallBack = null;
+		/**
+		 * The selected call back.
+		 * @member {function} selectedCallBack
+		 * @default null
+		 */
+		this.selectedCallBack = null;
 	}
 
-    /**
-     * Initializes the calendar data.
-     *
-     * @returns {Data}
-     */
-    setData()
-    {
-        const today = new Date();
-        const currentWeek = this.selectedWeek || this.calculateCurrentWeek(today);
-        const currentDate = getDateFromWeek(currentWeek, today.getFullYear());
+	/**
+	 * Initializes the calendar data.
+	 *
+	 * @returns {Data}
+	 */
+	setData()
+	{
+		const today = new Date();
+		const currentWeek = this.selectedWeek || this.calculateCurrentWeek(today);
+		const currentDate = getDateFromWeek(currentWeek, today.getFullYear());
 
-        return new Data({
-            monthName: this.getMonthName(currentDate.getMonth()),
-            year: currentDate.getFullYear(),
-            month: currentDate.getMonth(),
-            currentDate: currentDate.getDate(),
-            currentWeek,
-        });
-    }
+		return new Data({
+			monthName: this.getMonthName(currentDate.getMonth()),
+			year: currentDate.getFullYear(),
+			month: currentDate.getMonth(),
+			currentDate: currentDate.getDate(),
+			currentWeek,
+		});
+	}
 
-    /**
-     * Determines the current selected date.
-     *
-     * @param {Date} today
-     * @returns {Date}
-     */
-    getSelectedDate(today)
-    {
-        const selectedDate = this.selectedDate ? new Date(this.selectedDate) : today;
-        return new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate());
-    }
+	/**
+	 * Determines the current selected date.
+	 *
+	 * @param {Date} today
+	 * @returns {Date}
+	 */
+	getSelectedDate(today)
+	{
+		const selectedDate = this.selectedDate ? new Date(this.selectedDate) : today;
+		return new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate());
+	}
 
-    /**
-     * Calculates the ISO week number for a given date.
-     *
-     * @param {Date} date
-     * @returns {number}
-     */
-    calculateCurrentWeek(date)
-    {
-        const target = new Date(date.valueOf());
-        const dayNr = (date.getDay() + 6) % 7;
-        target.setDate(target.getDate() - dayNr + 3);
-        const firstThursday = target.valueOf();
+	/**
+	 * Calculates the ISO week number for a given date.
+	 *
+	 * @param {Date} date
+	 * @returns {number}
+	 */
+	calculateCurrentWeek(date)
+	{
+		const target = new Date(date.valueOf());
+		const dayNr = (date.getDay() + 6) % 7;
+		target.setDate(target.getDate() - dayNr + 3);
+		const firstThursday = target.valueOf();
 
-        target.setMonth(0, 1);
-        if (target.getDay() !== 4)
-        {
-            target.setMonth(0, 1 + ((4 - target.getDay() + 7) % 7));
-        }
+		target.setMonth(0, 1);
+		if (target.getDay() !== 4)
+		{
+			target.setMonth(0, 1 + ((4 - target.getDay() + 7) % 7));
+		}
 
-        // @ts-ignore
-        return 1 + Math.ceil((firstThursday - target) / 604800000);
-    }
+		// @ts-ignore
+		return 1 + Math.ceil((firstThursday - target) / 604800000);
+	}
 
-    /**
-     * Gets the name of the month.
-     *
-     * @param {number} month
-     * @returns {string}
-     */
-    getMonthName(month)
-    {
-        const monthNames = DateTime.monthNames;
-        return monthNames[month];
-    }
+	/**
+	 * Gets the name of the month.
+	 *
+	 * @param {number} month
+	 * @returns {string}
+	 */
+	getMonthName(month)
+	{
+		const monthNames = DateTime.monthNames;
+		return monthNames[month];
+	}
 
-    /**
-     * Updates the calendar to show the previous month.
-     *
-     * @returns {void}
-     */
-    goToPreviousMonth()
-    {
-        const data = this.data;
-        let { year, month } = data;
+	/**
+	 * Updates the calendar to show the previous month.
+	 *
+	 * @returns {void}
+	 */
+	goToPreviousMonth()
+	{
+		const data = this.data;
+		let { year, month } = data;
 
-        if (month === 0)
-        {
-            month = 11;
-            year--;
-        }
-        else
-        {
-            month--;
-        }
+		if (month === 0)
+		{
+			month = 11;
+			year--;
+		}
+		else
+		{
+			month--;
+		}
 
-        this.setDate(month, year);
-    }
+		this.setDate(month, year);
+	}
 
-    /**
-     * Updates the calendar to show the next month.
-     *
-     * @returns {void}
-     */
-    goToNextMonth()
-    {
-        const data = this.data;
-        let { year, month } = data;
+	/**
+	 * Updates the calendar to show the next month.
+	 *
+	 * @returns {void}
+	 */
+	goToNextMonth()
+	{
+		const data = this.data;
+		let { year, month } = data;
 
-        if (month === 11)
-        {
-            month = 0;
-            year++;
-        }
-        else
-        {
-            month++;
-        }
+		if (month === 11)
+		{
+			month = 0;
+			year++;
+		}
+		else
+		{
+			month++;
+		}
 
-        this.setDate(month, year);
-    }
+		this.setDate(month, year);
+	}
 
-    /**
-     * Sets the selected date.
-     *
-     * @param {number} month
-     * @param {number} year
-     * @param {number|null} [date=null]
-     * @returns {void}
-     */
-    setDate(month, year, date)
-    {
-        this.data.set({
-            year,
-            month,
-            monthName: this.getMonthName(month),
-        });
+	/**
+	 * Sets the selected date.
+	 *
+	 * @param {number} month
+	 * @param {number} year
+	 * @param {number|null} [date=null]
+	 * @returns {void}
+	 */
+	setDate(month, year, date)
+	{
+		this.data.set({
+			year,
+			month,
+			monthName: this.getMonthName(month),
+		});
 
-        if (date)
-        {
-            this.data.currentDate = date;
-        }
-    }
+		if (date)
+		{
+			this.data.currentDate = date;
+		}
+	}
 
-    /**
-     * Handles week selection.
-     *
-     * @param {number} weekNumber
-     * @returns {void}
-     */
-    selectWeek(weekNumber, year)
-    {
-        this.data.currentWeek = weekNumber;
-        const currentDate = getDateFromWeek(weekNumber, year);
-        this.setDate(currentDate.getMonth(), currentDate.getFullYear(), currentDate.getDate());
+	/**
+	 * Handles week selection.
+	 *
+	 * @param {number} weekNumber
+	 * @returns {void}
+	 */
+	selectWeek(weekNumber, year)
+	{
+		this.data.currentWeek = weekNumber;
+		const currentDate = getDateFromWeek(weekNumber, year);
+		this.setDate(currentDate.getMonth(), currentDate.getFullYear(), currentDate.getDate());
 
-        if (typeof this.selectedCallBack === 'function')
-        {
-            this.selectedCallBack(weekNumber);
-        }
-    }
+		if (typeof this.selectedCallBack === 'function')
+		{
+			this.selectedCallBack(weekNumber);
+		}
+	}
 
-    /**
-     * Renders the WeekCalendar component.
-     *
-     * @returns {object}
-     */
-    render()
-    {
-        return Div({ class: 'week-calendar-container border rounded-md bg-background p-3' }, [
-            WeekHeader({
-                next: () => this.goToNextMonth(),
-                previous: () => this.goToPreviousMonth(),
-            }),
-            WeekCells({
-                selectWeek: (weekNumber, year) => this.selectWeek(weekNumber, year),
-            }),
-        ]);
-    }
+	/**
+	 * Renders the WeekCalendar component.
+	 *
+	 * @returns {object}
+	 */
+	render()
+	{
+		return Div({ class: 'week-calendar-container border rounded-md bg-background p-3' }, [
+			WeekHeader({
+				next: () => this.goToNextMonth(),
+				previous: () => this.goToPreviousMonth(),
+			}),
+			WeekCells({
+				selectWeek: (weekNumber, year) => this.selectWeek(weekNumber, year),
+			}),
+		]);
+	}
 }

@@ -9,11 +9,11 @@ export { CheckboxCol, HeaderCol, TableHeader };
  * @returns {object}
  */
 export const DataTableBody = ({ key, rows, selectRow, rowItem }) => (
-    new TableBody({
-        cache: 'table',
-        key,
-        items: rows,
-        rowItem: (row) => rowItem(row, selectRow),
-        class: 'divide-y divide-border'
-    })
+	new TableBody({
+		cache: 'table',
+		key,
+		items: rows,
+		rowItem: (row) => rowItem(row, selectRow),
+		class: 'divide-y divide-border'
+	})
 );

@@ -94,7 +94,7 @@ export class Modal extends Component
 		const title = this.title || '';
 		const description = this.description || null;
 
-        return ModalContainer({
+		return ModalContainer({
 				class: className,
 				title,
 				description,
@@ -118,14 +118,14 @@ export class Modal extends Component
 	}
 
 	/**
-     * This will setup the states.
-     *
-     * @returns {object}
-     */
-    setupStates()
-    {
-        return {
-            open: {
+	 * This will setup the states.
+	 *
+	 * @returns {object}
+	 */
+	setupStates()
+	{
+		return {
+			open: {
 				state: false,
 				callBack: (state) =>
 				{
@@ -135,8 +135,8 @@ export class Modal extends Component
 					}
 				}
 			}
-        };
-    }
+		};
+	}
 
 	/**
 	 * This will get the header options.
@@ -149,28 +149,28 @@ export class Modal extends Component
 	}
 
 	/**
-     * This will get the buttons for the modal.
-     *
-     * @returns {array}
-     */
-    getButtons()
-    {
-        return [
-            Button({ variant: 'outline', click: () => this.destroy() }, 'Cancel'),
-            this.hidePrimaryButton !== true && Button({ variant: 'primary', type: 'submit' }, 'Save')
-        ];
-    }
+	 * This will get the buttons for the modal.
+	 *
+	 * @returns {array}
+	 */
+	getButtons()
+	{
+		return [
+			Button({ variant: 'outline', click: () => this.destroy() }, 'Cancel'),
+			this.hidePrimaryButton !== true && Button({ variant: 'primary', type: 'submit' }, 'Save')
+		];
+	}
 
 	/**
-     * This will check if the click was outside the component.
-     *
-     * @param {object} element
-     * @returns {boolean}
-     */
-    isOutsideClick(element)
-    {
-        return (!this.panel.contains(element));
-    }
+	 * This will check if the click was outside the component.
+	 *
+	 * @param {object} element
+	 * @returns {boolean}
+	 */
+	isOutsideClick(element)
+	{
+		return (!this.panel.contains(element));
+	}
 
 	/**
 	 * This will get the size class.
@@ -221,15 +221,15 @@ export class Modal extends Component
 	}
 
 	/**
-     * This will override the set up to use the app shell.
-     *
-     * @param {object} container
-     */
-    setContainer(container)
-    {
+	 * This will override the set up to use the app shell.
+	 *
+	 * @param {object} container
+	 */
+	setContainer(container)
+	{
 		// @ts-ignore
-        this.container = app.root;
-    }
+		this.container = app.root;
+	}
 
 	/**
 	 * This will open the modal.
@@ -256,7 +256,7 @@ export class Modal extends Component
 		 */
 		const DELAY = 10;
 		window.setTimeout(() => this.panel.showPopover(), DELAY);
-        this.state.open = true;
+		this.state.open = true;
 
 		/**
 		 * This will prevent the body from scrolling when the modal is open.

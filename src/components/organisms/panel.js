@@ -19,11 +19,11 @@ export class Panel extends Component
 	declareProps()
 	{
 		/**
-         * This will set the class.
-         * @member {string} class
-         * @default ''
-         */
-        this.class = '';
+		 * This will set the class.
+		 * @member {string} class
+		 * @default ''
+		 */
+		this.class = '';
 	}
 
 	/**

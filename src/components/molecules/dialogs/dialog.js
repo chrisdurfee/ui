@@ -17,31 +17,31 @@ const render = (component) => { return Builder.render(component, app.root); };
  * @type {object}
  */
 const typeStyles = {
-    info: {
-        borderColor: 'border-blue-500',
-        bgColor: 'bg-muted/10',
-        iconColor: 'text-blue-500'
-    },
-    warning: {
-        bgColor: 'bg-muted/10',
-        borderColor: 'border-warning',
-        iconColor: 'text-warning'
-    },
-    destructive: {
-        bgColor: 'bg-muted/10',
-        borderColor: 'border-destructive',
-        iconColor: 'text-red-500'
-    },
-    success: {
-        bgColor: 'bg-muted/10',
-        borderColor: 'border-emerald-500',
-        iconColor: 'text-emerald-500'
-    },
-    default: {
-        borderColor: 'border',
-        bgColor: 'bg-muted/10',
-        iconColor: 'text-muted-foreground'
-    }
+	info: {
+		borderColor: 'border-blue-500',
+		bgColor: 'bg-muted/10',
+		iconColor: 'text-blue-500'
+	},
+	warning: {
+		bgColor: 'bg-muted/10',
+		borderColor: 'border-warning',
+		iconColor: 'text-warning'
+	},
+	destructive: {
+		bgColor: 'bg-muted/10',
+		borderColor: 'border-destructive',
+		iconColor: 'text-red-500'
+	},
+	success: {
+		bgColor: 'bg-muted/10',
+		borderColor: 'border-emerald-500',
+		iconColor: 'text-emerald-500'
+	},
+	default: {
+		borderColor: 'border',
+		bgColor: 'bg-muted/10',
+		iconColor: 'text-muted-foreground'
+	}
 };
 
 /**
@@ -55,7 +55,7 @@ const typeStyles = {
  */
 export class Dialog extends Component
 {
-    /**
+	/**
 	 * This will declare the props for the compiler.
 	 *
 	 * @returns {void}
@@ -107,12 +107,12 @@ export class Dialog extends Component
 	 */
 	render()
 	{
-        const click = (event) => { if (event.target === this.panel) this.close() };
+		const click = (event) => { if (event.target === this.panel) this.close() };
 		const { borderColor, bgColor, iconColor } = typeStyles[this.type] || typeStyles.default;
-        const className = `${this.getMainClass()} ${bgColor} ${borderColor}`;
-        const title = this.title || 'Dialog Title';
+		const className = `${this.getMainClass()} ${bgColor} ${borderColor}`;
+		const title = this.title || 'Dialog Title';
 
-        return DialogContainer({
+		return DialogContainer({
 			class: className,
 			title,
 			click,
@@ -123,13 +123,13 @@ export class Dialog extends Component
 		}, this.children);
 	}
 
-    /**
-     * This will get the buttons for the modal.
-     *
-     * @returns {array}
-     */
-    getButtons()
-    {
+	/**
+	 * This will get the buttons for the modal.
+	 *
+	 * @returns {array}
+	 */
+	getButtons()
+	{
 		if (this.hideFooter)
 		{
 			return null;
@@ -140,24 +140,24 @@ export class Dialog extends Component
 			return this.buttons;
 		}
 
-        return [
-            Button({ variant: 'outline', click: () => this.close() }, 'Close')
-        ];
-    }
+		return [
+			Button({ variant: 'outline', click: () => this.close() }, 'Close')
+		];
+	}
 
-    /**
-     * This will setup the states.
-     *
-     * @returns {object}
-     */
-    setupStates()
-    {
-        return {
-            open: false
-        };
-    }
+	/**
+	 * This will setup the states.
+	 *
+	 * @returns {object}
+	 */
+	setupStates()
+	{
+		return {
+			open: false
+		};
+	}
 
-    /**
+	/**
 	 * This will get the modal class.
 	 *
 	 * @returns {string}
@@ -176,7 +176,7 @@ export class Dialog extends Component
 	{
 		render(this);
 		this.panel.showModal();
-        this.state.open = true;
+		this.state.open = true;
 	}
 
 	/**
@@ -186,13 +186,13 @@ export class Dialog extends Component
 	 */
 	close()
 	{
-        this.state.open = false;
+		this.state.open = false;
 		this.panel.close();
 
-        if (typeof this.onClose === 'function')
-        {
-            this.onClose();
-        }
+		if (typeof this.onClose === 'function')
+		{
+			this.onClose();
+		}
 
 		this.destroy();
 	}

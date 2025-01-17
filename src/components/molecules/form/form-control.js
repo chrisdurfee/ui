@@ -9,7 +9,7 @@ import { Atom } from "@base-framework/base";
  */
 const isInput = (child) =>
 {
-    return child.tag === 'input' || child.tag === 'select' || child.tag === 'textarea';
+	return child.tag === 'input' || child.tag === 'select' || child.tag === 'textarea';
 };
 
 /**
@@ -23,35 +23,35 @@ const isInput = (child) =>
  */
 const enhanceChildren = (children, handleInput, handleInvalid) =>
 {
-    return children.map((child) =>
-    {
-        /**
-         * This will recursively enhance children with validation event listeners.
-         */
-        if (child.children && child.children.length > 0)
-        {
-            child.children = enhanceChildren(child.children, handleInput, handleInvalid);
-        }
+	return children.map((child) =>
+	{
+		/**
+		 * This will recursively enhance children with validation event listeners.
+		 */
+		if (child.children && child.children.length > 0)
+		{
+			child.children = enhanceChildren(child.children, handleInput, handleInvalid);
+		}
 
-        if (!child.required)
-        {
-            return child;
-        }
+		if (!child.required)
+		{
+			return child;
+		}
 
-        if (isInput(child))
-        {
-            // Enhance input elements with validation event listeners
-            return {
-                ...child,
-                aria: {
-                    invalid: ['hasError'],
-                },
-                invalid: handleInvalid,
-                input: handleInput
-            };
-        }
-        return child;
-    });
+		if (isInput(child))
+		{
+			// Enhance input elements with validation event listeners
+			return {
+				...child,
+				aria: {
+					invalid: ['hasError'],
+				},
+				invalid: handleInvalid,
+				input: handleInput
+			};
+		}
+		return child;
+	});
 };
 
 /**
@@ -65,42 +65,42 @@ const enhanceChildren = (children, handleInput, handleInvalid) =>
  */
 export const FormControl = Atom((props, children) =>
 {
-    /**
-     * This will handle the invalid event for validation.
-     *
-     * @param {object} e
-     * @returns {void}
-     */
-    const handleInvalid = (e) =>
-    {
-        props.setError(e.target.validationMessage);
-    };
+	/**
+	 * This will handle the invalid event for validation.
+	 *
+	 * @param {object} e
+	 * @returns {void}
+	 */
+	const handleInvalid = (e) =>
+	{
+		props.setError(e.target.validationMessage);
+	};
 
-    /**
-     * This will handle the input event for validation.
-     *
-     * @param {object} e
-     * @returns {void}
-     */
-    const handleInput = (e) =>
-    {
-        const isValid = e.target.checkValidity();
-        if (isValid)
-        {
-            props.setError(null);
-        }
-    };
+	/**
+	 * This will handle the input event for validation.
+	 *
+	 * @param {object} e
+	 * @returns {void}
+	 */
+	const handleInput = (e) =>
+	{
+		const isValid = e.target.checkValidity();
+		if (isValid)
+		{
+			props.setError(null);
+		}
+	};
 
-    /**
-     * This will enhance the children with validation event listeners
-     * if they are required.
-     *
-     * @type {array} enhancedChildren
-     */
-    const enhancedChildren = enhanceChildren(children, handleInput, handleInvalid);
+	/**
+	 * This will enhance the children with validation event listeners
+	 * if they are required.
+	 *
+	 * @type {array} enhancedChildren
+	 */
+	const enhancedChildren = enhanceChildren(children, handleInput, handleInvalid);
 
-    return Div({
-        ...props,
-        class: "w-full"
-    }, enhancedChildren);
+	return Div({
+		...props,
+		class: "w-full"
+	}, enhancedChildren);
 });

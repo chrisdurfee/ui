@@ -10,10 +10,10 @@ import { Atom } from '@base-framework/base';
  */
 export const Legend = Atom((props, children) =>
 {
-    return BaseLegend({
-        ...props,
-        class: ` font-medium bg-background -mt-4 -mx-1 px-2 py-2 ${props.class || ''}`,
-    }, children)
+	return BaseLegend({
+		...props,
+		class: ` font-medium bg-background -mt-4 -mx-1 px-2 py-2 ${props.class || ''}`,
+	}, children)
 });
 
 export default Legend;

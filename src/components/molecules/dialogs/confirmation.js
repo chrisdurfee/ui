@@ -12,7 +12,7 @@ import { Dialog } from "./dialog.js";
  */
 export class Confirmation extends Dialog
 {
-    /**
+	/**
 	 * This will declare the props for the compiler.
 	 *
 	 * @returns {void}
@@ -20,40 +20,40 @@ export class Confirmation extends Dialog
 	declareProps()
 	{
 		/**
-         * @member {string} confirmTextLabel
-         */
-        this.confirmTextLabel = null;
+		 * @member {string} confirmTextLabel
+		 */
+		this.confirmTextLabel = null;
 
-        /**
-         * @member {function} confirmed
-         */
-        this.confirmed = null;
+		/**
+		 * @member {function} confirmed
+		 */
+		this.confirmed = null;
 	}
 
 	/**
-     * This will get the buttons for the modal.
-     *
-     * @returns {array}
-     */
-    getButtons()
-    {
-        const confirmTextLabel = this.confirmTextLabel || 'Confirm';
-        return [
-            Button({ variant: 'outline', click: () => this.close() }, 'Cancel'),
-            Button({ variant: 'primary', click: () => this.confirm() }, confirmTextLabel)
-        ];
-    }
+	 * This will get the buttons for the modal.
+	 *
+	 * @returns {array}
+	 */
+	getButtons()
+	{
+		const confirmTextLabel = this.confirmTextLabel || 'Confirm';
+		return [
+			Button({ variant: 'outline', click: () => this.close() }, 'Cancel'),
+			Button({ variant: 'primary', click: () => this.confirm() }, confirmTextLabel)
+		];
+	}
 
-    /**
-     * This will confirm the action.
-     *
-     * @returns {void}
-     */
-    confirm()
-    {
-        this.confirmed && this.confirmed();
-        this.close();
-    }
+	/**
+	 * This will confirm the action.
+	 *
+	 * @returns {void}
+	 */
+	confirm()
+	{
+		this.confirmed && this.confirmed();
+		this.close();
+	}
 }
 
 export default Confirmation;

@@ -8,20 +8,20 @@ import { Component } from '@base-framework/base';
  * @returns {object}
  */
 const TabButton = (props) => (
-    Li(
-        {
-            class: 'inline-flex flex-auto items-center justify-center whitespace-nowrap rounded-sm text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-sm',
-            dataSet: ['selected', ['state', props.value, 'active']],
-        },
-        [
-            Button({
-                class: 'flex flex-auto justify-center items-center px-3 py-1.5 disabled:opacity-50 disabled:cursor-not-allowed',
-                onSet: ['selected', { selected: props.value }],
-                click: (e) => props.callBack(props.value),
-                disabled: props.disabled
-            }, props.label)
-        ]
-    )
+	Li(
+		{
+			class: 'inline-flex flex-auto items-center justify-center whitespace-nowrap rounded-sm text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-sm',
+			dataSet: ['selected', ['state', props.value, 'active']],
+		},
+		[
+			Button({
+				class: 'flex flex-auto justify-center items-center px-3 py-1.5 disabled:opacity-50 disabled:cursor-not-allowed',
+				onSet: ['selected', { selected: props.value }],
+				click: (e) => props.callBack(props.value),
+				disabled: props.disabled
+			}, props.label)
+		]
+	)
 );
 
 /**
@@ -33,8 +33,8 @@ const TabButton = (props) => (
  */
 const addOption = (option, callBack) =>
 {
-    option.callBack = callBack;
-    return TabButton(option);
+	option.callBack = callBack;
+	return TabButton(option);
 };
 
 /**
@@ -46,9 +46,9 @@ const addOption = (option, callBack) =>
  * @returns {object}
  */
 const Navigation = (props) => (
-    Nav({ class: `tab items-center justify-center rounded-md bg-muted p-1 text-muted-foreground ${props.class}` }, [
-        Ul({ class: 'flex flex-auto flex-row', map: [props.options, (option) => addOption(option, props.callBack)] })
-    ])
+	Nav({ class: `tab items-center justify-center rounded-md bg-muted p-1 text-muted-foreground ${props.class}` }, [
+		Ul({ class: 'flex flex-auto flex-row', map: [props.options, (option) => addOption(option, props.callBack)] })
+	])
 );
 
 /**
@@ -61,7 +61,7 @@ const Navigation = (props) => (
  */
 export class TabGroup extends Component
 {
-    /**
+	/**
 	 * This will declare the props for the compiler.
 	 *
 	 * @returns {void}
@@ -69,63 +69,63 @@ export class TabGroup extends Component
 	declareProps()
 	{
 		/**
-         * This will set the options.
-         * @member {array} options
-         * @default []
-         */
-        this.options = [];
+		 * This will set the options.
+		 * @member {array} options
+		 * @default []
+		 */
+		this.options = [];
 
-        /**
-         * This will set the class.
-         * @member {string} class
-         * @default ''
-         */
-        this.class = '';
+		/**
+		 * This will set the class.
+		 * @member {string} class
+		 * @default ''
+		 */
+		this.class = '';
 
-        /**
-         * This will set the select call back.
-         * @member {function} callBack
-         */
-        this.onSelect = null;
+		/**
+		 * This will set the select call back.
+		 * @member {function} callBack
+		 */
+		this.onSelect = null;
 	}
 
-    /**
-     * This will render the component.
-     *
-     * @returns {object}
-     */
+	/**
+	 * This will render the component.
+	 *
+	 * @returns {object}
+	 */
 	render()
 	{
-        const callBack = this.select.bind(this);
+		const callBack = this.select.bind(this);
 
 		return Navigation({
-            class: this.class,
-            options: this.options,
-            callBack
-        });
+			class: this.class,
+			options: this.options,
+			callBack
+		});
 	}
 
-    /**
-     * This will select a value.
-     *
-     * @param {*} value
-     * @returns {void}
-     */
-    select(value)
-    {
-        this.state.selected = value;
+	/**
+	 * This will select a value.
+	 *
+	 * @param {*} value
+	 * @returns {void}
+	 */
+	select(value)
+	{
+		this.state.selected = value;
 
-        if (typeof this.onSelect === 'function')
-        {
-            this.onSelect(value, this.parent);
-        }
-    }
+		if (typeof this.onSelect === 'function')
+		{
+			this.onSelect(value, this.parent);
+		}
+	}
 
-    /**
-     * This will setup the states.
-     *
-     * @returns {object}
-     */
+	/**
+	 * This will setup the states.
+	 *
+	 * @returns {object}
+	 */
 	setupStates()
 	{
 		return {

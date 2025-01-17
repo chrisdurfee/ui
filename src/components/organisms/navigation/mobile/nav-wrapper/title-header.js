@@ -10,14 +10,14 @@ import { Icons } from "../../../../icons/icons.js";
  * @returns {object}
  */
 export const NavButton = (props) => (
-    Button({ class: 'm-2', variant: 'ghost', addState()
+	Button({ class: 'm-2', variant: 'ghost', addState()
 		{
 			return {
 				open: false
 			};
 		}, click: (e, { state }) => state.toggle('open') }, [
-        Icon(Icons.bar.three)
-    ])
+		Icon(Icons.bar.three)
+	])
 );
 
 /**
@@ -35,8 +35,8 @@ const Title = (title) => H3({ class: 'text-lg ml-2' }, title);
  * @returns {object}
  */
 export const TitleHeader = (props) => (
-    Div({ class: 'flex flex-auto flex-row items-center lg:hidden' }, [
-        NavButton(),
-        props.title && Title(props.title)
-    ])
+	Div({ class: 'flex flex-auto flex-row items-center lg:hidden' }, [
+		NavButton(),
+		props.title && Title(props.title)
+	])
 );

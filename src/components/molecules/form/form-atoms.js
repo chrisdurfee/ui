@@ -44,5 +44,5 @@ export const FormDescription = Atom((props, children) => P({ ...props, class: "t
  * @returns {object}
  */
 export const FormMessage = Atom((props, children) => (
-    P({ ...props, class: "text-sm text-destructive" }, children)
+	P({ ...props, class: "text-sm text-destructive" }, children)
 ));

@@ -56,24 +56,24 @@ export class TabNavigation extends Component
 	declareProps()
 	{
 		/**
-         * This will set the options.
-         * @member {array} options
-         * @default []
-         */
-        this.options = [];
+		 * This will set the options.
+		 * @member {array} options
+		 * @default []
+		 */
+		this.options = [];
 
-        /**
-         * This will set the class.
-         * @member {string} class
-         * @default ''
-         */
-        this.class = '';
+		/**
+		 * This will set the class.
+		 * @member {string} class
+		 * @default ''
+		 */
+		this.class = '';
 
-        /**
-         * This will set the select call back.
-         * @member {function} callBack
-         */
-        this.onSelect = null;
+		/**
+		 * This will set the select call back.
+		 * @member {function} callBack
+		 */
+		this.onSelect = null;
 	}
 
 	/**
@@ -150,17 +150,17 @@ export class TabNavigation extends Component
 	}
 
 	/**
-     * This will deactivate all links.
-     *
-     * @returns {void}
-     */
-    deactivateAllLinks()
-    {
-        for (const link of this.links)
-        {
-            this.updateLink(link, false);
-        }
-    }
+	 * This will deactivate all links.
+	 *
+	 * @returns {void}
+	 */
+	deactivateAllLinks()
+	{
+		for (const link of this.links)
+		{
+			this.updateLink(link, false);
+		}
+	}
 
 	/**
 	 * This will update the link.
@@ -185,7 +185,7 @@ export class TabNavigation extends Component
 		const link = Link({ text, href, exact });
 		this.links.push(link);
 		return link;
-    }
+	}
 
 	/**
 	 * This will remove all the links.

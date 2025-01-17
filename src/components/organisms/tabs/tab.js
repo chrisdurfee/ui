@@ -20,18 +20,18 @@ export class Tab extends Component
 	declareProps()
 	{
 		/**
-         * This will set the options.
-         * @member {array} options
-         * @default []
-         */
-        this.options = [];
+		 * This will set the options.
+		 * @member {array} options
+		 * @default []
+		 */
+		this.options = [];
 
-        /**
-         * This will set the class.
-         * @member {string} class
-         * @default ''
-         */
-        this.class = '';
+		/**
+		 * This will set the class.
+		 * @member {string} class
+		 * @default ''
+		 */
+		this.class = '';
 	}
 
 	/**
@@ -58,25 +58,25 @@ export class Tab extends Component
 	 *
 	 * @returns {array}
 	 */
-    addGroup()
-    {
+	addGroup()
+	{
 		let option;
 		const switches = [];
 
 		const options = this.options;
 		for (let i = 0, length = options.length; i < length; i++)
 		{
-            option = options[i];
+			option = options[i];
 			switches.push(
-            {
-                uri: option.uri || option.href,
-                component: option.component,
+			{
+				uri: option.uri || option.href,
+				component: option.component,
 				title: option.title || null,
 				persist: true
-            });
+			});
 		}
 		return switches;
-    }
+	}
 }
 
 export default Tab;

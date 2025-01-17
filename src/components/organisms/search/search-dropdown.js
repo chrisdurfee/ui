@@ -11,23 +11,23 @@ import { SearchInput } from "./search-input.js";
  * @returns {object}
  */
 const DropdownContainer = (props) => (
-    Div({
+	Div({
 		class: 'relative flex fle-auto flex-col',
-        onState: ['open', (open, ele, parent) =>
-        {
-            if (open)
-            {
+		onState: ['open', (open, ele, parent) =>
+		{
+			if (open)
+			{
 				return new PopOver({
-                    cache: 'dropdown',
-                    parent: parent,
-                    button: parent.input,
+					cache: 'dropdown',
+					parent: parent,
+					button: parent.input,
 					size: 'xl'
-                }, [
-                    Dropdown(props)
-                ]);
-            }
-        }]
-    })
+				}, [
+					Dropdown(props)
+				]);
+			}
+		}]
+	})
 );
 
 /**
@@ -158,20 +158,20 @@ export const SearchDropdown = Jot(
 	},
 
 	/**
-     * Toggles the dropdown open state.
-     */
-    toggleDropdown()
-    {
+	 * Toggles the dropdown open state.
+	 */
+	toggleDropdown()
+	{
 		// @ts-ignore
-        this.state.toggle('open');
+		this.state.toggle('open');
 
 		// @ts-ignore
-        if (this.state.open)
-        {
+		if (this.state.open)
+		{
 			// @ts-ignore
 			this.setSelectedIndexByQuery();
-        }
-    },
+		}
+	},
 
 	/**
 	 * This will handle key down events.

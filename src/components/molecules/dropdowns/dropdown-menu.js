@@ -10,16 +10,16 @@ import { Dropdown } from './dropdown.js';
  * @returns {object}
  */
 const DropdownButton = ({ label, icon, toggleDropdown }) => (
-    Button({
-        cache: 'button',
-        class: `inline-flex items-center justify-between rounded-md border border-input
-            bg-background px-2 py-2 text-sm font-medium hover:bg-muted
-            focus:outline-none transition duration-150 ease-in-out`,
-        click: toggleDropdown
-    }, [
-        label && Span(label),
-        icon && I({ html: icon })
-    ])
+	Button({
+		cache: 'button',
+		class: `inline-flex items-center justify-between rounded-md border border-input
+			bg-background px-2 py-2 text-sm font-medium hover:bg-muted
+			focus:outline-none transition duration-150 ease-in-out`,
+		click: toggleDropdown
+	}, [
+		label && Span(label),
+		icon && I({ html: icon })
+	])
 );
 
 /**
@@ -29,18 +29,18 @@ const DropdownButton = ({ label, icon, toggleDropdown }) => (
  * @returns {object}
  */
 const DropdownContainer = ({ onSelect }) => (
-    Div([
-        OnState('open', (isOpen, ele, parent) => (!isOpen)
-            ? null
-            : new PopOver({
-                cache: 'dropdown',
-                parent: parent,
-                button: parent.button,
-            }, [
-                Dropdown(onSelect)
-            ])
-        )
-    ])
+	Div([
+		OnState('open', (isOpen, ele, parent) => (!isOpen)
+			? null
+			: new PopOver({
+				cache: 'dropdown',
+				parent: parent,
+				button: parent.button,
+			}, [
+				Dropdown(onSelect)
+			])
+		)
+	])
 );
 
 /**
@@ -54,7 +54,7 @@ const DropdownContainer = ({ onSelect }) => (
  */
 export class DropdownMenu extends Component
 {
-    /**
+	/**
 	 * This will declare the props for the compiler.
 	 *
 	 * @returns {void}
@@ -62,93 +62,93 @@ export class DropdownMenu extends Component
 	declareProps()
 	{
 		/**
-         * @member {string} label
-         */
-        this.label = null;
+		 * @member {string} label
+		 */
+		this.label = null;
 
-        /**
-         * @member {string} icon
-         * @default null
-         */
-        this.icon = null;
+		/**
+		 * @member {string} icon
+		 * @default null
+		 */
+		this.icon = null;
 
-        /**
-         * @member {function} onSelect
-         */
-        this.onSelect = null;
+		/**
+		 * @member {function} onSelect
+		 */
+		this.onSelect = null;
 
-        /**
-         * @member {array} groups
-         */
-        this.groups = [];
+		/**
+		 * @member {array} groups
+		 */
+		this.groups = [];
 	}
 
-    /**
-     * Initializes component data.
-     *
-     * @returns {Data}
-     */
-    setData()
-    {
-        return new Data({
-            groups: this.groups || []
-        });
-    }
+	/**
+	 * Initializes component data.
+	 *
+	 * @returns {Data}
+	 */
+	setData()
+	{
+		return new Data({
+			groups: this.groups || []
+		});
+	}
 
-    /**
-     * Initializes the component state.
-     *
-     * @returns {object}
-     */
-    setupStates()
-    {
-        return {
-            open: false,
-            selectedItem: null
-        };
-    }
+	/**
+	 * Initializes the component state.
+	 *
+	 * @returns {object}
+	 */
+	setupStates()
+	{
+		return {
+			open: false,
+			selectedItem: null
+		};
+	}
 
-    /**
-     * Toggles the dropdown open state.
-     *
-     * @returns {void}
-     */
-    toggleDropdown()
-    {
-        this.state.toggle('open');
-    }
+	/**
+	 * Toggles the dropdown open state.
+	 *
+	 * @returns {void}
+	 */
+	toggleDropdown()
+	{
+		this.state.toggle('open');
+	}
 
-    /**
-     * Handles item selection within the dropdown.
-     *
-     * @param {object} item - The selected item object
-     * @returns {void}
-     */
-    handleSelect(item)
-    {
-        this.state.selectedItem = item;
-        this.state.open = false;
+	/**
+	 * Handles item selection within the dropdown.
+	 *
+	 * @param {object} item - The selected item object
+	 * @returns {void}
+	 */
+	handleSelect(item)
+	{
+		this.state.selectedItem = item;
+		this.state.open = false;
 
-        if (typeof this.onSelect === 'function')
-        {
-            this.onSelect(item);
-        }
-    }
+		if (typeof this.onSelect === 'function')
+		{
+			this.onSelect(item);
+		}
+	}
 
-    /**
-     * Renders the Dropdown component.
-     *
-     * @returns {object}
-     */
-    render()
-    {
-        return Div({ class: 'relative' }, [
-            DropdownButton({
-                label: this.label,
-                icon: this.icon,
-                toggleDropdown: this.toggleDropdown.bind(this)
-            }),
-            DropdownContainer({ onSelect: this.handleSelect.bind(this) })
-        ]);
-    }
+	/**
+	 * Renders the Dropdown component.
+	 *
+	 * @returns {object}
+	 */
+	render()
+	{
+		return Div({ class: 'relative' }, [
+			DropdownButton({
+				label: this.label,
+				icon: this.icon,
+				toggleDropdown: this.toggleDropdown.bind(this)
+			}),
+			DropdownContainer({ onSelect: this.handleSelect.bind(this) })
+		]);
+	}
 }

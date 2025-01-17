@@ -11,15 +11,15 @@ import { STATUSES, STATUS_CLASS } from "./statuses.js";
  * @returns {object}
  */
 export const StatusIndicator = ({ propName = 'status' } = {}) => (
-    Div({
-        class: `absolute bottom-0 right-0 w-3 h-3 border-2 rounded-full`,
-        onSet: [propName, {
-            [STATUS_CLASS.ONLINE]: STATUSES.ONLINE,
-            [STATUS_CLASS.OFFLINE]: STATUSES.OFFLINE,
-            [STATUS_CLASS.BUSY]: STATUSES.BUSY,
-            [STATUS_CLASS.AWAY]: STATUSES.AWAY
-        }]
-    })
+	Div({
+		class: `absolute bottom-0 right-0 w-3 h-3 border-2 rounded-full`,
+		onSet: [propName, {
+			[STATUS_CLASS.ONLINE]: STATUSES.ONLINE,
+			[STATUS_CLASS.OFFLINE]: STATUSES.OFFLINE,
+			[STATUS_CLASS.BUSY]: STATUSES.BUSY,
+			[STATUS_CLASS.AWAY]: STATUSES.AWAY
+		}]
+	})
 );
 
 export default StatusIndicator;

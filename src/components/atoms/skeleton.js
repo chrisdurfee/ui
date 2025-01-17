@@ -8,11 +8,11 @@ import { Div } from '@base-framework/atoms';
  */
 export const Skeleton = ({ class: className, shape = 'rectangle', width = 'w-full', height = 'h-4'}) =>
 {
-    const shapeClass = shape === 'circle' ? 'rounded-full' : 'rounded-md';
+	const shapeClass = shape === 'circle' ? 'rounded-full' : 'rounded-md';
 
 	return Div({
-        class: `bg-muted animate-pulse ${width} ${height} ${shapeClass} ${className || ''}`
-    });
+		class: `bg-muted animate-pulse ${width} ${height} ${shapeClass} ${className || ''}`
+	});
 };
 
 export default Skeleton;

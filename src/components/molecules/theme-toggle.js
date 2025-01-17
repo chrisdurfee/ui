@@ -17,20 +17,20 @@ const ThemeButton = Atom(({ value, label, icon }) => (
 		onState: ['method', { active: value}],
 		dataSet: ['method', ['state', value, 'active']],
 		click: (e, {state}) =>
-        {
-            state.method = value;
+		{
+			state.method = value;
 
-            localStorage.setItem('theme', value);
-            if (value === 'system')
-        {
-                localStorage.removeItem('theme');
-            }
-            checkTheme(value);
-        }
+			localStorage.setItem('theme', value);
+			if (value === 'system')
+		{
+				localStorage.removeItem('theme');
+			}
+			checkTheme(value);
+		}
 	}, [
-        Icon(icon),
-        Span(label)
-    ])
+		Icon(icon),
+		Span(label)
+	])
 ));
 
 /**
@@ -41,21 +41,21 @@ const ThemeButton = Atom(({ value, label, icon }) => (
  */
 const checkTheme = (theme) =>
 {
-    const htmlTag = document.documentElement;
-    if (theme === 'system')
-    {
-        theme = window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light"
-    }
+	const htmlTag = document.documentElement;
+	if (theme === 'system')
+	{
+		theme = window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+	}
 
-    // if theme HAS been set and is different from OS, add class to html tag
-    if (match && !match('(prefers-color-scheme: ' + theme + ')').matches)
-    {
-        htmlTag.classList.add(theme);
-        return;
-    }
+	// if theme HAS been set and is different from OS, add class to html tag
+	if (match && !match('(prefers-color-scheme: ' + theme + ')').matches)
+	{
+		htmlTag.classList.add(theme);
+		return;
+	}
 
-    const opposite = (theme === 'light')? 'dark' : 'light';
-    htmlTag.classList.remove(opposite);
+	const opposite = (theme === 'light')? 'dark' : 'light';
+	htmlTag.classList.remove(opposite);
 };
 
 /**
@@ -67,11 +67,11 @@ const checkTheme = (theme) =>
  */
 export const ThemeToggle = Jot(
 {
-    /**
-     * This will render the component.
-     *
-     * @returns {object}
-     */
+	/**
+	 * This will render the component.
+	 *
+	 * @returns {object}
+	 */
 	render()
 	{
 		return Div({ class: 'flex flex-auto flex-col' }, [
@@ -83,11 +83,11 @@ export const ThemeToggle = Jot(
 		]);
 	},
 
-    /**
-     * This will setup the states.
-     *
-     * @returns {object}
-     */
+	/**
+	 * This will setup the states.
+	 *
+	 * @returns {object}
+	 */
 	state()
 	{
 		return {

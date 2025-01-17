@@ -14,25 +14,25 @@ export { FormControl, FormField, FormItem };
  */
 const submit = (e, callBack = null) =>
 {
-    const form = e.target;
+	const form = e.target;
 
-    /**
-     * If the form is not valid, this will prevent it
-     * from perventing the default to allow the browser to
-     * display the validation messages.
-     */
-    const isValid = form.checkValidity();
-    if (!isValid)
-    {
-        return;
-    }
+	/**
+	 * If the form is not valid, this will prevent it
+	 * from perventing the default to allow the browser to
+	 * display the validation messages.
+	 */
+	const isValid = form.checkValidity();
+	if (!isValid)
+	{
+		return;
+	}
 
-    e.preventDefault();
+	e.preventDefault();
 
-    if (callBack)
-    {
-        callBack(e);
-    }
+	if (callBack)
+	{
+		callBack(e);
+	}
 };
 
 /**
@@ -45,5 +45,5 @@ const submit = (e, callBack = null) =>
  * @returns {object}
  */
 export const Form = Atom((props, children) => (
-    BaseForm({ ...props, submit: (e) => submit(e, props.submit), class: `w-full ${props.class ?? '' }` }, children))
+	BaseForm({ ...props, submit: (e) => submit(e, props.submit), class: `w-full ${props.class ?? '' }` }, children))
 );

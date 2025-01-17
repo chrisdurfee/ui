@@ -11,16 +11,16 @@ import { Icons } from '../../icons/icons.js';
  */
 export const HeaderCol = ({ align, sortable, key, label, sort, class: className}) =>
 {
-    const alignClass = align || 'justify-start';
-    return Th({
-        class: `cursor-pointer py-3 px-4 text-base ${className || ''}`,
-        click: sortable && (() => sort(key))
-    }, [
-        Div({ class: `flex flex-auto w-full items-center ${alignClass}` }, [
-            Span(label),
-            sortable && I({ class: 'ml-2', html: Icons.arrows.upDown })
-        ])
-    ]);
+	const alignClass = align || 'justify-start';
+	return Th({
+		class: `cursor-pointer py-3 px-4 text-base ${className || ''}`,
+		click: sortable && (() => sort(key))
+	}, [
+		Div({ class: `flex flex-auto w-full items-center ${alignClass}` }, [
+			Span(label),
+			sortable && I({ class: 'ml-2', html: Icons.arrows.upDown })
+		])
+	]);
 };
 
 export default HeaderCol;

@@ -31,11 +31,11 @@ const HiddenCheckox = ({ id, checked, bind, required }) => (
 const CheckBoxIcon = () => (
 	Span({ class: "absolute text-xs pointer-events-none" }, [
 		OnState('checked', (value) => !value
-            ? null
-            : I({
-                class: 'w-2 h-2 pointer-events-none',
-                html: Icons.check,
-            })
+			? null
+			: I({
+				class: 'w-2 h-2 pointer-events-none',
+				html: Icons.check,
+			})
 		)
 	])
 );

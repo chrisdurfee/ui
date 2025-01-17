@@ -6,14 +6,14 @@ import { Atom } from '@base-framework/base';
  * @constant
  */
 const POSITION_CLASSES = {
-    top: 'bottom-full left-1/2 transform -translate-x-1/2 mb-2',
-    'top-right': 'bottom-full left-full transform -translate-x-1 mb-2',
-    'top-left': 'bottom-full right-full transform translate-x-1 mb-2',
-    bottom: 'top-full left-1/2 transform -translate-x-1/2 mt-2',
-    'bottom-right': 'top-full left-full transform -translate-x-1 mt-2',
-    'bottom-left': 'top-full right-full transform translate-x-1 mt-2',
-    left: 'top-1/2 right-full transform -translate-y-1/2 mr-2',
-    right: 'top-1/2 left-full transform -translate-y-1/2 ml-2'
+	top: 'bottom-full left-1/2 transform -translate-x-1/2 mb-2',
+	'top-right': 'bottom-full left-full transform -translate-x-1 mb-2',
+	'top-left': 'bottom-full right-full transform translate-x-1 mb-2',
+	bottom: 'top-full left-1/2 transform -translate-x-1/2 mt-2',
+	'bottom-right': 'top-full left-full transform -translate-x-1 mt-2',
+	'bottom-left': 'top-full right-full transform translate-x-1 mt-2',
+	left: 'top-1/2 right-full transform -translate-y-1/2 mr-2',
+	right: 'top-1/2 left-full transform -translate-y-1/2 ml-2'
 };
 
 /**
@@ -37,21 +37,21 @@ const getPositionClass = (position) => POSITION_CLASSES[position] || POSITION_CL
  */
 export const Tooltip = Atom(({ position = 'top', content }, children) =>
 {
-    const positionClasses = getPositionClass(position);
-    if (Array.isArray(children) === false)
-    {
-        children = [children];
-    }
+	const positionClasses = getPositionClass(position);
+	if (Array.isArray(children) === false)
+	{
+		children = [children];
+	}
 
-    return Div({ class: 'relative group inline-block' }, [
-        ...children,
+	return Div({ class: 'relative group inline-block' }, [
+		...children,
 
-        // Tooltip box
-        Span({
-            class: `
-                absolute z-20 px-2 py-1 border text-sm bg-background rounded shadow-md opacity-0 whitespace-nowrap
-                group-hover:opacity-100 transition-opacity duration-200 ${positionClasses} pointer-events-none
-            `
-        }, content)
-    ]);
+		// Tooltip box
+		Span({
+			class: `
+				absolute z-20 px-2 py-1 border text-sm bg-background rounded shadow-md opacity-0 whitespace-nowrap
+				group-hover:opacity-100 transition-opacity duration-200 ${positionClasses} pointer-events-none
+			`
+		}, content)
+	]);
 });

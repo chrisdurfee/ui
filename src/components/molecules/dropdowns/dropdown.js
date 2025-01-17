@@ -9,9 +9,9 @@ import { DropdownItem } from './dropdown-item.js';
  * @returns {object}
  */
 const Group = (group, onSelect) => (
-    Ul({ class: 'grid gap-2' }, [
-        group.map((item) => DropdownItem(item, onSelect))
-    ])
+	Ul({ class: 'grid gap-2' }, [
+		group.map((item) => DropdownItem(item, onSelect))
+	])
 );
 
 /**
@@ -23,10 +23,10 @@ const Group = (group, onSelect) => (
  * @returns {object}
  */
 export const Dropdown = (onSelect) => (
-    Div({ class: `w-full z-10` }, [
-        Div({
-            class: 'max-h-60 border rounded-md overflow-y-auto p-1 grid gap-2 divide-y divide-border',
-            for: ['groups', (group) => Group(group, onSelect)]
-        })
-    ])
+	Div({ class: `w-full z-10` }, [
+		Div({
+			class: 'max-h-60 border rounded-md overflow-y-auto p-1 grid gap-2 divide-y divide-border',
+			for: ['groups', (group) => Group(group, onSelect)]
+		})
+	])
 );

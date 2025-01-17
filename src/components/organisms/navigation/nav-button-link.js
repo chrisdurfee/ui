@@ -31,12 +31,12 @@ export class NavButtonLink extends Component
 		this.checkCallBack = null;
 	}
 
-    /**
-     * This will render the component.
-     *
-     * @override
-     * @returns {object}
-     */
+	/**
+	 * This will render the component.
+	 *
+	 * @override
+	 * @returns {object}
+	 */
 	render()
 	{
 		const state = this.state;
@@ -57,23 +57,23 @@ export class NavButtonLink extends Component
 
 				if (!this.checkCallBack)
 				{
-                    return;
+					return;
 				}
 
-                const active = (state.active)? this : null;
-                this.checkCallBack(active);
+				const active = (state.active)? this : null;
+				this.checkCallBack(active);
 			},
 			children: this.children
 		};
 	}
 
-    /**
-     * This will set up the states.
-     *
-     * @override
-     * @protected
-     * @returns {object}
-     */
+	/**
+	 * This will set up the states.
+	 *
+	 * @override
+	 * @protected
+	 * @returns {object}
+	 */
 	setupStates()
 	{
 		return {
@@ -82,12 +82,12 @@ export class NavButtonLink extends Component
 		};
 	}
 
-    /**
-     * This will update the states.
-     *
-     * @param {object} selected
-     * @returns {void}
-     */
+	/**
+	 * This will update the states.
+	 *
+	 * @param {object} selected
+	 * @returns {void}
+	 */
 	update(selected)
 	{
 		this.state.set({

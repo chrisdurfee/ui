@@ -11,10 +11,10 @@ import { Avatar } from '../../molecules/avatars/avatar.js';
  */
 const UserInfo = Atom(({ name, email }) =>
 {
-    return Div({ class: 'min-w-0 flex-auto' }, [
-        P({ class: 'text-base font-semibold leading-6 m-0' }, name),
-        P({ class: 'truncate text-sm leading-5 text-muted-foreground m-0' }, email)
-    ]);
+	return Div({ class: 'min-w-0 flex-auto' }, [
+		P({ class: 'text-base font-semibold leading-6 m-0' }, name),
+		P({ class: 'truncate text-sm leading-5 text-muted-foreground m-0' }, email)
+	]);
 });
 
 /**
@@ -24,12 +24,12 @@ const UserInfo = Atom(({ name, email }) =>
  */
 const UserOnline = () =>
 {
-    return Div({ class: 'flex items-center gap-x-1.5' }, [
-        Div({ class: 'flex-none rounded-full bg-emerald-500/20 p-1' }, [
-            Div({ class: 'h-1.5 w-1.5 rounded-full bg-emerald-500' })
-        ]),
-        P({ class: 'text-xs leading-5 text-gray-500' }, 'Online')
-    ]);
+	return Div({ class: 'flex items-center gap-x-1.5' }, [
+		Div({ class: 'flex-none rounded-full bg-emerald-500/20 p-1' }, [
+			Div({ class: 'h-1.5 w-1.5 rounded-full bg-emerald-500' })
+		]),
+		P({ class: 'text-xs leading-5 text-gray-500' }, 'Online')
+	]);
 };
 
 /**
@@ -40,10 +40,10 @@ const UserOnline = () =>
  */
 const UserOffline = (lastSeen) =>
 {
-    return P({ class: 'text-xs leading-5 text-muted-foreground' }, [
-        Span(`Last seen `),
-        Time({ datetime: lastSeen }, '3h ago')
-    ]);
+	return P({ class: 'text-xs leading-5 text-muted-foreground' }, [
+		Span(`Last seen `),
+		Time({ datetime: lastSeen }, '3h ago')
+	]);
 };
 
 /**
@@ -55,9 +55,9 @@ const UserOffline = (lastSeen) =>
  */
 const getStatus = (status, lastSeen) =>
 {
-    return status === 'online'
-        ? UserOnline()
-        : UserOffline(lastSeen);
+	return status === 'online'
+		? UserOnline()
+		: UserOffline(lastSeen);
 };
 
 /**
@@ -65,10 +65,10 @@ const getStatus = (status, lastSeen) =>
  */
 const UserStatus = Atom(({ role, lastSeen, status }) =>
 {
-    return Div({ class: 'hidden shrink-0 sm:flex sm:flex-col sm:items-end' }, [
-        P({ class: 'text-sm leading-6 m-0' }, role),
-        getStatus(status, lastSeen)
-    ]);
+	return Div({ class: 'hidden shrink-0 sm:flex sm:flex-col sm:items-end' }, [
+		P({ class: 'text-sm leading-6 m-0' }, role),
+		getStatus(status, lastSeen)
+	]);
 });
 
 /**
@@ -79,8 +79,8 @@ const UserStatus = Atom(({ role, lastSeen, status }) =>
  */
 const getInitials = (name) =>
 {
-    const names = name.split(' ');
-    return names.map(n => n[0]).join('');
+	const names = name.split(' ');
+	return names.map(n => n[0]).join('');
 };
 
 /**
@@ -91,17 +91,17 @@ const getInitials = (name) =>
  */
 export const UserListItem = Atom((user) =>
 {
-    return Li({ class: 'fadeIn flex justify-between gap-x-6 py-4 px-4 rounded-md hover:bg-muted/50' }, [
-        Div({ class: 'flex min-w-0 gap-x-4' }, [
-            Avatar({ src: user.image, alt: user.name, fallbackText: getInitials(user.name) }),
-            UserInfo({ name: user.name, email: user.email })
-        ]),
-        UserStatus({
-            role: user.role,
-            lastSeen: user.lastSeen,
-            status: user.status
-        })
-    ]);
+	return Li({ class: 'fadeIn flex justify-between gap-x-6 py-4 px-4 rounded-md hover:bg-muted/50' }, [
+		Div({ class: 'flex min-w-0 gap-x-4' }, [
+			Avatar({ src: user.image, alt: user.name, fallbackText: getInitials(user.name) }),
+			UserInfo({ name: user.name, email: user.email })
+		]),
+		UserStatus({
+			role: user.role,
+			lastSeen: user.lastSeen,
+			status: user.status
+		})
+	]);
 });
 
 /**
@@ -112,14 +112,14 @@ export const UserListItem = Atom((user) =>
  */
 export const UserList = Atom((props) =>
 {
-    return new List({
-        cache: 'list',
-        key: 'name',
-        items: props.users,
-        role: 'list',
-        class: 'divide-y divide-border',
-        rowItem: UserListItem
-    });
+	return new List({
+		cache: 'list',
+		key: 'name',
+		items: props.users,
+		role: 'list',
+		class: 'divide-y divide-border',
+		rowItem: UserListItem
+	});
 });
 
 export default UserList;

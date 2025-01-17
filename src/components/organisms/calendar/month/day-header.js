@@ -7,8 +7,8 @@ import { Div } from '@base-framework/atoms';
  * @returns {object}
  */
 export const DayHeader = (day) => (
-    Div(
-        { class: 'flex items-center justify-center h-9 w-auto text-[0.8rem] font-normal text-muted-foreground' },
-        day
-    )
+	Div(
+		{ class: 'flex items-center justify-center h-9 w-auto text-[0.8rem] font-normal text-muted-foreground' },
+		day
+	)
 );

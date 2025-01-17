@@ -6,12 +6,12 @@
  */
 const has53Weeks = (year) =>
 {
-    const dec31 = new Date(year, 11, 31); // December 31
-    const jan1 = new Date(year, 0, 1);    // January 1
-    return (
-        dec31.getDay() === 4 || // December 31 is a Thursday
-        jan1.getDay() === 4     // January 1 is a Thursday
-    );
+	const dec31 = new Date(year, 11, 31); // December 31
+	const jan1 = new Date(year, 0, 1);    // January 1
+	return (
+		dec31.getDay() === 4 || // December 31 is a Thursday
+		jan1.getDay() === 4     // January 1 is a Thursday
+	);
 };
 
 /**
@@ -23,38 +23,38 @@ const has53Weeks = (year) =>
  */
 export const calculateWeekNumber = (date) =>
 {
-    const target = new Date(date.valueOf());
+	const target = new Date(date.valueOf());
 
-    // Adjust so that Monday = 0, Sunday = 6
-    const dayNr = (target.getDay() + 6) % 7;
+	// Adjust so that Monday = 0, Sunday = 6
+	const dayNr = (target.getDay() + 6) % 7;
 
-    // Move date to the nearest Thursday to align with ISO 8601
-    target.setDate(target.getDate() - dayNr + 3);
+	// Move date to the nearest Thursday to align with ISO 8601
+	target.setDate(target.getDate() - dayNr + 3);
 
-    // Year might be different from the date's actual .getFullYear()
-    const targetYear = target.getFullYear();
+	// Year might be different from the date's actual .getFullYear()
+	const targetYear = target.getFullYear();
 
-    // First Thursday of that year
-    const firstThursday = new Date(targetYear, 0, 4);
-    firstThursday.setDate(firstThursday.getDate() - ((firstThursday.getDay() + 6) % 7));
+	// First Thursday of that year
+	const firstThursday = new Date(targetYear, 0, 4);
+	firstThursday.setDate(firstThursday.getDate() - ((firstThursday.getDay() + 6) % 7));
 
-    // Calculate difference in weeks
-    // @ts-ignore
-    const weekNumber = Math.ceil((target - firstThursday) / 604800000) + 1; // 604800000ms = 7 days
+	// Calculate difference in weeks
+	// @ts-ignore
+	const weekNumber = Math.ceil((target - firstThursday) / 604800000) + 1; // 604800000ms = 7 days
 
-    // If we exceed 52 weeks and the year doesn't have 53 weeks, the ISO week belongs to next year
-    if (weekNumber > 52 && !has53Weeks(targetYear))
-    {
-        return {
-            weekNumber: 1,
-            year: targetYear + 1
-        };
-    }
+	// If we exceed 52 weeks and the year doesn't have 53 weeks, the ISO week belongs to next year
+	if (weekNumber > 52 && !has53Weeks(targetYear))
+	{
+		return {
+			weekNumber: 1,
+			year: targetYear + 1
+		};
+	}
 
-    return {
-        weekNumber,
-        year: targetYear
-    };
+	return {
+		weekNumber,
+		year: targetYear
+	};
 };
 
 /**
@@ -67,14 +67,14 @@ export const calculateWeekNumber = (date) =>
  */
 export const getPreviousMonthDays = (year, month, firstDay) =>
 {
-    // If first day is Sunday (0), there are no "previous" month days needed
-    if (firstDay === 0) return [];
+	// If first day is Sunday (0), there are no "previous" month days needed
+	if (firstDay === 0) return [];
 
-    const prevMonthDaysCount = new Date(year, month, 0).getDate(); // Days in the previous month
-    // e.g. if month is 8 (September), month-1 is 7 (August)
-    return Array.from({ length: firstDay }, (_, i) =>
-        new Date(year, month - 1, prevMonthDaysCount - firstDay + i + 1)
-    );
+	const prevMonthDaysCount = new Date(year, month, 0).getDate(); // Days in the previous month
+	// e.g. if month is 8 (September), month-1 is 7 (August)
+	return Array.from({ length: firstDay }, (_, i) =>
+		new Date(year, month - 1, prevMonthDaysCount - firstDay + i + 1)
+	);
 };
 
 /**
@@ -87,7 +87,7 @@ export const getPreviousMonthDays = (year, month, firstDay) =>
  */
 export const getNextMonthDays = (year, month, remainingDays) =>
 {
-    return Array.from({ length: remainingDays }, (_, i) => new Date(year, month + 1, i + 1));
+	return Array.from({ length: remainingDays }, (_, i) => new Date(year, month + 1, i + 1));
 };
 
 
@@ -100,19 +100,19 @@ export const getNextMonthDays = (year, month, remainingDays) =>
  */
 export const getDateFromWeek = (week, year) =>
 {
-    // Set date to January 4th (always in ISO week 1)
-    const jan4 = new Date(year, 0, 4);
+	// Set date to January 4th (always in ISO week 1)
+	const jan4 = new Date(year, 0, 4);
 
-    // Find the Monday of ISO week 1
-    const jan4DayOfWeek = (jan4.getDay() + 6) % 7; // Adjust so Monday = 0
-    const isoWeek1Start = new Date(jan4);
-    isoWeek1Start.setDate(jan4.getDate() - jan4DayOfWeek);
+	// Find the Monday of ISO week 1
+	const jan4DayOfWeek = (jan4.getDay() + 6) % 7; // Adjust so Monday = 0
+	const isoWeek1Start = new Date(jan4);
+	isoWeek1Start.setDate(jan4.getDate() - jan4DayOfWeek);
 
-    // Calculate the Monday of the target week
-    const targetDate = new Date(isoWeek1Start);
-    targetDate.setDate(isoWeek1Start.getDate() + (week - 1) * 7);
+	// Calculate the Monday of the target week
+	const targetDate = new Date(isoWeek1Start);
+	targetDate.setDate(isoWeek1Start.getDate() + (week - 1) * 7);
 
-    return targetDate;
+	return targetDate;
 };
 
 /**
@@ -124,23 +124,23 @@ export const getDateFromWeek = (week, year) =>
  */
 export const generateWeeks = (year, month) =>
 {
-    const firstDay = new Date(year, month, 1).getDay();
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-    const weeks = [];
-    let week = [];
+	const firstDay = new Date(year, month, 1).getDay();
+	const daysInMonth = new Date(year, month + 1, 0).getDate();
+	const weeks = [];
+	let week = [];
 
-    for (let day = 1 - firstDay; day <= daysInMonth; day++)
-    {
-        const currentDate = new Date(year, month, day);
-        week.push(day > 0 ? currentDate : null);
-        if (week.length === 7 || day === daysInMonth)
-        {
-            weeks.push([...week]);
-            week = [];
-        }
-    }
+	for (let day = 1 - firstDay; day <= daysInMonth; day++)
+	{
+		const currentDate = new Date(year, month, day);
+		week.push(day > 0 ? currentDate : null);
+		if (week.length === 7 || day === daysInMonth)
+		{
+			weeks.push([...week]);
+			week = [];
+		}
+	}
 
-    return weeks;
+	return weeks;
 };
 
 /**
@@ -152,24 +152,24 @@ export const generateWeeks = (year, month) =>
  */
 export const getMonthDays = (year, month) =>
 {
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-    const weeks = [];
-    let week = [];
+	const daysInMonth = new Date(year, month + 1, 0).getDate();
+	const weeks = [];
+	let week = [];
 
-    for (let day = 1; day <= daysInMonth; day++)
-    {
-        week.push(new Date(year, month, day));
-        if (week.length === 7)
-        {
-            weeks.push(week);
-            week = [];
-        }
-    }
+	for (let day = 1; day <= daysInMonth; day++)
+	{
+		week.push(new Date(year, month, day));
+		if (week.length === 7)
+		{
+			weeks.push(week);
+			week = [];
+		}
+	}
 
-    if (week.length > 0)
-    {
-        weeks.push(week);
-    }
+	if (week.length > 0)
+	{
+		weeks.push(week);
+	}
 
-    return weeks;
+	return weeks;
 };

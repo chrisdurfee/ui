@@ -11,15 +11,15 @@ import { DynamicTime } from '@base-framework/organisms';
  * @returns {object}
  */
 export const TimeFrame = ({ dateTime = '', remoteTimeZone = 'America/Denver', filter = null }) => (
-    Time([
-        new DynamicTime({
-            dateTime,
-            filter: filter || ((date) =>
-            {
-                // convert to local time
-                const localTime = DateTime.getLocalTime(date, true, false, remoteTimeZone);
-                return DateTime.getTimeFrame(localTime);
-            })
-        })
-    ])
+	Time([
+		new DynamicTime({
+			dateTime,
+			filter: filter || ((date) =>
+			{
+				// convert to local time
+				const localTime = DateTime.getLocalTime(date, true, false, remoteTimeZone);
+				return DateTime.getTimeFrame(localTime);
+			})
+		})
+	])
 );

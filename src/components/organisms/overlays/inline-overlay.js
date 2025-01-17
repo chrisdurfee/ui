@@ -10,17 +10,17 @@ import { Overlay } from './overlay.js';
  */
 export class InlineOverlay extends Overlay
 {
-    /**
-     * This will get the overlay type.
-     *
-     * @returns {string}
-     */
-    getClassName()
-    {
-        return 'overlay relative inline top-[0px] left-0 bottom-0 right-0 flex-col bg-background z-20 lg:left-[64px] lg:top-0 will-change-contents ' + (this.class || '');
-    }
+	/**
+	 * This will get the overlay type.
+	 *
+	 * @returns {string}
+	 */
+	getClassName()
+	{
+		return 'overlay relative inline top-[0px] left-0 bottom-0 right-0 flex-col bg-background z-20 lg:left-[64px] lg:top-0 will-change-contents ' + (this.class || '');
+	}
 
-    /**
+	/**
 	 * This will setup and render the component.
 	 *
 	 * @param {object} container

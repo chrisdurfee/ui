@@ -11,14 +11,14 @@ import { Icons } from '../../icons/icons.js';
  * @returns {object}
  */
 const BreadcrumbLink = (href, label) => (
-    A(
-        {
-            href,
-            'aria-current': label === 'Breadcrumb' && 'page', // Only set aria-current on the last item
-            class: 'text-muted-foreground font-medium hover:text-foreground'
-        },
-        [Span(label)]
-    )
+	A(
+		{
+			href,
+			'aria-current': label === 'Breadcrumb' && 'page', // Only set aria-current on the last item
+			class: 'text-muted-foreground font-medium hover:text-foreground'
+		},
+		[Span(label)]
+	)
 );
 
 /**
@@ -27,11 +27,11 @@ const BreadcrumbLink = (href, label) => (
  * @returns {object}
  */
 const BreadcrumbSeparator = () => (
-    Icon({
-        class: 'mx-3 text-muted-foreground',
-        'aria-hidden': true,
-        size: 'xs'
-    }, Icons.chevron.single.right)
+	Icon({
+		class: 'mx-3 text-muted-foreground',
+		'aria-hidden': true,
+		size: 'xs'
+	}, Icons.chevron.single.right)
 );
 
 /**
@@ -41,10 +41,10 @@ const BreadcrumbSeparator = () => (
  * @returns {object}
  */
 const BreadcrumbItem = (item) => (
-    Div({ class: 'flex items-center' }, [
-        (item.href) ? BreadcrumbLink(item.href, item.label) : Span(item.label),
-        item.separator && BreadcrumbSeparator()
-    ])
+	Div({ class: 'flex items-center' }, [
+		(item.href) ? BreadcrumbLink(item.href, item.label) : Span(item.label),
+		item.separator && BreadcrumbSeparator()
+	])
 );
 
 /**
@@ -58,48 +58,48 @@ const BreadcrumbItem = (item) => (
  */
 export const Breadcrumb = Jot(
 {
-    /**
-     * Set initial data
-     *
-     * @returns {Data}
-     */
-    setData()
-    {
-        return new Data({
-            // @ts-ignore
-            items: this.items || []
-        });
-    },
+	/**
+	 * Set initial data
+	 *
+	 * @returns {Data}
+	 */
+	setData()
+	{
+		return new Data({
+			// @ts-ignore
+			items: this.items || []
+		});
+	},
 
-    /**
-     * Render Breadcrumb Component
-     *
-     * @returns {object}
-     */
-    render()
-    {
-        // @ts-ignore
-        const length = this.data.items.length - 1;
-        return Nav(
-            {
-                'aria-label': 'Breadcrumb',
-                class: 'flex items-center space-x-1 text-sm'
-            },
-            [
-                Div({
-                    role: 'list',
-                    class: 'flex items-center',
-                    for: ['items', (item, index) => (
-                        BreadcrumbItem({
-                            href: item.href,
-                            label: item.label,
-                            separator: index < length
-                        })
-                    )]
-                })
-            ]
-        );
-    }
+	/**
+	 * Render Breadcrumb Component
+	 *
+	 * @returns {object}
+	 */
+	render()
+	{
+		// @ts-ignore
+		const length = this.data.items.length - 1;
+		return Nav(
+			{
+				'aria-label': 'Breadcrumb',
+				class: 'flex items-center space-x-1 text-sm'
+			},
+			[
+				Div({
+					role: 'list',
+					class: 'flex items-center',
+					for: ['items', (item, index) => (
+						BreadcrumbItem({
+							href: item.href,
+							label: item.label,
+							separator: index < length
+						})
+					)]
+				})
+			]
+		);
+	}
 });
 
 export default Breadcrumb;

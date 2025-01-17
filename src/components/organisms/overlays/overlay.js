@@ -12,29 +12,29 @@ import { Icons } from "../../icons/icons.js";
  */
 export const BackButton = Atom((props) =>
 {
-    const margin = props.margin || 'm-4 ml-0';
-    return Div({ class: `flex-none ${margin}` }, [
-        Button({
-            variant: 'icon',
-            class: 'back-button',
-            click: () => {
+	const margin = props.margin || 'm-4 ml-0';
+	return Div({ class: `flex-none ${margin}` }, [
+		Button({
+			variant: 'icon',
+			class: 'back-button',
+			click: () => {
 
-                if (window.history.length > 2)
-                {
-                    window.history.back();
-                    return;
-                }
+				if (window.history.length > 2)
+				{
+					window.history.back();
+					return;
+				}
 
-                if (props.backUrl)
-                {
-                    // @ts-ignore
-                    app.navigate(props.backUrl);
-                }
-            }
-        }, [
-            Icon(Icons.arrows.left)
-        ])
-    ]);
+				if (props.backUrl)
+				{
+					// @ts-ignore
+					app.navigate(props.backUrl);
+				}
+			}
+		}, [
+			Icon(Icons.arrows.left)
+		])
+	]);
 });
 
 /**
@@ -47,7 +47,7 @@ export const BackButton = Atom((props) =>
  */
 export class Overlay extends Component
 {
-    /**
+	/**
 	 * This will declare the props for the compiler.
 	 *
 	 * @returns {void}
@@ -55,105 +55,105 @@ export class Overlay extends Component
 	declareProps()
 	{
 		/**
-         * @member {string} class
-         * @default ''
-         */
-        this.class = '';
+		 * @member {string} class
+		 * @default ''
+		 */
+		this.class = '';
 	}
 
-    /**
-     * This will render the component.
-     *
-     * @returns {object}
-     */
-    render()
-    {
-        return Div(
-            {
-                class: this.getClassName(),
-                onSet: ['loading', {
-                    loading: true
-                }]
-            },
-            [
-                this.addBody()
-            ]
-        );
-    }
+	/**
+	 * This will render the component.
+	 *
+	 * @returns {object}
+	 */
+	render()
+	{
+		return Div(
+			{
+				class: this.getClassName(),
+				onSet: ['loading', {
+					loading: true
+				}]
+			},
+			[
+				this.addBody()
+			]
+		);
+	}
 
-    /**
-     * This will get the overlay className.
-     *
-     * @returns {string}
-     */
-    getClassName()
-    {
-        return 'overlay fixed top-[0px] left-0 bottom-0 right-0 flex-col bg-background z-20 lg:z-10 flex flex-auto lg:left-[64px] lg:top-0 overflow-y-auto will-change-contents ' + (this.class || '');
-    }
+	/**
+	 * This will get the overlay className.
+	 *
+	 * @returns {string}
+	 */
+	getClassName()
+	{
+		return 'overlay fixed top-[0px] left-0 bottom-0 right-0 flex-col bg-background z-20 lg:z-10 flex flex-auto lg:left-[64px] lg:top-0 overflow-y-auto will-change-contents ' + (this.class || '');
+	}
 
-    /**
+	/**
 	 * This will setup and render the component.
 	 *
 	 * @param {object} container
 	 * @returns {void}
 	 */
 	setContainer(container)
-    {
-        // @ts-ignore
-        this.container = app.root;
-    }
+	{
+		// @ts-ignore
+		this.container = app.root;
+	}
 
-    /**
-     * This will setup the overlay states.
-     *
-     * @returns {object}
-     */
-    setupStates()
-    {
-        return {
-            loading: false
-        };
-    }
+	/**
+	 * This will setup the overlay states.
+	 *
+	 * @returns {object}
+	 */
+	setupStates()
+	{
+		return {
+			loading: false
+		};
+	}
 
-    /**
-     * This will set the loading state.= to true.
-     *
-     * @returns {void}
-     */
-    addLoading()
-    {
-        this.state.loading = true;
-    }
+	/**
+	 * This will set the loading state.= to true.
+	 *
+	 * @returns {void}
+	 */
+	addLoading()
+	{
+		this.state.loading = true;
+	}
 
-    /**
-     * This will set the loading state to false.
-     *
-     * @returns {void}
-     */
-    removeLoading()
-    {
-        this.state.loading = false;
-    }
+	/**
+	 * This will set the loading state to false.
+	 *
+	 * @returns {void}
+	 */
+	removeLoading()
+	{
+		this.state.loading = false;
+	}
 
-    /**
-     * This will add the body of the overlay.
-     *
-     * @returns {object}
-     */
-    addBody()
-    {
-        return Div({ class: 'body fadeIn flex flex-auto flex-col' }, this.getContents());
-    }
+	/**
+	 * This will add the body of the overlay.
+	 *
+	 * @returns {object}
+	 */
+	addBody()
+	{
+		return Div({ class: 'body fadeIn flex flex-auto flex-col' }, this.getContents());
+	}
 
-    /**
-     * This will get the body contents.
-     *
-     * @returns {array|null}
-     */
-    getContents()
-    {
-        return this.children;
-    }
+	/**
+	 * This will get the body contents.
+	 *
+	 * @returns {array|null}
+	 */
+	getContents()
+	{
+		return this.children;
+	}
 }
 
 export default Overlay;

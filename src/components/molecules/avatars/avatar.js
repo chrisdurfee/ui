@@ -11,21 +11,21 @@ import { Atom } from '@base-framework/base';
  */
 const AvatarImage = Atom(({ src, alt }) =>
 {
-    if (!src)
-    {
-        return null;
-    }
+	if (!src)
+	{
+		return null;
+	}
 
-    return Img({
-        class: 'absolute w-full h-full rounded-full object-cover fadeIn',
-        src,
-        alt,
+	return Img({
+		class: 'absolute w-full h-full rounded-full object-cover fadeIn',
+		src,
+		alt,
 
-        /**
-         * If there's an error loading the image, hide it.
-         */
-        error: (event) => event.target.style.display = 'none'
-    });
+		/**
+		 * If there's an error loading the image, hide it.
+		 */
+		error: (event) => event.target.style.display = 'none'
+	});
 });
 
 /**
@@ -36,7 +36,7 @@ const AvatarImage = Atom(({ src, alt }) =>
  */
 const getInitials = (name) =>
 {
-    return name.split(' ').map((n) => n.charAt(0)).join('');
+	return name.split(' ').map((n) => n.charAt(0)).join('');
 };
 
 /**
@@ -47,11 +47,11 @@ const getInitials = (name) =>
  */
 const checkFallbackLength = (fallbackText) =>
 {
-    if (!fallbackText || fallbackText.length < 2)
-    {
-        return fallbackText;
-    }
-    return getInitials(fallbackText);
+	if (!fallbackText || fallbackText.length < 2)
+	{
+		return fallbackText;
+	}
+	return getInitials(fallbackText);
 };
 
 /**
@@ -64,37 +64,37 @@ const checkFallbackLength = (fallbackText) =>
  */
 const WatcherSpan = (watcherFallback) =>
 {
-    return Span([watcherFallback, (value, ele) => {
-        ele.textContent = checkFallbackLength(value);
-    }]);
+	return Span([watcherFallback, (value, ele) => {
+		ele.textContent = checkFallbackLength(value);
+	}]);
 };
 
 /**
  * Maps avatar size to a specific height/width class.
  */
 const sizeMap = {
-    xs: 'h-6 w-6',
-    sm: 'h-8 w-8',
-    md: 'h-12 w-12',
-    lg: 'h-16 w-16',
-    xl: 'h-24 w-24',
-    '2xl': 'h-32 w-32',
-    '3xl': 'h-48 w-48',
-    default: 'h-12 w-12'
+	xs: 'h-6 w-6',
+	sm: 'h-8 w-8',
+	md: 'h-12 w-12',
+	lg: 'h-16 w-16',
+	xl: 'h-24 w-24',
+	'2xl': 'h-32 w-32',
+	'3xl': 'h-48 w-48',
+	default: 'h-12 w-12'
 };
 
 /**
  * Maps avatar size to a font-size class for fallback text.
  */
 const fontSizeMap = {
-    xs: 'text-[7px]',
-    sm: 'text-xs',
-    md: 'text-base',
-    lg: 'text-xl',
-    xl: 'text-2xl',
-    '2xl': 'text-3xl',
-    '3xl': 'text-4xl',
-    default: 'text-base'
+	xs: 'text-[7px]',
+	sm: 'text-xs',
+	md: 'text-base',
+	lg: 'text-xl',
+	xl: 'text-2xl',
+	'2xl': 'text-3xl',
+	'3xl': 'text-4xl',
+	default: 'text-base'
 };
 
 /**
@@ -126,21 +126,21 @@ const getFontSizeClass = (size) => fontSizeMap[size] || fontSizeMap.default;
  */
 const AvatarFallback = (fallbackText, watcherFallback = null, size = 'md') =>
 {
-    const finalText = checkFallbackLength(fallbackText);
-    const fontSizeClass = getFontSizeClass(size);
+	const finalText = checkFallbackLength(fallbackText);
+	const fontSizeClass = getFontSizeClass(size);
 
-    return Div({
-        class: `
-            flex items-center justify-center w-full h-full rounded-full
-            bg-muted text-muted-foreground font-medium
-            ${fontSizeClass}
-        `
-    },
-    [
-        (watcherFallback)
-            ? WatcherSpan(watcherFallback)
-            : Span(finalText)
-    ]);
+	return Div({
+		class: `
+			flex items-center justify-center w-full h-full rounded-full
+			bg-muted text-muted-foreground font-medium
+			${fontSizeClass}
+		`
+	},
+	[
+		(watcherFallback)
+			? WatcherSpan(watcherFallback)
+			: Span(finalText)
+	]);
 };
 
 /**
@@ -159,13 +159,13 @@ const AvatarFallback = (fallbackText, watcherFallback = null, size = 'md') =>
  */
 export const Avatar = Atom(({ src, alt, fallbackText, watcherFallback, size }) =>
 {
-    const sizeClass = getSize(size);
+	const sizeClass = getSize(size);
 
-    return Div({
-        class: `relative flex items-center justify-center ${sizeClass}`
-    },
-    [
-        AvatarImage({ src, alt }),
-        AvatarFallback(fallbackText, watcherFallback, size)
-    ]);
+	return Div({
+		class: `relative flex items-center justify-center ${sizeClass}`
+	},
+	[
+		AvatarImage({ src, alt }),
+		AvatarFallback(fallbackText, watcherFallback, size)
+	]);
 });

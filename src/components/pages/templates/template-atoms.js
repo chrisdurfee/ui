@@ -11,8 +11,8 @@ import { Atom } from "@base-framework/base";
 export const TopBar = Atom((props, children) =>
 {
 	return Header([
-        H1({ watch: props.watch }, props.text)
-    ], children);
+		H1({ watch: props.watch }, props.text)
+	], children);
 });
 
 /**
@@ -28,7 +28,7 @@ export const MainColumn = Atom((props, children) =>
 
 	return {
 		...props,
-        children
+		children
 	};
 });
 

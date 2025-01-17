@@ -7,14 +7,14 @@ import { Data, Jot } from '@base-framework/base';
  * @type {object} sizeMap
  */
 const sizeMap = {
-    xs: 'h-1 w-1',
-    sm: 'h-2 w-2',
-    md: 'h-4 w-4',
-    lg: 'h-8 w-8',
-    xl: 'h-12 w-12',
-    '2xl': 'h-16 w-16',
-    '3xl': 'h-24 w-24',
-    default: 'h-4 w-4'
+	xs: 'h-1 w-1',
+	sm: 'h-2 w-2',
+	md: 'h-4 w-4',
+	lg: 'h-8 w-8',
+	xl: 'h-12 w-12',
+	'2xl': 'h-16 w-16',
+	'3xl': 'h-24 w-24',
+	default: 'h-4 w-4'
 };
 
 /**
@@ -32,24 +32,24 @@ const getSize = (size) => sizeMap[size] || sizeMap.default;
  * @returns {object}
  */
 const Dot = ({ index, size }) => (
-    Div({ class: `${size} rounded-full bg-muted cursor-pointer` }, [
-        Span({
-            class: 'block w-full h-full rounded-full transition-colors',
-            onSet: ['activeIndex', {
-                'bg-primary': index,
-                'shadow-md': index
-            }],
-            click: (e, {data, onClick}) =>
-            {
-                data.activeIndex = index;
+	Div({ class: `${size} rounded-full bg-muted cursor-pointer` }, [
+		Span({
+			class: 'block w-full h-full rounded-full transition-colors',
+			onSet: ['activeIndex', {
+				'bg-primary': index,
+				'shadow-md': index
+			}],
+			click: (e, {data, onClick}) =>
+			{
+				data.activeIndex = index;
 
-                if (onClick)
-                {
-                    onClick(index);
-                }
-            }
-        })
-    ])
+				if (onClick)
+				{
+					onClick(index);
+				}
+			}
+		})
+	])
 );
 
 /**
@@ -60,8 +60,8 @@ const Dot = ({ index, size }) => (
  * @returns {Array<object>}
  */
 const getDots = (count, size) => Array.from({ length: count }, (_, index) => Dot({
-    index,
-    size
+	index,
+	size
 }));
 
 /**
@@ -76,39 +76,39 @@ const getDots = (count, size) => Array.from({ length: count }, (_, index) => Dot
  */
 export const DotsIndicator = Jot(
 {
-    /**
-     * Defines component data (props).
-     *
-     * @returns {Data}
-     */
-    setData()
-    {
-        return new Data({
-            // @ts-ignore
-            count: this.count || 4, // total dots
-            // @ts-ignore
-            activeIndex: this.activeIndex || 0
-        });
-    },
+	/**
+	 * Defines component data (props).
+	 *
+	 * @returns {Data}
+	 */
+	setData()
+	{
+		return new Data({
+			// @ts-ignore
+			count: this.count || 4, // total dots
+			// @ts-ignore
+			activeIndex: this.activeIndex || 0
+		});
+	},
 
-    /**
-     * Renders the dots.
-     *
-     * @returns {object}
-     */
-    render()
-    {
-        // @ts-ignore
-        const gap = this.gap || "gap-2";
-        // @ts-ignore
-        const size = getSize(this.size || 'sm');
-        // @ts-ignore
-        const dots = getDots(this.data.count, size);
-        return Div({ class: 'flex justify-center items-center py-2' },
-        [
-            Div({ class: `flex ${gap}` }, dots)
-        ]);
-    }
+	/**
+	 * Renders the dots.
+	 *
+	 * @returns {object}
+	 */
+	render()
+	{
+		// @ts-ignore
+		const gap = this.gap || "gap-2";
+		// @ts-ignore
+		const size = getSize(this.size || 'sm');
+		// @ts-ignore
+		const dots = getDots(this.data.count, size);
+		return Div({ class: 'flex justify-center items-center py-2' },
+		[
+			Div({ class: `flex ${gap}` }, dots)
+		]);
+	}
 });
 
 export default DotsIndicator;

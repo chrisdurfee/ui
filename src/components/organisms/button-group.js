@@ -52,11 +52,11 @@ const ButtonText =
  */
 export default class ButtonGroup extends Component
 {
-    /**
-     * This will render the component.
-     *
-     * @returns {object}
-     */
+	/**
+	 * This will render the component.
+	 *
+	 * @returns {object}
+	 */
 	render()
 	{
 		return Buttons({ class: 'flex flex-auto flex-col' }, [
@@ -71,11 +71,11 @@ export default class ButtonGroup extends Component
 		]);
 	}
 
-    /**
-     * This will setup the states.
-     *
-     * @returns {object}
-     */
+	/**
+	 * This will setup the states.
+	 *
+	 * @returns {object}
+	 */
 	setupStates()
 	{
 		return {

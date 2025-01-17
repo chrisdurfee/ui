@@ -11,14 +11,14 @@ import { Legend } from './legend.js';
  */
 export const Fieldset = Atom((props, children) =>
 {
-    const border = props.border === 'full' ? 'border rounded-md' : 'border-t';
-    return BaseFieldset({
-        ...props,
-        class: `p-6 ${border} ${props.class || ''}`,
-    }, [
-        props.legend && Legend(props.legend),
-        Div({ class: 'flex flex-auto flex-col space-y-6' }, children)
-    ])
+	const border = props.border === 'full' ? 'border rounded-md' : 'border-t';
+	return BaseFieldset({
+		...props,
+		class: `p-6 ${border} ${props.class || ''}`,
+	}, [
+		props.legend && Legend(props.legend),
+		Div({ class: 'flex flex-auto flex-col space-y-6' }, children)
+	])
 });
 
 export default Fieldset;

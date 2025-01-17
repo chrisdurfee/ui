@@ -10,8 +10,8 @@ import { Checkbox } from '../../atoms/form/inputs/checkbox.js';
  */
 const toggleCheckbox = (parent, checkbox) =>
 {
-    const isSelected = parent.toggleAllSelectedRows();
-    checkbox.state.checked =(!isSelected);
+	const isSelected = parent.toggleAllSelectedRows();
+	checkbox.state.checked =(!isSelected);
 };
 
 /**
@@ -23,7 +23,7 @@ const toggleCheckbox = (parent, checkbox) =>
  * @returns {object}
  */
 export const CheckboxCol = (props) => (
-    Th({ class: `cursor-pointer py-3 px-4 text-base w-10 ${props.class || '' }` }, [
-        UseParent((parent) => new Checkbox({ class: 'mr-2', onChange: (checked, checkbox) => toggleCheckbox(parent, checkbox) })),
-    ])
+	Th({ class: `cursor-pointer py-3 px-4 text-base w-10 ${props.class || '' }` }, [
+		UseParent((parent) => new Checkbox({ class: 'mr-2', onChange: (checked, checkbox) => toggleCheckbox(parent, checkbox) })),
+	])
 );

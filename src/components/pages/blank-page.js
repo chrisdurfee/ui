@@ -20,8 +20,8 @@ export class BlankPage extends BasicPage
 	render()
 	{
 		return FullTemplate([
-            Div({ class: 'flex flex-auto flex-col pt-[80px] sm:pt-0' }, this.children)
-        ]);
+			Div({ class: 'flex flex-auto flex-col pt-[80px] sm:pt-0' }, this.children)
+		]);
 	}
 }
 

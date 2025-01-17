@@ -20,8 +20,8 @@ export class CenterPage extends BasicPage
 	render()
 	{
 		return FullTemplate([
-            Div({ class: 'contained px-4 flex flex-auto flex-col' }, this.children)
-        ]);
+			Div({ class: 'contained px-4 flex flex-auto flex-col' }, this.children)
+		]);
 	}
 }
 

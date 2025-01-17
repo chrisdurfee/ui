@@ -8,19 +8,19 @@ import { Component } from "@base-framework/base";
  * @returns {object}
  */
 const TabButton = (props) => (
-    Li(
-        {
-            class: 'inline-flex flex-auto items-center justify-center whitespace-nowrap rounded-sm text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-sm',
-            dataSet: ['selected', ['state', props.value, 'active']],
-        },
-        [
-            Button({
-                class: 'flex flex-auto justify-center items-center px-3 py-1.5',
-                onSet: ['selected', { selected: props.value }],
-                click: (e) => props.callBack(props.value),
-            }, props.label)
-        ]
-    )
+	Li(
+		{
+			class: 'inline-flex flex-auto items-center justify-center whitespace-nowrap rounded-sm text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-sm',
+			dataSet: ['selected', ['state', props.value, 'active']],
+		},
+		[
+			Button({
+				class: 'flex flex-auto justify-center items-center px-3 py-1.5',
+				onSet: ['selected', { selected: props.value }],
+				click: (e) => props.callBack(props.value),
+			}, props.label)
+		]
+	)
 );
 
 /**
@@ -32,8 +32,8 @@ const TabButton = (props) => (
  */
 const addOption = (option, callBack) =>
 {
-    option.callBack = callBack;
-    return TabButton(option);
+	option.callBack = callBack;
+	return TabButton(option);
 };
 
 /**
@@ -45,9 +45,9 @@ const addOption = (option, callBack) =>
  * @returns {object}
  */
 const Navigation = (props) => (
-    Nav({ class: `tab items-center justify-center rounded-md bg-muted p-1 text-muted-foreground ${props.class}` }, [
-        Ul({ class: 'flex flex-auto flex-row', map: [props.options, (option) => addOption(option, props.callBack)] })
-    ])
+	Nav({ class: `tab items-center justify-center rounded-md bg-muted p-1 text-muted-foreground ${props.class}` }, [
+		Ul({ class: 'flex flex-auto flex-row', map: [props.options, (option) => addOption(option, props.callBack)] })
+	])
 );
 
 /**
@@ -59,7 +59,7 @@ const Navigation = (props) => (
  */
 export class ButtonTab extends Component
 {
-    /**
+	/**
 	 * This will declare the props for the compiler.
 	 *
 	 * @returns {void}
@@ -67,130 +67,130 @@ export class ButtonTab extends Component
 	declareProps()
 	{
 		/**
-         * This will set the options.
-         * @member {array} options
-         * @default []
-         */
-        this.options = [];
+		 * This will set the options.
+		 * @member {array} options
+		 * @default []
+		 */
+		this.options = [];
 
-        /**
-         * This will set the class.
-         * @member {string} class
-         * @default ''
-         */
-        this.class = '';
+		/**
+		 * This will set the class.
+		 * @member {string} class
+		 * @default ''
+		 */
+		this.class = '';
 
-        /**
-         * This will set the call back.
-         * @member {function} callBack
-         */
-        this.callBack = null;
+		/**
+		 * This will set the call back.
+		 * @member {function} callBack
+		 */
+		this.callBack = null;
 	}
 
-    /**
-     * This will render the component.
-     *
-     * @returns {object}
-     */
-    render()
-    {
-        const callBack = this.select.bind(this);
+	/**
+	 * This will render the component.
+	 *
+	 * @returns {object}
+	 */
+	render()
+	{
+		const callBack = this.select.bind(this);
 
-        return Div({ class: '' }, [
-            Navigation({
-                class: this.class,
-                options: this.options,
-                callBack
-            }),
-            Section({
-                class: 'tab-content',
-                onState: ['selected', this.updateContent.bind(this)]
-            })
-        ]);
-    }
+		return Div({ class: '' }, [
+			Navigation({
+				class: this.class,
+				options: this.options,
+				callBack
+			}),
+			Section({
+				class: 'tab-content',
+				onState: ['selected', this.updateContent.bind(this)]
+			})
+		]);
+	}
 
-    /**
-     * This will get the first value.
-     *
-     * @returns {*}
-     */
-    getFirstValue()
-    {
-        return this.options[0]?.value;
-    }
+	/**
+	 * This will get the first value.
+	 *
+	 * @returns {*}
+	 */
+	getFirstValue()
+	{
+		return this.options[0]?.value;
+	}
 
-    /**
-     * This will update the component.
-     *
-     * @returns {void}
-     */
-    update()
-    {
-        const selected = this.state.get('selected');
-        this.select(null);
-        this.select(selected);
-    }
+	/**
+	 * This will update the component.
+	 *
+	 * @returns {void}
+	 */
+	update()
+	{
+		const selected = this.state.get('selected');
+		this.select(null);
+		this.select(selected);
+	}
 
-    /**
-     * This will select a value.
-     *
-     * @param {*} value
-     * @returns {void}
-     */
-    select(value)
-    {
-        this.state.selected = value;
-    }
+	/**
+	 * This will select a value.
+	 *
+	 * @param {*} value
+	 * @returns {void}
+	 */
+	select(value)
+	{
+		this.state.selected = value;
+	}
 
-    /**
-     * This will update the content.
-     *
-     * @param {*} value
-     * @returns {object}
-     */
-    updateContent(value)
-    {
-        const options = this.options;
-        if (!options || options.length < 1)
-        {
-            return;
-        }
+	/**
+	 * This will update the content.
+	 *
+	 * @param {*} value
+	 * @returns {object}
+	 */
+	updateContent(value)
+	{
+		const options = this.options;
+		if (!options || options.length < 1)
+		{
+			return;
+		}
 
-        const firstOption = options[0];
-        for (const option of options)
-        {
-            if (option.value === value)
-            {
-                return option.layout;
-            }
-        }
+		const firstOption = options[0];
+		for (const option of options)
+		{
+			if (option.value === value)
+			{
+				return option.layout;
+			}
+		}
 
-        return firstOption.layout;
-    }
+		return firstOption.layout;
+	}
 
-    /**
-     * This will setup the states.
-     *
-     * @returns {object}
-     */
-    setupStates()
-    {
-        const callBack = this.callBack,
-        type = typeof callBack;
+	/**
+	 * This will setup the states.
+	 *
+	 * @returns {object}
+	 */
+	setupStates()
+	{
+		const callBack = this.callBack,
+		type = typeof callBack;
 
-        return {
-            selected: {
-                state: this.getFirstValue(),
-                callBack(value)
-                {
-                    if (type === 'function')
-                    {
-                        callBack(value);
-                    }
-                }
-            }
-        };
-    }
+		return {
+			selected: {
+				state: this.getFirstValue(),
+				callBack(value)
+				{
+					if (type === 'function')
+					{
+						callBack(value);
+					}
+				}
+			}
+		};
+	}
 }
 
 export default ButtonTab;

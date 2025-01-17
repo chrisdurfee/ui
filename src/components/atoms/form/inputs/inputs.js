@@ -56,7 +56,7 @@ const formatPhoneNumber = (e) =>
  * @returns {object} A BaseInput element with common classes.
  */
 export const Input = Atom((props) => (
-    BaseInput({
+	BaseInput({
 		...props,
 		class: `${commonInputClasses} ${props.class || ''}`.trim(),
 	})
@@ -69,7 +69,7 @@ export const Input = Atom((props) => (
  * @returns {object} An Input element of type "tel" with phone formatting.
  */
 export const TelInput = Atom((props) => (
-    Input({
+	Input({
 		...props,
 		type: "tel",
 		name: props.name || "Phone",
@@ -88,7 +88,7 @@ export const TelInput = Atom((props) => (
  * @returns {object} An Input element of type "email".
  */
 export const EmailInput = Atom((props) => (
-    Input({
+	Input({
 		...props,
 		type: "email",
 		name: props.name || "Email",
@@ -104,7 +104,7 @@ export const EmailInput = Atom((props) => (
  * @returns {object} A BaseTextarea element.
  */
 export const Textarea = Atom((props) => (
-    BaseTextarea({
+	BaseTextarea({
 		...props,
 		as: "textarea",
 		class: `flex w-full h-24 px-3 py-2 text-sm rounded-md border border-input bg-background ${focusClass} ${placeholderClass} ${disabledClass} ${props.class || ''}`.trim(),
@@ -118,7 +118,7 @@ export const Textarea = Atom((props) => (
  * @returns {object} A Div containing a radio input and label.
  */
 export const Radio = (props = {}) => (
-    Div({ class: 'flex items-center space-x-2' }, [
+	Div({ class: 'flex items-center space-x-2' }, [
 		BaseInput({
 			...props,
 			type: 'radio',
@@ -135,7 +135,7 @@ export const Radio = (props = {}) => (
  * @returns {object} A BaseInput element of type "date".
  */
 export const DateInput = Atom((props) => (
-    BaseInput({
+	BaseInput({
 		...props,
 		type: "date",
 		class: `rounded-md border px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${props.class || ''}`.trim(),
@@ -149,7 +149,7 @@ export const DateInput = Atom((props) => (
  * @returns {object} A BaseInput element of type "time".
  */
 export const TimeInput = Atom((props) => (
-    BaseInput({
+	BaseInput({
 		...props,
 		type: "time",
 		class: `rounded-md border px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${props.class || ''}`.trim(),
@@ -163,7 +163,7 @@ export const TimeInput = Atom((props) => (
  * @returns {object} A BaseInput element of type "datetime-local".
  */
 export const DateTimeInput = Atom((props) => (
-    BaseInput({
+	BaseInput({
 		...props,
 		type: "datetime-local",
 		class: `rounded-md border px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${props.class || ''}`.trim(),
@@ -177,7 +177,7 @@ export const DateTimeInput = Atom((props) => (
  * @returns {object} A BaseInput element of type "month".
  */
 export const MonthInput = Atom((props) => (
-    BaseInput({
+	BaseInput({
 		...props,
 		type: "month",
 		class: `rounded-md border px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${props.class || ''}`.trim(),
@@ -191,7 +191,7 @@ export const MonthInput = Atom((props) => (
  * @returns {object} A BaseInput element of type "week".
  */
 export const WeekInput = Atom((props) => (
-    BaseInput({
+	BaseInput({
 		...props,
 		type: "week",
 		class: `rounded-md border px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${props.class || ''}`.trim(),
@@ -205,7 +205,7 @@ export const WeekInput = Atom((props) => (
  * @returns {object} An Input element of type "number".
  */
 export const NumberInput = Atom((props) => (
-    Input({
+	Input({
 		...props,
 		type: "number",
 	})
@@ -218,7 +218,7 @@ export const NumberInput = Atom((props) => (
  * @returns {object} An Input element of type "password".
  */
 export const PasswordInput = Atom((props) => (
-    Input({
+	Input({
 		...props,
 		type: "password",
 	})
@@ -231,7 +231,7 @@ export const PasswordInput = Atom((props) => (
  * @returns {object} An Input element of type "search".
  */
 export const SearchInput = Atom((props) => (
-    Input({
+	Input({
 		...props,
 		type: "search",
 	})
@@ -244,7 +244,7 @@ export const SearchInput = Atom((props) => (
  * @returns {object} An Input element of type "url".
  */
 export const UrlInput = Atom((props) => (
-    Input({
+	Input({
 		...props,
 		type: "url",
 	})
@@ -257,7 +257,7 @@ export const UrlInput = Atom((props) => (
  * @returns {object} An Input element of type "hidden".
  */
 export const HiddenInput = Atom((props) => (
-    Input({
+	Input({
 		...props,
 		type: "hidden",
 	})
@@ -270,7 +270,7 @@ export const HiddenInput = Atom((props) => (
  * @returns {object} A BaseInput element of type "color".
  */
 export const ColorInput = Atom((props) => (
-    BaseInput({
+	BaseInput({
 		...props,
 		type: "color",
 		class: `border rounded-md border-input bg-background text-foreground p-0 disabled:cursor-not-allowed disabled:opacity-50 ${props.class || ''}`.trim(),
@@ -284,7 +284,7 @@ export const ColorInput = Atom((props) => (
  * @returns {object} A BaseCheckbox element.
  */
 const Checkbox = Atom((props) => (
-    BaseCheckbox({
+	BaseCheckbox({
 		...props,
 		class: `flex h-4 w-4 rounded-md border border-input bg-background text-foreground ${focusClass} ${disabledClass} ${props.class || ''}`.trim(),
 	})
@@ -303,7 +303,7 @@ const fileExtraClasses = "file:border-0 file:bg-transparent file:text-sm file:fo
  * @returns {object} A BaseInput element of type "file".
  */
 export const FileInput = Atom((props) => (
-    BaseInput({
+	BaseInput({
 		...props,
 		type: "file",
 		class: `${commonInputClasses} ${fileExtraClasses} ${props.class || ''}`.trim(),

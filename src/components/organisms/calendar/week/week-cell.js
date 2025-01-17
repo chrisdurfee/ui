@@ -10,8 +10,8 @@ import { Button } from '@base-framework/atoms';
  */
 const isDayCurrentDay = (day, month, year) =>
 {
-    const current = new Date();
-    return current.getDate() === day && current.getMonth() === month && current.getFullYear() === year;
+	const current = new Date();
+	return current.getDate() === day && current.getMonth() === month && current.getFullYear() === year;
 };
 
 /**
@@ -24,16 +24,16 @@ const isDayCurrentDay = (day, month, year) =>
  */
 export const WeekCell = ({ day, month, year, weekNumber, selectWeek }) =>
 {
-    const isCurrentDay = isDayCurrentDay(day, month, year);
+	const isCurrentDay = isDayCurrentDay(day, month, year);
 
-    return Button({
-        text: day || '',
-        disabled: !day,
-        class: `
-            px-2 py-1 text-center rounded-md
-            ${isCurrentDay ? 'bg-accent text-accent-foreground' : ''}
-            hover:bg-primary hover:text-primary-foreground
-        `,
-        click: () => selectWeek(weekNumber, year),
-    });
+	return Button({
+		text: day || '',
+		disabled: !day,
+		class: `
+			px-2 py-1 text-center rounded-md
+			${isCurrentDay ? 'bg-accent text-accent-foreground' : ''}
+			hover:bg-primary hover:text-primary-foreground
+		`,
+		click: () => selectWeek(weekNumber, year),
+	});
 };
