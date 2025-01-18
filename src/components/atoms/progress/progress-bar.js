@@ -1,5 +1,5 @@
 import { Div } from '@base-framework/atoms';
-import { VeilJot } from '../veil.js';
+import { Veil, VeilJot } from '../veil.js';
 
 /**
  * This will create a progress bar.
@@ -18,8 +18,7 @@ const Progress = () => (
  *
  * This will create a progress bar component.
  *
- * @param {object} props
- * @returns {object}
+ * @type {typeof Veil}
  */
 export const ProgressBar = VeilJot(
 {

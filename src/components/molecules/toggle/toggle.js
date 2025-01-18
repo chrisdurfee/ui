@@ -1,13 +1,12 @@
 import { Button, Checkbox, Span } from '@base-framework/atoms';
-import { VeilJot } from '../../atoms/veil.js';
-import { Component } from '@base-framework/base';
+import { Veil, VeilJot } from '../../atoms/veil.js';
 
 /**
  * Toggle
  *
  * This will create a toggle switch component.
  *
- * @type {typeof Component}
+ * @type {typeof Veil}
  */
 export const Toggle = VeilJot(
 {

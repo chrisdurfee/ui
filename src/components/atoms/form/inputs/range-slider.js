@@ -1,6 +1,5 @@
 import { Div, Input } from '@base-framework/atoms';
-import { VeilJot } from '../../veil.js';
-// Example: import the classes you need from wherever they are exported.
+import { Veil, VeilJot } from '../../veil.js';
 import { disabledClass, focusClass } from './input-classes.js';
 
 /**
@@ -8,8 +7,7 @@ import { disabledClass, focusClass } from './input-classes.js';
  *
  * Creates a range slider with a custom style matching the provided design.
  *
- * @param {object} props
- * @returns {object}
+ * @type {typeof Veil}
  */
 export const RangeSlider = VeilJot(
 {
