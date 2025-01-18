@@ -1,15 +1,14 @@
 import { Div } from '@base-framework/atoms';
 import { VeilJot } from '../../atoms/veil.js';
 import { CountDisplay, MinusButton, PlusButton } from './atoms.js';
+import { Component } from '@base-framework/base';
 
 /**
  * Counter Atom
  *
  * This creates a counter component with an input for count and buttons to increment and decrement.
  *
- * @param {object} props
- * @param {array} children
- * @returns {typeof Component}
+ * @type {typeof Component}
  */
 export const Counter = VeilJot(
 {

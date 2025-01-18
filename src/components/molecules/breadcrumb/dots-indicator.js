@@ -1,5 +1,5 @@
 import { Div, Span } from '@base-framework/atoms';
-import { Data, Jot } from '@base-framework/base';
+import { Component, Data, Jot } from '@base-framework/base';
 
 /**
  * This will store the sizes for the avatar.
@@ -69,8 +69,7 @@ const getDots = (count, size) => Array.from({ length: count }, (_, index) => Dot
  *
  * Renders a row of circular dots, one of which is "active."
  *
- * @param {object} props
- * @returns {typeof Component}
+ * @type {typeof Component}
  * @example
  *   new DotsIndicator({ count: 4, activeIndex: 0 })
  */

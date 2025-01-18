@@ -1,5 +1,5 @@
 import { Div } from '@base-framework/atoms';
-import { Data, Jot } from '@base-framework/base';
+import { Component, Data, Jot } from '@base-framework/base';
 import { PopOver } from "../../molecules/popover.js";
 import { Dropdown } from "./dropdown.js";
 import { SearchInput } from "./search-input.js";
@@ -35,8 +35,7 @@ const DropdownContainer = (props) => (
  *
  * This will create a search dropdown.
  *
- * @param {object} props - The properties of the component.
- * @returns {typeof Component} - The search dropdown component.
+ * @type {typeof Component}
  */
 export const SearchDropdown = Jot(
 {

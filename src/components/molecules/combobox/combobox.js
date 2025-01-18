@@ -1,5 +1,5 @@
 import { Button, Div, I, Input, Li, OnState, Span, Ul } from '@base-framework/atoms';
-import { Data, Jot } from '@base-framework/base';
+import { Component, Data, Jot } from '@base-framework/base';
 import { Icon } from '../../atoms/icon.js';
 import { Icons } from '../../icons/icons.js';
 import { PopOver } from '../popover.js';
@@ -79,9 +79,7 @@ const DropdownContainer = ({ onSelect, state }) => (
  *
  * This will render a combobox component.
  *
- * @param {object} props
- * @param {array} children
- * @returns {typeof Component}
+ * @type {typeof Component}
  */
 export const Combobox = Jot(
 {

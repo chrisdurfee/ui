@@ -1,4 +1,5 @@
 import { Div } from "@base-framework/atoms";
+import { Component } from "@base-framework/base";
 import { VeilJot } from "../../atoms/veil.js";
 import { FormDescription, FormItem, FormLabel, FormMessage } from "./form-atoms.js";
 import { FormControl } from "./form-control.js";
@@ -8,9 +9,7 @@ import { FormControl } from "./form-control.js";
  *
  * Handles controlled form fields with accessibility.
  *
- * @param {object} props
- * @param {array} children
- * @returns {typeof Component}
+ * @type {typeof Component}
  */
 export const FormField = VeilJot(
 {

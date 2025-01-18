@@ -52,9 +52,7 @@ const BreadcrumbItem = (item) => (
  *
  * This will render a Breadcrumb component.
  *
- * @param {object} props
- * @param {array} children
- * @returns {typeof Component}
+ * @type {typeof Component}
  */
 export const Breadcrumb = Jot(
 {
