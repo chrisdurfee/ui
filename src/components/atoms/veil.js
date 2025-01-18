@@ -40,6 +40,6 @@ export const Veil = Jot(
  * This will create a Veil component.
  *
  * @param  {*} props
- * @returns {typeof Component}
+ * @returns {typeof Veil}
  */
 export const VeilJot = (props) => Jot(props, Veil);
