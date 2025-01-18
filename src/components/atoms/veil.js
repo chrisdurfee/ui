@@ -1,4 +1,4 @@
-import { Jot } from "@base-framework/base";
+import { Component, Jot } from "@base-framework/base";
 
 /**
  * Veil Component
@@ -13,17 +13,6 @@ import { Jot } from "@base-framework/base";
  */
 export const Veil = Jot(
 {
-	/**
-	 * This will get the child scope instance of the component.
-	 *
-	 * @returns {object}
-	 */
-	getChildScope()
-	{
-		// @ts-ignore
-		return this.parent ?? this;
-	},
-
 	/**
 	 * This will set the component context.
 	 *
@@ -53,6 +42,6 @@ export const Veil = Jot(
  * This will create a Veil component.
  *
  * @param  {*} props
- * @returns {import("node_modules/@base-framework/base/dist/types/modules/component/jot").ComponentConstructor}
+ * @returns {typeof Component}
  */
 export const VeilJot = (props) => Jot(props, Veil);

@@ -9,7 +9,7 @@ import { CountDisplay, MinusButton, PlusButton } from './atoms.js';
  *
  * @param {object} props
  * @param {array} children
- * @returns {ComponentConstructor}
+ * @returns {typeof Component}
  */
 export const Counter = VeilJot(
 {

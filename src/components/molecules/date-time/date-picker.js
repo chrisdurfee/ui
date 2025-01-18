@@ -72,7 +72,7 @@ const CalendarContainer = ({ handleDateSelect, blockPriorDates }) => (
  *
  * @param {object} props
  * @param {array} children
- * @returns {ComponentConstructor}
+ * @returns {typeof Component}
  */
 export const DatePicker = VeilJot(
 {

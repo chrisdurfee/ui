@@ -1,5 +1,5 @@
 import { A, Div, Nav, Span } from '@base-framework/atoms';
-import { Data, Jot } from '@base-framework/base';
+import { Component, Data, Jot } from '@base-framework/base';
 import { Icon } from '../../atoms/icon.js';
 import { Icons } from '../../icons/icons.js';
 
@@ -54,7 +54,7 @@ const BreadcrumbItem = (item) => (
  *
  * @param {object} props
  * @param {array} children
- * @returns {ComponentConstructor}
+ * @returns {typeof Component}
  */
 export const Breadcrumb = Jot(
 {

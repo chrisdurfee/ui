@@ -36,7 +36,7 @@ const DropdownContainer = (props) => (
  * This will create a search dropdown.
  *
  * @param {object} props - The properties of the component.
- * @returns {ComponentConstructor} - The search dropdown component.
+ * @returns {typeof Component} - The search dropdown component.
  */
 export const SearchDropdown = Jot(
 {

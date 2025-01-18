@@ -10,7 +10,7 @@ import { FormControl } from "./form-control.js";
  *
  * @param {object} props
  * @param {array} children
- * @returns {ComponentConstructor}
+ * @returns {typeof Component}
  */
 export const FormField = VeilJot(
 {

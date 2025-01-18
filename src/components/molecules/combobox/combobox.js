@@ -81,7 +81,7 @@ const DropdownContainer = ({ onSelect, state }) => (
  *
  * @param {object} props
  * @param {array} children
- * @returns {ComponentConstructor}
+ * @returns {typeof Component}
  */
 export const Combobox = Jot(
 {
