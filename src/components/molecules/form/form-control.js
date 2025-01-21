@@ -95,7 +95,7 @@ export const FormControl = Atom((props, children) =>
 	 * This will enhance the children with validation event listeners
 	 * if they are required.
 	 *
-	 * @type {array} enhancedChildren
+	 * @type {Array<object>} enhancedChildren
 	 */
 	const enhancedChildren = enhanceChildren(children, handleInput, handleInvalid);
 
