@@ -16,7 +16,7 @@ const ListItem = Atom(({ index, click, state }, children) => (
 				'text-white': index
 			}]
 		],
-		pointerdown: () => click(index)
+		click: () => click(index)
 	}, children)
 ));
 

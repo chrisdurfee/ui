@@ -28,7 +28,6 @@ export const SearchInput = Atom((props) => (
 				parent.dropdown.updatePosition();
 			},
 			pointerup: (e, parent) => parent.toggleDropdown(),
-			blur: (e, { state }) => setTimeout(() => (state.open = false), CLOSE_DELAY),
 			keydown: (e) => (typeof props.handleKeyDown === 'function') && props.handleKeyDown(e),
 		}),
 		props.icon && Div({ class: 'absolute right-0 mr-2' }, [
