@@ -40,7 +40,7 @@
 		"typescript": "^5.4.2",
 		"vite": "^5.4.9"
 	},
-	"types": "dist/types/ui.d.ts",
+	"types": "./dist/types/**/*.d.ts",
 	"files": [
 		"package.json",
 		"readme.md",
