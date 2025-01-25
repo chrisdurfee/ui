@@ -153,6 +153,7 @@ export class DockableOverlay extends Overlay
 	 */
 	beforeDestroy()
 	{
+		this.state.docked = true;
 		document.documentElement.style.overflowY = 'auto';
 	}
 }
