@@ -1,5 +1,30 @@
 import { Div } from "@base-framework/atoms";
+import { DataTracker } from "@base-framework/base";
 import { Overlay } from "./overlay.js";
+
+/**
+ * This will register the dockable overlay type
+ * to the data tracker to track if the
+ * container is being removed and the component
+ * is not docked.
+ */
+DataTracker.addType('dockableOverlay', (data) =>
+{
+	if (!data)
+	{
+		return;
+	}
+
+	/**
+	 * This will check if the component is rendered and not docked
+	 * and then destroy it.
+	 */
+	const component = data.component;
+	if (component && component.rendered === true && component.state.docked === false)
+	{
+		component.destroy();
+	}
+});
 
 /**
  * DockableOverlay
@@ -111,6 +136,15 @@ export class DockableOverlay extends Overlay
 	 */
 	afterSetup()
 	{
+		/**
+		 * This will add the dockable overlay to the data tracker
+		 * so we can keep track of it.
+		 */
+		DataTracker.add(this.container, 'dockableOverlay',
+		{
+			component: this
+		});
+
 		this.onResize();
 	}
 
@@ -153,7 +187,6 @@ export class DockableOverlay extends Overlay
 	 */
 	beforeDestroy()
 	{
-		this.state.docked = true;
 		document.documentElement.style.overflowY = 'auto';
 	}
 }
