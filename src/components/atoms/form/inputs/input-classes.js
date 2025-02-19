@@ -21,7 +21,7 @@ export const focusClass = "focus-visible:outline-none focus-visible:ring-2 focus
  * @constant {string} disabledClass
  * Common classes for disabled state.
  */
-export const disabledClass = "disabled:cursor-not-allowed disabled:opacity-50";
+export const disabledClass = "disabled:cursor-not-allowed disabled:opacity-50 [&:user-invalid]:border-destructive";
 
 /**
  * @constant {string} placeholderClass
