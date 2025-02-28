@@ -12,7 +12,7 @@ export { FormControl, FormField, FormItem };
  * @param {function|null} callBack
  * @returns {void}
  */
-const submit = (e, callBack = null) =>
+const submit = (e, parent, callBack = null) =>
 {
 	const form = e.target;
 
@@ -31,7 +31,7 @@ const submit = (e, callBack = null) =>
 
 	if (callBack)
 	{
-		callBack(e);
+		callBack(e, parent);
 	}
 };
 
@@ -45,5 +45,5 @@ const submit = (e, callBack = null) =>
  * @returns {object}
  */
 export const Form = Atom((props, children) => (
-	BaseForm({ ...props, submit: (e) => submit(e, props.submit), class: `w-full ${props.class ?? '' }` }, children))
+	BaseForm({ ...props, submit: (e, parent) => submit(e, parent, props.submit), class: `w-full ${props.class ?? '' }` }, children))
 );
