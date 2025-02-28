@@ -100,7 +100,7 @@ export class Modal extends Component
 				description,
 				options: this.headerOptions(),
 				buttons: this.getButtons(),
-				onSubmit: () =>
+				onSubmit: (parent) =>
 				{
 					if (this.onSubmit)
 					{
