@@ -104,7 +104,7 @@ export class Modal extends Component
 				{
 					if (this.onSubmit)
 					{
-						this.onSubmit();
+						this.onSubmit(parent);
 					}
 
 					this.destroy();
