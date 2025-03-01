@@ -7,9 +7,10 @@ import { Component, Jot } from "@base-framework/base";
  * or it will use the parent's data or context data to set a local context
  * to act as if it's data scope is the parent component.
  *
- * @type {typeof Component}
+ * @class
+ * @extends {Component}
  */
-export const Veil = Jot(
+export class Veil extends Component
 {
 	/**
 	 * This will set the component context.
@@ -34,7 +35,7 @@ export const Veil = Jot(
 
 		return { data };
 	}
-});
+}
 
 /**
  * This will create a Veil component.
