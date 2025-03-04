@@ -1,5 +1,5 @@
 import { Div, Table } from '@base-framework/atoms';
-import { Data, Jot } from '@base-framework/base';
+import { Component, Data } from '@base-framework/base';
 import { DataTableBody } from './data-table-body.js';
 import { CheckboxCol, HeaderCol, TableHeader } from './table-header.js';
 export { CheckboxCol, HeaderCol, TableHeader };
@@ -12,7 +12,7 @@ export { CheckboxCol, HeaderCol, TableHeader };
  * @param {object} props
  * @returns {object}
  */
-export const DataTable = Jot(
+export class DataTable extends Component
 {
 	/**
 	 * Initializes component data.
@@ -25,7 +25,7 @@ export const DataTable = Jot(
 			selectedRows: [],
 			selected: false
 		});
-	},
+	}
 
 	/**
 	 * This will toggle all selected rows.
@@ -47,7 +47,7 @@ export const DataTable = Jot(
 		// @ts-ignore
 		this.updateTable(!isSelected);
 		return isSelected;
-	},
+	}
 
 	/**
 	 * This will update the selected state.
@@ -60,7 +60,7 @@ export const DataTable = Jot(
 		const selectedRows = this.data.get('selectedRows');
 		// @ts-ignore
 		this.data.selected = (selectedRows.length > 0);
-	},
+	}
 
 	/**
 	 * This will get the selected rows.
@@ -71,7 +71,7 @@ export const DataTable = Jot(
 	{
 		// @ts-ignore
 		return this.data.get('selectedRows');
-	},
+	}
 
 	/**
 	 * This will update the table rows.
@@ -87,7 +87,7 @@ export const DataTable = Jot(
 		rows.forEach(row => row.selected = selected);
 		// @ts-ignore
 		this.list.setRows(rows);
-	},
+	}
 
 	/**
 	 * Handles row selection.
@@ -113,7 +113,7 @@ export const DataTable = Jot(
 		this.data.selectedRows = selectedRows;
 		// @ts-ignore
 		this.updateSelected();
-	},
+	}
 
 	/**
 	 * Renders the DataTable component.
@@ -146,7 +146,7 @@ export const DataTable = Jot(
 				])
 			])
 		]);
-	},
+	}
 
 	/**
 	 * This will remove items from the list.
@@ -159,7 +159,7 @@ export const DataTable = Jot(
 	{
 		// @ts-ignore
 		this.list.remove(items);
-	},
+	}
 
 	/**
 	 * This will set the items in the list.
@@ -172,7 +172,7 @@ export const DataTable = Jot(
 	{
 		// @ts-ignore
 		this.list.setRows(rows);
-	},
+	}
 
 	/**
 	 * This will append items to the list.
@@ -185,7 +185,7 @@ export const DataTable = Jot(
 	{
 		// @ts-ignore
 		this.list.append(items);
-	},
+	}
 
 	/**
 	 * This will mingle the new items with the old items.
@@ -199,7 +199,7 @@ export const DataTable = Jot(
 	{
 		// @ts-ignore
 		this.list.mingle(newItems, withDelete);
-	},
+	}
 
 	/**
 	 * This will prepend items to the list.
@@ -212,7 +212,7 @@ export const DataTable = Jot(
 	{
 		// @ts-ignore
 		this.list.prepend(items);
-	},
+	}
 
 	/**
 	 * This will remove the selected rows.
@@ -224,4 +224,4 @@ export const DataTable = Jot(
 		// @ts-ignore
 		this.data.selectedRows = [];
 	}
-});
+}
