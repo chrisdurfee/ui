@@ -35,7 +35,7 @@ export const DataTable = Jot(
 	toggleAllSelectedRows()
 	{
 		// @ts-ignore
-		const tableRows = this.table.getRows();
+		const tableRows = this.list.getRows();
 		// @ts-ignore
 		const isSelected = this.data.selectedRows.length === tableRows.length;
 		const selectedRows = isSelected ? [] : tableRows;
@@ -83,10 +83,10 @@ export const DataTable = Jot(
 	updateTable(selected)
 	{
 		// @ts-ignore
-		const rows = this.table.getRows();
+		const rows = this.list.getRows();
 		rows.forEach(row => row.selected = selected);
 		// @ts-ignore
-		this.table.setRows(rows);
+		this.list.setRows(rows);
 	},
 
 	/**
@@ -158,7 +158,7 @@ export const DataTable = Jot(
 	remove(items)
 	{
 		// @ts-ignore
-		this.table.remove(items);
+		this.list.remove(items);
 	},
 
 	/**
@@ -171,7 +171,7 @@ export const DataTable = Jot(
 	setRows(rows)
 	{
 		// @ts-ignore
-		this.table.setRows(rows);
+		this.list.setRows(rows);
 	},
 
 	/**
@@ -184,7 +184,7 @@ export const DataTable = Jot(
 	append(items)
 	{
 		// @ts-ignore
-		this.table.append(items);
+		this.list.append(items);
 	},
 
 	/**
@@ -198,7 +198,7 @@ export const DataTable = Jot(
 	mingle(newItems, withDelete = false)
 	{
 		// @ts-ignore
-		this.table.mingle(newItems, withDelete);
+		this.list.mingle(newItems, withDelete);
 	},
 
 	/**
@@ -211,7 +211,7 @@ export const DataTable = Jot(
 	prepend(items)
 	{
 		// @ts-ignore
-		this.table.prepend(items);
+		this.list.prepend(items);
 	},
 
 	/**
