@@ -25,10 +25,6 @@ export { CheckboxCol, HeaderCol, TableHeader };
 export const ScrollableDataTable = Atom((props) => (
 	new DataTable(
 	{
-		key: props.key,
-		rows: props.rows,
-		rowItem: props.rowItem,
-
 		/**
 		 * Renders the DataTable component.
 		 *
@@ -36,9 +32,8 @@ export const ScrollableDataTable = Atom((props) => (
 		 */
 		render()
 		{
-			console.log(this)
 			// @ts-ignore
-			const currentRows = this.rows;
+			const currentRows = props.rows;
 			// @ts-ignore
 			const border = this.border !== false ? 'border' : '';
 
@@ -49,7 +44,7 @@ export const ScrollableDataTable = Atom((props) => (
 						props.headers && TableHeader({ headers: props.headers, sort: (key) => this.sortRows(key) }),
 						// @ts-ignore
 						props.customHeader ?? null,
-						ScrollableTableBody({
+						new ScrollableTableBody({
 							scrollContainer: props.scrollContainer,
 							loadMoreItems: props.loadMoreItems,
 							offset: props.offset,
@@ -58,12 +53,12 @@ export const ScrollableDataTable = Atom((props) => (
 							containerClass: props.containerClass ?? '',
 							data: props.data,
 							// @ts-ignore
-							key: this.key,
-							rows: currentRows,
+							key: props.key,
+							items: currentRows,
 							// @ts-ignore
 							selectRow: this.selectRow.bind(this),
 							// @ts-ignore
-							rowItem: this.rowItem
+							rowItem: props.rowItem
 						})
 					])
 				])
