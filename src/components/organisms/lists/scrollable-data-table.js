@@ -22,7 +22,6 @@ export { CheckboxCol, HeaderCol, TableHeader };
  * @property {function} [props.selectRow] - The function to select a row.
  * @property {string} [props.border] - The border to add to the table.
  * @property {object} [props.data] - The table data.
- * @property {string} [props.containerClass] - The class to add to the scroll container.
  * @returns {object}
  */
 export const ScrollableDataTable = Atom((props) => (
@@ -37,7 +36,6 @@ export const ScrollableDataTable = Atom((props) => (
 		key: props.key,
 		rows: props.rows,
 		rowItem: props.rowItem,
-		containerClass: props.containerClass ?? '',
 		headers: props.headers,
 		customHeader: props.customHeader,
 		border: props.border

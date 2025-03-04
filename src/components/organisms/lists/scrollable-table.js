@@ -5,6 +5,27 @@ import { CheckboxCol, HeaderCol, TableHeader } from './table-header.js';
 export { CheckboxCol, HeaderCol, TableHeader };
 
 /**
+ * This will create the table body.
+ *
+ * @param {object} props
+ * @returns {object}
+ */
+export const ScrollableDataTableBody = (props) => (
+	new ScrollableTableBody({
+		cache: 'list',
+		scrollContainer: props.scrollContainer,
+		loadMoreItems: props.loadMoreItems,
+		offset: props.offset,
+		limit: props.limit,
+		key: props.key,
+		data: props.data,
+		items: props.items,
+		rowItem: (row) => props.rowItem(row, props.selectRow),
+		class: 'divide-y divide-border'
+	})
+);
+
+/**
  * ScrollableDataTable Component
  *
  * This will create a scrollable data table.
@@ -23,52 +44,50 @@ export { CheckboxCol, HeaderCol, TableHeader };
  */
 export class ScrollableTable extends DataTable
 {
-    /**
-     * Renders the DataTable component.
-     *
-     * @returns {object}
-     */
-    render()
-    {
-        // @ts-ignore
-        const currentRows = this.rows;
-        // @ts-ignore
-        const border = this.border !== false ? 'border' : '';
+	/**
+	 * Renders the DataTable component.
+	 *
+	 * @returns {object}
+	 */
+	render()
+	{
+		// @ts-ignore
+		const currentRows = this.rows;
+		// @ts-ignore
+		const border = this.border !== false ? 'border' : '';
 
-        return Div({ class: 'w-full' }, [
-            Div({ class: `w-full rounded-md ${border} overflow-x-auto` }, [
-                Table({ class: 'w-full' }, [
-                    // @ts-ignore
-                    this.headers && TableHeader({ headers: this.headers, sort: (key) => this.sortRows(key) }),
-                    // @ts-ignore
-                    this.customHeader ?? null,
-                    new ScrollableTableBody({
-                        // @ts-ignore
-                        scrollContainer: this.scrollContainer,
-                        // @ts-ignore
-                        loadMoreItems: this.loadMoreItems,
-                        // @ts-ignore
-                        offset: this.offset,
-                        // @ts-ignore
-                        limit: this.limit,
-                        // @ts-ignore
-                        class: this.class,
-                        // @ts-ignore
-                        containerClass: this.containerClass ?? '',
-                        // @ts-ignore
-                        data: this.tableData,
-                        // @ts-ignore
-                        key: this.key,
-                        items: currentRows,
-                        // @ts-ignore
-                        selectRow: this.selectRow.bind(this),
-                        // @ts-ignore
-                        rowItem: this.rowItem
-                    })
-                ])
-            ])
-        ]);
-    }
+		return Div({ class: 'w-full' }, [
+			Div({ class: `w-full rounded-md ${border} overflow-x-auto` }, [
+				Table({ class: 'w-full' }, [
+					// @ts-ignore
+					this.headers && TableHeader({ headers: this.headers, sort: (key) => this.sortRows(key) }),
+					// @ts-ignore
+					this.customHeader ?? null,
+					ScrollableDataTableBody({
+						// @ts-ignore
+						scrollContainer: this.scrollContainer,
+						// @ts-ignore
+						loadMoreItems: this.loadMoreItems,
+						// @ts-ignore
+						offset: this.offset,
+						// @ts-ignore
+						limit: this.limit,
+						// @ts-ignore
+						class: this.class,
+						// @ts-ignore
+						data: this.tableData,
+						// @ts-ignore
+						key: this.key,
+						items: currentRows,
+						// @ts-ignore
+						selectRow: this.selectRow.bind(this),
+						// @ts-ignore
+						rowItem: this.rowItem
+					})
+				])
+			])
+		]);
+	}
 }
 
 export default ScrollableTable;
