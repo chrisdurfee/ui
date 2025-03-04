@@ -10,13 +10,28 @@ export { CheckboxCol, HeaderCol, TableHeader };
  *
  * This will create a scrollable data table.
  *
- * @param {object} props
+ * @property {HTMLElement} [props.scrollContainer] - The container element for scroll events. Defaults to window.
+ * @property {function} [props.loadMoreItems] - A function to fetch/generate additional items.
+ * @property {number} [props.offset] - The initial offset. Defaults to 0.
+ * @property {number} [props.limit] - Number of items to load per batch. Defaults to 20.
+ * @property {string} [props.class] - The class to add to the list.
+ * @property {string} [props.key] - The key to use to identify the items.
+ * @property {array} [props.rows] - The initial rows.
+ * @property {function} [props.rowItem] - The row item.
+ * @property {string} [props.containerClass] - The class to add to the scroll container.
  * @returns {object}
  */
 export const ScrollableDataTable = Atom((props) =>
 {
 	new DataTable(
 	{
+		customHeaders: props.customHeaders,
+		headers: props.headers,
+		class: props.class,
+		key: props.key,
+		rows: props.rows,
+		rowItem: props.rowItem,
+
 		/**
 		 * Renders the DataTable component.
 		 *
