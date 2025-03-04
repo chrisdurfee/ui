@@ -1,7 +1,5 @@
-import { Div, Table } from '@base-framework/atoms';
 import { Atom } from '@base-framework/base';
-import { ScrollableTableBody } from '@base-framework/organisms';
-import { DataTable } from './data-table.js';
+import { ScrollableTable } from './scrollable-table.js';
 import { CheckboxCol, HeaderCol, TableHeader } from './table-header.js';
 export { CheckboxCol, HeaderCol, TableHeader };
 
@@ -19,51 +17,30 @@ export { CheckboxCol, HeaderCol, TableHeader };
  * @property {string} [props.key] - The key to use to identify the items.
  * @property {array} [props.rows] - The initial rows.
  * @property {function} [props.rowItem] - The row item.
+ * @property {array} [props.headers] - The table headers.
+ * @property {object} [props.customHeader] - The custom header.
+ * @property {function} [props.selectRow] - The function to select a row.
+ * @property {string} [props.border] - The border to add to the table.
+ * @property {object} [props.data] - The table data.
  * @property {string} [props.containerClass] - The class to add to the scroll container.
  * @returns {object}
  */
 export const ScrollableDataTable = Atom((props) => (
-	new DataTable(
+	new ScrollableTable(
 	{
-		/**
-		 * Renders the DataTable component.
-		 *
-		 * @returns {object}
-		 */
-		render()
-		{
-			// @ts-ignore
-			const currentRows = props.rows;
-			// @ts-ignore
-			const border = this.border !== false ? 'border' : '';
-
-			return Div({ class: 'w-full' }, [
-				Div({ class: `w-full rounded-md ${border} overflow-x-auto` }, [
-					Table({ class: 'w-full' }, [
-						// @ts-ignore
-						props.headers && TableHeader({ headers: props.headers, sort: (key) => this.sortRows(key) }),
-						// @ts-ignore
-						props.customHeader ?? null,
-						new ScrollableTableBody({
-							scrollContainer: props.scrollContainer,
-							loadMoreItems: props.loadMoreItems,
-							offset: props.offset,
-							limit: props.limit,
-							class: props.class,
-							containerClass: props.containerClass ?? '',
-							data: props.data,
-							// @ts-ignore
-							key: props.key,
-							items: currentRows,
-							// @ts-ignore
-							selectRow: this.selectRow.bind(this),
-							// @ts-ignore
-							rowItem: props.rowItem
-						})
-					])
-				])
-			]);
-		}
+		tableData: props.data,
+		scrollContainer: props.scrollContainer,
+		loadMoreItems: props.loadMoreItems,
+		offset: props.offset,
+		limit: props.limit,
+		class: props.class,
+		key: props.key,
+		rows: props.rows,
+		rowItem: props.rowItem,
+		containerClass: props.containerClass ?? '',
+		headers: props.headers,
+		customHeader: props.customHeader,
+		border: props.border
 	})
 ));
 
