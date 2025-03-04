@@ -28,7 +28,6 @@ export const ScrollableDataTable = Atom((props) =>
 	{
 		customHeaders: props.customHeaders,
 		headers: props.headers,
-		class: props.class,
 		key: props.key,
 		rows: props.rows,
 		rowItem: props.rowItem,
@@ -57,6 +56,7 @@ export const ScrollableDataTable = Atom((props) =>
 							loadMoreItems: props.loadMoreItems,
 							offset: props.offset,
 							limit: props.limit,
+							class: props.class,
 							containerClass: props.containerClass ?? '',
 							data: props.data,
 							// @ts-ignore
