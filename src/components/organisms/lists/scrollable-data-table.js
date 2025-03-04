@@ -22,8 +22,7 @@ export { CheckboxCol, HeaderCol, TableHeader };
  * @property {string} [props.containerClass] - The class to add to the scroll container.
  * @returns {object}
  */
-export const ScrollableDataTable = Atom((props) =>
-{
+export const ScrollableDataTable = Atom((props) => (
 	new DataTable(
 	{
 		customHeaders: props.customHeaders,
@@ -72,6 +71,6 @@ export const ScrollableDataTable = Atom((props) =>
 			]);
 		}
 	})
-});
+));
 
 export default ScrollableDataTable;
