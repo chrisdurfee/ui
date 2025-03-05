@@ -37,6 +37,7 @@ export const ScrollableDataTableBody = (props) => (
  * @property {number} [props.limit] - Number of items to load per batch. Defaults to 20.
  * @property {string} [props.class] - The class to add to the list.
  * @property {string} [props.key] - The key to use to identify the items.
+ * @property {object} [props.tableData] - The table data.
  * @property {array} [props.rows] - The initial rows.
  * @property {function} [props.rowItem] - The row item.
  * @property {string} [props.containerClass] - The class to add to the scroll container.
@@ -75,7 +76,7 @@ export class ScrollableTable extends DataTable
 						// @ts-ignore
 						class: this.class,
 						// @ts-ignore
-						data: this.tableData,
+						tableData: this.tableData,
 						// @ts-ignore
 						key: this.key,
 						items: currentRows,
