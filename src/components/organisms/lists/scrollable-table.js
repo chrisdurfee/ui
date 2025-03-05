@@ -89,6 +89,17 @@ export class ScrollableTable extends DataTable
 			])
 		]);
 	}
+
+	/**
+	 * Refreshes the list.
+	 *
+	 * @returns {void}
+	 */
+	refresh()
+	{
+		// @ts-ignore
+		this.list.refresh();
+	}
 }
 
 export default ScrollableTable;
