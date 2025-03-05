@@ -18,7 +18,7 @@ export const ScrollableDataTableBody = (props) => (
 		offset: props.offset,
 		limit: props.limit,
 		key: props.key,
-		data: props.data,
+		tableData: props.tableData,
 		items: props.items,
 		rowItem: (row) => props.rowItem(row, props.selectRow),
 		class: 'divide-y divide-border'
