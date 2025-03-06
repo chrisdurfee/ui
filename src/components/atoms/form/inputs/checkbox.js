@@ -131,6 +131,9 @@ export const Checkbox = Jot(
 	 */
 	clickHandler(e)
 	{
+		e.preventDefault();
+		e.stopPropagation();
+
 		// @ts-ignore
 		this.state.toggle('checked');
 		// @ts-ignore
