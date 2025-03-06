@@ -14,21 +14,18 @@ export { CheckboxCol, HeaderCol };
 export const TableHeader = (props) =>
 {
 	return Thead([
-		Tr({ class: 'text-muted-foreground border-b', map: [props.headers, header =>
-			{
-				if (header.label === 'checkbox')
-				{
-					return CheckboxCol({ toggle: props.toggle });
-				}
-
-				return HeaderCol({
+		Tr({
+			class: 'text-muted-foreground border-b',
+			map: [props.headers, header => (header.label === 'checkbox')
+				? CheckboxCol({ toggle: props.toggle })
+				: HeaderCol({
 					align: header.align,
 					sortable: header.sortable,
 					key: header.key,
 					label: header.label,
 					sort: props.sort
-				});
-			}]
+				})
+			]
 		})
 	]);
 };
