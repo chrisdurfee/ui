@@ -112,7 +112,7 @@ export const Combobox = Jot(
 	after()
 	{
 		// @ts-ignore
-		if (this.selectFirst === true)
+		if (this.selectFirst === true && this.state.selectedValue === '')
 		{
 			// @ts-ignore
 			const item = this.data.items[0];
