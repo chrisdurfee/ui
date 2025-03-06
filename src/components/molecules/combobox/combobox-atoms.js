@@ -35,7 +35,7 @@ export const ComboboxItem = (item, onSelect, state) => {
 		onState: [state, 'selectedValue', { 'bg-secondary': item.value }]
 	}, [
 		item.icon && Span({ class: 'mr-2 flex items-baseline' }, [ Icon({ size: 'xs' }, item.icon)]),
-		Span(item.label),
+		Span({ class: 'text-base font-normal' }, item.label),
 	]);
 };
 
