@@ -156,6 +156,8 @@ export const Checkbox = Jot(
 	{
 		// @ts-ignore
 		const id = this.getId();
+		// @ts-ignore
+		const clickCallback = (e) => this.clickHandler(e);
 
 		// @ts-ignore
 		return Div({ class: `flex items-center space-x-2 cursor-pointer ${this.class || ''}` }, [
@@ -168,10 +170,10 @@ export const Checkbox = Jot(
 				// @ts-ignore
 				required: this.required,
 				// @ts-ignore
-				clickHandler: (e) => this.clickHandler(e)
+				clickHandler: clickCallback
 			}),
 			// @ts-ignore
-			this.label && CheckboxLabel({ id, label: this.label, clickHandler: () => this.clickHandler() })
+			this.label && CheckboxLabel({ id, label: this.label, clickHandler: clickCallback })
 		]);
 	}
 });
