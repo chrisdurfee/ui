@@ -44,7 +44,7 @@ export const Combobox = Jot(
 	 * @param {object} item
 	 * @returns {void}
 	 */
-	handleSelect(item)
+	select(item)
 	{
 		// @ts-ignore
 		const state = this.state;
@@ -56,8 +56,21 @@ export const Combobox = Jot(
 		if (typeof this.onSelect === 'function')
 		{
 			// @ts-ignore
-			this.onSelect(item);
+			this.onSelect(item, parent);
 		}
+	},
+
+	/**
+	 * Selects the first item in the list.
+	 *
+	 * @returns {void}
+	 */
+	selectFirstItem()
+	{
+		// @ts-ignore
+		const item = this.data.items[0];
+		// @ts-ignore
+		this.select(item);
 	},
 
 	/**
@@ -92,7 +105,7 @@ export const Combobox = Jot(
 				// @ts-ignore
 				state: this.state,
 				// @ts-ignore
-				onSelect: this.handleSelect.bind(this)
+				onSelect: this.select.bind(this)
 			}),
 
 			// Hidden required input for form validation
