@@ -56,7 +56,7 @@ export const Combobox = Jot(
 		if (typeof this.onSelect === 'function')
 		{
 			// @ts-ignore
-			this.onSelect(item, parent);
+			this.onSelect(item, this.parent);
 		}
 	},
 
