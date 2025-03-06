@@ -7,6 +7,14 @@ import { DropdownButton, DropdownContainer } from './combobox-atoms.js';
  *
  * This will render a combobox component.
  *
+ * @property {Array<object>} items
+ * @property {string} class
+ * @property {string} maxWidth
+ * @property {string} width
+ * @property {string} name
+ * @property {boolean} required
+ * @property {boolean} selectFirst
+ * @property {function} onSelect
  * @type {typeof Component}
  */
 export const Combobox = Jot(
@@ -82,6 +90,21 @@ export const Combobox = Jot(
 	{
 		// @ts-ignore
 		this.state.toggle('open');
+	},
+
+	/**
+	 * This will run after the component is set up.
+	 *
+	 * @returns {void}
+	 */
+	after()
+	{
+		// @ts-ignore
+		if (this.selectFirst === true)
+		{
+			// @ts-ignore
+			this.selectFirstItem();
+		}
 	},
 
 	/**
