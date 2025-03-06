@@ -47,6 +47,21 @@ export const Combobox = Jot(
 	},
 
 	/**
+	 * This will set the state item.
+	 *
+	 * @param {object} item
+	 * @returns {void}
+	 */
+	setStateItem(item)
+	{
+		// @ts-ignore
+		const state = this.state;
+		state.selectedValue = item.value;
+		state.selectedLabel = item.label;
+		state.open = false;
+	},
+
+	/**
 	 * Handles the selection of an item.
 	 *
 	 * @param {object} item
@@ -55,10 +70,7 @@ export const Combobox = Jot(
 	select(item)
 	{
 		// @ts-ignore
-		const state = this.state;
-		state.selectedValue = item.value;
-		state.selectedLabel = item.label;
-		state.open = false;
+		this.setStateItem(item);
 
 		// @ts-ignore
 		if (typeof this.onSelect === 'function')
@@ -103,7 +115,12 @@ export const Combobox = Jot(
 		if (this.selectFirst === true)
 		{
 			// @ts-ignore
-			this.selectFirstItem();
+			const item = this.data.items[0];
+			if (item)
+			{
+				// @ts-ignore
+				this.setStateItem(item);
+			}
 		}
 	},
 
