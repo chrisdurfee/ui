@@ -29,8 +29,8 @@ const ModalHeader = ({ title, description, back, icon, options = [] }) => (
 		 */
 		Div({ class: 'flex flex-auto flex-row justify-between w-full ml-2 gap-2' }, [
 			Div({ class: 'flex flex-auto flex-col' }, [
-				H2({ class: 'text-lg font-semibold m-0' }, title),
-				description && Div({ class: 'text-sm text-muted-foreground' }, description)
+				H2({ class: 'text-lg font-semibold m-0 truncate' }, title),
+				description && Div({ class: 'text-sm text-muted-foreground truncate' }, description)
 			]),
 			...options
 		])
