@@ -1,4 +1,4 @@
-import { Input } from '@base-framework/atoms';
+import { Input, UseParent } from '@base-framework/atoms';
 import { Button } from '../../atoms/buttons/buttons.js';
 import { Icons } from '../../icons/icons.js';
 
@@ -51,23 +51,25 @@ export const PlusButton = ({ click }) => (
  * @returns {object}
  */
 export const CountDisplay = ({ bind, min, max, readonly = false }) => (
-	Input({
-		value: '[[count]]',
-		bind,
-		blur: (e, {state}) =>
-		{
-			let newValue = parseInt(e.target.value, 10);
-			if (isNaN(newValue)) newValue = min ?? 0;
-			if (min !== undefined) newValue = Math.max(newValue, min);
-			if (max !== undefined) newValue = Math.min(newValue, max);
+	UseParent(({ state }) => (
+		Input({
+			value: ['[[count]]', state],
+			bind,
+			blur: (e, {state}) =>
+			{
+				let newValue = parseInt(e.target.value, 10);
+				if (isNaN(newValue)) newValue = min ?? 0;
+				if (min !== undefined) newValue = Math.max(newValue, min);
+				if (max !== undefined) newValue = Math.min(newValue, max);
 
-			state.count = newValue;
-		},
-		class: 'flex flex-auto text-lg font-medium bg-transparent text-center border min-w-0',
-		readonly,
-		min,
-		max,
-		type: 'number',
-		'aria-label': 'Counter'
-	})
+				state.count = newValue;
+			},
+			class: 'flex flex-auto text-lg font-medium bg-transparent text-center border min-w-0',
+			readonly,
+			min,
+			max,
+			type: 'number',
+			'aria-label': 'Counter'
+		})
+	))
 );
