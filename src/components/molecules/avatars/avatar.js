@@ -139,7 +139,7 @@ const AvatarFallback = (fallbackText, watcherFallback = null, size = 'md') =>
 	[
 		(watcherFallback)
 			? WatcherSpan(watcherFallback)
-			: Span(finalText)
+			: Span({ class: 'uppercase' }, finalText)
 	]);
 };
 
