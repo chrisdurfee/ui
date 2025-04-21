@@ -75,7 +75,6 @@ export const TelInput = Atom((props) => (
 		name: props.name || "Phone",
 		label: props.label || "Phone",
 		placeholder: "(555) 555-5555",
-		required: true,
 		pattern: props.pattern || "\\(\\d{3}\\) \\d{3}-\\d{4}",
 		keyup: formatPhoneNumber,
 	})
