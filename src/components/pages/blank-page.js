@@ -20,7 +20,7 @@ export class BlankPage extends BasicPage
 	render()
 	{
 		// @ts-ignore
-		const className = this.class ? this.class : 'pt-[80px] sm:pt-0';
+		const className = (this.class != '') ? this.class : 'pt-[80px] sm:pt-0';
 		return FullTemplate([
 			Div({ class: `flex flex-auto flex-col ${className}` }, this.children)
 		]);
