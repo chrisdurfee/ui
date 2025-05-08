@@ -164,7 +164,7 @@ export class MainLink extends Component
 		{
 			return new NavLink(
 			{
-				class: 'flex flex-auto flex-row',
+				class: 'flex flex-auto flex-row rounded-md',
 				cache: 'link',
 				href: this.href,
 				activeClass: 'selected',
@@ -173,7 +173,7 @@ export class MainLink extends Component
 		}
 
 		return new NavButtonLink({
-			class: 'flex flex-auto flex-row',
+			class: 'flex flex-auto flex-row rounded-md',
 			cache: 'link',
 			checkCallBack: this.checkCallBack
 		}, children);
