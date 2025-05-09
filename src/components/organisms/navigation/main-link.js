@@ -14,7 +14,7 @@ import { NavButtonLink } from './nav-button-link.js';
 const Li = Atom(({ options, click }, children) =>
 {
 	const settings = {
-		class: `relative flex flex-row w-auto text-left p-0 overflow-hidden transition-all cursor-pointer min-w-[48px] rounded-md option${options ? ' sub' : ''}`,
+		class: `relative flex flex-row w-auto text-left p-0 transition-all cursor-pointer min-w-[48px] option${options ? ' sub' : ''}`,
 		click
 	};
 
@@ -35,7 +35,7 @@ const Li = Atom(({ options, click }, children) =>
  */
 const LinkContent = (label, icon = null, hasChildren = false) => [
 	icon && I({
-		class: 'icon w-12 rounded-md flex items-center justify-center',
+		class: 'icon w-12 rounded-md flex items-center justify-center min-w-12',
 		onState: ['selected', {
 			selected: true
 		}],
@@ -164,7 +164,7 @@ export class MainLink extends Component
 		{
 			return new NavLink(
 			{
-				class: 'flex flex-auto flex-row rounded-md',
+				class: 'flex flex-auto flex-row rounded-md transition-all overflow-x-hidden',
 				cache: 'link',
 				href: this.href,
 				activeClass: 'selected',
@@ -173,7 +173,7 @@ export class MainLink extends Component
 		}
 
 		return new NavButtonLink({
-			class: 'flex flex-auto flex-row rounded-md',
+			class: 'flex flex-auto flex-row rounded-md transition-all overflow-x-hidden',
 			cache: 'link',
 			checkCallBack: this.checkCallBack
 		}, children);
