@@ -1,3 +1,4 @@
+import { Button } from "@base-framework/atoms";
 import { Component } from "@base-framework/base";
 
 /**
@@ -41,7 +42,7 @@ export class NavButtonLink extends Component
 	{
 		const state = this.state;
 
-		return {
+		return Button({
 			class: this.class || '',
 			onState: [
 				['selected', {
@@ -64,7 +65,7 @@ export class NavButtonLink extends Component
 				this.checkCallBack(active);
 			},
 			children: this.children
-		};
+		});
 	}
 
 	/**
