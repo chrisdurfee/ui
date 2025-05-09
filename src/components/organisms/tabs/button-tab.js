@@ -15,7 +15,7 @@ const TabButton = (props) => (
 		},
 		[
 			Button({
-				class: 'flex flex-auto justify-center items-center px-3 py-1.5',
+				class: 'flex flex-auto justify-center items-center px-3 py-1.5 rounded-md',
 				onSet: ['selected', { selected: props.value }],
 				click: (e) => props.callBack(props.value),
 			}, props.label)
