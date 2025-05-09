@@ -63,9 +63,8 @@ export class NavButtonLink extends Component
 
 				const active = (state.active)? this : null;
 				this.checkCallBack(active);
-			},
-			children: this.children
-		});
+			}
+		}, this.children);
 	}
 
 	/**
