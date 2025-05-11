@@ -9,7 +9,7 @@ export { CheckboxCol, HeaderCol, TableHeader };
  * This will create a scrollable data table.
  *
  * @param {object} props
- * @property {HTMLElement} [props.scrollContainer] - The container element for scroll events. Defaults to window.
+ * @property {HTMLElement} [props.scrollContainer] - The container element for scroll events. Defaults to globalThis.
  * @property {function} [props.loadMoreItems] - A function to fetch/generate additional items.
  * @property {number} [props.offset] - The initial offset. Defaults to 0.
  * @property {number} [props.limit] - Number of items to load per batch. Defaults to 20.

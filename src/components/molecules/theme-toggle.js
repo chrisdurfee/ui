@@ -3,7 +3,7 @@ import { Atom, Jot } from "@base-framework/base";
 import { Icon } from "../atoms/icon.js";
 import { Icons } from "../icons/icons.js";
 
-const match = window.matchMedia;
+const match = globalThis.matchMedia;
 
 /**
  * This will create a state button.
@@ -44,7 +44,7 @@ const checkTheme = (theme) =>
 	const htmlTag = document.documentElement;
 	if (theme === 'system')
 	{
-		theme = window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+		theme = globalThis.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light"
 	}
 
 	// if theme HAS been set and is different from OS, add class to html tag
@@ -91,7 +91,7 @@ export const ThemeToggle = Jot(
 	state()
 	{
 		return {
-			method: window.localStorage.getItem('theme') ?? 'system'
+			method: globalThis.localStorage.getItem('theme') ?? 'system'
 		};
 	}
 });

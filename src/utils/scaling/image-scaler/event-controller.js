@@ -77,7 +77,7 @@ export class EventController
 			// @ts-ignore
 			base.onMouseWheel(wheel, container, true);
 			// @ts-ignore
-			base.on("resize", window, resize);
+			base.on("resize", globalThis, resize);
 		};
 
 		// Immediately attach
@@ -95,7 +95,7 @@ export class EventController
 			// @ts-ignore
 			base.offMouseWheel(wheel, container);
 			// @ts-ignore
-			base.off("resize", window, resize);
+			base.off("resize", globalThis, resize);
 		};
 	}
 

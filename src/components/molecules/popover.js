@@ -16,21 +16,21 @@ export const getPosition = (button, container) =>
 	const containerRect = container.getBoundingClientRect();
 
 	const PADDING = 10;
-	const scrollX = window.scrollX;
-	const scrollY = window.scrollY;
+	const scrollX = globalThis.scrollX;
+	const scrollY = globalThis.scrollY;
 
 	// Initial position of the dropdown
 	let x = rect.left + scrollX;
 	let y = rect.bottom + scrollY;
 
 	// Space above and below the button
-	const spaceBelow = window.innerHeight - rect.bottom;
+	const spaceBelow = globalThis.innerHeight - rect.bottom;
 	const spaceAbove = rect.top;
 
 	// Adjust position if dropdown overflows on the right of the viewport
-	if (x + containerRect.width > window.innerWidth)
+	if (x + containerRect.width > globalThis.innerWidth)
 	{
-		x = window.innerWidth - containerRect.width - PADDING;
+		x = globalThis.innerWidth - containerRect.width - PADDING;
 	}
 
 	// Adjust position based on available space
@@ -201,7 +201,7 @@ export class PopOver extends Component
 					this.state.open = false;
 				}
 			}],
-			['resize', window, (e) => this.updatePosition()],
+			['resize', globalThis, (e) => this.updatePosition()],
 			['scroll', document, (e) => this.updatePosition()],
 		];
 	}

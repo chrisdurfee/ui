@@ -255,7 +255,7 @@ export class Modal extends Component
 		 * it is added to the DOM.
 		 */
 		const DELAY = 10;
-		window.setTimeout(() => this.panel.showPopover(), DELAY);
+		globalThis.setTimeout(() => this.panel.showPopover(), DELAY);
 		this.state.open = true;
 
 		/**

@@ -78,7 +78,7 @@ export class SignatureCanvas extends Component
 		this.ctx = this.canvas.getContext("2d");
 
 		// Resize and draw after the parent has fully rendered
-		window.setTimeout(() =>
+		globalThis.setTimeout(() =>
 		{
 			this.resize();
 			this.draw();
@@ -104,7 +104,7 @@ export class SignatureCanvas extends Component
 			['pointerup', panel, callBackUp],
 			['pointerdown', panel, callBackDown, options],
 			['pointerout', panel, callBackUp],
-			['resize', window, resize]
+			['resize', globalThis, resize]
 		];
 	}
 
@@ -221,7 +221,7 @@ export class SignatureCanvas extends Component
 		// Redraw old image data
 		if (canvasData !== 'data:,')
 		{
-			const img = new window.Image();
+			const img = new globalThis.Image();
 			// @ts-ignore
 			base.on('load', img, function loadImage()
 			{

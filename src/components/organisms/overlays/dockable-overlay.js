@@ -156,7 +156,7 @@ export class DockableOverlay extends Overlay
 	setupEvents()
 	{
 		return [
-			['resize', window, () => this.onResize()]
+			['resize', globalThis, () => this.onResize()]
 		];
 	}
 
@@ -167,7 +167,7 @@ export class DockableOverlay extends Overlay
 	 */
 	canDock()
 	{
-		return (window.innerWidth >= this.dockSize);
+		return (globalThis.innerWidth >= this.dockSize);
 	}
 
 	/**

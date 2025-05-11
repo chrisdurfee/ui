@@ -19,9 +19,9 @@ export const BackButton = Atom((props) =>
 			class: 'back-button',
 			click: () => {
 
-				if (window.history.length > 2)
+				if (globalThis.history.length > 2)
 				{
-					window.history.back();
+					globalThis.history.back();
 					return;
 				}
 
