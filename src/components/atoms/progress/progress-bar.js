@@ -1,4 +1,4 @@
-import { Div } from '@base-framework/atoms';
+import { Div, UseParent } from '@base-framework/atoms';
 import { Veil, VeilJot } from '../veil.js';
 
 /**
@@ -7,10 +7,12 @@ import { Veil, VeilJot } from '../veil.js';
  * @returns {object}
  */
 const Progress = () => (
-	Div({
-		class: 'absolute h-full rounded-full bg-primary transition-all duration-300',
-		style: `width: [[progress]]%;`,
-	})
+	UseParent(({ state }) => (
+		Div({
+			class: 'absolute h-full rounded-full bg-primary transition-all duration-300',
+			style: [`width: [[progress]]%;`, state],
+		})
+	))
 );
 
 /**

@@ -1,4 +1,4 @@
-import { Div, OnState } from "@base-framework/atoms";
+import { Div, OnState, UseParent } from "@base-framework/atoms";
 import { Atom } from "@base-framework/base";
 import { InlineNavigation } from "../../inline-navigation.js";
 import { NavigationPopover } from "./navigation-popover.js";
@@ -36,7 +36,7 @@ const mapCloseCallBack = (options, callBack) =>
  */
 const MobileNav = (props) =>
 {
-	const closeCallBack = (e, { parent }) => parent.parent.state.open = false;
+	const closeCallBack = props.closeCallBack;
 	mapCloseCallBack(props.options, closeCallBack);
 
 	return Div({ class: 'bg-background flex flex-auto flex-col w-full relative' }, [
@@ -78,10 +78,15 @@ export const MobileNavButton = Atom((props) =>
  */
 export const MobileNavWrapper = Atom((props) =>
 {
-	return Div({ cache: 'mobileNav', class: 'flex flex-auto flex-col w-full relative lg:hidden' }, [
-		Div({ class: 'flex flex-auto flex-col w-full' }, [
-			TitleHeader(props),
-			MobileNav(props)
-		])
-	]);
+	return UseParent(({ state }) =>
+	{
+		props.closeCallBack = (e) => state.open = false;
+
+		return Div({ cache: 'mobileNav', class: 'flex flex-auto flex-col w-full relative lg:hidden' }, [
+			Div({ class: 'flex flex-auto flex-col w-full' }, [
+				TitleHeader(props),
+				MobileNav(props)
+			])
+		]);
+	});
 });
