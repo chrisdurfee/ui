@@ -10,15 +10,15 @@ import { commonInputClasses } from './inputs/input-classes.js';
 export const Select = Atom((props) =>
 ({
 	tag: 'select',
-	...props,
-	class: `${commonInputClasses} ${props.class || ''}`.trim(),
 	onCreated(ele)
 	{
 		if (props.options)
 		{
 			Html.setupSelectOptions(ele, props.options);
 		}
-	}
+	},
+	...props,
+	class: `${commonInputClasses} ${props.class || ''}`.trim()
 }));
 
 export default Select;

@@ -36,17 +36,20 @@ const mapCloseCallBack = (options, callBack) =>
  */
 const MobileNav = (props) =>
 {
-	const closeCallBack = props.closeCallBack;
-	mapCloseCallBack(props.options, closeCallBack);
-
 	return Div({ class: 'bg-background flex flex-auto flex-col w-full relative' }, [
 		OnState('open', (state) => (!state)
 			? null
 			: [
 				new NavigationPopover({ title: props.title }, [
-					new InlineNavigation(
+					UseParent(({ state }) =>
 					{
-						options: props.options
+						const closeCallBack = (e) => state.open = false;
+						mapCloseCallBack(props.options, closeCallBack);
+
+						return new InlineNavigation(
+						{
+							options: props.options
+						});
 					})
 				])
 			]
@@ -78,15 +81,10 @@ export const MobileNavButton = Atom((props) =>
  */
 export const MobileNavWrapper = Atom((props) =>
 {
-	return UseParent(({ state }) =>
-	{
-		props.closeCallBack = (e) => state.open = false;
-
-		return Div({ cache: 'mobileNav', class: 'flex flex-auto flex-col w-full relative lg:hidden' }, [
-			Div({ class: 'flex flex-auto flex-col w-full' }, [
-				TitleHeader(props),
-				MobileNav(props)
-			])
-		]);
-	});
+	return Div({ cache: 'mobileNav', class: 'flex flex-auto flex-col w-full relative lg:hidden' }, [
+		Div({ class: 'flex flex-auto flex-col w-full' }, [
+			TitleHeader(props),
+			MobileNav(props)
+		])
+	]);
 });
