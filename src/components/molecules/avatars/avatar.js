@@ -80,6 +80,7 @@ const sizeMap = {
 	xl: 'h-24 w-24',
 	'2xl': 'h-32 w-32',
 	'3xl': 'h-48 w-48',
+	'4xl': 'h-64 w-64',
 	default: 'h-12 w-12'
 };
 
@@ -94,6 +95,7 @@ const fontSizeMap = {
 	xl: 'text-2xl',
 	'2xl': 'text-3xl',
 	'3xl': 'text-4xl',
+	'4xl': 'text-5xl',
 	default: 'text-base'
 };
 
