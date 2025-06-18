@@ -27,7 +27,7 @@ export const Icon = Atom((props, children) =>
 
 	return I({
 		...props,
-		class: `icon-size ${sizeClass} ${props.class || ""}`,
+		class: `stroke-current icon-size ${sizeClass} ${props.class || ""}`,
 		html: children[0]?.textContent,
 	});
 });
