@@ -36,11 +36,10 @@ const AvatarImage = Atom(({ src, alt }) =>
  */
 const getInitials = (name) =>
 {
-	if (!name || typeof name !== 'string')
+	if (!name)
 	{
-		return '';
+		return name;
 	}
-
 	return name.split(' ').map((n) => n.charAt(0)).join('');
 };
 
