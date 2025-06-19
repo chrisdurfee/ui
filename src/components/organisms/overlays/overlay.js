@@ -1,8 +1,6 @@
 import { Div } from "@base-framework/atoms";
 import { Atom, Component } from "@base-framework/base";
 import { Button } from "../../atoms/buttons/buttons.js";
-import { Icon } from "../../atoms/icon.js";
-import { Icons } from "../../icons/icons.js";
 
 /**
  * This will create an overlay back button.
@@ -13,27 +11,9 @@ import { Icons } from "../../icons/icons.js";
 export const BackButton = Atom((props) =>
 {
 	const margin = props.margin || 'm-4 ml-0';
+	props.allowHistory = (props.allowHistory === true);
 	return Div({ class: `flex-none ${margin}` }, [
-		Button({
-			variant: 'icon',
-			class: 'back-button',
-			click: () => {
-
-				if (globalThis.history.length > 2)
-				{
-					globalThis.history.back();
-					return;
-				}
-
-				if (props.backUrl)
-				{
-					// @ts-ignore
-					app.navigate(props.backUrl);
-				}
-			}
-		}, [
-			Icon(Icons.arrows.left)
-		])
+		Button({ variant: 'back', class: 'ghost' })
 	]);
 });
 

@@ -20,6 +20,25 @@ const DefaultVariant = (defaultProps) => (
 );
 
 /**
+ *  This will create a button with an icon.
+ *
+ *  @param {object} props
+ *  @param {array} children
+ *  @returns {object}
+ */
+const IconButton = Atom((props, children) => (
+		BaseButton({
+			...props,
+			class: props.class
+		}, [
+			props.icon && props.position !== 'right' ? Icon({ size: 'sm', class: props.animation ?? null }, props.icon) : null,
+			...(children || []),
+			props.icon && props.position === 'right' ? Icon({ size: 'sm', class: props.animation ?? null }, props.icon) : null
+		])
+	)
+);
+
+/**
  * This will create a button with an icon.
  *
  * @param {object} defaultProps
@@ -27,16 +46,55 @@ const DefaultVariant = (defaultProps) => (
  */
 const WithIconVariant = (defaultProps) => (
 	Atom((props, children) => (
-		BaseButton({
+		IconButton({
 			...defaultProps,
 			...props,
 			class: `bttn ${defaultProps.class} ${props.class || ''}`
-		}, [
-			props.icon && props.position !== 'right' ? Icon({ size: 'sm', class: props.animation ?? null }, props.icon) : null,
-			...(children || []),
-			props.icon && props.position === 'right' ? Icon({ size: 'sm', class: props.animation ?? null }, props.icon) : null
-		])
+		}, children)
 	))
+);
+
+/**
+ *  This will create a back button that navigates to the previous page or a specified URL.
+ *
+ *  @param {object} props
+ *   @returns {function}
+ */
+const backCallBack = (props) =>
+{
+	return () =>
+	{
+		if (props.allowHistory === true && globalThis.history.length > 2)
+		{
+			globalThis.history.back();
+			return;
+		}
+
+		if (props.backUrl)
+		{
+			// @ts-ignore
+			app.navigate(props.backUrl);
+		}
+	};
+};
+
+/**
+ * This will create a back button variant.
+ *
+ * @param {object} defaultProps
+ * @returns {object}
+ */
+const BackVariant = (defaultProps) => (
+	Atom((props, children) =>
+	{
+		props.icon = props.icon || Icons.arrows.left;
+		props.click = props.click || backCallBack(props);
+
+		return IconButton({
+			...defaultProps,
+			...props
+		}, children);
+	})
 );
 
 /**
@@ -55,6 +113,7 @@ const BUTTON_VARIANTS = {
 	link: DefaultVariant({ class: 'link' }),
 	icon: WithIconVariant({ class: 'icon' }),
 	withIcon: WithIconVariant({ class: 'with-icon' }),
+	back: BackVariant({ class: 'with-icon back-button' }),
 };
 
 /**
