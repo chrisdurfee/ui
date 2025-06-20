@@ -40,6 +40,12 @@ const getInitials = (name) =>
 	{
 		return name;
 	}
+
+	if (typeof name !== 'string')
+	{
+		name = String(name);
+	}
+
 	return name.split(' ').map((n) => n.charAt(0)).join('');
 };
 
