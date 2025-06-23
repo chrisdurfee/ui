@@ -38,3 +38,16 @@ export const SplitRow = (label, value) =>
 		Span({ class: 'text-muted-foreground' }, label),
 		Span(value)
 	]);
+
+/**
+ * Renders a two-column row that are close together.
+ *
+ * @param {string} label - The left-hand text.
+ * @param {string} value - The right-hand text.
+ * @returns {object}
+ */
+export const ColumnRow = (label, value) =>
+	Div({ class: 'flex' }, [
+		Span({ class: 'text-muted-foreground mr-8 w-24 truncate text-nowrap' }, label),
+		Span(value)
+	]);
