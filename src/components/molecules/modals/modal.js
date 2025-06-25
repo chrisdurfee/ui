@@ -277,7 +277,7 @@ export class Modal extends Component
 
 		if (typeof this.onClose === 'function')
 		{
-			this.onClose();
+			this.onClose(this);
 		}
 
 		/**

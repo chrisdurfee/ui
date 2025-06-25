@@ -41,12 +41,17 @@ const getInitials = (name) =>
 		return name;
 	}
 
+	if (Array.isArray(name))
+	{
+		name = name.join(' ');
+	}
+
 	if (typeof name !== 'string')
 	{
 		name = String(name);
 	}
 
-	return name.split(' ').map((n) => n.charAt(0)).join('');
+	return name.split(' ').map((n) => n.charAt(0)).join('').toUpperCase();
 };
 
 /**
