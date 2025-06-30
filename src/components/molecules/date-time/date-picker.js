@@ -46,23 +46,21 @@ const CalendarButton = ({ bind, required, toggleOpen }) => (
  * @returns {object}
  */
 const CalendarContainer = ({ handleDateSelect, blockPriorDates }) => (
-	Div({ class: 'absolute mt-1 z-10 bg-background rounded-md shadow-lg' }, [
-		OnState('open', (value, ele, parent ) => (!value)
-			? null
-			: new PopOver({
-				cache: 'dropdown',
-				parent: parent,
-				button: parent.panel,
-				size: 'fit'
-			}, [
-				new Calendar({
-					selectedDate: parent.state.selectedDate,
-					selectedCallBack: handleDateSelect,
-					blockPriorDates
-				})
-			])
-		)
-	])
+	OnState('open', (value, ele, parent ) => (!value)
+		? null
+		: new PopOver({
+			cache: 'dropdown',
+			parent: parent,
+			button: parent.panel,
+			size: 'fit'
+		}, [
+			new Calendar({
+				selectedDate: parent.state.selectedDate,
+				selectedCallBack: handleDateSelect,
+				blockPriorDates
+			})
+		])
+	)
 );
 
 /**
