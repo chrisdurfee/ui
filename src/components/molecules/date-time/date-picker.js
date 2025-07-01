@@ -1,6 +1,6 @@
 import { Button, Div, I, Input, OnState, Span } from '@base-framework/atoms';
 import { DateTime } from '@base-framework/base';
-import { Veil, VeilJot } from '../../atoms/veil.js';
+import { Veil } from '../../atoms/veil.js';
 import { Icons } from '../../icons/icons.js';
 import { Calendar } from '../../organisms/calendar/calendar.js';
 import { PopOver } from '../popover.js';
@@ -70,20 +70,21 @@ const CalendarContainer = ({ handleDateSelect, blockPriorDates }) => (
  *
  * @type {typeof Veil}
  */
-export const DatePicker = VeilJot(
+export class DatePicker extends Veil
 {
 	/**
 	 * The initial state of the DatePicker.
 	 *
 	 * @member {object} state
 	 */
-	state()
+	setupStates()
 	{
 		return {
+			// @ts-ignore
 			selectedDate: this.selectedDate ?? null,
 			open: false
 		};
-	},
+	}
 
 	/**
 	 * This is added to check the input after the component is rendered.
@@ -91,10 +92,11 @@ export const DatePicker = VeilJot(
 	 *
 	 * @returns {void}
 	 */
-	after()
+	afterSetup()
 	{
+		// @ts-ignore
 		this.state.selectedDate = this.input.value;
-	},
+	}
 
 	/**
 	 * Renders the DatePicker component.
@@ -108,26 +110,32 @@ export const DatePicker = VeilJot(
 		{
 			this.state.selectedDate = date;
 			this.state.open = false;
+			// @ts-ignore
 			this.input.value = date;
 
+			// @ts-ignore
 			if (typeof this.onChange === 'function')
 			{
+				// @ts-ignore
 				this.onChange(date);
 			}
 		};
 
-		return Div({ class: 'relative w-full max-w-[320px]' }, [
+		return Div({ class: 'relative w-full max-w-[320px]', debug: true }, [
 			CalendarButton({
 				toggleOpen,
+				// @ts-ignore
 				bind: this.bind,
+				// @ts-ignore
 				required: this.required
 			}),
 			CalendarContainer({
 				handleDateSelect,
+				// @ts-ignore
 				blockPriorDates: this.blockPriorDates || false
 			})
 		]);
 	}
-});
+}
 
 export default DatePicker;
