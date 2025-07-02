@@ -23,6 +23,7 @@ export * from "./calendar/utils.js";
 export * from "./lists/checkbox-col.js";
 export * from "./lists/data-table-body.js";
 export * from "./lists/data-table.js";
+export * from "./lists/dynamic-data-table.js";
 export * from "./lists/header-col.js";
 export * from "./lists/scrollable-data-table.js";
 export * from "./lists/table-header.js";
