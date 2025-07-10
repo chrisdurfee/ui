@@ -44,6 +44,11 @@ export const Toggle = VeilJot(
 		{
 			state.toggle('active');
 			this.checkbox.checked = state.active;
+
+			if (this.change)
+			{
+				this.change(state.active, e, this);
+			}
 		};
 
 		return Button({

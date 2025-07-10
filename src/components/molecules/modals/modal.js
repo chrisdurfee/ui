@@ -102,12 +102,16 @@ export class Modal extends Component
 				buttons: this.getButtons(),
 				onSubmit: (parent) =>
 				{
+					let canClose = true;
 					if (this.onSubmit)
 					{
-						this.onSubmit(parent);
+						canClose = this.onSubmit(parent);
 					}
 
-					this.destroy();
+					if (canClose !== false)
+					{
+						this.destroy();
+					}
 				},
 				icon: this.icon,
 				back: this.back ?? false,
@@ -240,6 +244,16 @@ export class Modal extends Component
 	{
 		render(this);
 		this.showModal();
+	}
+
+	/**
+	 * This will destroy the modal.
+	 *
+	 * @returns {void}
+	 */
+	close()
+	{
+		this.destroy();
 	}
 
 	/**
