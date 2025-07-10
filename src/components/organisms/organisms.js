@@ -51,6 +51,7 @@ export * from "./overlays/overlay.js";
 
 // New exports from the search folder
 export * from "./search/search-dropdown.js";
+export * from "./search/search-input.js";
 
 // New exports from the tabs folder
 export * from "./tabs/button-tab.js";

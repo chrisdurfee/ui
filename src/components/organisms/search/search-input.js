@@ -16,21 +16,42 @@ export const SearchInput = Atom((props) => (
 		Input({
 			cache: 'input',
 			placeholder: props.placeholder ?? 'Search...',
-			bind: [props.state, 'searchQuery'],
+			bind: (props.bind ?? [props.state, 'searchQuery']),
 			keyup: (e, parent) =>
 			{
-				parent.state.open = true;
+				if (parent.state)
+				{
+					parent.state.open = false;
+				}
+
 				if (typeof props.filterOptions === 'function')
 				{
 					props.filterOptions();
 				}
 
-				parent.dropdown.updatePosition();
+				if (parent.dropdown)
+				{
+					parent.dropdown.updatePosition();
+				}
+
+				if (props.keyup)
+				{
+					props.keyup(e, parent);
+				}
 			},
-			pointerup: (e, parent) => parent.toggleDropdown(),
-			keydown: (e) => (typeof props.handleKeyDown === 'function') && props.handleKeyDown(e),
+			pointerup: (e, parent) =>
+			{
+				if (typeof parent.toggleDropdown === 'function')
+				{
+					parent.toggleDropdown();
+				}
+			},
+			keydown: (e) =>
+			[
+				(typeof props.handleKeyDown === 'function') && props.handleKeyDown(e)
+			],
 		}),
-		props.icon && Div({ class: 'absolute right-0 mr-2' }, [
+		props.icon && Div({ class: 'absolute flex right-0 mr-2' }, [
 			Icon(props.icon)
 		])
 	])

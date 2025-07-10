@@ -229,7 +229,7 @@ export const PasswordInput = Atom((props) => (
  * @param {object} props Props passed to the Input.
  * @returns {object} An Input element of type "search".
  */
-export const SearchInput = Atom((props) => (
+const SearchInput = Atom((props) => (
 	Input({
 		...props,
 		type: "search",
