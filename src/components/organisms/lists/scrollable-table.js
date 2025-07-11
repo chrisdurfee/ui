@@ -1,4 +1,4 @@
-import { Div, Table } from '@base-framework/atoms';
+import { Div, On, Table } from '@base-framework/atoms';
 import { ScrollableTableBody } from '@base-framework/organisms';
 import { DataTable } from './data-table.js';
 import { CheckboxCol, HeaderCol, TableHeader } from './table-header.js';
@@ -41,6 +41,7 @@ export const ScrollableDataTableBody = (props) => (
  * @property {array} [props.rows] - The initial rows.
  * @property {function} [props.rowItem] - The row item.
  * @property {string} [props.containerClass] - The class to add to the scroll container.
+ * @property {array} [props.emptyState] - The empty state to show when there are no items.
  * @returns {object}
  */
 export class ScrollableTable extends DataTable
@@ -58,7 +59,12 @@ export class ScrollableTable extends DataTable
 		const border = this.border !== false ? 'border' : '';
 
 		return Div({ class: 'w-full' }, [
-			Div({ class: `w-full rounded-md ${border} overflow-x-auto` }, [
+			On('hasItems', (hasItems) =>
+			{
+				// @ts-ignore
+				return (hasItems === false && this.emptyState) ? this.emptyState() : null;
+			}),
+			Div({ class: `w-full rounded-md ${border} overflow-x-auto`, onSet: ['hasItems', { hidden: false }] }, [
 				Table({ class: 'w-full' }, [
 					// @ts-ignore
 					this.headers && TableHeader({ headers: this.headers, sort: (key) => this.sortRows(key) }),

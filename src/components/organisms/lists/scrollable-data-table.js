@@ -23,6 +23,7 @@ export { CheckboxCol, HeaderCol, TableHeader };
  * @property {string} [props.border] - The border to add to the table.
  * @property {object} [props.data] - The table data.
  * @property {string} [props.cache] - The table cache identifier.
+ * @property {object|null} [props.emptyState] - The empty state to show when there are no items.
  * @returns {object}
  */
 export const ScrollableDataTable = Atom((props) => (
@@ -40,7 +41,8 @@ export const ScrollableDataTable = Atom((props) => (
 		rowItem: props.rowItem,
 		headers: props.headers,
 		customHeader: props.customHeader,
-		border: props.border
+		border: props.border,
+		emptyState: props.emptyState,
 	})
 ));
 

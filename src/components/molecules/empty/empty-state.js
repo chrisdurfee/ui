@@ -10,12 +10,12 @@ import { Form } from "../form/form.js";
  * @param {array} children - The children elements to be rendered inside the empty state.
  * @return {object} - The empty state component.
  */
-export const EmptyState = Atom((props, children) => (
-	Div({ class: 'w-full max-w-sm p-6' }, [
+export const EmptyState = Atom((props, children = []) => (
+	Div({ class: 'w-full max-w-sm p-6 m-auto' }, [
 		Form({ class: 'flex flex-auto flex-col' }, [
 			Div({ class: 'flex flex-auto flex-col space-y-4' }, [
 				Div({ class: 'flex flex-auto items-center justify-center' }, [
-					props.Icon && Div({ class: 'w-16 h-16 mb-2 text-primary' }, [
+					props.icon && Div({ class: 'w-16 h-16 mb-2 text-primary' }, [
 						Icon(props.icon)
 					])
 				]),

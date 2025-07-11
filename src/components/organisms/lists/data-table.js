@@ -1,4 +1,4 @@
-import { Div, Table } from '@base-framework/atoms';
+import { Div, On, Table } from '@base-framework/atoms';
 import { Component, Data } from '@base-framework/base';
 import { DataTableBody } from './data-table-body.js';
 import { CheckboxCol, HeaderCol, TableHeader } from './table-header.js';
@@ -23,6 +23,7 @@ export class DataTable extends Component
 	{
 		return new Data({
 			selectedRows: [],
+			hasItems: null,
 			selected: false
 		});
 	}
@@ -128,7 +129,12 @@ export class DataTable extends Component
 		const border = this.border !== false ? 'border' : '';
 
 		return Div({ class: 'w-full' }, [
-			Div({ class: `w-full rounded-md ${border} overflow-x-auto` }, [
+			On('hasItems', (hasItems) =>
+			{
+				// @ts-ignore
+				return (hasItems === false && this.emptyState) ? this.emptyState() : null;
+			}),
+			Div({ class: `w-full rounded-md ${border} overflow-x-auto`, onSet: ['hasItems', { hidden: false }] }, [
 				Table({ class: 'w-full' }, [
 					// @ts-ignore
 					this.headers && TableHeader({ headers: this.headers, sort: (key) => this.sortRows(key) }),
@@ -141,7 +147,9 @@ export class DataTable extends Component
 						// @ts-ignore
 						selectRow: this.selectRow.bind(this),
 						// @ts-ignore
-						rowItem: this.rowItem
+						rowItem: this.rowItem,
+						// @ts-ignore
+						emptyState: this.emptyState
 					})
 				])
 			])

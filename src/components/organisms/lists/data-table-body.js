@@ -8,12 +8,13 @@ export { CheckboxCol, HeaderCol, TableHeader };
  * @param {object} props
  * @returns {object}
  */
-export const DataTableBody = ({ key, rows, selectRow, rowItem }) => (
+export const DataTableBody = ({ key, rows, selectRow, rowItem, emptyState }) => (
 	new TableBody({
 		cache: 'list',
 		key,
 		items: rows,
 		rowItem: (row) => rowItem(row, selectRow),
-		class: 'divide-y divide-border'
+		class: 'divide-y divide-border',
+		emptyState
 	})
 );
