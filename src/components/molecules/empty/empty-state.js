@@ -21,10 +21,12 @@ export const EmptyState = Atom((props, children) => (
 				]),
 				Header({ class: 'py-4 text-center' }, [
 					H2({ class: 'text-xl font-bold' }, props.title),
-					P(props.description || ''),
+					P({ class: 'pb-8 text-muted-foreground' }, props.description || ''),
 					...children
 				])
 			])
 		])
 	])
 ));
+
+export default EmptyState;

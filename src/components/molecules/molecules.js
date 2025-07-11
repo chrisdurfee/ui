@@ -43,3 +43,6 @@ export * from "./dialogs/confirmation.js";
 export * from "./dialogs/dialog-container.js";
 export * from "./dialogs/dialog.js";
 
+// New exports from the empty-state folder
+export * from "./empty/empty-state.js";
+
