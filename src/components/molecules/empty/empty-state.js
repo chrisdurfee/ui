@@ -11,7 +11,7 @@ import { Form } from "../form/form.js";
  * @return {object} - The empty state component.
  */
 export const EmptyState = Atom((props, children = []) => (
-	Div({ class: 'w-full max-w-sm p-6 m-auto' }, [
+	Div({ class: 'w-full max-w-md p-6 m-auto' }, [
 		Form({ class: 'flex flex-auto flex-col' }, [
 			Div({ class: 'flex flex-auto flex-col space-y-4' }, [
 				Div({ class: 'flex flex-auto items-center justify-center' }, [

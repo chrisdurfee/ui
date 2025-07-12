@@ -58,7 +58,7 @@ export class ScrollableTable extends DataTable
 		// @ts-ignore
 		const border = this.border !== false ? 'border' : '';
 
-		return Div({ class: 'w-full' }, [
+		return Div({ class: 'w-full flex flex-auto flex-col' }, [
 			On('hasItems', (hasItems) =>
 			{
 				// @ts-ignore
