@@ -21,9 +21,22 @@ export class DataTable extends Component
 	 */
 	setData()
 	{
+		// @ts-ignore
+		let hasItems = this.rows && this.rows.length > 0;
+
+		/**
+		 * This will not set the empty state for dynamic data tables.
+		 */
+		// @ts-ignore
+		if ((this.loadMoreItems || this.tableData) && !hasItems)
+		{
+			hasItems = null;
+		}
+
 		return new Data({
 			selectedRows: [],
-			hasItems: null,
+			// @ts-ignore
+			hasItems,
 			selected: false
 		});
 	}
