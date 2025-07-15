@@ -1,3 +1,5 @@
+import { DateTime } from "@base-framework/base";
+
 /**
  * Creates a watcher callback.
  *
@@ -143,6 +145,57 @@ export const Format =
 			value = defaultValueCallBack(value, defaultValue);
 			const intVal = parseInt(value, 10);
 			return isNaN(intVal) ? defaultValue : intVal.toString();
+		};
+
+		return createWatcherCallback(watcher, callBack);
+	},
+
+	/**
+	 * Formats a date value to a standard date format.
+	 *
+	 * @param {string|number|object|array} watcher
+	 * @param {*} defaultValue - Value if original is invalid.
+	 * @returns {object|array}
+	 */
+	date(watcher, defaultValue = null)
+	{
+		const callBack = (value) =>
+		{
+			return (value)? DateTime.format('standard', value) : (defaultValue || '');
+		};
+
+		return createWatcherCallback(watcher, callBack);
+	},
+
+	/**
+	 * Formats a date and time value to a standard date and time format.
+	 *
+	 * @param {string|number|object|array} watcher
+	 * @param {*} defaultValue - Value if original is invalid.
+	 * @returns {object|array}
+	 */
+	dateTime(watcher, defaultValue = null)
+	{
+		const callBack = (value) =>
+		{
+			return (value)? DateTime.format('standard', value) + ' ' + DateTime.formatTime(value, 12) : (defaultValue || '');
+		};
+
+		return createWatcherCallback(watcher, callBack);
+	},
+
+	/**
+	 * Formats a time value to a standard time format.
+	 *
+	 * @param {string|number|object|array} watcher
+	 * @param {*} defaultValue - Value if original is invalid.
+	 * @returns {object|array}
+	 */
+	time(watcher, defaultValue = null)
+	{
+		const callBack = (value) =>
+		{
+			return (value)? DateTime.formatTime(value, 12) : (defaultValue || '');
 		};
 
 		return createWatcherCallback(watcher, callBack);
