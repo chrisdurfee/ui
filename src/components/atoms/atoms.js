@@ -2,6 +2,7 @@ export * from "./badges/badge.js";
 export * from "./buttons/buttons.js";
 export * from "./cards/card.js";
 export * from "./form/fieldset.js";
+export * from "./form/form-group.js";
 export * from "./form/inputs/checkbox.js";
 export * from "./form/inputs/inputs.js";
 export * from "./form/inputs/range-slider.js";

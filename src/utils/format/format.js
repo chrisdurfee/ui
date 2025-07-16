@@ -56,9 +56,13 @@ export const Format =
 	{
 		const callBack = (value) =>
 		{
-			value = defaultValueCallBack(value, defaultValue);
-			const pattern = /\B(?=(\d{3})+(?!\d))/g;
-			return value.toString().replace(pattern, ',');
+			if (!isNaN(value))
+			{
+				const pattern = /\B(?=(\d{3})+(?!\d))/g;
+				return value.toString().replace(pattern, ',');
+			}
+
+			return defaultValue || '';
 		};
 
 		return createWatcherCallback(watcher, callBack);
@@ -94,11 +98,10 @@ export const Format =
 	{
 		const callBack = (value) =>
 		{
-			value = defaultValueCallBack(value, defaultValue);
 			const numeric = parseFloat(value);
 			if (isNaN(numeric))
 			{
-				return defaultValue;
+				return defaultValue || '';
 			}
 
 			const pattern = /\B(?=(\d{3})+(?!\d))/g;
@@ -119,13 +122,13 @@ export const Format =
 	{
 		const callBack = (value) =>
 		{
-			value = defaultValueCallBack(value, defaultValue);
-			const digits = value.toString().replace(/\D/g, '');
+			value = value || '';
+			const digits = String(value.toString()).replace(/\D/g, '');
 			if (digits.length === 10)
 			{
 				return '(' + digits.slice(0, 3) + ') ' + digits.slice(3, 6) + '-' + digits.slice(6);
 			}
-			return value;
+			return (value)? value : defaultValue;
 		};
 
 		return createWatcherCallback(watcher, callBack);
