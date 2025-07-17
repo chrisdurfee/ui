@@ -20,14 +20,18 @@ export const RangeDayCell = ({ day, iso, disabled, isStart, isEnd, isBetween, cl
 	let variant = 'ghost';
 	let additionalClasses = '';
 
-	if (isStart || isEnd) {
+	if (isStart || isEnd)
+	{
 		variant = 'default';
 		additionalClasses = 'bg-primary text-primary-foreground hover:bg-primary/90';
-	} else if (isBetween) {
+	}
+	else if (isBetween)
+	{
 		additionalClasses = 'bg-accent text-accent-foreground hover:bg-accent/80';
 	}
 
-	if (disabled) {
+	if (disabled)
+	{
 		additionalClasses += ' opacity-50 cursor-not-allowed';
 	}
 
@@ -36,7 +40,14 @@ export const RangeDayCell = ({ day, iso, disabled, isStart, isEnd, isBetween, cl
 			class: `flex items-center justify-center h-9 w-9 p-0 text-sm font-medium rounded-md transition-colors ${additionalClasses}`,
 			variant,
 			disabled,
-			click: () => !disabled && click()
+			click: () =>
+			{
+				console.log('Day cell clicked:', { day, iso, disabled });
+				if (!disabled)
+				{
+					click();
+				}
+			}
 		},
 		day.toString()
 	);

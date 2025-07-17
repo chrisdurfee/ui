@@ -17,7 +17,10 @@ import { Button } from '../../../atoms/buttons/buttons.js';
 export const RangeToggle = ({ start, end, selecting, onSelectStart, onSelectEnd }) =>
 	Div({ class: 'flex space-x-2 mb-4' }, [
 		Button({
-			click: onSelectStart,
+			click: () => {
+				console.log('Start button clicked');
+				onSelectStart();
+			},
 			variant: selecting === 'start' ? 'default' : 'outline',
 			class: 'flex-1 text-left justify-start px-3 py-2 text-sm font-medium rounded-md border min-h-[2.5rem] flex flex-col items-start'
 		}, [
@@ -25,7 +28,10 @@ export const RangeToggle = ({ start, end, selecting, onSelectStart, onSelectEnd 
 			Div({ class: 'font-medium' }, start ? formatDateDisplay(start) : 'Select start')
 		]),
 		Button({
-			click: onSelectEnd,
+			click: () => {
+				console.log('End button clicked');
+				onSelectEnd();
+			},
 			variant: selecting === 'end' ? 'default' : 'outline',
 			class: 'flex-1 text-left justify-start px-3 py-2 text-sm font-medium rounded-md border min-h-[2.5rem] flex flex-col items-start'
 		}, [

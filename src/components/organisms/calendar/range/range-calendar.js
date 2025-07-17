@@ -109,6 +109,9 @@ export class RangeCalendar extends Component
 	 */
 	handleClick(isoDate)
 	{
+		console.log('handleClick called with:', isoDate);
+		console.log('Current state:', this.state);
+
 		if (this.state.selecting === 'start')
 		{
 			this.state.start = isoDate;
@@ -135,6 +138,8 @@ export class RangeCalendar extends Component
 				this.onRangeSelect(this.state.start, this.state.end);
 			}
 		}
+
+		console.log('New state:', this.state);
 	}
 
 	/**
@@ -188,7 +193,7 @@ export class RangeCalendar extends Component
 				isStart,
 				isEnd,
 				isBetween,
-				click: () => this.handleClick(iso)
+				click: this.handleClick.bind(this, iso)
 			});
 		}
 
