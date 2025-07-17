@@ -14,8 +14,8 @@ import { Button } from '../../atoms/buttons/buttons.js';
  */
 export const YearSelector = ({ currentMonth, currentYear, onSelect }) =>
 {
-	const start = currentYear - 50;
-	const years = Array.from({ length: 101 }, (_, i) => start + i);
+	const start = currentYear - 75;
+	const years = Array.from({ length: 151 }, (_, i) => start + i);
 
 	return Div(
 		{ class: 'grid grid-cols-4 gap-2 overflow-y-auto max-h-72' },
