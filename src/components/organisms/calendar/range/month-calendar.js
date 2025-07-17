@@ -23,8 +23,6 @@ import { RangeDaysGrid } from './range-days-grid.js';
 export const MonthCalendar = Atom((props, children) => (
 	Div({ class: 'flex flex-auto flex-col' }, [
 		CalendarHeader({
-			monthName: props.monthName,
-			year: props.year,
 			onMonthClick: props.onMonthClick,
 			onYearClick: props.onYearClick,
 			next: props.next,

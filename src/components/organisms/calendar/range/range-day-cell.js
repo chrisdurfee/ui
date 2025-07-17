@@ -37,7 +37,7 @@ export const RangeDayCell = ({ day, iso, disabled, isStart, isEnd, isBetween, cl
 
 	return Button(
 		{
-			class: `flex items-center justify-center h-9 w-9 p-0 text-sm font-medium rounded-md transition-colors ${additionalClasses}`,
+			class: `flex items-center justify-center p-0 text-sm font-medium rounded-md transition-colors ${additionalClasses}`,
 			variant,
 			disabled,
 			click: () =>

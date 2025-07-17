@@ -118,7 +118,7 @@ export class RangeCalendar extends Component
 
 			const date = new Date(isoDate);
 			// set current date to start date
-			this.setContext({
+			this.setCurrent({
 				month: date.getMonth(),
 				year: date.getFullYear(),
 				date: date.getDate()
@@ -141,7 +141,7 @@ export class RangeCalendar extends Component
 
 			// set current date to end date
 			const date = new Date(isoDate);
-			this.setContext({
+			this.setCurrent({
 				month: date.getMonth(),
 				year: date.getFullYear(),
 				date: date.getDate()
