@@ -23,7 +23,16 @@ export const MonthCalendar = Atom((props, children) => (
 			next: props.next,
 			previous: props.previous
 		}),
-		DaysOfWeekHeader(),
-		RangeDaysGrid({ cells: props.cells })
+		Div({
+			class: 'flex flex-auto flex-col w-full',
+			onSet: [
+				'currentDate',
+				() =>
+				[
+					DaysOfWeekHeader(),
+					RangeDaysGrid({ cells: props.cells })
+				]
+			]
+		})
 	])
 ));

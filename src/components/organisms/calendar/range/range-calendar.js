@@ -1,10 +1,10 @@
 import { Div, OnState } from '@base-framework/atoms';
 import { Component, Data } from '@base-framework/base';
-import { MonthSelector } from '../month-selector.js';
 import { FormatDate } from '../utils.js';
-import { YearSelector } from '../year-selector.js';
 import { MonthCalendar } from './month-calendar.js';
+import { MonthSelector } from './month-selector.js';
 import { RangeToggle } from './range-toggle.js';
+import { YearSelector } from './year-selector.js';
 
 /**
  * RangeCalendar
@@ -111,6 +111,19 @@ export class RangeCalendar extends Component
 	}
 
 	/**
+	 * Update current month/year in data.
+	 *
+	 * @param {{month:number,year:number}} obj
+	 * @returns {void}
+	 */
+	setCurrent({ month, year })
+	{
+		const d = this.data.current;
+		d.month = (month + 12) % 12;
+		d.year  = year + (month < 0 ? -1 : month > 11 ? 1 : 0);
+	}
+
+	/**
 	 * Render the range calendar.
 	 *
 	 * @returns {object}
@@ -164,11 +177,11 @@ export class RangeCalendar extends Component
 						case 'months':
 							return MonthSelector(
 								{
-									currentMonth: this.data.current.month,
-									currentYear: this.data.current.year,
+									currentMonth: current.month,
+									currentYear:  current.year,
 									onSelect: (m) =>
 									{
-										this.setCurrentDate(m, this.data.current.year);
+										this.setCurrent({ month: m, year: current.year });
 										this.state.view = 'calendar';
 									}
 								}
@@ -176,37 +189,21 @@ export class RangeCalendar extends Component
 						case 'years':
 							return YearSelector(
 								{
-									currentMonth: this.data.current.month,
-									currentYear: this.data.current.year,
+									currentYear: current.year,
 									onSelect: (y) =>
 									{
-										this.setCurrentDate(this.data.current.month, y);
+										this.setCurrent({ month: current.month, year: y });
 										this.state.view = 'calendar';
 									}
 								}
 							);
 						default:
 							return MonthCalendar({
-								current: this.data.current,
-								today: this.data.today,
-								select: (date) => this.selectDate(date),
-								next: () => this.goToNextMonth(),
-								previous: () => this.goToPreviousMonth(),
-								blockPriorDates: this.blockPriorDates || false,
-								onMonthClick: (e) =>
-								{
-									e.preventDefault();
-									e.stopPropagation();
-
-									this.state.view = 'months';
-								},
-								onYearClick: (e) =>
-								{
-									e.preventDefault();
-									e.stopPropagation();
-
-									this.state.view = 'years';
-								}
+								onMonthClick: () => this.state.view = 'months',
+								onYearClick: () => this.state.view = 'years',
+								next: () => this.setCurrent({ month: current.month+1, year: current.year }),
+								previous: () => this.setCurrent({ month: current.month-1, year: current.year }),
+								cells
 							});
 					}
 				})
