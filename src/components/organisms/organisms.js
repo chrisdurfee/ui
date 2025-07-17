@@ -15,6 +15,9 @@ export * from "./calendar/week/week-cell.js";
 export * from "./calendar/week/week-cells.js";
 export * from "./calendar/week/week-header.js";
 
+// Exports from the calendar/range folder
+export * from "./calendar/range/range-calendar.js";
+
 // Exports from the calendar root folder
 export * from "./calendar/calendar.js";
 export * from "./calendar/utils.js";
