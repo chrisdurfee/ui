@@ -17,19 +17,26 @@ import { Button } from '../../../atoms/buttons/buttons.js';
  */
 export const RangeDayCell = ({ day, iso, disabled, isStart, isEnd, isBetween, click }) =>
 {
-	const cls = isStart
-	? 'bg-primary text-primary-foreground'
-	: isEnd
-	? 'bg-primary text-primary-foreground'
-	: isBetween
-	? 'bg-muted text-foreground'
-	: '';
+	let variant = 'ghost';
+	let additionalClasses = '';
+
+	if (isStart || isEnd) {
+		variant = 'default';
+		additionalClasses = 'bg-primary text-primary-foreground hover:bg-primary/90';
+	} else if (isBetween) {
+		additionalClasses = 'bg-accent text-accent-foreground hover:bg-accent/80';
+	}
+
+	if (disabled) {
+		additionalClasses += ' opacity-50 cursor-not-allowed';
+	}
 
 	return Button(
 		{
-			class: 'flex items-center justify-center h-9 p-0 text-sm rounded-md ' + cls,
+			class: `flex items-center justify-center h-9 w-9 p-0 text-sm font-medium rounded-md transition-colors ${additionalClasses}`,
+			variant,
 			disabled,
-			click: () => !disabled && click(iso)
+			click: () => !disabled && click()
 		},
 		day.toString()
 	);

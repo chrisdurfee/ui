@@ -12,8 +12,8 @@ import { RangeDayCell } from './range-day-cell.js';
  */
 export const RangeDaysGrid = ({ cells }) =>
 	Div({ class: 'grid grid-cols-7 gap-1' },
-		cells.map((c) =>
-			(!c)? null : RangeDayCell({
+		cells.map((c, index) =>
+			(!c) ? Div({ class: 'h-9' }) : RangeDayCell({
 				day: c.day,
 				iso: c.iso,
 				disabled: c.disabled,

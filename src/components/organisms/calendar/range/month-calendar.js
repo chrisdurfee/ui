@@ -8,6 +8,8 @@ import { RangeDaysGrid } from './range-days-grid.js';
  * Create a month calendar component.
  *
  * @param {object} props
+ * @param {string} props.monthName
+ * @param {number} props.year
  * @param {function} props.onMonthClick
  * @param {function} props.onYearClick
  * @param {function} props.next
@@ -16,23 +18,18 @@ import { RangeDaysGrid } from './range-days-grid.js';
  * @returns {object}
  */
 export const MonthCalendar = Atom((props, children) => (
-	Div({ class: 'fex flex-auto flex-col' }, [
+	Div({ class: 'flex flex-auto flex-col' }, [
 		CalendarHeader({
+			monthName: props.monthName,
+			year: props.year,
 			onMonthClick: props.onMonthClick,
 			onYearClick: props.onYearClick,
 			next: props.next,
 			previous: props.previous
 		}),
-		Div({
-			class: 'flex flex-auto flex-col w-full',
-			onSet: [
-				'currentDate',
-				() =>
-				[
-					DaysOfWeekHeader(),
-					RangeDaysGrid({ cells: props.cells })
-				]
-			]
-		})
+		Div({ class: 'flex flex-auto flex-col w-full' }, [
+			DaysOfWeekHeader(),
+			RangeDaysGrid({ cells: props.cells })
+		])
 	])
 ));

@@ -55,17 +55,21 @@ export class RangeCalendar extends Component
 	setData()
 	{
 		const now = new Date();
+		const startMonth = this.startDate ? new Date(this.startDate + 'T00:00:00') : now;
+		const initialMonth = startMonth.getMonth();
+		const initialYear = startMonth.getFullYear();
+
 		return new Data({
 			today: {
 				date: now.getDate(),
 				month: now.getMonth(),
 				year: now.getFullYear()
 			},
-			monthName: this.getMonthName(now.getMonth()),
+			monthName: this.getMonthName(initialMonth),
 			current: {
 				date: now.getDate(),
-				month: now.getMonth(),
-				year: now.getFullYear()
+				month: initialMonth,
+				year: initialYear
 			}
 		});
 	}
@@ -113,7 +117,17 @@ export class RangeCalendar extends Component
 		}
 		else
 		{
-			this.state.end = isoDate;
+			// If end date is before start date, swap them
+			if (this.state.start && isoDate < this.state.start)
+			{
+				this.state.end = this.state.start;
+				this.state.start = isoDate;
+			}
+			else
+			{
+				this.state.end = isoDate;
+			}
+
 			this.state.selecting = 'start';
 
 			if (typeof this.onRangeSelect === 'function')
@@ -159,8 +173,9 @@ export class RangeCalendar extends Component
 		for (let d = 1; d <= daysInMonth; d++)
 		{
 			const iso = FormatDate(current.year, current.month, d);
-			const dateObj = new Date(iso + 'T00:00:00');
-			const isBefore = dateObj < new Date(today.year, today.month, today.date);
+			const dateObj = new Date(current.year, current.month, d);
+			const todayObj = new Date(today.year, today.month, today.date);
+			const isBefore = dateObj < todayObj;
 			const disabled = this.blockPriorDates && isBefore;
 			const isStart = start === iso;
 			const isEnd = end === iso;
@@ -173,11 +188,11 @@ export class RangeCalendar extends Component
 				isStart,
 				isEnd,
 				isBetween,
-				click: (i) => this.handleClick(i)
+				click: () => this.handleClick(iso)
 			});
 		}
 
-		return Div({ class: 'range-calendar p-4 rounded-md border min-w-80' }, [
+		return Div({ class: 'range-calendar bg-background border border-border rounded-lg shadow-md p-4 w-full max-w-sm' }, [
 			RangeToggle({
 				start,
 				end,
@@ -214,6 +229,8 @@ export class RangeCalendar extends Component
 							);
 						default:
 							return MonthCalendar({
+								monthName: this.data.monthName,
+								year: current.year,
 								onMonthClick: () => this.state.view = 'months',
 								onYearClick: () => this.state.view = 'years',
 								next: () =>

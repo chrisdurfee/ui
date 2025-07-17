@@ -9,4 +9,4 @@ import { Div } from '@base-framework/atoms';
  * @returns {object}
  */
 export const DayHeader = (day) =>
-	Div({ class: 'py-1' }, day);
+	Div({ class: 'h-9 flex items-center justify-center font-medium' }, day);
