@@ -23,8 +23,14 @@ export const YearSelector = ({ currentMonth, currentYear, onSelect }) =>
 			(yr) =>
 				Button(
 					{
-						click: () => onSelect(yr),
-						variant: 'ghost',
+						click: (e) =>
+                        {
+                            e.preventDefault();
+                            e.stopPropagation();
+
+                            onSelect(yr);
+                        },
+						variant: (yr === currentYear ? 'primary' : 'ghost'),
 						'aria-label': `Select ${yr}`
 					},
 					yr.toString()

@@ -211,6 +211,7 @@ export class Calendar extends Component
 					case 'months':
 						return MonthSelector(
 							{
+								currentMonth: this.data.current.month,
 								currentYear: this.data.current.year,
 								onSelect: (m) =>
 								{
@@ -239,8 +240,20 @@ export class Calendar extends Component
 							next: () => this.goToNextMonth(),
 							previous: () => this.goToPreviousMonth(),
 							blockPriorDates: this.blockPriorDates || false,
-							onMonthClick: () => this.state.view = 'months',
-							onYearClick: () => this.state.view = 'years'
+							onMonthClick: (e) =>
+							{
+								e.preventDefault();
+								e.stopPropagation();
+
+								this.state.view = 'months';
+							},
+							onYearClick: (e) =>
+							{
+								e.preventDefault();
+								e.stopPropagation();
+
+								this.state.view = 'years';
+							}
 						});
 				}
 			})

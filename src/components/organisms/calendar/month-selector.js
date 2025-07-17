@@ -8,18 +8,25 @@ import { Button } from '../../atoms/buttons/buttons.js';
  * Renders a grid of month buttons.
  *
  * @param {object} props
+ * @param {number} props.currentMonth
  * @param {number} props.currentYear
  * @param {function} props.onSelect
  * @returns {object}
  */
-export const MonthSelector = ({ currentYear, onSelect }) =>
+export const MonthSelector = ({ currentMonth, currentYear, onSelect }) =>
 	Div({ class: 'grid grid-cols-3 gap-2' },
 		DateTime.monthNames.map(
 			(name, idx) =>
 				Button(
 					{
-						click: () => onSelect(idx),
-						variant: 'ghost',
+						click: (e) =>
+						{
+							e.preventDefault();
+							e.stopPropagation();
+
+							onSelect(idx);
+						},
+						variant: (currentMonth === idx ? 'primary' : 'ghost'),
 						'aria-label': `Select ${name} ${currentYear}`
 					},
 					name.substring(0, 3)
