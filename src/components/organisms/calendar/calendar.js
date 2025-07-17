@@ -1,7 +1,9 @@
-import { Div } from '@base-framework/atoms';
+import { Div, OnState } from '@base-framework/atoms';
 import { Component, Data, DateTime } from '@base-framework/base';
+import { MonthSelector } from './month-selector.js';
 import { MonthCalendar } from './month/month-calendar.js';
 import { addTime, pad } from './utils.js';
+import { YearSelector } from './year-selector.js';
 
 /**
  * Calendar
@@ -79,6 +81,18 @@ export class Calendar extends Component
 				year: today.getFullYear()
 			}
 		});
+	}
+
+	/**
+	 * This will set up the states for the calendar.
+	 *
+	 * @return {object}
+	 */
+	setupStates()
+	{
+		return {
+			view: 'calendar', // 'calendar' | 'months' | 'years'
+		};
 	}
 
 	/**
@@ -190,13 +204,45 @@ export class Calendar extends Component
 	render()
 	{
 		return Div({ class: 'calendar-container p-3 rounded-md border min-w-80' }, [
-			MonthCalendar({
-				current: this.data.current,
-				today: this.data.today,
-				select: (date) => this.selectDate(date),
-				next: () => this.goToNextMonth(),
-				previous: () => this.goToPreviousMonth(),
-				blockPriorDates: this.blockPriorDates || false
+			OnState('view', (view) =>
+			{
+				switch (view)
+				{
+					case 'months':
+						return MonthSelector(
+							{
+								currentYear: this.data.current.year,
+								onSelect: (m) =>
+								{
+									this.setCurrentDate(m, this.data.current.year);
+									this.state.view = 'calendar';
+								}
+							}
+						);
+					case 'years':
+						return YearSelector(
+							{
+								currentMonth: this.data.current.month,
+								currentYear: this.data.current.year,
+								onSelect: (y) =>
+								{
+									this.setCurrentDate(this.data.current.month, y);
+									this.state.view = 'calendar';
+								}
+							}
+						);
+					default:
+						return MonthCalendar({
+							current: this.data.current,
+							today: this.data.today,
+							select: (date) => this.selectDate(date),
+							next: () => this.goToNextMonth(),
+							previous: () => this.goToPreviousMonth(),
+							blockPriorDates: this.blockPriorDates || false,
+							onMonthClick: () => this.state.view = 'months',
+							onYearClick: () => this.state.view = 'years'
+						});
+				}
 			})
 		]);
 	}

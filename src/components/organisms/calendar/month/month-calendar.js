@@ -1,27 +1,7 @@
-import { Div, Span } from '@base-framework/atoms';
+import { Div } from '@base-framework/atoms';
 import { CalendarCells } from './calendar-cells.js';
+import { CalendarHeader } from './calendar-header.js';
 import { DayHeader } from './day-header.js';
-import { NavigationButton } from './navigation-button.js';
-
-/**
- * This will create the calendar header.
- *
- * @param {object} props
- * @returns {object}
- */
-const CalendarHeader = ({ next, previous }) => (
-    Div({ class: 'flex flex-auto min-h-12 text-sm font-medium relative justify-center items-center' }, [
-		Span('[[monthName]] [[current.year]]'),
-		NavigationButton({
-			label: 'Previous',
-			click: previous
-		}),
-		NavigationButton({
-			label: 'Next',
-			click: next
-		})
-	])
-);
 
 /**
  * This will create the month header row.
@@ -45,6 +25,8 @@ const HeaderCells = () =>
 export const MonthCalendar = (props) => (
     Div({ class: 'rdp w-full space-y-1' }, [
 		CalendarHeader({
+			onMonthClick: props.onMonthClick,
+			onYearClick: props.onYearClick,
 			next: props.next,
 			previous: props.previous
 		}),
