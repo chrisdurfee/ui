@@ -1,6 +1,6 @@
 import { Div, OnState } from '@base-framework/atoms';
 import { Component, Data, DateTime } from '@base-framework/base';
-import { FormatDate } from '../utils.js';
+import { pad } from '../utils.js';
 import { MonthCalendar } from './month-calendar.js';
 import { MonthSelector } from './month-selector.js';
 import { RangeToggle } from './range-toggle.js';
@@ -66,11 +66,15 @@ export class RangeCalendar extends Component
 				year: now.getFullYear()
 			},
 			monthName: this.getMonthName(initialMonth),
+			currentData: `${startMonth.getFullYear()}-${pad(startMonth.getMonth() + 1)}-${pad(startMonth.getDate())}`,
 			current: {
 				date: now.getDate(),
 				month: initialMonth,
-				year: initialYear
-			}
+				year: initialYear,
+				start: this.startDate,
+				end: this.endDate
+			},
+			selecting: 'start'
 		});
 	}
 
@@ -89,15 +93,12 @@ export class RangeCalendar extends Component
 	/**
 	 * Initialize component state.
 	 *
-	 * @returns {{view:string,selecting:string,start:string|null,end:string|null}}
+	 * @returns {{view:string}}
 	 */
 	setupStates()
 	{
 		return {
-			view: 'calendar', // 'calendar', 'months', or 'years'
-			selecting: 'start',
-			start: this.startDate,
-			end: this.endDate
+			view: 'calendar' // 'calendar', 'months', or 'years'
 		};
 	}
 
@@ -109,52 +110,69 @@ export class RangeCalendar extends Component
 	 */
 	handleClick(isoDate)
 	{
-		console.log('handleClick called with:', isoDate);
-		console.log('Current state:', this.state);
-
-		if (this.state.selecting === 'start')
+		if (this.data.selecting === 'start')
 		{
-			this.state.start = isoDate;
-			this.state.end = null;
-			this.state.selecting = 'end';
+			this.data.current.start = isoDate;
+			this.data.current.end = null;
+			this.data.selecting = 'end';
+
+			const date = new Date(isoDate);
+			// set current date to start date
+			this.setContext({
+				month: date.getMonth(),
+				year: date.getFullYear(),
+				date: date.getDate()
+			});
 		}
 		else
 		{
 			// If end date is before start date, swap them
-			if (this.state.start && isoDate < this.state.start)
+			if (this.data.current.start && isoDate < this.data.current.start)
 			{
-				this.state.end = this.state.start;
-				this.state.start = isoDate;
+				this.data.current.end = this.data.current.start;
+				this.data.current.start = isoDate;
 			}
 			else
 			{
-				this.state.end = isoDate;
+				this.data.current.end = isoDate;
 			}
 
-			this.state.selecting = 'start';
+			this.data.selecting = 'start';
+
+			// set current date to end date
+			const date = new Date(isoDate);
+			this.setContext({
+				month: date.getMonth(),
+				year: date.getFullYear(),
+				date: date.getDate()
+			});
 
 			if (typeof this.onRangeSelect === 'function')
 			{
-				this.onRangeSelect(this.state.start, this.state.end);
+				this.onRangeSelect(this.data.current.start, this.data.current.end);
 			}
 		}
-
-		console.log('New state:', this.state);
 	}
 
 	/**
 	 * Update current month/year in data.
 	 *
-	 * @param {{month:number,year:number}} obj
+	 * @param {object} obj
 	 * @returns {void}
 	 */
-	setCurrent({ month, year })
+	setCurrent({ month, year, date = null })
 	{
 		const d = this.data.current;
 		d.month = (month + 12) % 12;
 		d.year = year + (month < 0 ? -1 : month > 11 ? 1 : 0);
 
+		if (date !== null)
+		{
+			d.date = date;
+		}
+
 		this.data.monthName = this.getMonthName(d.month);
+		this.data.currentDate = `${year}-${pad(month + 1)}-${pad(d.date)}`;
 	}
 
 	/**
@@ -164,46 +182,16 @@ export class RangeCalendar extends Component
 	 */
 	render()
 	{
-		const { today, current } = this.data;
-		const { start, end, selecting } = this.state;
-		const firstDay = new Date(current.year, current.month, 1).getDay();
-		const daysInMonth = new Date(current.year, current.month + 1, 0).getDate();
-		const cells = [];
-
-		for (let i = 0; i < firstDay; i++)
-		{
-			cells.push(null);
-		}
-
-		for (let d = 1; d <= daysInMonth; d++)
-		{
-			const iso = FormatDate(current.year, current.month, d);
-			const dateObj = new Date(current.year, current.month, d);
-			const todayObj = new Date(today.year, today.month, today.date);
-			const isBefore = dateObj < todayObj;
-			const disabled = this.blockPriorDates && isBefore;
-			const isStart = start === iso;
-			const isEnd = end === iso;
-			const isBetween = start && end && iso > start && iso < end;
-
-			cells.push({
-				day: d,
-				iso,
-				disabled,
-				isStart,
-				isEnd,
-				isBetween,
-				click: this.handleClick.bind(this, iso)
-			});
-		}
+		const { today, current, selecting } = this.data;
+		const { start, end } = current;
 
 		return Div({ class: 'range-calendar bg-background border border-border rounded-lg shadow-md p-4 w-full max-w-sm' }, [
 			RangeToggle({
 				start,
 				end,
 				selecting,
-				onSelectStart: () => this.state.selecting = 'start',
-				onSelectEnd: () => this.state.selecting = 'end'
+				onSelectStart: () => this.data.selecting = 'start',
+				onSelectEnd: () => this.data.selecting = 'end'
 			}),
 			OnState('view', (view) =>
 				{
@@ -236,6 +224,10 @@ export class RangeCalendar extends Component
 							return MonthCalendar({
 								monthName: this.data.monthName,
 								year: current.year,
+								today,
+								current,
+								blockPriorDates: this.blockPriorDates,
+								onDateClick: (iso) => this.handleClick(iso),
 								onMonthClick: () => this.state.view = 'months',
 								onYearClick: () => this.state.view = 'years',
 								next: () =>
@@ -249,8 +241,7 @@ export class RangeCalendar extends Component
 									const current = this.data.current;
 									const selectingDate = (current.month === 0)? { month: 11, year: current.year - 1 } : { month: current.month - 1, year: current.year };
 									this.setCurrent(selectingDate);
-								},
-								cells
+								}
 							});
 					}
 				})

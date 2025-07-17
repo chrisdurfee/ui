@@ -10,11 +10,14 @@ import { RangeDaysGrid } from './range-days-grid.js';
  * @param {object} props
  * @param {string} props.monthName
  * @param {number} props.year
+ * @param {object} props.today
+ * @param {object} props.current
+ * @param {boolean} props.blockPriorDates
+ * @param {function} props.onDateClick
  * @param {function} props.onMonthClick
  * @param {function} props.onYearClick
  * @param {function} props.next
  * @param {function} props.previous
- * @param {Array} props.cells
  * @returns {object}
  */
 export const MonthCalendar = Atom((props, children) => (
@@ -27,9 +30,21 @@ export const MonthCalendar = Atom((props, children) => (
 			next: props.next,
 			previous: props.previous
 		}),
-		Div({ class: 'flex flex-auto flex-col w-full' }, [
-			DaysOfWeekHeader(),
-			RangeDaysGrid({ cells: props.cells })
-		])
+		Div({
+			class: 'flex flex-auto flex-col w-full',
+			onSet: [
+				'currentDate',
+				() =>
+				[
+					DaysOfWeekHeader(),
+					RangeDaysGrid({
+						today: props.today,
+						current: props.current,
+						blockPriorDates: props.blockPriorDates,
+						onDateClick: props.onDateClick
+					})
+				]
+			]
+		})
 	])
 ));

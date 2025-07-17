@@ -42,7 +42,6 @@ export const RangeDayCell = ({ day, iso, disabled, isStart, isEnd, isBetween, cl
 			disabled,
 			click: () =>
 			{
-				console.log('Day cell clicked:', { day, iso, disabled });
 				if (!disabled)
 				{
 					click();
