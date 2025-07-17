@@ -158,7 +158,7 @@ export class RangeCalendar extends Component
 				isStart,
 				isEnd,
 				isBetween,
-				onClick: (i) => this.handleClick(i)
+				click: (i) => this.handleClick(i)
 			});
 		}
 
@@ -201,8 +201,18 @@ export class RangeCalendar extends Component
 							return MonthCalendar({
 								onMonthClick: () => this.state.view = 'months',
 								onYearClick: () => this.state.view = 'years',
-								next: () => this.setCurrent({ month: current.month+1, year: current.year }),
-								previous: () => this.setCurrent({ month: current.month-1, year: current.year }),
+								next: () =>
+								{
+									const current = this.data.current;
+									const selectingDate = (current.month === 11)? { month: 0, year: current.year + 1 } : { month: current.month + 1, year: current.year };
+									this.setCurrent(selectingDate);
+								},
+								previous: () =>
+								{
+									const current = this.data.current;
+									const selectingDate = (current.month === 0)? { month: 11, year: current.year - 1 } : { month: current.month - 1, year: current.year };
+									this.setCurrent(selectingDate);
+								},
 								cells
 							});
 					}

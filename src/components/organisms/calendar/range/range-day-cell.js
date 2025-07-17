@@ -12,10 +12,10 @@ import { Button } from '../../../atoms/buttons/buttons.js';
  * @param {boolean} props.isStart
  * @param {boolean} props.isEnd
  * @param {boolean} props.isBetween
- * @param {function} props.onClick
+ * @param {function} props.click
  * @returns {object}
  */
-export const RangeDayCell = ({ day, iso, disabled, isStart, isEnd, isBetween, onClick }) =>
+export const RangeDayCell = ({ day, iso, disabled, isStart, isEnd, isBetween, click }) =>
 {
 	const cls = isStart
 	? 'bg-primary text-primary-foreground'
@@ -29,7 +29,7 @@ export const RangeDayCell = ({ day, iso, disabled, isStart, isEnd, isBetween, on
 		{
 			class: 'flex items-center justify-center h-9 p-0 text-sm rounded-md ' + cls,
 			disabled,
-			click: () => !disabled && onClick(iso)
+			click: () => !disabled && click(iso)
 		},
 		day.toString()
 	);
