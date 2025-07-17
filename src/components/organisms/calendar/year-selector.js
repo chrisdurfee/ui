@@ -24,12 +24,12 @@ export const YearSelector = ({ currentMonth, currentYear, onSelect }) =>
 				Button(
 					{
 						click: (e) =>
-                        {
-                            e.preventDefault();
-                            e.stopPropagation();
+						{
+							e.preventDefault();
+							e.stopPropagation();
 
-                            onSelect(yr);
-                        },
+							onSelect(yr);
+						},
 						variant: (yr === currentYear ? 'primary' : 'ghost'),
 						'aria-label': `Select ${yr}`
 					},
