@@ -1,5 +1,5 @@
 import { Div, OnState } from '@base-framework/atoms';
-import { Component, Data } from '@base-framework/base';
+import { Component, Data, DateTime } from '@base-framework/base';
 import { FormatDate } from '../utils.js';
 import { MonthCalendar } from './month-calendar.js';
 import { MonthSelector } from './month-selector.js';
@@ -61,12 +61,25 @@ export class RangeCalendar extends Component
 				month: now.getMonth(),
 				year: now.getFullYear()
 			},
+			monthName: this.getMonthName(now.getMonth()),
 			current: {
 				date: now.getDate(),
 				month: now.getMonth(),
 				year: now.getFullYear()
 			}
 		});
+	}
+
+	/**
+	 * This will get the name of the month.
+	 *
+	 * @param {number} month
+	 * @returns {string}
+	 */
+	getMonthName(month)
+	{
+		const monthNames = DateTime.monthNames;
+		return monthNames[month];
 	}
 
 	/**
@@ -120,7 +133,9 @@ export class RangeCalendar extends Component
 	{
 		const d = this.data.current;
 		d.month = (month + 12) % 12;
-		d.year  = year + (month < 0 ? -1 : month > 11 ? 1 : 0);
+		d.year = year + (month < 0 ? -1 : month > 11 ? 1 : 0);
+
+		this.data.monthName = this.getMonthName(d.month);
 	}
 
 	/**
