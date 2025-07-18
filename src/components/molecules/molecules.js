@@ -35,6 +35,7 @@ export * from "./counters/counter.js";
 
 // New exports from the date-time folder
 export * from "./date-time/date-picker.js";
+export * from "./date-time/date-range-picker.js";
 export * from "./date-time/time-frame.js";
 export * from "./date-time/time-picker.js";
 

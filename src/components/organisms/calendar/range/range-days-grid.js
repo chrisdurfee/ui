@@ -21,13 +21,41 @@ export const RangeDaysGrid = ({ today, current, blockPriorDates, onDateClick }) 
 	const daysInMonth = new Date(current.year, current.month + 1, 0).getDate();
 	const cells = [];
 
-	// Add empty cells for days before the first day of the month
-	for (let i = 0; i < firstDay; i++)
+	// Get previous month info for leading days
+	const prevMonth = current.month === 0 ? 11 : current.month - 1;
+	const prevYear = current.month === 0 ? current.year - 1 : current.year;
+	const daysInPrevMonth = new Date(prevYear, prevMonth + 1, 0).getDate();
+
+	// Get next month info for trailing days
+	const nextMonth = current.month === 11 ? 0 : current.month + 1;
+	const nextYear = current.month === 11 ? current.year + 1 : current.year;
+
+	// Add cells for previous month's trailing days
+	for (let i = firstDay - 1; i >= 0; i--)
 	{
-		cells.push(null);
+		const day = daysInPrevMonth - i;
+		const iso = FormatDate(prevYear, prevMonth, day);
+		const dateObj = new Date(prevYear, prevMonth, day);
+		const todayObj = new Date(today.year, today.month, today.date);
+		const isBefore = dateObj < todayObj;
+		const disabled = blockPriorDates && isBefore;
+		const isStart = start === iso;
+		const isEnd = end === iso;
+		const isBetween = start && end && iso > start && iso < end;
+
+		cells.push({
+			day,
+			iso,
+			disabled,
+			isStart,
+			isEnd,
+			isBetween,
+			isOtherMonth: true,
+			click: () => onDateClick(iso)
+		});
 	}
 
-	// Add cells for each day of the month
+	// Add cells for current month days
 	for (let d = 1; d <= daysInMonth; d++)
 	{
 		const iso = FormatDate(current.year, current.month, d);
@@ -46,19 +74,51 @@ export const RangeDaysGrid = ({ today, current, blockPriorDates, onDateClick }) 
 			isStart,
 			isEnd,
 			isBetween,
+			isOtherMonth: false,
+			click: () =>
+			{
+				console.log(iso);
+				onDateClick(iso);
+			}
+		});
+	}
+
+	const totalCells = cells.length;
+	const nextMonthDays = (7 - (totalCells % 7)) % 7;
+
+	for (let d = 1; d <= nextMonthDays; d++)
+	{
+		const iso = FormatDate(nextYear, nextMonth, d);
+		const dateObj = new Date(nextYear, nextMonth, d);
+		const todayObj = new Date(today.year, today.month, today.date);
+		const isBefore = dateObj < todayObj;
+		const disabled = blockPriorDates && isBefore;
+		const isStart = start === iso;
+		const isEnd = end === iso;
+		const isBetween = start && end && iso > start && iso < end;
+
+		cells.push({
+			day: d,
+			iso,
+			disabled,
+			isStart,
+			isEnd,
+			isBetween,
+			isOtherMonth: true,
 			click: () => onDateClick(iso)
 		});
 	}
 
 	return Div({ class: 'grid grid-cols-7 gap-1' },
 		cells.map((c, index) =>
-			(!c) ? Div({ class: 'h-9' }) : RangeDayCell({
+			RangeDayCell({
 				day: c.day,
 				iso: c.iso,
 				disabled: c.disabled,
 				isStart: c.isStart,
 				isEnd: c.isEnd,
 				isBetween: c.isBetween,
+				isOtherMonth: c.isOtherMonth,
 				click: c.click
 			})
 		)

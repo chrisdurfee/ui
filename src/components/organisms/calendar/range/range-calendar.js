@@ -116,7 +116,8 @@ export class RangeCalendar extends Component
 			this.data.current.end = null;
 			this.data.selecting = 'end';
 
-			const date = new Date(isoDate);
+			const date = new Date(isoDate + 'T00:00:00');
+
 			// set current date to start date
 			this.setCurrent({
 				month: date.getMonth(),
@@ -140,7 +141,7 @@ export class RangeCalendar extends Component
 			this.data.selecting = 'start';
 
 			// set current date to end date
-			const date = new Date(isoDate);
+			const date = new Date(isoDate + 'T00:00:00');
 			this.setCurrent({
 				month: date.getMonth(),
 				year: date.getFullYear(),
@@ -185,13 +186,23 @@ export class RangeCalendar extends Component
 		const { today, current, selecting } = this.data;
 		const { start, end } = current;
 
-		return Div({ class: 'range-calendar bg-background border border-border rounded-lg shadow-md p-4 w-full max-w-sm' }, [
+		return Div({ class: 'range-calendar bg-background border border-border rounded-lg shadow-md p-4 w-full max-w-sm min-w-80' }, [
 			RangeToggle({
 				start,
 				end,
 				selecting,
-				onSelectStart: () => this.data.selecting = 'start',
-				onSelectEnd: () => this.data.selecting = 'end'
+				onSelectStart: (e) =>
+				{
+					e.preventDefault();
+					e.stopPropagation();
+					this.data.selecting = 'start';
+				},
+				onSelectEnd: (e) =>
+				{
+					e.preventDefault();
+					e.stopPropagation();
+					this.data.selecting = 'end';
+				}
 			}),
 			OnState('view', (view) =>
 				{
@@ -228,8 +239,18 @@ export class RangeCalendar extends Component
 								current,
 								blockPriorDates: this.blockPriorDates,
 								onDateClick: (iso) => this.handleClick(iso),
-								onMonthClick: () => this.state.view = 'months',
-								onYearClick: () => this.state.view = 'years',
+								onMonthClick: (e) =>
+								{
+									e.preventDefault();
+									e.stopPropagation();
+									this.state.view = 'months';
+								},
+								onYearClick: (e) =>
+								{
+									e.preventDefault();
+									e.stopPropagation();
+									this.state.view = 'years';
+								},
 								next: () =>
 								{
 									const current = this.data.current;
