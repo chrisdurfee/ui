@@ -35,9 +35,9 @@ const CalendarButton = ({ bind, required, toggleOpen }) => (
 		UseParent(({ state }) =>
         {
             return [
-                Span(Format.date([state, '[[start]]'], 'Start Date')),
+                Span(Format.date(['[[start]]', state], 'Start Date')),
                 Span(' - '),
-                Span(Format.date([state, '[[end]]'], 'End Date')),
+                Span(Format.date(['[[end]]', state], 'End Date')),
             ];
         }),
 		I({ html: Icons.calendar.days })
@@ -57,7 +57,7 @@ const CalendarContainer = ({ handleDateSelect, blockPriorDates }) => (
 			cache: 'dropdown',
 			parent: parent,
 			button: parent.panel,
-			size: 'fit'
+			size: 'xl'
 		}, [
 			new RangeCalendar({
 				startDate: parent.state.start,

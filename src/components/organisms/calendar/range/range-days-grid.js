@@ -77,7 +77,6 @@ export const RangeDaysGrid = ({ today, current, blockPriorDates, onDateClick }) 
 			isOtherMonth: false,
 			click: () =>
 			{
-				console.log(iso);
 				onDateClick(iso);
 			}
 		});
