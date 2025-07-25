@@ -22,7 +22,7 @@ const ThemeButton = Atom(({ value, label, icon }) => (
 
 			localStorage.setItem('theme', value);
 			if (value === 'system')
-		{
+			{
 				localStorage.removeItem('theme');
 			}
 			checkTheme(value);

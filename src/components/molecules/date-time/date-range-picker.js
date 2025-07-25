@@ -127,7 +127,7 @@ export const DateRangePicker = VeilJot(
 
 			if (typeof this.onChange === 'function')
 			{
-				this.onChange({ start, end });
+				this.onChange({ start, end }, this.parent);
 			}
 		};
 

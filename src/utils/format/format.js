@@ -35,7 +35,7 @@ export const createWatcherCallback = (watcher, callBack) =>
  */
 const defaultValueCallBack = (value, defaultValue = '') =>
 {
-	return (value !== undefined && value !== null) ? value : defaultValue;
+	return (value !== undefined && value !== null && value !== '') ? value : defaultValue;
 };
 
 /**
