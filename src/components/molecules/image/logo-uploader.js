@@ -1,5 +1,5 @@
 import { Div, Img, Input, Label, OnState } from '@base-framework/atoms';
-import { Component, Jot } from '@base-framework/base';
+import { Component, Events, Jot } from '@base-framework/base';
 import { Icon } from '../../atoms/icon.js';
 import { Icons } from '../../icons/icons.js';
 
@@ -26,6 +26,41 @@ export const LogoUploader = Jot(
 	},
 
 	/**
+	 * This will open the file browse dialog.
+	 *
+	 * @returns {void}
+	 */
+	openFileBrowse()
+	{
+		// @ts-ignore
+		const ele = this.input;
+		if (ele)
+		{
+			ele.value = '';
+			Events.trigger('click', ele);
+		}
+	},
+
+	/**
+	 * Get the URL for the uploaded file.
+	 *
+	 * @param {File} file - The file to get the URL for.
+	 * @returns {string} The object URL for the file.
+	 */
+	getFileUrl(file)
+	{
+		// @ts-ignore
+		if (this.url)
+		{
+			// @ts-ignore
+			URL.revokeObjectURL(this.url);
+		}
+
+		// @ts-ignore
+		return (this.url = URL.createObjectURL(file));
+	},
+
+	/**
 	 * Render the component.
 	 *
 	 * @returns {object} Rendered component
@@ -36,41 +71,56 @@ export const LogoUploader = Jot(
 		// @ts-ignore
 		const onChange = this.onChange || null;
 
-		return Div({ class: 'relative w-32 h-32 rounded-full border border-dashed border-muted-foreground flex items-center justify-center cursor-pointer hover:bg-muted transition-colors duration-150 overflow-hidden group' }, [
+		return Div({ class: 'flex flex-col items-center' }, [
 			Input({
-				id,
-				type: 'file',
-				accept: 'image/*',
-				class: 'hidden',
-				change: (e) =>
-				{
-					const file = e.target.files?.[0];
-					if (file && onChange)
+					id,
+					cache: 'input',
+					type: 'file',
+					accept: 'image/*',
+					class: 'hidden',
+					change: (e) =>
 					{
-						// @ts-ignore
-						onChange(file, this.parent);
+						const file = e.target.files?.[0];
+						if (file && onChange)
+						{
+							// @ts-ignore
+							this.state.loaded = false;
+							// @ts-ignore
+							onChange(file, this.parent);
+
+							// @ts-ignore
+							this.src = this.getFileUrl(file);
+							// @ts-ignore
+							this.state.loaded = true;
+						}
+					}
+				}),
+				Div({
+					class: 'relative w-32 h-32 rounded-full border flex items-center justify-center cursor-pointer hover:bg-muted transition-colors duration-150 overflow-hidden group',
+					click: (e) =>
+					{
+						e.preventDefault();
+						e.stopPropagation();
 
 						// @ts-ignore
-						this.src = URL.createObjectURL(file);
-						// @ts-ignore
-						this.state.loaded = true;
+						this.openFileBrowse();
 					}
-				}
-			}),
-			OnState('loaded', (value) => (value)
-				? Img({
-					// @ts-ignore
-					src: this.src,
-					class: 'absolute inset-0 w-full h-full object-cover rounded-full pointer-events-none'
-				})
-				: Label({
-						htmlFor: id,
-						class: 'z-10 flex flex-col items-center justify-center text-sm text-muted-foreground pointer-events-none group-hover:text-primary'
-					}, [
-					Icon(Icons.upload),
-					Div('Upload logo')
-				])
-			),
+				}, [
+				OnState('loaded', (value) => (value)
+					? Img({
+						// @ts-ignore
+						src: this.src,
+						class: 'absolute inset-0 w-full h-full object-cover rounded-full'
+					})
+					: Label({
+							htmlFor: id,
+							class: 'z-10 flex flex-col items-center justify-center text-sm text-muted-foreground group-hover:text-primary'
+						}, [
+						Icon(Icons.upload),
+						Div('Upload logo')
+					])
+				),
+			])
 		]);
 	}
 });
