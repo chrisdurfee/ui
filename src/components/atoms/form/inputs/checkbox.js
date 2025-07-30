@@ -49,7 +49,7 @@ const CheckBoxIcon = () => (
 const CustomCheckbox = ({ id, bind, checked, required, clickHandler }) => (
 	Div({
 		class: `relative flex items-center justify-center w-5 h-5 transition-colors duration-200 hover:border-accent-foreground
-			rounded-md border border-input
+			rounded-md border
 			${focusClass}
 			${disabledClass}`.trim(),
 		onState: [

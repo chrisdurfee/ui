@@ -28,7 +28,7 @@ function HiddenInput({ bind, required })
 function TimeButton({ bind, required, toggleOpen })
 {
 	return Button({
-		class: 'relative flex items-center gap-2 w-full justify-between border border-input bg-background hover:bg-muted rounded-md h-10 px-4 py-2',
+		class: 'relative flex items-center gap-2 w-full justify-between border bg-background hover:bg-muted rounded-md h-10 px-4 py-2',
 		click: toggleOpen,
 	},
 	[
@@ -73,51 +73,48 @@ function TimeColumn({ items, handleTimeSelect, state, stateValue, pad = false })
  */
 function TimeContainer({ handleTimeSelect })
 {
-	return Div({ class: 'absolute mt-1 z-10 bg-background rounded-md shadow-lg' },
-	[
-		OnState('open', (value, ele, parent) =>
-			!value
-				? null
-				: new PopOver({
-					cache: 'dropdown',
-					parent: parent,
-					button: parent.panel,
-					size: 'fit'
-				},
+	return OnState('open', (value, ele, parent) =>
+		!value
+			? null
+			: new PopOver({
+				cache: 'dropdown',
+				parent: parent,
+				button: parent.panel,
+				size: 'fit'
+			},
+			[
+				Div({ class: 'flex flex-auto flex-col border rounded-md shadow-md' },
 				[
-					Div({ class: 'flex flex-auto flex-col border rounded-md shadow-md' },
+					Div({ class: 'grid grid-cols-3 gap-2 p-4 text-center max-h-[220px] min-w-[240px]' },
 					[
-						Div({ class: 'grid grid-cols-3 gap-2 p-4 text-center max-h-[220px] min-w-[240px]' },
-						[
-							// Hours column
-							TimeColumn({
-								items: Array.from({ length: 12 }, (_, i) => i + 1),
-								handleTimeSelect,
-								state: parent.state,
-								stateValue: 'hour',
-								pad: true
-							}),
-							// Minutes column
-							TimeColumn({
-								items: Array.from({ length: 60 }, (_, i) => i),
-								handleTimeSelect,
-								state: parent.state,
-								stateValue: 'minute',
-								pad: true
-							}),
-							// AM/PM column
-							TimeColumn({
-								items: ['AM', 'PM'],
-								handleTimeSelect,
-								state: parent.state,
-								stateValue: 'meridian'
-							})
-						])
+						// Hours column
+						TimeColumn({
+							items: Array.from({ length: 12 }, (_, i) => i + 1),
+							handleTimeSelect,
+							state: parent.state,
+							stateValue: 'hour',
+							pad: true
+						}),
+						// Minutes column
+						TimeColumn({
+							items: Array.from({ length: 60 }, (_, i) => i),
+							handleTimeSelect,
+							state: parent.state,
+							stateValue: 'minute',
+							pad: true
+						}),
+						// AM/PM column
+						TimeColumn({
+							items: ['AM', 'PM'],
+							handleTimeSelect,
+							state: parent.state,
+							stateValue: 'meridian'
+						})
 					])
-				]
-			)
+				])
+			]
 		)
-	]);
+	);
 }
 
 /**
