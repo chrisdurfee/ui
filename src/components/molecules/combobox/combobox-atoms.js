@@ -12,7 +12,7 @@ import { PopOver } from '../popover.js';
 export const DropdownButton = ({ toggleDropdown }) => (
 	Button({
 		cache: 'button',
-		class: 'relative z-[2] inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-muted h-10 px-4 py-2 justify-between',
+		class: 'relative z-[2] inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border bg-input hover:bg-muted h-10 px-4 py-2 justify-between',
 		click: toggleDropdown
 	},
 	[

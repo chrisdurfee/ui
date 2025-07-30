@@ -12,8 +12,8 @@ import { Dropdown } from './dropdown.js';
 const DropdownButton = ({ label, icon, toggleDropdown }) => (
 	Button({
 		cache: 'button',
-		class: `inline-flex items-center justify-between rounded-md border border-input
-			bg-background px-2 py-2 text-sm font-medium hover:bg-muted
+		class: `inline-flex items-center justify-between rounded-md border
+			px-2 py-2 text-sm font-medium hover:bg-muted
 			focus:outline-none transition duration-150 ease-in-out`,
 		click: toggleDropdown
 	}, [
