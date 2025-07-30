@@ -186,7 +186,7 @@ export class RangeCalendar extends Component
 		const { today, current, selecting } = this.data;
 		const { start, end } = current;
 
-		return Div({ class: 'range-calendar bg-background border border-border rounded-lg shadow-md p-4 w-full max-w-sm min-w-80' }, [
+		return Div({ class: 'range-calendar border border-border rounded-lg shadow-md p-4 w-full max-w-sm min-w-80' }, [
 			RangeToggle({
 				start,
 				end,

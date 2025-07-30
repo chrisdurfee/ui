@@ -106,7 +106,7 @@ export const Textarea = Atom((props) => (
 	BaseTextarea({
 		...props,
 		as: "textarea",
-		class: `flex w-full h-24 px-3 py-2 text-sm rounded-md border border-input bg-background ${focusClass} ${placeholderClass} ${disabledClass} ${props.class || ''}`.trim(),
+		class: `flex w-full h-24 px-3 py-2 text-sm rounded-md border border-input bg-input ${focusClass} ${placeholderClass} ${disabledClass} ${props.class || ''}`.trim(),
 	})
 ));
 
@@ -272,7 +272,7 @@ export const ColorInput = Atom((props) => (
 	BaseInput({
 		...props,
 		type: "color",
-		class: `border rounded-md border-input bg-background text-foreground p-0 disabled:cursor-not-allowed disabled:opacity-50 ${props.class || ''}`.trim(),
+		class: `border rounded-md border-input bg-input text-foreground p-0 disabled:cursor-not-allowed disabled:opacity-50 ${props.class || ''}`.trim(),
 	})
 ));
 
@@ -285,7 +285,7 @@ export const ColorInput = Atom((props) => (
 const Checkbox = Atom((props) => (
 	BaseCheckbox({
 		...props,
-		class: `flex h-4 w-4 rounded-md border border-input bg-background text-foreground ${focusClass} ${disabledClass} ${props.class || ''}`.trim(),
+		class: `flex h-4 w-4 rounded-md border border-input bg-input text-foreground ${focusClass} ${disabledClass} ${props.class || ''}`.trim(),
 	})
 ));
 

@@ -202,7 +202,7 @@ export class WeekCalendar extends Component
 	 */
 	render()
 	{
-		return Div({ class: 'week-calendar-container border rounded-md bg-background p-3' }, [
+		return Div({ class: 'week-calendar-container border rounded-md p-3' }, [
 			WeekHeader({
 				next: () => this.goToNextMonth(),
 				previous: () => this.goToPreviousMonth(),

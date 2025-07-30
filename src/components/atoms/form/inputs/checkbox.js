@@ -1,7 +1,7 @@
 import { Checkbox as BaseCheckbox, Div, I, Label, OnState, Span } from '@base-framework/atoms';
 import { Jot } from '@base-framework/base';
 import { Icons } from '../../../icons/icons.js';
-import { borderClass, disabledClass, focusClass } from './input-classes.js';
+import { disabledClass, focusClass } from './input-classes.js';
 
 /**
  * This will create a hidden checkbox atom.
@@ -48,8 +48,8 @@ const CheckBoxIcon = () => (
  */
 const CustomCheckbox = ({ id, bind, checked, required, clickHandler }) => (
 	Div({
-		class: `relative flex items-center justify-center w-5 h-5 transition-colors duration-200 border-primary hover:border-accent-foreground
-			${borderClass}
+		class: `relative flex items-center justify-center w-5 h-5 transition-colors duration-200 hover:border-accent-foreground
+			rounded-md border border-input
 			${focusClass}
 			${disabledClass}`.trim(),
 		onState: [
