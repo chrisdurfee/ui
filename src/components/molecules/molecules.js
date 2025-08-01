@@ -5,6 +5,7 @@ export * from "./dropdowns/dropdown-item.js";
 export * from "./dropdowns/dropdown-menu.js";
 export * from "./dropdowns/dropdown.js";
 export * from "./form/form-atoms.js";
+export * from "./form/form-card.js";
 export * from "./form/form-control.js";
 export * from "./form/form-field.js";
 export * from "./form/form.js";

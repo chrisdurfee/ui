@@ -25,6 +25,11 @@ const enhanceChildren = (children, handleInput, handleInvalid) =>
 {
 	return children.map((child) =>
 	{
+		if (!child)
+		{
+			return child;
+		}
+
 		/**
 		 * This will recursively enhance children with validation event listeners.
 		 */
