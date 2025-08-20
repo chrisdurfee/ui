@@ -1,9 +1,8 @@
 import { A, Div, Footer, H3, Header, I, P } from "@base-framework/atoms";
-import { Atom } from "@base-framework/base";
+import { Atom, Component } from "@base-framework/base";
 import { Timer } from "@base-framework/organisms";
 import { Button } from "../../atoms/buttons/buttons.js";
 import { Icons } from "../../icons/icons.js";
-import { DelayComponent } from "../delay-component.js";
 
 /**
  * Type styles mapping (reusing from Alert component style)
@@ -60,8 +59,10 @@ const TitleBar = (title) => (
  */
 const NotificationLink = Atom(({ href, class: customClass }, children) => (
 	A({
-		class: `pullRightIn bg-popover text-popover-foreground relative flex flex-auto flex-col justify-start shadow-lg pointer-events-auto p-4 border rounded-md min-w-[340px] max-w-[450px] mt-4 ${customClass}`,
+		class: `bg-popover text-popover-foreground relative flex flex-auto flex-col justify-start shadow-lg pointer-events-auto p-4 border rounded-md min-w-[340px] max-w-[450px] mt-4 ${customClass}`,
 		href: href,
+		animateIn: 'pullRightIn',
+		animateOut: 'pullRight',
 		role: 'alert'
 	}, children)
 ));
@@ -76,6 +77,8 @@ const NotificationButton = Atom(({ close, class: customClass }, children) => (
 	Div({
 		class: `pullRightIn bg-popover text-popover-foreground relative flex flex-auto flex-col justify-start shadow-lg pointer-events-auto p-4 border rounded-md min-w-[340px] max-w-[450px] mt-4 ${customClass}`,
 		click: () => close(),
+		animateIn: 'pullRightIn',
+		animateOut: 'pullRight',
 		role: 'alert'
 	}, children)
 ));
@@ -86,9 +89,9 @@ const NotificationButton = Atom(({ close, class: customClass }, children) => (
  * A component that displays notifications.
  *
  * @class
- * @extends DelayComponent
+ * @extends Component
  */
-export class Notification extends DelayComponent
+export class Notification extends Component
 {
 	/**
 	 * This will declare the props for the compiler.
@@ -97,11 +100,6 @@ export class Notification extends DelayComponent
 	 */
 	declareProps()
 	{
-		/**
-		 * @member {stirng} removingClass}
-		 */
-		this.removingClass = 'pullRight';
-
 		/**
 		 * @member {function|null} secondaryAction
 		 */
