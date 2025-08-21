@@ -21,7 +21,9 @@ export const ScrollableDataTableBody = (props) => (
 		tableData: props.tableData,
 		items: props.items,
 		rowItem: (row) => props.rowItem(row, props.selectRow),
-		class: 'divide-y divide-border'
+		class: 'divide-y divide-border',
+		skeleton: props.skeleton,
+		columnCount: props.columnCount
 	})
 );
 
@@ -55,11 +57,9 @@ export class ScrollableTable extends DataTable
 	render()
 	{
 		// @ts-ignore
-		const showingSkeleton = this.data.get('showSkeleton');
-		// @ts-ignore
-		const currentRows = showingSkeleton ? this.generateSkeletonRows() : this.rows;
-		// @ts-ignore
 		const border = this.border !== false ? 'border' : '';
+		// @ts-ignore
+		const columnCount = this.headers ? this.headers.length : 3;
 
 		return Div({ class: 'w-full flex flex-auto flex-col' }, [
 			On('hasItems', (hasItems) =>
@@ -73,38 +73,30 @@ export class ScrollableTable extends DataTable
 					this.headers && TableHeader({ headers: this.headers, sort: (key) => this.sortRows(key) }),
 					// @ts-ignore
 					this.customHeader ?? null,
-					On('showSkeleton', (showSkeleton) =>
-					{
-						return (showSkeleton)
-							? new ScrollableTableBody({
-								cache: 'list',
-								// @ts-ignore
-								key: this.key,
-								items: currentRows,
-								rowItem: (row) => row, // Skeleton rows are already complete components
-								class: 'divide-y divide-border'
-							})
-							: ScrollableDataTableBody({
-								// @ts-ignore
-								scrollContainer: this.scrollContainer,
-								// @ts-ignore
-								loadMoreItems: this.loadMoreItems,
-								// @ts-ignore
-								offset: this.offset,
-								// @ts-ignore
-								limit: this.limit,
-								// @ts-ignore
-								class: this.class,
-								// @ts-ignore
-								tableData: this.tableData,
-								// @ts-ignore
-								key: this.key,
-								items: currentRows,
-								// @ts-ignore
-								selectRow: this.selectRow.bind(this),
-								// @ts-ignore
-								rowItem: this.rowItem
-							});
+					ScrollableDataTableBody({
+						// @ts-ignore
+						scrollContainer: this.scrollContainer,
+						// @ts-ignore
+						loadMoreItems: this.loadMoreItems,
+						// @ts-ignore
+						offset: this.offset,
+						// @ts-ignore
+						limit: this.limit,
+						// @ts-ignore
+						class: this.class,
+						// @ts-ignore
+						tableData: this.tableData,
+						// @ts-ignore
+						key: this.key,
+						// @ts-ignore
+						items: this.rows,
+						// @ts-ignore
+						selectRow: this.selectRow.bind(this),
+						// @ts-ignore
+						rowItem: this.rowItem,
+						// @ts-ignore
+						skeleton: this.skeleton,
+						columnCount: columnCount
 					})
 				])
 			])
