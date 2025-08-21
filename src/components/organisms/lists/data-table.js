@@ -223,26 +223,29 @@ export class DataTable extends Component
 					this.headers && TableHeader({ headers: this.headers, sort: (key) => this.sortRows(key) }),
 					// @ts-ignore
 					this.customHeader ?? null,
-					showingSkeleton
-						? new TableBody({
-							cache: 'list',
-							// @ts-ignore
-							key: this.key,
-							items: currentRows,
-							rowItem: (row) => row, // Skeleton rows are already complete components
-							class: 'divide-y divide-border'
-						})
-						: DataTableBody({
-							// @ts-ignore
-							key: this.key,
-							rows: currentRows,
-							// @ts-ignore
-							selectRow: this.selectRow.bind(this),
-							// @ts-ignore
-							rowItem: this.rowItem,
-							// @ts-ignore
-							emptyState: this.emptyState
-						})
+					On('showSkeleton', (showSkeleton) =>
+					{
+						return (showSkeleton)
+							? new TableBody({
+								cache: 'list',
+								// @ts-ignore
+								key: this.key,
+								items: currentRows,
+								rowItem: (row) => row, // Skeleton rows are already complete components
+								class: 'divide-y divide-border'
+							})
+							: DataTableBody({
+								// @ts-ignore
+								key: this.key,
+								rows: currentRows,
+								// @ts-ignore
+								selectRow: this.selectRow.bind(this),
+								// @ts-ignore
+								rowItem: this.rowItem,
+								// @ts-ignore
+								emptyState: this.emptyState
+							});
+					})
 				])
 			])
 		]);
