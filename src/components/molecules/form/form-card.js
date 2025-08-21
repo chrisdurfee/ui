@@ -45,6 +45,8 @@ export const FormCardGroup = Atom((props, children = []) => (
  * @param {array} children - The children to render inside the group.
  * @returns {object} The rendered form card group component.
  */
-export const FormCardContent = Atom((props, children = []) => (
-	Div({ ...props, class: `flex flex-col pb-4 px-6 space-y-4 ${props.class || ''}` }, children)
-));
+export const FormCardContent = Atom((props, children = []) =>
+{
+	const border = props.border ? 'border-t' : '';
+	return Div({ ...props, class: `flex flex-col pb-4 px-6 space-y-4 ${border} ${props.class || ''}` }, children);
+});

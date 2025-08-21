@@ -71,7 +71,7 @@ export const LogoUploader = Jot(
 		// @ts-ignore
 		const onChange = this.onChange || null;
 
-		return Div({ class: 'flex flex-col items-center' }, [
+		return Div({ class: 'flex-none items-center' }, [
 			Input({
 					id,
 					cache: 'input',

@@ -87,7 +87,7 @@ const backCallBack = (props) =>
 const BackVariant = (defaultProps) => (
 	Atom((props, children) =>
 	{
-		props.icon = props.icon || Icons.arrows.left;
+		props.icon = props.icon || Icons.chevron.single.left;
 		props.click = props.click || backCallBack(props);
 
 		return IconButton({

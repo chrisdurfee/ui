@@ -9,7 +9,7 @@ export const sizeClass = "flex h-10 w-full px-3 py-2 text-sm";
  * @constant {string} borderClass
  * Common border & background classes for inputs.
  */
-export const borderClass = "rounded-md border bg-input";
+export const borderClass = "rounded-md border border-border bg-input";
 
 /**
  * @constant {string} focusClass

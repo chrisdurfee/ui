@@ -6,7 +6,7 @@ import {
 	Label,
 } from '@base-framework/atoms';
 import { Atom } from '@base-framework/base';
-import { commonInputClasses, disabledClass, focusClass, placeholderClass } from './input-classes.js';
+import { borderClass, commonInputClasses, disabledClass, focusClass, placeholderClass } from './input-classes.js';
 
 /**
  * Formats a string as a telephone number in the format (XXX) XXX-XXXX.
@@ -106,7 +106,7 @@ export const Textarea = Atom((props) => (
 	BaseTextarea({
 		...props,
 		as: "textarea",
-		class: `flex w-full h-24 px-3 py-2 text-sm rounded-md border bg-input ${focusClass} ${placeholderClass} ${disabledClass} ${props.class || ''}`.trim(),
+		class: `flex w-full h-24 px-3 py-2 text-sm ${borderClass} ${focusClass} ${placeholderClass} ${disabledClass} ${props.class || ''}`.trim(),
 	})
 ));
 
@@ -137,7 +137,7 @@ export const DateInput = Atom((props) => (
 	BaseInput({
 		...props,
 		type: "date",
-		class: `rounded-md border px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${props.class || ''}`.trim(),
+		class: `${borderClass} ${focusClass} ${placeholderClass} ${disabledClass} px-3 py-2 text-sm ring-offset-background ${props.class || ''}`.trim(),
 	})
 ));
 
@@ -151,7 +151,7 @@ export const TimeInput = Atom((props) => (
 	BaseInput({
 		...props,
 		type: "time",
-		class: `rounded-md border px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${props.class || ''}`.trim(),
+		class: `${borderClass} ${focusClass} ${placeholderClass} ${disabledClass} px-3 py-2 text-sm ring-offset-background ${props.class || ''}`.trim(),
 	})
 ));
 
@@ -165,7 +165,7 @@ export const DateTimeInput = Atom((props) => (
 	BaseInput({
 		...props,
 		type: "datetime-local",
-		class: `rounded-md border px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${props.class || ''}`.trim(),
+		class: `${borderClass} ${focusClass} ${placeholderClass} ${disabledClass} px-3 py-2 text-sm ring-offset-background ${props.class || ''}`.trim(),
 	})
 ));
 
@@ -179,7 +179,7 @@ export const MonthInput = Atom((props) => (
 	BaseInput({
 		...props,
 		type: "month",
-		class: `rounded-md border px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${props.class || ''}`.trim(),
+		class: `${borderClass} ${focusClass} ${placeholderClass} ${disabledClass} px-3 py-2 text-sm ring-offset-background ${props.class || ''}`.trim(),
 	})
 ));
 
@@ -193,7 +193,7 @@ export const WeekInput = Atom((props) => (
 	BaseInput({
 		...props,
 		type: "week",
-		class: `rounded-md border px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${props.class || ''}`.trim(),
+		class: `${borderClass} ${focusClass} ${placeholderClass} ${disabledClass} px-3 py-2 text-sm ring-offset-background ${props.class || ''}`.trim(),
 	})
 ));
 
@@ -272,7 +272,7 @@ export const ColorInput = Atom((props) => (
 	BaseInput({
 		...props,
 		type: "color",
-		class: `border rounded-md bg-input text-foreground p-0 disabled:cursor-not-allowed disabled:opacity-50 ${props.class || ''}`.trim(),
+		class: `${borderClass} text-foreground p-0 ${disabledClass} ${props.class || ''}`.trim(),
 	})
 ));
 
@@ -285,7 +285,7 @@ export const ColorInput = Atom((props) => (
 const Checkbox = Atom((props) => (
 	BaseCheckbox({
 		...props,
-		class: `flex h-4 w-4 rounded-md border bg-input text-foreground ${focusClass} ${disabledClass} ${props.class || ''}`.trim(),
+		class: `flex h-4 w-4 text-foreground ${borderClass} ${focusClass} ${disabledClass} ${props.class || ''}`.trim(),
 	})
 ));
 

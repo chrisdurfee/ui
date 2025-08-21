@@ -28,7 +28,7 @@ function HiddenInput({ bind, required })
 function TimeButton({ bind, required, toggleOpen })
 {
 	return Button({
-		class: 'relative flex items-center gap-2 w-full justify-between border bg-background hover:bg-muted rounded-md h-10 px-4 py-2',
+		class: 'relative flex items-center gap-2 w-full justify-between border bg-input hover:bg-muted rounded-md h-10 px-4 py-2',
 		click: toggleOpen,
 	},
 	[
