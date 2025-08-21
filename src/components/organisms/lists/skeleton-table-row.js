@@ -30,9 +30,8 @@ export const SkeletonTableRow = ({ columnCount = 3, customCell, key }) =>
 
 	return Tr({
 		class: 'border-b',
-		key,
-		children: Array.from({ length: columnCount }, (_, index) => createSkeletonCell(index))
-	});
+		key
+	}, Array.from({ length: columnCount }, (_, index) => createSkeletonCell(index)));
 };
 
 export default SkeletonTableRow;
