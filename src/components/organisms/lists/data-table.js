@@ -1,5 +1,6 @@
 import { Div, On, Table } from '@base-framework/atoms';
 import { Component, Data } from '@base-framework/base';
+import { TableBody } from '@base-framework/organisms';
 import { DataTableBody } from './data-table-body.js';
 import { SkeletonTableRow } from './skeleton-table-row.js';
 import { CheckboxCol, HeaderCol, TableHeader } from './table-header.js';
@@ -204,7 +205,9 @@ export class DataTable extends Component
 	render()
 	{
 		// @ts-ignore
-		const currentRows = this.data.get('showSkeleton') ? this.generateSkeletonRows() : this.rows;
+		const showingSkeleton = this.data.get('showSkeleton');
+		// @ts-ignore
+		const currentRows = showingSkeleton ? this.generateSkeletonRows() : this.rows;
 		// @ts-ignore
 		const border = this.border !== false ? 'border' : '';
 
@@ -220,17 +223,26 @@ export class DataTable extends Component
 					this.headers && TableHeader({ headers: this.headers, sort: (key) => this.sortRows(key) }),
 					// @ts-ignore
 					this.customHeader ?? null,
-					DataTableBody({
-						// @ts-ignore
-						key: this.key,
-						rows: currentRows,
-						// @ts-ignore
-						selectRow: this.selectRow.bind(this),
-						// @ts-ignore
-						rowItem: this.rowItem,
-						// @ts-ignore
-						emptyState: this.emptyState
-					})
+					showingSkeleton
+						? new TableBody({
+							cache: 'list',
+							// @ts-ignore
+							key: this.key,
+							items: currentRows,
+							rowItem: (row) => row, // Skeleton rows are already complete components
+							class: 'divide-y divide-border'
+						})
+						: DataTableBody({
+							// @ts-ignore
+							key: this.key,
+							rows: currentRows,
+							// @ts-ignore
+							selectRow: this.selectRow.bind(this),
+							// @ts-ignore
+							rowItem: this.rowItem,
+							// @ts-ignore
+							emptyState: this.emptyState
+						})
 				])
 			])
 		]);

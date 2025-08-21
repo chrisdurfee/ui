@@ -1,5 +1,5 @@
 import { Div, On, Table } from '@base-framework/atoms';
-import { DataTableBody } from '@base-framework/organisms';
+import { DataTableBody, TableBody } from '@base-framework/organisms';
 import { DataTable } from './data-table.js';
 import { CheckboxCol, HeaderCol, TableHeader } from './table-header.js';
 export { CheckboxCol, HeaderCol, TableHeader };
@@ -53,7 +53,9 @@ export class DynamicTable extends DataTable
 	render()
 	{
 		// @ts-ignore
-		const currentRows = this.data.showSkeleton ? this.generateSkeletonRows() : this.rows;
+		const showingSkeleton = this.data.showSkeleton;
+		// @ts-ignore
+		const currentRows = showingSkeleton ? this.generateSkeletonRows() : this.rows;
 		// @ts-ignore
 		const border = this.border !== false ? 'border' : '';
 
@@ -69,25 +71,34 @@ export class DynamicTable extends DataTable
 					this.headers && TableHeader({ headers: this.headers, sort: (key) => this.sortRows(key) }),
 					// @ts-ignore
 					this.customHeader ?? null,
-					DynamicTableBody({
-						// @ts-ignore
-						loadMoreItems: this.loadMoreItems,
-						// @ts-ignore
-						offset: this.offset,
-						// @ts-ignore
-						limit: this.limit,
-						// @ts-ignore
-						class: this.class,
-						// @ts-ignore
-						tableData: this.tableData,
-						// @ts-ignore
-						key: this.key,
-						items: currentRows,
-						// @ts-ignore
-						selectRow: this.selectRow.bind(this),
-						// @ts-ignore
-						rowItem: this.rowItem
-					})
+					showingSkeleton
+						? new TableBody({
+							cache: 'list',
+							// @ts-ignore
+							key: this.key,
+							items: currentRows,
+							rowItem: (row) => row, // Skeleton rows are already complete components
+							class: 'divide-y divide-border'
+						})
+						: DynamicTableBody({
+							// @ts-ignore
+							loadMoreItems: this.loadMoreItems,
+							// @ts-ignore
+							offset: this.offset,
+							// @ts-ignore
+							limit: this.limit,
+							// @ts-ignore
+							class: this.class,
+							// @ts-ignore
+							tableData: this.tableData,
+							// @ts-ignore
+							key: this.key,
+							items: currentRows,
+							// @ts-ignore
+							selectRow: this.selectRow.bind(this),
+							// @ts-ignore
+							rowItem: this.rowItem
+						})
 				])
 			])
 		]);

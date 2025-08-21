@@ -55,7 +55,9 @@ export class ScrollableTable extends DataTable
 	render()
 	{
 		// @ts-ignore
-		const currentRows = this.data.get('showSkeleton') ? this.generateSkeletonRows() : this.rows;
+		const showingSkeleton = this.data.get('showSkeleton');
+		// @ts-ignore
+		const currentRows = showingSkeleton ? this.generateSkeletonRows() : this.rows;
 		// @ts-ignore
 		const border = this.border !== false ? 'border' : '';
 
@@ -71,27 +73,36 @@ export class ScrollableTable extends DataTable
 					this.headers && TableHeader({ headers: this.headers, sort: (key) => this.sortRows(key) }),
 					// @ts-ignore
 					this.customHeader ?? null,
-					ScrollableDataTableBody({
-						// @ts-ignore
-						scrollContainer: this.scrollContainer,
-						// @ts-ignore
-						loadMoreItems: this.loadMoreItems,
-						// @ts-ignore
-						offset: this.offset,
-						// @ts-ignore
-						limit: this.limit,
-						// @ts-ignore
-						class: this.class,
-						// @ts-ignore
-						tableData: this.tableData,
-						// @ts-ignore
-						key: this.key,
-						items: currentRows,
-						// @ts-ignore
-						selectRow: this.selectRow.bind(this),
-						// @ts-ignore
-						rowItem: this.rowItem
-					})
+					showingSkeleton
+						? new ScrollableTableBody({
+							cache: 'list',
+							// @ts-ignore
+							key: this.key,
+							items: currentRows,
+							rowItem: (row) => row, // Skeleton rows are already complete components
+							class: 'divide-y divide-border'
+						})
+						: ScrollableDataTableBody({
+							// @ts-ignore
+							scrollContainer: this.scrollContainer,
+							// @ts-ignore
+							loadMoreItems: this.loadMoreItems,
+							// @ts-ignore
+							offset: this.offset,
+							// @ts-ignore
+							limit: this.limit,
+							// @ts-ignore
+							class: this.class,
+							// @ts-ignore
+							tableData: this.tableData,
+							// @ts-ignore
+							key: this.key,
+							items: currentRows,
+							// @ts-ignore
+							selectRow: this.selectRow.bind(this),
+							// @ts-ignore
+							rowItem: this.rowItem
+						})
 				])
 			])
 		]);
