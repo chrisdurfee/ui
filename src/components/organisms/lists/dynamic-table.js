@@ -40,6 +40,7 @@ export const DynamicTableBody = (props) => (
  * @property {function} [props.rowItem] - The row item.
  * @property {string} [props.containerClass] - The class to add to the scroll container.
  * @property {object|null} [props.emptyState] - The empty state to show when there are no items.
+ * @property {boolean|object} [props.skeleton] - Skeleton configuration. Can be true for default or object with { number: 5, row: customRowFunction }
  * @returns {object}
  */
 export class DynamicTable extends DataTable
@@ -52,7 +53,7 @@ export class DynamicTable extends DataTable
 	render()
 	{
 		// @ts-ignore
-		const currentRows = this.rows;
+		const currentRows = this.data.showSkeleton ? this.generateSkeletonRows() : this.rows;
 		// @ts-ignore
 		const border = this.border !== false ? 'border' : '';
 

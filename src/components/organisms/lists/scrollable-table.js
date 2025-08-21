@@ -42,6 +42,7 @@ export const ScrollableDataTableBody = (props) => (
  * @property {function} [props.rowItem] - The row item.
  * @property {string} [props.containerClass] - The class to add to the scroll container.
  * @property {array} [props.emptyState] - The empty state to show when there are no items.
+ * @property {boolean|object} [props.skeleton] - Skeleton configuration. Can be true for default or object with { number: 5, row: customRowFunction }
  * @returns {object}
  */
 export class ScrollableTable extends DataTable
@@ -54,7 +55,7 @@ export class ScrollableTable extends DataTable
 	render()
 	{
 		// @ts-ignore
-		const currentRows = this.rows;
+		const currentRows = this.data.get('showSkeleton') ? this.generateSkeletonRows() : this.rows;
 		// @ts-ignore
 		const border = this.border !== false ? 'border' : '';
 

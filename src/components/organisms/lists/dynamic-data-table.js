@@ -23,6 +23,7 @@ export { CheckboxCol, HeaderCol, TableHeader };
  * @property {object} [props.data] - The table data.
  * @property {string} [props.cache] - The table cache identifier.
  * @property {object|null} [props.emptyState] - The empty state to show when there are no items.
+ * @property {boolean|object} [props.skeleton] - Skeleton configuration. Can be true for default or object with { number: 5, row: customRowFunction }
  * @returns {object}
  */
 export const DynamicDataTable = Atom((props) => (
@@ -41,6 +42,7 @@ export const DynamicDataTable = Atom((props) => (
 		customHeader: props.customHeader,
 		border: props.border,
 		emptyState: props.emptyState,
+		skeleton: props.skeleton,
 	})
 ));
 
