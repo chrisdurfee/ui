@@ -131,6 +131,25 @@ export class DataTable extends Component
 	}
 
 	/**
+	 * Gets the number of header columns.
+	 *
+	 * @returns {number}
+	 */
+	getHeaderColCount()
+	{
+		// @ts-ignore
+		if (this.customHeader)
+		{
+			// @ts-ignore
+			const tHead = this.customHeader;
+			const row = tHead?.children[0];
+			return row?.children?.length;
+		}
+		// @ts-ignore
+		return (this.headers ? this.headers.length : 3);
+	}
+
+	/**
 	 * Renders the DataTable component.
 	 *
 	 * @returns {object}
@@ -140,7 +159,7 @@ export class DataTable extends Component
 		// @ts-ignore
 		const border = this.border !== false ? 'border' : '';
 		// @ts-ignore
-		const columnCount = this.headers ? this.headers.length : 3;
+		const columnCount = this.getHeaderColCount();
 
 		return Div({ class: 'w-full flex flex-auto flex-col' }, [
 			On('hasItems', (hasItems) =>

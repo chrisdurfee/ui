@@ -59,7 +59,7 @@ export class ScrollableTable extends DataTable
 		// @ts-ignore
 		const border = this.border !== false ? 'border' : '';
 		// @ts-ignore
-		const columnCount = this.headers ? this.headers.length : 3;
+		const columnCount = this.getHeaderColCount();
 
 		return Div({ class: 'w-full flex flex-auto flex-col' }, [
 			On('hasItems', (hasItems) =>
