@@ -1,4 +1,5 @@
-import { Button, Div, I, Input, OnState, Span } from '@base-framework/atoms';
+import { Button, Div, I, Input, OnStateOpen, Span } from '@base-framework/atoms';
+import { Events } from '@base-framework/base';
 import { Veil, VeilJot } from '../../atoms/veil.js';
 import { Icons } from '../../icons/icons.js';
 import { PopOver } from '../popover.js';
@@ -73,10 +74,8 @@ function TimeColumn({ items, handleTimeSelect, state, stateValue, pad = false })
  */
 function TimeContainer({ handleTimeSelect })
 {
-	return OnState('open', (value, ele, parent) =>
-		!value
-			? null
-			: new PopOver({
+	return OnStateOpen((value, ele, parent) =>
+		new PopOver({
 				cache: 'dropdown',
 				parent: parent,
 				button: parent.panel,
@@ -260,6 +259,7 @@ export const TimePicker = VeilJot(
 				this.state.selectedTime = formattedTime;
 				this.state.open = false;
 				this.input.value = formattedTime;
+				Events.trigger('change', this.input);
 
 				if (typeof this.change === 'function')
 				{
