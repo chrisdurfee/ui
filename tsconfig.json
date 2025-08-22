@@ -1,5 +1,6 @@
 {
 	"compilerOptions": {
+		"skipLibCheck": true,
 		"allowJs": true, // Allows TypeScript to process JS files
 		"checkJs": true, // Enables type checking for JS files, based on your JSDoc comments
 		"noImplicitAny": false, // Disables the `any` type
