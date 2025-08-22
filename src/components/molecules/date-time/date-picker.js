@@ -1,4 +1,4 @@
-import { Button, Div, I, Input, OnState, Span } from '@base-framework/atoms';
+import { Button, Div, I, IfState, Input, Span } from '@base-framework/atoms';
 import { DateTime } from '@base-framework/base';
 import { Veil, VeilJot } from '../../atoms/veil.js';
 import { Icons } from '../../icons/icons.js';
@@ -46,9 +46,8 @@ const CalendarButton = ({ bind, required, toggleOpen }) => (
  * @returns {object}
  */
 const CalendarContainer = ({ handleDateSelect, blockPriorDates }) => (
-	OnState('open', (value, ele, parent ) => (!value)
-		? null
-		: new PopOver({
+	IfState('open', true, (value, ele, parent) =>
+		new PopOver({
 			cache: 'dropdown',
 			parent: parent,
 			button: parent.panel,
@@ -111,6 +110,7 @@ export const DatePicker = VeilJot(
 		const toggleOpen = (e, { state }) => state.toggle('open');
 		const handleDateSelect = (date) =>
 		{
+			console.log(this, this.data)
 			this.state.selectedDate = date;
 			this.state.open = false;
 			this.input.value = date;

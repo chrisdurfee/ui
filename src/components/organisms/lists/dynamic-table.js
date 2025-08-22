@@ -11,7 +11,7 @@ export { CheckboxCol, HeaderCol, TableHeader };
  * @returns {object}
  */
 export const DynamicTableBody = (props) => (
-	DataTableBody({
+	new DataTableBody({
 		cache: 'list',
 		loadMoreItems: props.loadMoreItems,
 		offset: props.offset,
