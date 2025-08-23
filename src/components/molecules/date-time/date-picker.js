@@ -46,7 +46,7 @@ const CalendarButton = ({ bind, required, toggleOpen }) => (
  * @returns {object}
  */
 const CalendarContainer = ({ handleDateSelect, blockPriorDates }) => (
-	OnStateOpen((value, ele, parent) =>
+	OnStateOpen((value, ele, parent) => (
 		new PopOver({
 			cache: 'dropdown',
 			parent: parent,
@@ -58,7 +58,7 @@ const CalendarContainer = ({ handleDateSelect, blockPriorDates }) => (
 				selectedCallBack: handleDateSelect,
 				blockPriorDates
 			})
-		])
+		]))
 	)
 );
 

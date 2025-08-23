@@ -1,6 +1,6 @@
 {
 	"name": "@base-framework/ui",
-	"version": "1.0.287",
+	"version": "1.0.293",
 	"description": "This is a UI package that adds components and atoms that use Tailwind CSS and a theme based on Shadcn.",
 	"main": "./dist/index.es.js",
 	"scripts": {
@@ -38,7 +38,7 @@
 		"d3": "^7.9.0",
 		"tailwindcss-animate": "^1.0.7",
 		"typescript": "^5.7.3",
-		"vite": "^6.1.1"
+		"vite": "^7.1.0"
 	},
 	"types": "./dist/types/**/*.d.ts",
 	"files": [
