@@ -74,6 +74,12 @@ export class NotificationContainer extends Component
 	{
 		// @ts-ignore
 		this.list.delete(notice.id);
+
+		// @ts-ignore
+		if (this.list.isEmpty())
+		{
+			this.panel.hidePopover();
+		}
 	}
 }
 

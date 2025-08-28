@@ -20,10 +20,7 @@ export const AsideTemplate = Atom((props, children) =>
 			}, [
 				props.left
 			]),
-			MainColumn({
-				class: 'flex-grow flex-col',
-				flex: 'flex flex-grow flex-col'
-			}, [
+			MainColumn([
 				props.right
 			])
 		])
