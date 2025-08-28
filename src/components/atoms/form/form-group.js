@@ -18,7 +18,7 @@ export const FormGroup = Atom((props, children) =>
 	// Outer flex: column on mobile, row+centered on sm+
 	return Div({
 		...props,
-		class: `grid grid-cols-1 gap-y-4 sm:grid-cols-[1fr,2fr] sm:gap-x-6 pt-8 ${border} ${props.class || ''}`
+		class: `grid grid-cols-1 gap-y-4 sm:grid-cols-[1fr_2fr] sm:gap-x-6 pt-8 ${border} ${props.class || ''}`
 	}, [
 		props.label && Div({
 			...props.labelProps,
