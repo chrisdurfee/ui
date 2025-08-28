@@ -9,7 +9,8 @@ import { Atom } from "@base-framework/base";
  */
 export const Row = Atom((props, children) =>
 {
-	props.class = 'row flex flex-auto flex-col lg:flex-row ' + (props.class || '');
+	const flex = (!props.flex)? "flex flex-auto flex-col lg:flex-row" : props.flex;
+	props.class = 'row ' + flex + ' ' + (props.class || '');
 
 	return {
 		...props,
