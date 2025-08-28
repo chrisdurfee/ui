@@ -15,7 +15,7 @@ import { Button } from '../../../atoms/buttons/buttons.js';
  * @returns {object}
  */
 export const RangeToggle = ({ start, end, selecting, onSelectStart, onSelectEnd }) =>
-	Div({ class: 'flex space-x-2 mb-4' }, [
+	Div({ class: 'flex gap-x-2 mb-4' }, [
 		On('selecting', (selecting) => {
 
 			const variant = selecting === 'start' ? 'primary' : 'outline';

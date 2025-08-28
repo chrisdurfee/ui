@@ -23,7 +23,7 @@ const HeaderCells = () =>
  * @returns {object}
  */
 export const MonthCalendar = (props) => (
-    Div({ class: 'rdp w-full space-y-1' }, [
+    Div({ class: 'rdp flex flex-auto flex-col w-full gap-y-1' }, [
 		CalendarHeader({
 			onMonthClick: props.onMonthClick,
 			onYearClick: props.onYearClick,

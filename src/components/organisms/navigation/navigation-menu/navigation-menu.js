@@ -87,7 +87,7 @@ export class NavigationMenu extends Component
 	{
 		return Nav({ class: `flex items-center justify-center p-2 text-muted-foreground rounded-md ${this.class || ''}` }, [
 				Ul({
-					class: 'flex space-x-4',
+					class: 'flex gap-x-4',
 					map: [this.options, (option) => this.addLink(option)],
 					watch: {
 						value: ['[[path]]', router.data],

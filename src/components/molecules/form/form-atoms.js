@@ -10,7 +10,7 @@ import { Atom } from "@base-framework/base";
  * @param {array} children
  * @returns {object}
  */
-export const FormItem = Atom((props, children) => Div({ ...props, class: "flex flex-auto flex-col space-y-2" }, children));
+export const FormItem = Atom((props, children) => Div({ ...props, class: "flex flex-auto flex-col gap-y-2" }, children));
 
 /**
  * FormLabel

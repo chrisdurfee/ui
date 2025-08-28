@@ -81,7 +81,7 @@ export const Breadcrumb = Jot(
 		return Nav(
 			{
 				'aria-label': 'Breadcrumb',
-				class: 'flex items-center space-x-1 text-sm'
+				class: 'flex items-center gap-x-1 text-sm'
 			},
 			[
 				Div({

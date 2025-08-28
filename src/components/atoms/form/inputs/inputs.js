@@ -117,7 +117,7 @@ export const Textarea = Atom((props) => (
  * @returns {object} A Div containing a radio input and label.
  */
 export const Radio = (props = {}) => (
-	Div({ class: 'flex items-center space-x-2' }, [
+	Div({ class: 'flex items-center gap-x-2' }, [
 		BaseInput({
 			...props,
 			type: 'radio',

@@ -160,7 +160,7 @@ export const Checkbox = Jot(
 		const clickCallback = (e) => this.clickHandler(e);
 
 		// @ts-ignore
-		return Div({ class: `flex items-center space-x-2 cursor-pointer ${this.class || ''}` }, [
+		return Div({ class: `flex items-center gap-x-2 cursor-pointer ${this.class || ''}` }, [
 			CustomCheckbox({
 				id,
 				// @ts-ignore

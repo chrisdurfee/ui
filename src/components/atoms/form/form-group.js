@@ -22,14 +22,14 @@ export const FormGroup = Atom((props, children) =>
 	}, [
 		props.label && Div({
 			...props.labelProps,
-			class: `space-y-1 ${props.labelProps?.class || ''}`
+			class: `flex flex-auto flex-col gap-y-1 ${props.labelProps?.class || ''}`
 		}, [
 			H4({ class: 'text-base' }, props.label),
 			props.description && P({ class: `text-sm text-muted-foreground` }, props.description)
 		]),
 
 		// Controls container: grows to fill remaining space, spacing between items
-		Div({ class: 'flex flex-col space-y-4' }, children)
+		Div({ class: 'flex flex-col gap-y-4' }, children)
 	]);
 });
 

@@ -15,7 +15,7 @@ import { NavigationButton } from './navigation-button.js';
  * @returns {object}
  */
 export const CalendarHeader = ({ onMonthClick, onYearClick, next, previous }) =>
-	Div({ class: 'flex items-center justify-center space-x-2 relative min-h-12 text-sm font-medium' }, [
+	Div({ class: 'flex items-center justify-center gap-x-2 relative min-h-12 text-sm font-medium' }, [
 		Button({ click: onMonthClick, variant: 'ghost', 'aria-label': 'Select month' }, '[[monthName]]'),
 		Button({ click: onYearClick, variant: 'ghost', 'aria-label': 'Select year' }, '[[current.year]]'),
 		NavigationButton({ label: 'Previous', click: previous }),

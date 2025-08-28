@@ -17,7 +17,7 @@ export const Fieldset = Atom((props, children) =>
 		class: `p-6 ${border} ${props.class || ''}`,
 	}, [
 		props.legend && Legend(props.legend),
-		Div({ class: 'flex flex-auto flex-col space-y-6' }, children)
+		Div({ class: 'flex flex-auto flex-col gap-y-6' }, children)
 	])
 });
 

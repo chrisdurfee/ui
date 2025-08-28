@@ -53,7 +53,7 @@ export const CustomSkeletonRowExample = () => {
         }, [
             // Avatar column
             Td({ class: 'px-6 py-4' }, [
-                Div({ class: 'flex items-center space-x-3' }, [
+                Div({ class: 'flex items-center gap-x-3' }, [
                     Skeleton({
                         shape: 'circle',
                         width: 'w-10',
@@ -89,7 +89,7 @@ export const CustomSkeletonRowExample = () => {
             ]),
             // Actions column
             Td({ class: 'px-6 py-4' }, [
-                Div({ class: 'flex space-x-2' }, [
+                Div({ class: 'flex gap-x-2' }, [
                     Skeleton({ width: 'w-8', height: 'h-8', shape: 'circle' }),
                     Skeleton({ width: 'w-8', height: 'h-8', shape: 'circle' }),
                     Skeleton({ width: 'w-8', height: 'h-8', shape: 'circle' })
@@ -112,7 +112,7 @@ export const CustomSkeletonRowExample = () => {
         ],
         rowItem: (user) => Tr([
             Td({ class: 'px-6 py-4' }, [
-                Div({ class: 'flex items-center space-x-3' }, [
+                Div({ class: 'flex items-center gap-x-3' }, [
                     Div({
                         class: 'w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center'
                     }, user.name.charAt(0)),
@@ -134,7 +134,7 @@ export const CustomSkeletonRowExample = () => {
                 }, user.active ? 'Active' : 'Inactive')
             ]),
             Td({ class: 'px-6 py-4' }, [
-                Div({ class: 'flex space-x-2' }, [
+                Div({ class: 'flex gap-x-2' }, [
                     Button({ class: 'p-1 text-gray-400 hover:text-gray-600' }, '✏️'),
                     Button({ class: 'p-1 text-gray-400 hover:text-gray-600' }, '👁️'),
                     Button({ class: 'p-1 text-gray-400 hover:text-red-600' }, '🗑️')
