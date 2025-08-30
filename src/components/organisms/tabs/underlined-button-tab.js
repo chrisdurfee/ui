@@ -104,38 +104,19 @@ export class UnderlinedButtonTab extends Component
 			}),
 			Section({
 				class: 'tab-content pt-6',
-				switch: this.addGroup()
+				onState: ['selected', this.updateContent.bind(this)]
 			})
 		]);
 	}
 
 	/**
-	 * This will set up the component.
+	 * This will get the first value.
 	 *
-	 * @returns {void}
+	 * @returns {*}
 	 */
-	beforeSetup()
+	getFirstValue()
 	{
-		this.selectedIndex = 0;
-		this.setSelectedIndex();
-	}
-
-	/**
-	 * This will set the selected index.
-	 *
-	 * @returns {void}
-	 */
-	setSelectedIndex()
-	{
-		const options = this.options;
-		for (let i = 0, length = options.length; i < length; i++)
-		{
-			if (options[i].selected === true)
-			{
-				this.selectedIndex = i;
-				break;
-			}
-		}
+		return this.options[0]?.value;
 	}
 
 	/**
@@ -146,56 +127,57 @@ export class UnderlinedButtonTab extends Component
 	 */
 	select(value)
 	{
-		this.setSelected(value);
-
-		if (this.onSelect)
-		{
-			this.onSelect(value, this.selectedIndex);
-		}
+		this.state.selected = value;
 	}
 
 	/**
-	 * This will set the selected option.
+	 * This will update the content.
 	 *
 	 * @param {*} value
-	 * @returns {void}
+	 * @returns {object}
 	 */
-	setSelected(value)
+	updateContent(value)
 	{
 		const options = this.options;
-		for (let i = 0, length = options.length; i < length; i++)
+		if (!options || options.length < 1)
 		{
-			if (options[i].value === value)
+			return;
+		}
+
+		const firstOption = options[0];
+		for (const option of options)
+		{
+			if (option.value === value)
 			{
-				this.selectedIndex = i;
-				break;
+				return option.component;
 			}
 		}
+
+		return firstOption.component;
 	}
 
 	/**
-	 * This will add the group.
+	 * This will setup the states.
 	 *
-	 * @returns {array}
+	 * @returns {object}
 	 */
-	addGroup()
+	setupStates()
 	{
-		let option;
-		const switches = [];
+		const onSelect = this.onSelect,
+		type = typeof onSelect;
 
-		const options = this.options;
-		for (let i = 0, length = options.length; i < length; i++)
-		{
-			option = options[i];
-			switches.push(
-			{
-				uri: option.value,
-				component: option.component,
-				title: option.title || null,
-				persist: true
-			});
-		}
-		return switches;
+		return {
+			selected: {
+				state: this.getFirstValue(),
+				callBack(value)
+				{
+					if (type === 'function')
+					{
+						onSelect(value);
+					}
+				}
+			}
+		};
 	}
 }
 

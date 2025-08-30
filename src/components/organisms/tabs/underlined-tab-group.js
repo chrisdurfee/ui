@@ -106,35 +106,6 @@ export class UnderlinedTabGroup extends Component
 	}
 
 	/**
-	 * This will set up the component.
-	 *
-	 * @returns {void}
-	 */
-	beforeSetup()
-	{
-		this.selectedIndex = 0;
-		this.setSelectedIndex();
-	}
-
-	/**
-	 * This will set the selected index.
-	 *
-	 * @returns {void}
-	 */
-	setSelectedIndex()
-	{
-		const options = this.options;
-		for (let i = 0, length = options.length; i < length; i++)
-		{
-			if (options[i].selected === true)
-			{
-				this.selectedIndex = i;
-				break;
-			}
-		}
-	}
-
-	/**
 	 * This will select an option.
 	 *
 	 * @param {*} value
@@ -142,31 +113,24 @@ export class UnderlinedTabGroup extends Component
 	 */
 	select(value)
 	{
-		this.setSelected(value);
+		this.state.selected = value;
 
-		if (this.onSelect)
+		if (typeof this.onSelect === 'function')
 		{
-			this.onSelect(value, this.selectedIndex);
+			this.onSelect(value, this.parent);
 		}
 	}
 
 	/**
-	 * This will set the selected option.
+	 * This will setup the states.
 	 *
-	 * @param {*} value
-	 * @returns {void}
+	 * @returns {object}
 	 */
-	setSelected(value)
+	setupStates()
 	{
-		const options = this.options;
-		for (let i = 0, length = options.length; i < length; i++)
-		{
-			if (options[i].value === value)
-			{
-				this.selectedIndex = i;
-				break;
-			}
-		}
+		return {
+			selected: this.options[0]?.value || null
+		};
 	}
 }
 
