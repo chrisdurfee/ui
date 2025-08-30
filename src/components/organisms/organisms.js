@@ -61,6 +61,10 @@ export * from "./tabs/button-tab.js";
 export * from "./tabs/tab-group.js";
 export * from "./tabs/tab-navigation.js";
 export * from "./tabs/tab.js";
+export * from "./tabs/underlined-button-tab.js";
+export * from "./tabs/underlined-tab-group.js";
+export * from "./tabs/underlined-tab-navigation.js";
+export * from "./tabs/underlined-tab.js";
 
 export * from "./signature/signature-panel.js";
 
