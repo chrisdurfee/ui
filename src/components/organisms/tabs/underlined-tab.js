@@ -41,13 +41,13 @@ export class UnderlinedTab extends Component
 	 */
 	render()
 	{
-		return Div({ class: 'underlined-tab-panel' }, [
+		return Div({ class: 'underlined-tab-panel flex flex-auto flex-col' }, [
 			new UnderlinedTabNavigation({
 				class: this.class,
 				options: this.options
 			}),
 			Section({
-				class: 'tab-content pt-6',
+				class: 'tab-content pt-6 flex flex-auto flex-col',
 				switch: this.addGroup()
 			})
 		]);

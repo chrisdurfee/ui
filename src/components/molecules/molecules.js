@@ -24,6 +24,7 @@ export * from "./avatars/status-indicator.js";
 export * from "./avatars/statuses.js";
 
 // Image
+export * from "./image/image-uploader.js";
 export * from "./image/logo-uploader.js";
 
 // New exports from the breadcrumb folder
