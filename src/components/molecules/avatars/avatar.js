@@ -16,6 +16,15 @@ const AvatarImage = Atom(({ src, alt }) =>
 		return null;
 	}
 
+	/**
+	 * If we are not watching and the url doesn't look
+	 * like a path, skip rendering the image.
+	 */
+	if (src.indexOf('.') === -1 && src.indexOf('[[') === -1)
+	{
+		return null;
+	}
+
 	return Img({
 		class: 'absolute w-full h-full rounded-full object-cover fadeIn',
 		src,

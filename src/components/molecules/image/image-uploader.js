@@ -4,6 +4,14 @@ import { Icon } from '../../atoms/icon.js';
 import { Icons } from '../../icons/icons.js';
 
 /**
+ * Checks if the provided source is an invalid file.
+ *
+ * @param {string} src - The source string to check.
+ * @returns {boolean} True if the file is invalid, false otherwise.
+ */
+const isInvalidFile = (src) => (src.indexOf('.') === -1 && src.indexOf('[[') === -1);
+
+/**
  * ImageUploader
  *
  * Upload button for image files, styled with a dashed circular drop zone.
@@ -106,20 +114,30 @@ export const ImageUploader = Jot(
 						this.openFileBrowse();
 					}
 				}, [
-				OnState('loaded', (value) => (value)
-					? Img({
+				OnState('loaded', (value) =>
+				{
+					/**
+					 * If we are not watching and the url doesn't look
+					 * like a path, skip rendering the image.
+					 */
+					// @ts-ignore
+					if (value === false || isInvalidFile(this.src))
+					{
+						return Label({
+								htmlFor: id,
+								class: 'z-10 flex flex-col items-center justify-center text-sm text-muted-foreground group-hover:text-primary'
+							}, [
+							Icon(Icons.upload),
+							Div('Upload Image')
+						]);
+					}
+
+					return Img({
 						// @ts-ignore
 						src: this.src,
 						class: 'absolute inset-0 w-full h-full object-cover rounded-full'
-					})
-					: Label({
-							htmlFor: id,
-							class: 'z-10 flex flex-col items-center justify-center text-sm text-muted-foreground group-hover:text-primary'
-						}, [
-						Icon(Icons.upload),
-						Div('Upload Image')
-					])
-				),
+					});
+				}),
 			])
 		]);
 	}
