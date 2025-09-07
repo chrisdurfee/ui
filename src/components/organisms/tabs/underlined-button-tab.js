@@ -15,7 +15,7 @@ const UnderlinedTabButton = (props) => (
 		},
 		[
 			Button({
-				class: 'flex flex-auto justify-center items-center px-4 py-3',
+				class: 'flex flex-auto justify-center items-center px-4 py-3 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed',
 				onSet: ['selected', { selected: props.value }],
 				click: (e) => props.callBack(props.value),
 			}, props.label)

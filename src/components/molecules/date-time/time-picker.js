@@ -1,4 +1,4 @@
-import { Button, Div, I, Input, OnStateOpen, Span } from '@base-framework/atoms';
+import { Button, Div, I, Input, OnStateOpen } from '@base-framework/atoms';
 import { Events } from '@base-framework/base';
 import { Veil, VeilJot } from '../../atoms/veil.js';
 import { Icons } from '../../icons/icons.js';
@@ -21,24 +21,49 @@ function HiddenInput({ bind, required })
 }
 
 /**
- * Button that toggles the time picker popover.
+ * Visible input for direct time typing.
  *
  * @param {object} props
  * @returns {object}
  */
-function TimeButton({ bind, required, toggleOpen })
+function TimeInput({ placeholder, handleInputChange, handleInputFocus })
 {
-	return Button({
-		class: 'relative flex items-center gap-2 w-full justify-between border bg-input hover:bg-muted rounded-md h-10 px-4 py-2',
-		click: toggleOpen,
-	},
-	[
-		HiddenInput({ bind, required }),
-		Span({
-			onState: ['selectedTime', (value) => value || 'Pick a time']
-		}),
-		I({ html: Icons.clock })
-	]);
+	return Input({
+		cache: 'timeInput',
+		class: 'flex-1 bg-transparent outline-none placeholder:text-muted-foreground border-0',
+		placeholder: placeholder || 'hh:mm AM/PM',
+		input: handleInputChange,
+		focus: handleInputFocus,
+		onState: ['selectedTime', (value) => value || '']
+	});
+}
+
+/**
+ * Container that holds the time input and clock button.
+ *
+ * @param {object} props
+ * @returns {object}
+ */
+function TimeInputContainer({ bind, required, toggleOpen, handleInputChange, handleInputFocus, placeholder })
+{
+	return Div(
+		{
+			class: 'relative flex items-center gap-2 w-full justify-between border bg-input hover:bg-muted rounded-md h-10 px-4 py-2',
+		},
+		[
+			HiddenInput({ bind, required }),
+			TimeInput({ placeholder, handleInputChange, handleInputFocus }),
+			Button(
+				{
+					class: 'flex-shrink-0 hover:bg-muted/50 rounded p-1',
+					click: toggleOpen,
+				},
+				[
+					I({ html: Icons.clock })
+				]
+			)
+		]
+	);
 }
 
 /**
@@ -49,7 +74,8 @@ function TimeButton({ bind, required, toggleOpen })
  */
 function TimeColumn({ items, handleTimeSelect, state, stateValue, pad = false })
 {
-	return Div({ class: 'flex flex-col max-h-[200px] overflow-y-auto' },
+	return Div(
+		{ class: 'flex flex-col max-h-[200px] overflow-y-auto' },
 		items.map((item) =>
 		{
 			let displayItem = pad
@@ -58,7 +84,7 @@ function TimeColumn({ items, handleTimeSelect, state, stateValue, pad = false })
 
 			return Button({
 				text: displayItem,
-				class: 'hover:bg-muted/50 rounded-md px-2 py-1',
+				class: 'hover:bg-muted/50 rounded-md pr-2 py-1',
 				click: () => handleTimeSelect({ [stateValue]: displayItem }),
 				onState: [state, stateValue, { 'bg-muted': displayItem }]
 			});
@@ -75,42 +101,47 @@ function TimeColumn({ items, handleTimeSelect, state, stateValue, pad = false })
 function TimeContainer({ handleTimeSelect })
 {
 	return OnStateOpen((value, ele, parent) =>
-		new PopOver({
+		new PopOver(
+			{
 				cache: 'dropdown',
 				parent: parent,
 				button: parent.panel,
 				size: 'fit'
 			},
 			[
-				Div({ class: 'flex flex-auto flex-col border rounded-md shadow-md' },
-				[
-					Div({ class: 'grid grid-cols-3 gap-2 p-4 text-center max-h-[220px] min-w-[240px]' },
+				Div(
+					{ class: 'flex flex-auto flex-col border rounded-md shadow-md' },
 					[
-						// Hours column
-						TimeColumn({
-							items: Array.from({ length: 12 }, (_, i) => i + 1),
-							handleTimeSelect,
-							state: parent.state,
-							stateValue: 'hour',
-							pad: true
-						}),
-						// Minutes column
-						TimeColumn({
-							items: Array.from({ length: 60 }, (_, i) => i),
-							handleTimeSelect,
-							state: parent.state,
-							stateValue: 'minute',
-							pad: true
-						}),
-						// AM/PM column
-						TimeColumn({
-							items: ['AM', 'PM'],
-							handleTimeSelect,
-							state: parent.state,
-							stateValue: 'meridian'
-						})
-					])
-				])
+						Div(
+							{ class: 'grid grid-cols-3 gap-2 p-4 text-center max-h-[220px] min-w-[240px]' },
+							[
+								// Hours column
+								TimeColumn({
+									items: Array.from({ length: 12 }, (_, i) => i + 1),
+									handleTimeSelect,
+									state: parent.state,
+									stateValue: 'hour',
+									pad: true
+								}),
+								// Minutes column
+								TimeColumn({
+									items: Array.from({ length: 60 }, (_, i) => i),
+									handleTimeSelect,
+									state: parent.state,
+									stateValue: 'minute',
+									pad: true
+								}),
+								// AM/PM column
+								TimeColumn({
+									items: ['AM', 'PM'],
+									handleTimeSelect,
+									state: parent.state,
+									stateValue: 'meridian'
+								})
+							]
+						)
+					]
+				)
 			]
 		)
 	);
@@ -247,6 +278,81 @@ export const TimePicker = VeilJot(
 	render()
 	{
 		const toggleOpen = (e, { state }) => state.toggle('open');
+
+		/**
+		 * Handles direct input changes and formats the time.
+		 */
+		const handleInputChange = (e) =>
+		{
+			let inputValue = e.target.value.replace(/[^\d]/g, ''); // Remove non-digits
+
+			// Format as hh:mm
+			let formattedValue = '';
+			if (inputValue.length > 0)
+			{
+				formattedValue = inputValue.substring(0, 2);
+				if (inputValue.length > 2)
+				{
+					formattedValue += ':' + inputValue.substring(2, 4);
+				}
+			}
+
+			// If we have a complete time (4 digits), add AM/PM based on hour
+			if (inputValue.length >= 4)
+			{
+				const hour = parseInt(inputValue.substring(0, 2), 10);
+				const minute = parseInt(inputValue.substring(2, 4), 10);
+
+				if (hour >= 0 && hour <= 23 && minute >= 0 && minute <= 59)
+				{
+					let displayHour = hour;
+					let meridian = 'AM';
+
+					if (hour === 0)
+					{
+						displayHour = 12;
+					}
+					else if (hour > 12)
+					{
+						displayHour = hour - 12;
+						meridian = 'PM';
+					}
+					else if (hour === 12)
+					{
+						meridian = 'PM';
+					}
+
+					const formattedTime = `${displayHour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')} ${meridian}`;
+					formattedValue = formattedTime;
+
+					// Update the component state
+					this.state.set({
+						hour: displayHour.toString().padStart(2, '0'),
+						minute: minute.toString().padStart(2, '0'),
+						meridian,
+						selectedTime: formattedTime
+					});
+
+					this.input.value = formattedTime;
+					Events.trigger('change', this.input);
+
+					if (typeof this.change === 'function')
+					{
+						this.change(formattedTime);
+					}
+				}
+			}
+
+			e.target.value = formattedValue;
+		};
+
+		/**
+		 * Handles input focus - select all text for easy editing.
+		 */
+		const handleInputFocus = (e) => {
+			e.target.select();
+		};
+
 		const handleTimeSelect = ({ hour, minute, meridian }) =>
 		{
 			if (hour) this.state.hour = hour;
@@ -268,17 +374,22 @@ export const TimePicker = VeilJot(
 			}
 		};
 
-		return Div({ class: 'relative w-full max-w-[320px]' },
-		[
-			TimeButton({
-				toggleOpen,
-				bind: this.bind,
-				required: this.required
-			}),
-			TimeContainer({
-				handleTimeSelect
-			})
-		]);
+		return Div(
+			{ class: 'relative w-full max-w-[320px]' },
+			[
+				TimeInputContainer({
+					toggleOpen,
+					bind: this.bind,
+					required: this.required,
+					handleInputChange,
+					handleInputFocus,
+					placeholder: this.placeholder
+				}),
+				TimeContainer({
+					handleTimeSelect
+				})
+			]
+		);
 	}
 });
 
