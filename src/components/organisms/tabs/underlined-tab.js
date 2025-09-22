@@ -1,5 +1,5 @@
 import { Div, Section } from "@base-framework/atoms";
-import { Component } from "@base-framework/base";
+import { Veil } from '../../../components/atoms/veil.js';
 import { UnderlinedTabNavigation } from "./underlined-tab-navigation.js";
 
 /**
@@ -10,7 +10,7 @@ import { UnderlinedTabNavigation } from "./underlined-tab-navigation.js";
  *
  * @class
  */
-export class UnderlinedTab extends Component
+export class UnderlinedTab extends Veil
 {
 	/**
 	 * This will declare the props for the compiler.

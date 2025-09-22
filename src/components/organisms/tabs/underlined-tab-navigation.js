@@ -1,5 +1,6 @@
 import { Nav, Ul } from "@base-framework/atoms";
-import { Component, NavLink, router } from "@base-framework/base";
+import { NavLink, router } from "@base-framework/base";
+import { Veil } from '../../../components/atoms/veil.js';
 
 /**
  * This will validate if a path is active.
@@ -46,7 +47,7 @@ const UnderlinedLink = ({ text, href, exact }) => (
  *
  * @class
  */
-export class UnderlinedTabNavigation extends Component
+export class UnderlinedTabNavigation extends Veil
 {
 	/**
 	 * This will declare the props for the compiler.

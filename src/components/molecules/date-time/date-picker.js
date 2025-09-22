@@ -1,5 +1,5 @@
 import { Button, Div, I, Input, OnStateOpen } from '@base-framework/atoms';
-import { Events } from '@base-framework/base';
+import { DateTime, Events } from '@base-framework/base';
 import { Veil, VeilJot } from '../../atoms/veil.js';
 import { Icons } from '../../icons/icons.js';
 import { Calendar } from '../../organisms/calendar/calendar.js';
@@ -33,22 +33,7 @@ const DateInput = ({ placeholder, handleInputChange, handleInputFocus }) => (
 		placeholder: placeholder || 'mm/dd/yyyy',
 		input: handleInputChange,
 		focus: handleInputFocus,
-		onState: ['selectedDate', (value) =>
-		{
-			// Format the date for display in the input
-			if (value)
-			{
-				const date = new Date(value);
-				if (!isNaN(date.getTime()))
-				{
-					const month = (date.getMonth() + 1).toString().padStart(2, '0');
-					const day = date.getDate().toString().padStart(2, '0');
-					const year = date.getFullYear();
-					return `${month}/${day}/${year}`;
-				}
-			}
-			return '';
-		}]
+		onState: ['selectedDate', (value) => (value ? DateTime.format('standard', value) : '')]
 	})
 );
 

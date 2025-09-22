@@ -1,5 +1,5 @@
 import { Button, Li, Nav, Ul } from '@base-framework/atoms';
-import { Component } from '@base-framework/base';
+import { Veil } from '../../../components/atoms/veil.js';
 
 /**
  * This will create an underlined tab button atom.
@@ -11,12 +11,12 @@ const UnderlinedTabButton = (props) => (
 	Li(
 		{
 			class: 'relative inline-flex items-center justify-center whitespace-nowrap text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:text-foreground after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-primary after:transition-all after:duration-200 after:scale-x-0 data-[state=active]:after:scale-x-100',
-			dataSet: ['selected', ['state', props.value, 'active']],
+			dataStateSet: ['selected', ['state', props.value, 'active']],
 		},
 		[
 			Button({
 				class: 'flex flex-auto justify-center items-center px-4 py-3 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer',
-				onSet: ['selected', { selected: props.value }],
+				onState: ['selected', { selected: props.value }],
 				click: (e) => props.callBack(props.value),
 				disabled: props.disabled
 			}, props.label)
@@ -57,9 +57,9 @@ const UnderlinedNavigation = (props) => (
  * This will create an underlined tab group with bottom border indicators.
  *
  * @class
- * @extends Component
+ * @extends Veil
  */
-export class UnderlinedTabGroup extends Component
+export class UnderlinedTabGroup extends Veil
 {
 	/**
 	 * This will declare the props for the compiler.
