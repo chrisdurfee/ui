@@ -68,7 +68,11 @@ export class Overlay extends Component
 	 */
 	getClassName()
 	{
-		return 'overlay fixed top-[0px] left-0 bottom-0 right-0 flex-col bg-background z-20 lg:z-10 flex flex-auto lg:left-[64px] lg:top-0 overflow-y-visible will-change-contents ' + (this.class || '');
+		return `absolute overlay left-0 top-0 right-0 z-20
+			h-svh max-h-svh min-h-svh
+			bg-background pointer-events-auto
+			lg:left-16
+			pb-[calc(env(safe-area-inset-bottom)+56px)] will-change-contents ${this.class || ''}`;
 	}
 
 	/**
@@ -122,7 +126,7 @@ export class Overlay extends Component
 	 */
 	addBody()
 	{
-		return Div({ class: 'body fadeIn flex flex-auto flex-col' }, this.getContents());
+		return Div({ class: 'body fadeIn flex flex-auto flex-col bg-background' }, this.getContents());
 	}
 
 	/**
