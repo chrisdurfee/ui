@@ -9,7 +9,7 @@ import { Icons } from '../../icons/icons.js';
  * @param {string} src - The source string to check.
  * @returns {boolean} True if the file is invalid, false otherwise.
  */
-const isInvalidFile = (src) => (src.indexOf('.') === -1 && src.indexOf('[[') === -1);
+const isInvalidFile = (src) => (src.indexOf('.') === -1 && src.indexOf('[[') === -1 && src.indexOf('blob:') === -1);
 
 /**
  * ImageUploader
