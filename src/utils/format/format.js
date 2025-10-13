@@ -101,7 +101,7 @@ export const Format =
 			const numeric = parseFloat(value);
 			if (isNaN(numeric))
 			{
-				return defaultValue || '';
+				return currency + defaultValue || '';
 			}
 
 			const pattern = /\B(?=(\d{3})+(?!\d))/g;
