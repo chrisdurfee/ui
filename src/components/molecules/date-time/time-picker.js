@@ -5,6 +5,74 @@ import { Icons } from '../../icons/icons.js';
 import { PopOver } from '../popover.js';
 
 /**
+ * Formats a numeric string into hh:mm format.
+ *
+ * @param {string} inputValue - Numeric string (digits only)
+ * @returns {string} Formatted time string
+ */
+function formatTimeInput(inputValue)
+{
+	let formattedValue = '';
+	if (inputValue.length > 0)
+	{
+		formattedValue = inputValue.substring(0, 2);
+		if (inputValue.length > 2)
+		{
+			formattedValue += ':' + inputValue.substring(2, 4);
+		}
+	}
+	return formattedValue;
+}
+
+/**
+ * Converts 24-hour time input to 12-hour format with AM/PM.
+ *
+ * @param {string} inputValue - Numeric string (4 digits: hhmm)
+ * @returns {{ formattedTime: string|null, hour: string|null, minute: string|null, meridian: string|null }}
+ */
+function convertTo12HourFormat(inputValue)
+{
+	if (inputValue.length < 4)
+	{
+		return { formattedTime: null, hour: null, minute: null, meridian: null };
+	}
+
+	const hour = parseInt(inputValue.substring(0, 2), 10);
+	const minute = parseInt(inputValue.substring(2, 4), 10);
+
+	if (hour < 0 || hour > 23 || minute < 0 || minute > 59)
+	{
+		return { formattedTime: null, hour: null, minute: null, meridian: null };
+	}
+
+	let displayHour = hour;
+	let meridian = 'AM';
+
+	if (hour === 0)
+	{
+		displayHour = 12;
+	}
+	else if (hour > 12)
+	{
+		displayHour = hour - 12;
+		meridian = 'PM';
+	}
+	else if (hour === 12)
+	{
+		meridian = 'PM';
+	}
+
+	const formattedTime = `${displayHour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')} ${meridian}`;
+
+	return {
+		formattedTime,
+		hour: displayHour.toString().padStart(2, '0'),
+		minute: minute.toString().padStart(2, '0'),
+		meridian
+	};
+}
+
+/**
  * Hidden input for the TimePicker.
  *
  * @param {object} props
@@ -48,14 +116,14 @@ function TimeInputContainer({ bind, required, toggleOpen, handleInputChange, han
 {
 	return Div(
 		{
-			class: 'relative flex items-center gap-2 w-full justify-between border bg-input hover:bg-muted rounded-md h-10 px-4 py-2',
+			class: 'relative flex items-center gap-2 w-full justify-between border bg-input hover:bg-muted rounded-md h-10 pr-4 py-2',
 		},
 		[
 			HiddenInput({ bind, required }),
 			TimeInput({ placeholder, handleInputChange, handleInputFocus }),
 			Button(
 				{
-					class: 'flex-shrink-0 hover:bg-muted/50 rounded p-1',
+					class: 'flex-shrink-0 hover:bg-muted/50 rounded p-1 cursor-pointer',
 					click: toggleOpen,
 				},
 				[
@@ -271,122 +339,113 @@ export const TimePicker = VeilJot(
 	},
 
 	/**
+	 * Toggles the time picker popover.
+	 *
+	 * @param {Event} e
+	 * @param {object} context
+	 */
+	toggleOpen(e, { state })
+	{
+		state.toggle('open');
+	},
+
+	/**
+	 * Handles direct input changes and formats the time.
+	 *
+	 * @param {Event} e
+	 */
+	handleInputChange(e)
+	{
+		// @ts-ignore
+		let inputValue = e.target.value.replace(/[^\d]/g, ''); // Remove non-digits
+
+		// Format as hh:mm
+		let formattedValue = formatTimeInput(inputValue);
+
+		// If we have a complete time (4 digits), add AM/PM based on hour
+		const result = convertTo12HourFormat(inputValue);
+		if (result.formattedTime)
+		{
+			formattedValue = result.formattedTime;
+
+			// Update the component state
+			this.state.set({
+				hour: result.hour,
+				minute: result.minute,
+				meridian: result.meridian,
+				selectedTime: result.formattedTime
+			});
+
+			this.input.value = result.formattedTime;
+			Events.trigger('change', this.input);
+
+			if (typeof this.change === 'function')
+			{
+				this.change(result.formattedTime);
+			}
+		}
+
+		// @ts-ignore
+		e.target.value = formattedValue;
+	},
+
+	/**
+	 * Handles input focus - select all text for easy editing.
+	 *
+	 * @param {Event} e
+	 */
+	handleInputFocus(e)
+	{
+		// @ts-ignore
+		e.target.select();
+	},
+
+	/**
+	 * Handles time selection from the picker columns.
+	 *
+	 * @param {object} params
+	 */
+	handleTimeSelect({ hour, minute, meridian })
+	{
+		if (hour) this.state.hour = hour;
+		if (minute) this.state.minute = minute;
+		if (meridian) this.state.meridian = meridian;
+
+		if (this.state.hour && this.state.minute && this.state.meridian)
+		{
+			const formattedTime = `${this.state.hour}:${this.state.minute} ${this.state.meridian}`;
+			this.state.selectedTime = formattedTime;
+			this.state.open = false;
+			this.input.value = formattedTime;
+			Events.trigger('change', this.input);
+
+			if (typeof this.change === 'function')
+			{
+				this.change(formattedTime);
+			}
+		}
+	},
+
+	/**
 	 * Renders the TimePicker component.
 	 *
 	 * @returns {object}
 	 */
 	render()
 	{
-		const toggleOpen = (e, { state }) => state.toggle('open');
-
-		/**
-		 * Handles direct input changes and formats the time.
-		 */
-		const handleInputChange = (e) =>
-		{
-			let inputValue = e.target.value.replace(/[^\d]/g, ''); // Remove non-digits
-
-			// Format as hh:mm
-			let formattedValue = '';
-			if (inputValue.length > 0)
-			{
-				formattedValue = inputValue.substring(0, 2);
-				if (inputValue.length > 2)
-				{
-					formattedValue += ':' + inputValue.substring(2, 4);
-				}
-			}
-
-			// If we have a complete time (4 digits), add AM/PM based on hour
-			if (inputValue.length >= 4)
-			{
-				const hour = parseInt(inputValue.substring(0, 2), 10);
-				const minute = parseInt(inputValue.substring(2, 4), 10);
-
-				if (hour >= 0 && hour <= 23 && minute >= 0 && minute <= 59)
-				{
-					let displayHour = hour;
-					let meridian = 'AM';
-
-					if (hour === 0)
-					{
-						displayHour = 12;
-					}
-					else if (hour > 12)
-					{
-						displayHour = hour - 12;
-						meridian = 'PM';
-					}
-					else if (hour === 12)
-					{
-						meridian = 'PM';
-					}
-
-					const formattedTime = `${displayHour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')} ${meridian}`;
-					formattedValue = formattedTime;
-
-					// Update the component state
-					this.state.set({
-						hour: displayHour.toString().padStart(2, '0'),
-						minute: minute.toString().padStart(2, '0'),
-						meridian,
-						selectedTime: formattedTime
-					});
-
-					this.input.value = formattedTime;
-					Events.trigger('change', this.input);
-
-					if (typeof this.change === 'function')
-					{
-						this.change(formattedTime);
-					}
-				}
-			}
-
-			e.target.value = formattedValue;
-		};
-
-		/**
-		 * Handles input focus - select all text for easy editing.
-		 */
-		const handleInputFocus = (e) => {
-			e.target.select();
-		};
-
-		const handleTimeSelect = ({ hour, minute, meridian }) =>
-		{
-			if (hour) this.state.hour = hour;
-			if (minute) this.state.minute = minute;
-			if (meridian) this.state.meridian = meridian;
-
-			if (this.state.hour && this.state.minute && this.state.meridian)
-			{
-				const formattedTime = `${this.state.hour}:${this.state.minute} ${this.state.meridian}`;
-				this.state.selectedTime = formattedTime;
-				this.state.open = false;
-				this.input.value = formattedTime;
-				Events.trigger('change', this.input);
-
-				if (typeof this.change === 'function')
-				{
-					this.change(formattedTime);
-				}
-			}
-		};
-
 		return Div(
 			{ class: 'relative w-full max-w-[320px]' },
 			[
 				TimeInputContainer({
-					toggleOpen,
+					toggleOpen: this.toggleOpen.bind(this),
 					bind: this.bind,
 					required: this.required,
-					handleInputChange,
-					handleInputFocus,
+					handleInputChange: this.handleInputChange.bind(this),
+					handleInputFocus: this.handleInputFocus.bind(this),
 					placeholder: this.placeholder
 				}),
 				TimeContainer({
-					handleTimeSelect
+					handleTimeSelect: this.handleTimeSelect.bind(this)
 				})
 			]
 		);

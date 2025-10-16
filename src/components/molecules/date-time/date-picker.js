@@ -6,6 +6,55 @@ import { Calendar } from '../../organisms/calendar/calendar.js';
 import { PopOver } from '../popover.js';
 
 /**
+ * Formats a numeric string into mm/dd/yyyy format.
+ *
+ * @param {string} cleanValue - Numeric string (digits only)
+ * @returns {string} Formatted date string
+ */
+const formatDateInput = (cleanValue) =>
+{
+	let formattedValue = '';
+	if (cleanValue.length > 0)
+	{
+		formattedValue = cleanValue.substring(0, 2);
+		if (cleanValue.length > 2)
+		{
+			formattedValue += '/' + cleanValue.substring(2, 4);
+			if (cleanValue.length > 4)
+			{
+				formattedValue += '/' + cleanValue.substring(4, 8);
+			}
+		}
+	}
+	return formattedValue;
+};
+
+/**
+ * Validates and converts a date input to ISO format.
+ *
+ * @param {string} cleanValue - Numeric string (8 digits: mmddyyyy)
+ * @returns {string|null} ISO date string (yyyy-mm-dd) or null if invalid
+ */
+const validateAndFormatDate = (cleanValue) =>
+{
+	if (cleanValue.length !== 8)
+	{
+		return null;
+	}
+
+	const month = parseInt(cleanValue.substring(0, 2), 10);
+	const day = parseInt(cleanValue.substring(2, 4), 10);
+	const year = parseInt(cleanValue.substring(4, 8), 10);
+
+	if (month >= 1 && month <= 12 && day >= 1 && day <= 31 && year >= 1900)
+	{
+		return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+	}
+
+	return null;
+};
+
+/**
  * This will create a hidden input atom for form binding.
  *
  * @param {object} props
@@ -53,7 +102,7 @@ const DateInputContainer = ({ bind, required, toggleOpen, handleInputChange, han
 			DateInput({ placeholder, handleInputChange, handleInputFocus }),
 			Button(
 				{
-					class: 'flex-shrink-0 hover:bg-muted/50 rounded p-1',
+					class: 'flex-shrink-0 hover:bg-muted/50 rounded p-1 cursor-pointer',
 					click: toggleOpen,
 				},
 				[
@@ -126,95 +175,95 @@ export const DatePicker = VeilJot(
 	},
 
 	/**
+	 * Handles direct input changes and formats the date.
+	 *
+	 * @param {Event} e
+	 */
+	handleInputChange(e)
+	{
+		// @ts-ignore
+		const inputValue = e.target.value;
+		const cleanValue = inputValue.replace(/\D/g, ''); // Remove non-digits
+
+		// Format as mm/dd/yyyy
+		// @ts-ignore
+		e.target.value = formatDateInput(cleanValue);
+
+		// If we have a complete date, validate and update state
+		const dateString = validateAndFormatDate(cleanValue);
+		if (dateString)
+		{
+			this.state.selectedDate = dateString;
+			this.input.value = dateString;
+			Events.trigger('change', this.input);
+
+			if (typeof this.onChange === 'function')
+			{
+				this.onChange(dateString);
+			}
+		}
+	},
+
+	/**
+	 * Handles input focus - select all text for easy editing.
+	 *
+	 * @param {Event} e
+	 */
+	handleInputFocus(e)
+	{
+		// @ts-ignore
+		e.target.select();
+	},
+
+	/**
+	 * Handles date selection from calendar.
+	 *
+	 * @param {string} date
+	 */
+	handleDateSelect(date)
+	{
+		this.state.selectedDate = date;
+		this.state.open = false;
+		this.input.value = date;
+		Events.trigger('change', this.input);
+
+		if (typeof this.onChange === 'function')
+		{
+			this.onChange(date);
+		}
+	},
+
+	/**
+	 * Toggles the calendar popover.
+	 *
+	 * @param {Event} e
+	 * @param {object} context
+	 */
+	toggleOpen(e, { state })
+	{
+		state.toggle('open');
+	},
+
+	/**
 	 * Renders the DatePicker component.
 	 *
 	 * @returns {object}
 	 */
 	render()
 	{
-		const toggleOpen = (e, { state }) => state.toggle('open');
-
-		/**
-		 * Handles direct input changes and formats the date.
-		 */
-		const handleInputChange = (e) =>
-		{
-			const inputValue = e.target.value;
-			const cleanValue = inputValue.replace(/\D/g, ''); // Remove non-digits
-
-			// Format as mm/dd/yyyy
-			let formattedValue = '';
-			if (cleanValue.length > 0)
-			{
-				formattedValue = cleanValue.substring(0, 2);
-				if (cleanValue.length > 2)
-				{
-					formattedValue += '/' + cleanValue.substring(2, 4);
-					if (cleanValue.length > 4)
-					{
-						formattedValue += '/' + cleanValue.substring(4, 8);
-					}
-				}
-			}
-
-			e.target.value = formattedValue;
-
-			// If we have a complete date, validate and update state
-			if (cleanValue.length === 8)
-			{
-				const month = parseInt(cleanValue.substring(0, 2), 10);
-				const day = parseInt(cleanValue.substring(2, 4), 10);
-				const year = parseInt(cleanValue.substring(4, 8), 10);
-
-				if (month >= 1 && month <= 12 && day >= 1 && day <= 31 && year >= 1900)
-				{
-					const dateString = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-					this.state.selectedDate = dateString;
-					this.input.value = dateString;
-					Events.trigger('change', this.input);
-
-					if (typeof this.onChange === 'function')
-					{
-						this.onChange(dateString);
-					}
-				}
-			}
-		};
-
-		/**
-		 * Handles input focus - select all text for easy editing.
-		 */
-		const handleInputFocus = (e) =>
-		{
-			e.target.select();
-		};
-
-		const handleDateSelect = (date) =>
-		{
-			this.state.selectedDate = date;
-			this.state.open = false;
-			this.input.value = date;
-			Events.trigger('change', this.input);
-
-			if (typeof this.onChange === 'function')
-			{
-				this.onChange(date);
-			}
-		};
-
 		return Div(
 			{ class: 'relative w-full max-w-[320px]' },
 			[
 				DateInputContainer({
-					toggleOpen,
+					toggleOpen: this.toggleOpen.bind(this),
 					bind: this.bind,
 					required: this.required,
-					handleInputChange,
-					handleInputFocus,
+					handleInputChange: this.handleInputChange.bind(this),
+					handleInputFocus: this.handleInputFocus.bind(this),
 					placeholder: this.placeholder
 				}),
 				CalendarContainer({
-					handleDateSelect,
+					handleDateSelect: this.handleDateSelect.bind(this),
 					blockPriorDates: this.blockPriorDates || false
 				})
 			]
