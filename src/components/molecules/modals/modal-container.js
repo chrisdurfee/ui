@@ -12,7 +12,7 @@ import { Form } from "../form/form.js";
  * @returns {object}
  */
 const ModalHeader = ({ title, description, back, icon, options = [] }) => (
-	Header({ class: 'modal-header bg-background/80 backdrop-blur-md sticky flex flex-none items-center py-4 px-6 z-10' }, [
+	Header({ class: 'modal-header bg-background/80 backdrop-blur-md sticky flex flex-none items-center py-4 px-6 z-10 min-w-0' }, [
 
 		/**
 		 * Back Button
@@ -27,12 +27,12 @@ const ModalHeader = ({ title, description, back, icon, options = [] }) => (
 		/**
 		 * Title and Description
 		 */
-		Div({ class: 'flex flex-auto flex-row justify-between w-full ml-2 gap-2' }, [
-			Div({ class: 'flex flex-auto flex-col' }, [
+		Div({ class: 'flex flex-auto flex-row justify-between ml-2 gap-2 min-w-0' }, [
+			Div({ class: 'flex flex-auto flex-col min-w-0' }, [
 				H2({ class: 'text-lg font-semibold m-0 truncate' }, title),
 				description && Div({ class: 'text-sm text-muted-foreground truncate' }, description)
 			]),
-			...options
+			Div({ class: 'flex flex-none items-center gap-2' }, options)
 		])
 	])
 );
@@ -47,7 +47,7 @@ const ModalHeader = ({ title, description, back, icon, options = [] }) => (
 export const ModalContainer = Atom((props, children) => (
 	Div({
 			popover: 'manual',
-			class: `modal m-auto top-0 right-0 bottom-0 left-0 fixed z-20 grid w-full h-full max-h-screen gap-2 lg:border bg-background text-foreground shadow-xl break-words p-0 ${props.class}`,
+			class: `modal m-auto top-0 right-0 bottom-0 left-0 fixed z-20 grid w-full h-full max-h-screen gap-2 lg:border bg-background text-foreground shadow-xl break-words p-0 overflow-hidden ${props.class}`,
 			click: (e, parent) =>
 			{
 				const isClickOutside = (e.target === parent.panel);
@@ -60,7 +60,7 @@ export const ModalContainer = Atom((props, children) => (
 				}
 			}
 		}, [
-		Form({ class: 'modal-content relative bg-background z-[1] flex flex-auto flex-col gap-y-4', submit: (e, parent) => (props.onSubmit && props.onSubmit(parent)) }, [
+		Form({ class: 'modal-content relative bg-background z-[1] flex flex-auto flex-col gap-y-4 overflow-hidden', submit: (e, parent) => (props.onSubmit && props.onSubmit(parent)) }, [
 			ModalHeader(props),
 			Div({ class: 'modal-body flex flex-grow flex-col overflow-y-auto py-0 px-6 z-0' }, children),
 			Footer({ class: 'modal-footer sticky bg-background/80 backdrop-blur-md flex flex-none justify-between py-4 px-6 z-10' }, props.buttons)
