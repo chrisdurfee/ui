@@ -68,11 +68,11 @@ export class Overlay extends Component
 	 */
 	getClassName()
 	{
-		return `absolute overlay left-0 top-0 right-0 z-20
+		return `absolute flex flex-auto flex-col overlay left-0 top-0 right-0 z-20
 			h-svh max-h-svh min-h-svh
 			bg-background pointer-events-auto
 			lg:left-16
-			pb-[calc(env(safe-area-inset-bottom)+56px)] will-change-contents ${this.class || ''}`;
+			will-change-contents ${this.class || ''}`;
 	}
 
 	/**

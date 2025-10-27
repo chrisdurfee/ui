@@ -63,6 +63,14 @@ export class Modal extends Component
 		this.hidePrimaryButton = false;
 
 		/**
+		 * @member {boolean} hideFooter
+		 * @default false
+		 * @description This will hide the footer.
+		 * @values true, false
+		 */
+		this.hideFooter = false;
+
+		/**
 		 * @member {string} icon
 		 */
 		this.icon = null;
@@ -100,6 +108,7 @@ export class Modal extends Component
 				description,
 				options: this.headerOptions(),
 				buttons: this.getButtons(),
+				hideFooter: this.hideFooter,
 				onSubmit: (parent) =>
 				{
 					let canClose = true;

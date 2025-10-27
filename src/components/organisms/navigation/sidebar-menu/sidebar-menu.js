@@ -8,7 +8,7 @@ import { InlineNavigation } from "../inline-navigation.js";
  * @returns {object}
  */
 export const SidebarMenu = ({ title, options, class: className = '', mobileBorder = false, sticky = false, topNav = null, bottomNav = null }) => (
-	Div({ class: `pb-12 p-4 pt-0 lg:p-6 lg:border-r w-full lg:max-w-[300px] h-full ${className}` }, [
+	Div({ class: `pb-12 p-4 pt-0 lg:p-6 lg:border-r w-full lg:max-w-[300px] flex-auto flex-col ${className}` }, [
 		topNav,
 		title && Header({ class: 'pb-4 md:pb-2 px-6 flex' }, [
 			H1({ class: 'scroll-m-20 text-3xl lg:text-2xl font-bold tracking-tight' }, title),

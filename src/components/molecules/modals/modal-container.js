@@ -47,7 +47,7 @@ const ModalHeader = ({ title, description, back, icon, options = [] }) => (
 export const ModalContainer = Atom((props, children) => (
 	Div({
 			popover: 'manual',
-			class: `modal m-auto top-0 right-0 bottom-0 left-0 fixed z-20 grid w-full h-full max-h-screen gap-2 lg:border bg-background text-foreground shadow-xl break-words p-0 overflow-hidden ${props.class}`,
+			class: `modal m-auto top-0 right-0 bottom-0 left-0 fixed z-20 grid w-full h-full max-h-screen gap-2 lg:border bg-background text-foreground shadow-xl break-words p-0 overflow-y-auto ${props.class}`,
 			click: (e, parent) =>
 			{
 				const isClickOutside = (e.target === parent.panel);
@@ -60,10 +60,10 @@ export const ModalContainer = Atom((props, children) => (
 				}
 			}
 		}, [
-		Form({ class: 'modal-content relative bg-background z-[1] flex flex-auto flex-col gap-y-4 overflow-hidden', submit: (e, parent) => (props.onSubmit && props.onSubmit(parent)) }, [
+		Form({ class: 'modal-content relative bg-background z-[1] flex flex-auto flex-col gap-y-4', submit: (e, parent) => (props.onSubmit && props.onSubmit(parent)) }, [
 			ModalHeader(props),
-			Div({ class: 'modal-body flex flex-grow flex-col overflow-y-auto py-0 px-6 z-0' }, children),
-			Footer({ class: 'modal-footer sticky bg-background/80 backdrop-blur-md flex flex-none justify-between py-4 px-6 z-10' }, props.buttons)
+			Div({ class: 'modal-body flex flex-grow flex-col py-0 px-6 z-0', cache: 'modalBody' }, children),
+			!props.hideFooter && Footer({ class: 'modal-footer sticky bg-background/80 backdrop-blur-md flex flex-none justify-between py-4 px-6 z-10' }, props.buttons)
 		])
 	])
 ));

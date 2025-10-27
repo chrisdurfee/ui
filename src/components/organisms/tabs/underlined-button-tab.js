@@ -96,14 +96,14 @@ export class UnderlinedButtonTab extends Veil
 	{
 		const callBack = this.select.bind(this);
 
-		return Div({ class: 'underlined-button-tab-panel' }, [
+		return Div({ class: 'underlined-button-tab-panel flex flex-auto flex-col' }, [
 			UnderlinedNavigation({
 				class: this.class,
 				options: this.options,
 				callBack
 			}),
 			Section({
-				class: 'tab-content pt-6',
+				class: 'tab-content pt-6 flex flex-auto flex-col',
 				onState: ['selected', this.updateContent.bind(this)]
 			})
 		]);
