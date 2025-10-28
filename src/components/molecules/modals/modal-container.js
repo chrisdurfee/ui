@@ -60,7 +60,7 @@ export const ModalContainer = Atom((props, children) => (
 				}
 			}
 		}, [
-		Form({ class: 'modal-content relative bg-background z-[1] flex flex-auto flex-col gap-y-4', submit: (e, parent) => (props.onSubmit && props.onSubmit(parent)) }, [
+		Form({ class: 'modal-content relative bg-background z-[1] flex flex-auto flex-col gap-y-4 min-w-0', submit: (e, parent) => (props.onSubmit && props.onSubmit(parent)) }, [
 			ModalHeader(props),
 			Div({ class: 'modal-body flex flex-grow flex-col py-0 px-6 z-0', cache: 'modalBody' }, children),
 			!props.hideFooter && Footer({ class: 'modal-footer sticky bg-background/80 backdrop-blur-md flex flex-none justify-between py-4 px-6 z-10' }, props.buttons)
