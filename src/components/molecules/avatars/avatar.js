@@ -30,10 +30,12 @@ const AvatarImage = Atom(({ src, alt }) =>
 		src,
 		alt,
 
+		load: (event) => event.target.style.visibility = 'visible',
+
 		/**
 		 * If there's an error loading the image, hide it.
 		 */
-		error: (event) => event.target.style.display = 'none'
+		error: (event) => event.target.style.visibility = 'hidden'
 	});
 });
 
