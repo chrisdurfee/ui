@@ -12,7 +12,7 @@ const CLOSE_DELAY = 100;
  * @returns {object} - The search input component.
  */
 export const SearchInput = Atom((props) => (
-	Div({ class: 'relative flex items-center' }, [
+	Div({ class: 'relative flex flex-auto items-center' }, [
 		Input({
 			cache: 'input',
 			class: props.class ?? '',
