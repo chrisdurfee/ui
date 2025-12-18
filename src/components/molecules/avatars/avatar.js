@@ -1,5 +1,6 @@
-import { Div, Img, Span } from '@base-framework/atoms';
+import { Div, Span } from '@base-framework/atoms';
 import { Atom } from '@base-framework/base';
+import { Image } from '../../atoms/image.js';
 
 /**
  * AvatarImage
@@ -25,17 +26,9 @@ const AvatarImage = Atom(({ src, alt }) =>
 		return null;
 	}
 
-	return Img({
-		class: 'absolute w-full h-full rounded-full object-cover fadeIn',
+	return Image({
 		src,
-		alt,
-
-		load: (event) => event.target.style.visibility = 'visible',
-
-		/**
-		 * If there's an error loading the image, hide it.
-		 */
-		error: (event) => event.target.style.visibility = 'hidden'
+		alt
 	});
 });
 
