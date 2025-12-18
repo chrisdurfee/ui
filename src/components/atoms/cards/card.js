@@ -12,6 +12,7 @@ export const Card = Atom((props, children) =>
 {
 	const margin = props.margin ?? 'my-5 mx-5';
 	const padding = props.padding ?? 'p-4';
+	const border = props.border ?? 'border-border';
 
 	if (props.hover)
 	{
@@ -20,6 +21,6 @@ export const Card = Atom((props, children) =>
 
 	return Div({
 		...props,
-		class: `rounded-lg border bg-card text-card-foreground shadow-md min-w-[120px] min-h-[80px] ${margin} ${padding} ${props.class || ''}`
+		class: `rounded-lg ${border} bg-card text-card-foreground shadow-md min-w-[120px] min-h-[80px] ${margin} ${padding} ${props.class || ''}`
 	}, children);
 });
