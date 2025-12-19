@@ -28,7 +28,8 @@ const AvatarImage = Atom(({ src, alt }) =>
 
 	return Image({
 		src,
-		alt
+		alt,
+		class: 'rounded-full'
 	});
 });
 

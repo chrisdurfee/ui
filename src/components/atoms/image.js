@@ -28,7 +28,7 @@ export const Image = Atom(({ src, alt, class: className, checkPath = true }) =>
 	}
 
 	return Img({
-		class: `absolute w-full h-full rounded-full object-cover fadeIn ${className}`,
+		class: `absolute w-full h-full object-cover fadeIn ${className}`,
 		src,
 		alt,
 
