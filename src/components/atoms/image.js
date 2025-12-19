@@ -9,7 +9,7 @@ import { Atom } from '@base-framework/base';
  * @param {object} props
  * @returns {object}
  */
-export const Image = Atom(({ src, alt, class: className }) =>
+export const Image = Atom(({ src, alt, class: className, checkPath = true }) =>
 {
 	if (!src)
 	{
@@ -22,7 +22,7 @@ export const Image = Atom(({ src, alt, class: className }) =>
 	 * If we are not watching and the url doesn't look
 	 * like a path, skip rendering the image.
 	 */
-	if (src.indexOf('.') === -1 && src.indexOf('[[') === -1)
+	if (checkPath && src.indexOf('.') === -1 && src.indexOf('[[') === -1)
 	{
 		return null;
 	}
