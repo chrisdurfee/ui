@@ -51,23 +51,6 @@ export class Drawer extends Modal
 	}
 
 	/**
-	 * Setup after the component is created
-	 *
-	 * @returns {void}
-	 */
-	afterSetup()
-	{
-		if (this.swipeToClose)
-		{
-			this.gesture = new DrawerGesture({
-				closeThreshold: this.closeThreshold,
-				snapThreshold: this.snapThreshold,
-				onClose: () => this.destroy()
-			});
-		}
-	}
-
-	/**
 	 * Get extra props for ModalContainer
 	 *
 	 * @returns {object}
@@ -135,6 +118,19 @@ export class Drawer extends Modal
 	showModal()
 	{
 		super.showModal();
+
+		// Initialize gesture with cached element references after modal is shown
+		if (this.swipeToClose && !this.gesture)
+		{
+			this.gesture = new DrawerGesture({
+				modal: this.panel,
+				modalContent: this.modalContent,
+				modalBody: this.modalBody,
+				closeThreshold: this.closeThreshold,
+				snapThreshold: this.snapThreshold,
+				onClose: () => this.destroy()
+			});
+		}
 	}
 
 	/**
@@ -151,30 +147,9 @@ export class Drawer extends Modal
 		}
 
 		return {
-			touchstart: (e, parent) =>
-            {
-                // @ts-ignore
-				const modalBody = this.modalBody;
-				if (modalBody)
-				{
-					this.gesture.handleTouchStart(e, modalBody);
-				}
-			},
-			touchmove: (e, parent) =>
-            {
-				const content = e.currentTarget;
-                // @ts-ignore
-				const modalBody = this.modalBody;
-				if (modalBody)
-				{
-					this.gesture.handleTouchMove(e, content, modalBody);
-				}
-			},
-			touchend: (e) =>
-            {
-				const content = e.currentTarget;
-				this.gesture.handleTouchEnd(e, content);
-			}
+			touchstart: (e) => this.gesture.handleTouchStart(e),
+			touchmove: (e) => this.gesture.handleTouchMove(e),
+			touchend: (e) => this.gesture.handleTouchEnd(e)
 		};
 	}
 

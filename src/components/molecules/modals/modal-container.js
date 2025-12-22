@@ -63,6 +63,7 @@ export const ModalContainer = Atom((props, children) => (
 		Form({
 			class: 'modal-content relative bg-background z-[1] flex flex-auto flex-col gap-y-4 min-w-0',
 			submit: (e, parent) => (props.onSubmit && props.onSubmit(parent)),
+			cache: 'modalContent',
 			...props.gestureHandlers
 		}, [
 			ModalHeader(props),
