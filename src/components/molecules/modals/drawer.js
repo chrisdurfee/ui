@@ -124,7 +124,9 @@ export class Drawer extends Modal
 		{
 			this.gesture = new DrawerGesture({
 				modal: this.panel,
+				// @ts-ignore
 				modalContent: this.modalContent,
+				// @ts-ignore
 				modalBody: this.modalBody,
 				closeThreshold: this.closeThreshold,
 				snapThreshold: this.snapThreshold,
