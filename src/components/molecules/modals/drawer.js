@@ -1,3 +1,5 @@
+import { DrawerGesture } from './drawer-gesture.js';
+import { ModalContainer } from './modal-container.js';
 import { Modal } from './modal.js';
 
 /**
@@ -55,28 +57,77 @@ export class Drawer extends Modal
 	 */
 	afterSetup()
 	{
-		this.initDragState();
+		if (this.swipeToClose)
+		{
+			this.gesture = new DrawerGesture({
+				closeThreshold: this.closeThreshold,
+				snapThreshold: this.snapThreshold,
+				onClose: () => this.destroy()
+			});
+		}
 	}
 
 	/**
-	 * Initialize drag state
+	 * Get extra props for ModalContainer
 	 *
-	 * @private
-	 * @returns {void}
+	 * @returns {object}
 	 */
-	initDragState()
+	getContainerProps()
 	{
-		this.dragState = {
-			isDragging: false,
-			startY: 0,
-			currentY: 0,
-			startScrollTop: 0,
-			canDrag: false
-		};
+		const props = {};
+
+		// Add gesture handlers if enabled
+		if (this.swipeToClose && this.gesture)
+		{
+			props.gestureHandlers = this.getGestureHandlers();
+		}
+
+		return props;
 	}
 
 	/**
-	 * Show the modal and attach gesture handlers
+	 * Render the drawer with gesture handlers
+	 *
+	 * @returns {object}
+	 */
+	render()
+	{
+		const className = this.getMainClass();
+		const title = this.title || '';
+		const description = this.description || null;
+		const containerProps = this.getContainerProps();
+
+		return ModalContainer({
+				class: className,
+				title,
+				description,
+				options: this.headerOptions(),
+				buttons: this.getButtons(),
+				hideFooter: this.hideFooter,
+				onSubmit: (parent) =>
+				{
+					let canClose = true;
+					if (this.onSubmit)
+					{
+						canClose = this.onSubmit(parent);
+					}
+
+					if (canClose !== false)
+					{
+						this.destroy();
+					}
+				},
+				icon: this.icon,
+				back: this.back ?? false,
+				aria: { expanded: ['open']},
+				...containerProps
+			},
+			this.children
+		);
+	}
+
+	/**
+	 * Show the modal
 	 *
 	 * @protected
 	 * @returns {void}
@@ -84,230 +135,63 @@ export class Drawer extends Modal
 	showModal()
 	{
 		super.showModal();
-
-		if (this.swipeToClose && this.isMobile())
-		{
-			this.attachGestureHandlers();
-		}
 	}
 
 	/**
-	 * Check if we're on mobile viewport
+	 * Get gesture event handlers for modal content
+	 * Returns event props to be spread onto the modal-content element
 	 *
-	 * @private
-	 * @returns {boolean}
+	 * @returns {object}
 	 */
-	isMobile()
+	getGestureHandlers()
 	{
-		return window.innerWidth < 1024;
-	}
-
-	/**
-	 * Attach touch gesture handlers
-	 *
-	 * @private
-	 * @returns {void}
-	 */
-	attachGestureHandlers()
-	{
-		const content = this.panel.querySelector('.modal-content');
-		const modalBody = this.panel.querySelector('.modal-body');
-
-		if (!content || !modalBody)
+		if (!this.swipeToClose || !this.gesture || !this.gesture.isMobile())
 		{
-			return;
+			return {};
 		}
 
-		// Touch start
-		this.touchStartHandler = (e) => this.onTouchStart(e, modalBody);
-		content.addEventListener('touchstart', this.touchStartHandler, { passive: true });
-
-		// Touch move
-		this.touchMoveHandler = (e) => this.onTouchMove(e, content, modalBody);
-		content.addEventListener('touchmove', this.touchMoveHandler, { passive: false });
-
-		// Touch end
-		this.touchEndHandler = (e) => this.onTouchEnd(e, content);
-		content.addEventListener('touchend', this.touchEndHandler, { passive: true });
-
-		// Store refs for cleanup
-		this.gestureElements = { content, modalBody };
-	}
-
-	/**
-	 * Handle touch start
-	 *
-	 * @private
-	 * @param {TouchEvent} e
-	 * @param {HTMLElement} modalBody
-	 * @returns {void}
-	 */
-	onTouchStart(e, modalBody)
-	{
-		const touch = e.touches[0];
-		this.dragState.startY = touch.clientY;
-		this.dragState.currentY = touch.clientY;
-		this.dragState.startScrollTop = modalBody.scrollTop;
-
-		// Can drag if at top of scroll
-		this.dragState.canDrag = modalBody.scrollTop === 0;
-	}
-
-	/**
-	 * Handle touch move
-	 *
-	 * @private
-	 * @param {TouchEvent} e
-	 * @param {HTMLElement} content
-	 * @param {HTMLElement} modalBody
-	 * @returns {void}
-	 */
-	onTouchMove(e, content, modalBody)
-	{
-		const touch = e.touches[0];
-		this.dragState.currentY = touch.clientY;
-		const deltaY = this.dragState.currentY - this.dragState.startY;
-
-		// Check if we should start dragging
-		if (!this.dragState.isDragging && this.dragState.canDrag && deltaY > 0)
-		{
-			// User is pulling down and we're at top of scroll
-			if (modalBody.scrollTop === 0)
-			{
-				this.dragState.isDragging = true;
+		return {
+			touchstart: (e, parent) =>
+            {
+                // @ts-ignore
+				const modalBody = this.modalBody;
+				if (modalBody)
+				{
+					this.gesture.handleTouchStart(e, modalBody);
+				}
+			},
+			touchmove: (e, parent) =>
+            {
+				const content = e.currentTarget;
+                // @ts-ignore
+				const modalBody = this.modalBody;
+				if (modalBody)
+				{
+					this.gesture.handleTouchMove(e, content, modalBody);
+				}
+			},
+			touchend: (e) =>
+            {
+				const content = e.currentTarget;
+				this.gesture.handleTouchEnd(e, content);
 			}
-		}
-
-		// If dragging, move the drawer
-		if (this.dragState.isDragging && deltaY > 0)
-		{
-			e.preventDefault();
-
-			// Apply transform with rubber band effect
-			const damping = 1 - (deltaY / (window.innerHeight * 2));
-			const translateY = deltaY * Math.max(damping, 0.5);
-
-			content.style.transform = `translateY(${translateY}px)`;
-			content.style.transition = 'none';
-
-			// Update opacity of backdrop
-			const opacity = Math.max(0, 1 - (deltaY / this.closeThreshold));
-			this.updateBackdropOpacity(opacity);
-		}
-		else if (modalBody.scrollTop > 0)
-		{
-			// Content is scrolling, allow it
-			this.dragState.canDrag = false;
-		}
+		};
 	}
 
 	/**
-	 * Handle touch end
-	 *
-	 * @private
-	 * @param {TouchEvent} e
-	 * @param {HTMLElement} content
-	 * @returns {void}
-	 */
-	onTouchEnd(e, content)
-	{
-		const deltaY = this.dragState.currentY - this.dragState.startY;
-
-		if (this.dragState.isDragging)
-		{
-			content.style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out';
-
-			// Close if dragged past threshold
-			if (deltaY > this.closeThreshold)
-			{
-				this.animateClose(content);
-			}
-			else
-			{
-				// Snap back
-				content.style.transform = 'translateY(0)';
-				this.updateBackdropOpacity(1);
-			}
-		}
-
-		// Reset drag state
-		this.dragState.isDragging = false;
-		this.dragState.canDrag = false;
-	}
-
-	/**
-	 * Animate drawer closing
-	 *
-	 * @private
-	 * @param {HTMLElement} content
-	 * @returns {void}
-	 */
-	animateClose(content)
-	{
-		content.style.transform = `translateY(100%)`;
-		this.updateBackdropOpacity(0);
-
-		setTimeout(() => {
-			this.destroy();
-		}, 300);
-	}
-
-	/**
-	 * Update backdrop opacity
-	 *
-	 * @private
-	 * @param {number} opacity
-	 * @returns {void}
-	 */
-	updateBackdropOpacity(opacity)
-	{
-		const backdrop = this.panel.querySelector('::after');
-		if (backdrop)
-		{
-			this.panel.style.setProperty('--backdrop-opacity', opacity.toString());
-		}
-	}
-
-	/**
-	 * Clean up gesture handlers before destroy
+	 * Clean up before destroy
 	 *
 	 * @protected
 	 * @returns {void}
 	 */
 	beforeDestroy()
 	{
-		this.removeGestureHandlers();
+		if (this.gesture)
+		{
+			this.gesture.destroy();
+			this.gesture = null;
+		}
+
 		super.beforeDestroy();
-	}
-
-	/**
-	 * Remove gesture event listeners
-	 *
-	 * @private
-	 * @returns {void}
-	 */
-	removeGestureHandlers()
-	{
-		if (!this.gestureElements)
-		{
-			return;
-		}
-
-		const { content } = this.gestureElements;
-
-		if (this.touchStartHandler)
-		{
-			content.removeEventListener('touchstart', this.touchStartHandler);
-		}
-		if (this.touchMoveHandler)
-		{
-			content.removeEventListener('touchmove', this.touchMoveHandler);
-		}
-		if (this.touchEndHandler)
-		{
-			content.removeEventListener('touchend', this.touchEndHandler);
-		}
-
-		this.gestureElements = null;
 	}
 }
