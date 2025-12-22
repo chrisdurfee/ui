@@ -49,7 +49,7 @@ export class Modal extends Component
 		/**
 		 * @member {string|null} type
 		 * @default null
-		 * @values 'right', 'left'
+		 * @values 'right', 'left', 'drawer'
 		 * @description This will set the type of modal.
 		 */
 		this.type = null;
@@ -218,6 +218,8 @@ export class Modal extends Component
 				return 'right right-0';
 			case 'left':
 				return 'left left-0';
+			case 'drawer':
+				return 'drawer';
 			default:
 				return '';
 		}
