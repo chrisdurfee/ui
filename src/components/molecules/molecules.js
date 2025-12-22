@@ -10,7 +10,7 @@ export * from "./form/form-control.js";
 export * from "./form/form-field.js";
 export * from "./form/form.js";
 export * from "./modals/atoms.js";
-export * from "./modals/drawer.js";
+export * from "./modals/drawer/drawer.js";
 export * from "./modals/modal.js";
 export * from "./notifications/notification-container.js";
 export * from "./notifications/notification.js";

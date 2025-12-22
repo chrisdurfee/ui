@@ -1,47 +1,26 @@
-import { Div, Footer, H2, Header } from "@base-framework/atoms";
+import { Div, Footer } from "@base-framework/atoms";
 import { Atom } from "@base-framework/base";
-import { Button } from "../../atoms/buttons/buttons.js";
-import { Icon } from "../../atoms/icon.js";
-import { Icons } from "../../icons/icons.js";
 import { Form } from "../form/form.js";
+import { ModalHeader } from "./modal-header.js";
 
 /**
- * This will create a dialog header.
+ * ModalContainer
  *
- * @param {object} props
- * @returns {object}
- */
-const ModalHeader = ({ title, description, back, icon, options = [] }) => (
-	Header({ class: 'modal-header bg-background/80 backdrop-blur-md sticky flex flex-none items-center py-4 px-6 z-10 min-w-0' }, [
-
-		/**
-		 * Back Button
-		 */
-		back && Button({ variant: 'icon', icon: Icons.arrows.left, class: 'mr-2 p-0 flex sm:hidden', click: (e, parent) => parent.close() }),
-
-		/**
-		 * Icon
-		 */
-		icon && Div({ class: 'mr-2 w-12 h-12 rounded-full bg-muted flex flex-none items-center justify-center' }, [ Icon(icon) ]),
-
-		/**
-		 * Title and Description
-		 */
-		Div({ class: 'flex flex-auto flex-row justify-between ml-2 gap-2 min-w-0' }, [
-			Div({ class: 'flex flex-auto flex-col min-w-0' }, [
-				H2({ class: 'text-lg font-semibold m-0 truncate' }, title),
-				description && Div({ class: 'text-sm text-muted-foreground truncate' }, description)
-			]),
-			Div({ class: 'flex flex-none items-center gap-2' }, options)
-		])
-	])
-);
-
-/**
- * This will create a dialog component.
+ * Creates a container for modal/drawer components with header, body, and footer.
+ * Handles popover behavior, form submission, and backdrop clicks.
  *
- * @param {object} props
- * @param {array} children
+ * @param {object} props - Component properties
+ * @param {string} [props.class] - Additional CSS classes
+ * @param {string} props.title - Modal title
+ * @param {string} [props.description] - Optional description
+ * @param {boolean} [props.back=false] - Show back button on mobile
+ * @param {string} [props.icon] - Icon to display in header
+ * @param {Array} [props.options=[]] - Header action buttons
+ * @param {Array} [props.buttons=[]] - Footer buttons
+ * @param {boolean} [props.hideFooter=false] - Hide footer section
+ * @param {Function} [props.onSubmit] - Form submission handler
+ * @param {object} [props.gestureHandlers] - Touch gesture handlers for drawer
+ * @param {Array} children - Modal body content
  * @returns {object}
  */
 export const ModalContainer = Atom((props, children) => (

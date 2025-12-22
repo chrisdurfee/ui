@@ -1,12 +1,18 @@
+import { ModalContainer } from '../modal-container.js';
+import { Modal } from '../modal.js';
 import { DrawerGesture } from './drawer-gesture.js';
-import { ModalContainer } from './modal-container.js';
-import { Modal } from './modal.js';
 
 /**
  * Drawer
  *
  * A mobile-first drawer component that slides up from the bottom on mobile
  * and appears as a centered modal on desktop. Supports swipe-to-close gestures.
+ *
+ * Extends the Modal component with:
+ * - Mobile-optimized slide-up animation
+ * - Touch gesture support for swipe-to-close
+ * - Rubber-band drag effect
+ * - Adaptive behavior (drawer on mobile, modal on desktop)
  *
  * @export
  * @class Drawer
@@ -15,7 +21,7 @@ import { Modal } from './modal.js';
 export class Drawer extends Modal
 {
 	/**
-	 * This will declare the props for the compiler.
+	 * Declares the component props
 	 *
 	 * @returns {void}
 	 */
@@ -24,34 +30,54 @@ export class Drawer extends Modal
 		super.declareProps();
 
 		/**
-		 * Force type to drawer
+		 * Forces type to drawer for styling
+		 * @type {string}
 		 */
 		this.type = 'drawer';
 
 		/**
-		 * @member {boolean} swipeToClose
+		 * Enables swipe-to-close gesture on mobile
+		 * @type {boolean}
 		 * @default true
-		 * @description Enable swipe-to-close gesture on mobile
 		 */
 		this.swipeToClose = true;
 
 		/**
-		 * @member {number} closeThreshold
+		 * Pixels to drag before closing (mobile only)
+		 * @type {number}
 		 * @default 150
-		 * @description Pixels to drag before closing (mobile only)
 		 */
 		this.closeThreshold = 150;
 
 		/**
-		 * @member {number} snapThreshold
+		 * Pixels to drag before snapping behavior kicks in
+		 * @type {number}
 		 * @default 50
-		 * @description Pixels to drag before snapping behavior kicks in
 		 */
 		this.snapThreshold = 50;
+
+		/**
+		 * DrawerGesture instance for handling touch events
+		 * @type {DrawerGesture|null}
+		 * @private
+		 */
+		this.gesture = null;
+
+		/**
+		 * Cached reference to modal content element (set via cache property)
+		 * @type {HTMLElement|null}
+		 */
+		this.modalContent = null;
+
+		/**
+		 * Cached reference to modal body element (set via cache property)
+		 * @type {HTMLElement|null}
+		 */
+		this.modalBody = null;
 	}
 
 	/**
-	 * Get extra props for ModalContainer
+	 * Gets extra props to pass to ModalContainer
 	 *
 	 * @returns {object}
 	 */
@@ -69,7 +95,7 @@ export class Drawer extends Modal
 	}
 
 	/**
-	 * Render the drawer with gesture handlers
+	 * Renders the drawer with gesture handlers
 	 *
 	 * @returns {object}
 	 */
@@ -80,7 +106,8 @@ export class Drawer extends Modal
 		const description = this.description || null;
 		const containerProps = this.getContainerProps();
 
-		return ModalContainer({
+		return ModalContainer(
+			{
 				class: className,
 				title,
 				description,
@@ -102,7 +129,7 @@ export class Drawer extends Modal
 				},
 				icon: this.icon,
 				back: this.back ?? false,
-				aria: { expanded: ['open']},
+				aria: { expanded: ['open'] },
 				...containerProps
 			},
 			this.children
@@ -110,7 +137,7 @@ export class Drawer extends Modal
 	}
 
 	/**
-	 * Show the modal
+	 * Shows the modal and initializes gesture handling
 	 *
 	 * @protected
 	 * @returns {void}
@@ -124,9 +151,7 @@ export class Drawer extends Modal
 		{
 			this.gesture = new DrawerGesture({
 				modal: this.panel,
-				// @ts-ignore
 				modalContent: this.modalContent,
-				// @ts-ignore
 				modalBody: this.modalBody,
 				closeThreshold: this.closeThreshold,
 				snapThreshold: this.snapThreshold,
@@ -136,8 +161,8 @@ export class Drawer extends Modal
 	}
 
 	/**
-	 * Get gesture event handlers for modal content
-	 * Returns event props to be spread onto the modal-content element
+	 * Gets gesture event handlers for modal content.
+	 * Returns event props to be spread onto the modal-content element.
 	 *
 	 * @returns {object}
 	 */
@@ -156,7 +181,7 @@ export class Drawer extends Modal
 	}
 
 	/**
-	 * Clean up before destroy
+	 * Cleans up before destroy
 	 *
 	 * @protected
 	 * @returns {void}

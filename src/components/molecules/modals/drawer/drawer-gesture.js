@@ -1,8 +1,14 @@
 /**
  * DrawerGesture
  *
- * Handles touch gesture tracking for drawer components.
- * Manages drag state, thresholds, and provides helper methods for swipe-to-close behavior.
+ * Manages touch gesture tracking for drawer components.
+ * Handles drag state, velocity thresholds, and swipe-to-close behavior.
+ *
+ * This class provides methods for:
+ * - Tracking touch start/move/end events
+ * - Calculating drag deltas with rubber-band damping
+ * - Determining when to close or snap back the drawer
+ * - Managing backdrop opacity during drag
  *
  * @export
  * @class DrawerGesture
@@ -13,21 +19,36 @@ export class DrawerGesture
 	 * Creates an instance of DrawerGesture.
 	 *
 	 * @param {object} [options={}]
-	 * @param {HTMLElement|null} [options.modal=null] - The modal element (panel) reference
+	 * @param {HTMLElement} [options.modal=null] - The modal element (panel) reference
+	 * @param {HTMLElement} [options.modalContent=null] - The modal content element reference
+	 * @param {HTMLElement} [options.modalBody=null] - The scrollable body element reference
 	 * @param {number} [options.closeThreshold=150] - Pixels to drag before closing
 	 * @param {number} [options.snapThreshold=50] - Pixels to drag before snapping
-	 * @param {Function|null} [options.onClose=null] - Callback when drawer should close
+	 * @param {Function} [options.onClose=null] - Callback when drawer should close
 	 */
 	constructor(options = {})
 	{
-		const { modal = null, closeThreshold = 150, snapThreshold = 50, onClose = null } = options;
+		const {
+			modal = null,
+			modalContent = null,
+			modalBody = null,
+			closeThreshold = 150,
+			snapThreshold = 50,
+			onClose = null
+		} = options;
 
 		this.modal = modal;
+		this.modalContent = modalContent;
+		this.modalBody = modalBody;
+		this.closeThreshold = closeThreshold;
+		this.snapThreshold = snapThreshold;
+		this.onClose = onClose;
+
 		this.reset();
 	}
 
 	/**
-	 * Reset drag state
+	 * Resets the drag state to initial values
 	 *
 	 * @returns {void}
 	 */
@@ -43,7 +64,7 @@ export class DrawerGesture
 	}
 
 	/**
-	 * Check if viewport is mobile
+	 * Checks if the viewport is mobile size
 	 *
 	 * @returns {boolean}
 	 */
@@ -53,37 +74,39 @@ export class DrawerGesture
 	}
 
 	/**
-	 * Handle touch start
+	 * Handles touch start event
 	 *
-	 * @param {TouchEvent} e
+	 * @param {TouchEvent} e - The touch event
 	 * @returns {void}
 	 */
 	handleTouchStart(e)
 	{
-		// @ts-ignore
-		if (!this.modalBody) return;
+		if (!this.modalBody)
+		{
+			return;
+		}
 
 		const touch = e.touches[0];
 		this.state.startY = touch.clientY;
 		this.state.currentY = touch.clientY;
-		// @ts-ignore
 		this.state.startScrollTop = this.modalBody.scrollTop;
 
-		// Can drag if at top of scroll
-		// @ts-ignore
+		// Can drag only if at the top of scroll
 		this.state.canDrag = this.modalBody.scrollTop === 0;
 	}
 
 	/**
-	 * Handle touch move
+	 * Handles touch move event
 	 *
-	 * @param {TouchEvent} e
+	 * @param {TouchEvent} e - The touch event
 	 * @returns {void}
 	 */
 	handleTouchMove(e)
 	{
-		// @ts-ignore
-		if (!this.modalContent || !this.modalBody) return;
+		if (!this.modalContent || !this.modalBody)
+		{
+			return;
+		}
 
 		const touch = e.touches[0];
 		this.state.currentY = touch.clientY;
@@ -93,7 +116,6 @@ export class DrawerGesture
 		if (!this.state.isDragging && this.state.canDrag && deltaY > 0)
 		{
 			// User is pulling down and we're at top of scroll
-			// @ts-ignore
 			if (this.modalBody.scrollTop === 0)
 			{
 				this.state.isDragging = true;
@@ -107,16 +129,13 @@ export class DrawerGesture
 
 			// Apply transform with rubber band effect
 			const translateY = this.calculateTranslateY(deltaY);
-			// @ts-ignore
 			this.modalContent.style.transform = `translateY(${translateY}px)`;
-			// @ts-ignore
 			this.modalContent.style.transition = 'none';
 
-			// Calculate backdrop opacity
+			// Calculate and update backdrop opacity
 			const opacity = this.calculateBackdropOpacity(deltaY);
 			this.updateBackdropOpacity(opacity);
 		}
-		// @ts-ignore
 		else if (this.modalBody.scrollTop > 0)
 		{
 			// Content is scrolling, disallow drag
@@ -125,32 +144,32 @@ export class DrawerGesture
 	}
 
 	/**
-	 * Handle touch end
+	 * Handles touch end event
 	 *
-	 * @param {TouchEvent} e
+	 * @param {TouchEvent} e - The touch event
 	 * @returns {void}
 	 */
 	handleTouchEnd(e)
 	{
-		// @ts-ignore
-		if (!this.modalContent) return;
+		if (!this.modalContent)
+		{
+			return;
+		}
 
 		const deltaY = this.getDeltaY();
 
 		if (this.state.isDragging)
 		{
-			// @ts-ignore
 			this.modalContent.style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out';
 
 			// Close if dragged past threshold
-			// @ts-ignore
 			if (deltaY > this.closeThreshold)
 			{
 				this.animateClose();
 			}
 			else
 			{
-				// Snap back
+				// Snap back to original position
 				this.snapBack();
 			}
 		}
@@ -161,9 +180,9 @@ export class DrawerGesture
 	}
 
 	/**
-	 * Get current drag delta Y
+	 * Gets current drag delta Y
 	 *
-	 * @returns {number}
+	 * @returns {number} The vertical drag distance in pixels
 	 */
 	getDeltaY()
 	{
@@ -171,10 +190,11 @@ export class DrawerGesture
 	}
 
 	/**
-	 * Calculate translateY with rubber band damping
+	 * Calculates translateY with rubber band damping effect.
+	 * The further you drag, the more resistance is applied.
 	 *
-	 * @param {number} deltaY
-	 * @returns {number}
+	 * @param {number} deltaY - The raw drag distance
+	 * @returns {number} The damped translation distance
 	 */
 	calculateTranslateY(deltaY)
 	{
@@ -183,21 +203,21 @@ export class DrawerGesture
 	}
 
 	/**
-	 * Calculate backdrop opacity based on drag distance
+	 * Calculates backdrop opacity based on drag distance.
+	 * Opacity decreases as the drawer is dragged down.
 	 *
-	 * @param {number} deltaY
-	 * @returns {number}
+	 * @param {number} deltaY - The drag distance
+	 * @returns {number} Opacity value between 0 and 1
 	 */
 	calculateBackdropOpacity(deltaY)
 	{
-		// @ts-ignore
 		return Math.max(0, 1 - (deltaY / this.closeThreshold));
 	}
 
 	/**
-	 * Update backdrop opacity
+	 * Updates the backdrop opacity via CSS custom property
 	 *
-	 * @param {number} opacity
+	 * @param {number} opacity - The opacity value (0-1)
 	 * @returns {void}
 	 */
 	updateBackdropOpacity(opacity)
@@ -209,16 +229,17 @@ export class DrawerGesture
 	}
 
 	/**
-	 * Animate drawer closing
+	 * Animates the drawer closing by translating it off-screen
 	 *
 	 * @returns {void}
 	 */
 	animateClose()
 	{
-		// @ts-ignore
-		if (!this.modalContent) return;
+		if (!this.modalContent)
+		{
+			return;
+		}
 
-		// @ts-ignore
 		this.modalContent.style.transform = 'translateY(100%)';
 		this.updateBackdropOpacity(0);
 
@@ -231,22 +252,23 @@ export class DrawerGesture
 	}
 
 	/**
-	 * Snap drawer back to original position
+	 * Snaps the drawer back to its original position
 	 *
 	 * @returns {void}
 	 */
 	snapBack()
 	{
-		// @ts-ignore
-		if (!this.modalContent) return;
+		if (!this.modalContent)
+		{
+			return;
+		}
 
-		// @ts-ignore
 		this.modalContent.style.transform = 'translateY(0)';
 		this.updateBackdropOpacity(1);
 	}
 
 	/**
-	 * Check if currently dragging
+	 * Checks if currently dragging
 	 *
 	 * @returns {boolean}
 	 */
@@ -256,13 +278,16 @@ export class DrawerGesture
 	}
 
 	/**
-	 * Cleanup
+	 * Cleans up resources and resets state
 	 *
 	 * @returns {void}
 	 */
 	destroy()
 	{
 		this.reset();
+		this.modal = null;
+		this.modalContent = null;
+		this.modalBody = null;
 		this.onClose = null;
 	}
 }
