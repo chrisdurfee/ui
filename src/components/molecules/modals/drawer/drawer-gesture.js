@@ -229,18 +229,24 @@ export class DrawerGesture
 	}
 
 	/**
-	 * Animates the drawer closing by translating it off-screen
+	 * Animates the drawer closing by translating the entire modal off-screen
 	 *
 	 * @returns {void}
 	 */
 	animateClose()
 	{
-		if (!this.modalContent)
+		if (!this.modal || !this.modalContent)
 		{
 			return;
 		}
 
-		this.modalContent.style.transform = 'translateY(100%)';
+		// Reset content transform
+		this.modalContent.style.transform = 'translateY(0)';
+		this.modalContent.style.transition = 'none';
+
+		// Animate entire modal sliding down
+		this.modal.style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out';
+		this.modal.style.transform = 'translateY(100%)';
 		this.updateBackdropOpacity(0);
 
 		setTimeout(() => {
