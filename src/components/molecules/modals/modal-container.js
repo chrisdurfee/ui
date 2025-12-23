@@ -25,13 +25,14 @@ import { ModalHeader } from "./modal-header.js";
  */
 export const ModalContainer = Atom((props, children) =>
 {
-	// Don't apply positioning classes for drawer - CSS handles it
+	// Don't apply positioning/sizing classes for drawer - CSS handles it
 	const isDrawer = props.class?.includes('drawer');
 	const positionClasses = isDrawer ? '' : 'm-auto top-0 right-0 bottom-0 left-0';
+	const sizeClasses = isDrawer ? '' : 'h-full max-h-screen';
 
 	return Div({
 			popover: 'manual',
-			class: `modal ${positionClasses} fixed z-20 grid w-full h-full max-h-screen gap-2 lg:border bg-background text-foreground shadow-xl break-words p-0 overflow-y-auto ${props.class}`,
+			class: `modal ${positionClasses} ${sizeClasses} fixed z-20 grid w-full gap-2 lg:border bg-background text-foreground shadow-xl break-words p-0 overflow-y-auto ${props.class}`,
 			click: (e, parent) =>
 			{
 				const isClickOutside = (e.target === parent.panel);
