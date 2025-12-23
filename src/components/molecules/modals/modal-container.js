@@ -23,10 +23,15 @@ import { ModalHeader } from "./modal-header.js";
  * @param {Array} children - Modal body content
  * @returns {object}
  */
-export const ModalContainer = Atom((props, children) => (
-	Div({
+export const ModalContainer = Atom((props, children) =>
+{
+	// Don't apply positioning classes for drawer - CSS handles it
+	const isDrawer = props.class?.includes('drawer');
+	const positionClasses = isDrawer ? '' : 'm-auto top-0 right-0 bottom-0 left-0';
+
+	return Div({
 			popover: 'manual',
-			class: `modal m-auto top-0 right-0 bottom-0 left-0 fixed z-20 grid w-full h-full max-h-screen gap-2 lg:border bg-background text-foreground shadow-xl break-words p-0 overflow-y-auto ${props.class}`,
+			class: `modal ${positionClasses} fixed z-20 grid w-full h-full max-h-screen gap-2 lg:border bg-background text-foreground shadow-xl break-words p-0 overflow-y-auto ${props.class}`,
 			click: (e, parent) =>
 			{
 				const isClickOutside = (e.target === parent.panel);
@@ -49,5 +54,5 @@ export const ModalContainer = Atom((props, children) => (
 			Div({ class: 'modal-body flex flex-grow flex-col py-0 px-6 z-0 overflow-y-auto', cache: 'modalBody' }, children),
 			!props.hideFooter && Footer({ class: 'modal-footer sticky bottom-0 bg-background/80 backdrop-blur-md flex flex-none justify-between py-4 px-6 z-10' }, props.buttons)
 		])
-	])
-));
+	]);
+});
