@@ -1,0 +1,185 @@
+.modal {
+    animation: popIn .2s;
+    /* Use dvh (dynamic viewport height) for iOS Safari */
+    max-height: 100dvh;
+    max-height: -webkit-fill-available;
+    padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+    @apply shadow-xl md:rounded-md rounded-md;
+}
+.modal:after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+}
+.modal.sm {
+    max-width: 425px;
+    max-height: 350px;
+    @apply shadow-xl md:rounded-md rounded-md border;
+}
+.modal.sm .modal-body {
+    max-height: 300px;
+}
+.modal.lg,
+.modal.xl {
+    top: 0;
+    bottom: 0;
+    /* Use dvh (dynamic viewport height) for iOS Safari */
+    max-height: 100dvh;
+    max-height: -webkit-fill-available;
+    /* Ensure full height on iOS Safari */
+    height: 100dvh;
+    height: -webkit-fill-available;
+}
+.modal .modal-header {
+    padding-top: calc(1rem + env(safe-area-inset-top));
+    top: calc(-0px - env(safe-area-inset-top));
+}
+.modal .modal-footer {
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+    bottom: calc(-0px - env(safe-area-inset-bottom));
+}
+
+@media (min-width: 1024px) {
+
+    .modal.md {
+        max-height: 80vh;
+        padding: 0;
+    }
+    .modal header button.icon {
+        @apply hidden;
+    }
+}
+
+.modal.right,
+.modal.left {
+    top: 0;
+    bottom: 0;
+    /* Use dvh (dynamic viewport height) for iOS Safari */
+    max-height: 100dvh;
+    max-height: -webkit-fill-available;
+    height: 100dvh;
+    height: -webkit-fill-available;
+    border-radius: 0;
+}
+.modal.right.md,
+.modal.left.md {
+    @apply max-w-[640px];
+}
+.modal.right {
+    margin-right: 0;
+    animation-name: pullRightIn;
+}
+.modal.left {
+    margin-left: 0;
+    animation-name: pullLeftIn;
+}
+
+/* ========================================
+   Drawer Modal Styles
+   Mobile bottom sheet / Desktop centered
+   ======================================== */
+
+.modal.drawer {
+    /* Mobile: slide up from bottom like native app drawer */
+    top: auto !important;
+    bottom: 0 !important;
+    margin: 0 !important;
+    /* Use dvh (dynamic viewport height) for iOS Safari */
+    max-height: 90dvh !important;
+    max-height: -webkit-fill-available !important;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    animation: slideUpIn 0.3s ease-out;
+    --backdrop-opacity: 1;
+}
+
+.modal.drawer:after {
+    opacity: var(--backdrop-opacity, 1);
+    transition: opacity 0.3s ease-out;
+}
+
+.modal.drawer .modal-header {
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    /* Add extra padding for drag handle on mobile */
+    padding-top: calc(2rem + env(safe-area-inset-top));
+    /* Prevent text selection during drag */
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* Drag handle indicator for mobile drawer */
+.modal.drawer .modal-header::before {
+    content: '';
+    position: absolute;
+    top: calc(0.75rem + env(safe-area-inset-top));
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2.5rem;
+    height: 0.25rem;
+    background: currentColor;
+    opacity: 0.3;
+    border-radius: 9999px;
+    /* Clickable area for better UX */
+    cursor: grab;
+}
+
+.modal.drawer .modal-content {
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    /* Enable smooth transform during drag */
+    will-change: transform;
+    /* Prevent text selection during drag */
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* Re-enable text selection for body content */
+.modal.drawer .modal-body {
+    user-select: text;
+    -webkit-user-select: text;
+}
+
+/* Desktop: behave like standard centered modal */
+@media (min-width: 1024px) {
+    .modal.drawer {
+        top: auto !important;
+        bottom: auto !important;
+        margin: auto !important;
+        max-height: 80vh !important;
+        border-radius: 0.5rem;
+        animation: popIn 0.2s;
+    }
+
+    .modal.drawer .modal-header {
+        border-top-left-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
+        padding-top: calc(1rem + env(safe-area-inset-top));
+    }
+
+    .modal.drawer .modal-header::before {
+        display: none;
+    }
+
+    .modal.drawer .modal-content {
+        border-radius: 0.5rem;
+    }
+}
+
+/* Slide up animation for mobile drawer */
+@keyframes slideUpIn {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
