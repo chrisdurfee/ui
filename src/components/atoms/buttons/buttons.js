@@ -135,7 +135,7 @@ class BackButton extends Component
  * @returns {object}
  */
 const BackVariant = (defaultProps) => (
-	(props, children) => new BackButton({ ...defaultProps, ...props }, children)
+	Atom((props, children) => new BackButton({ ...defaultProps, ...props }, children))
 );
 
 /**
