@@ -1,5 +1,5 @@
 import { Button as BaseButton } from '@base-framework/atoms';
-import { Atom, Component } from '@base-framework/base';
+import { Atom } from '@base-framework/base';
 import { Icons } from '../../icons/icons.js';
 import { Icon } from '../icon.js';
 
@@ -55,78 +55,28 @@ const WithIconVariant = (defaultProps) => (
 );
 
 /**
- * BackButton
+ *  This will create a back button that navigates to the previous page or a specified URL.
  *
- * This will create a back button that tracks history length to ensure
- * it goes back to the previous page even if tabs/navigation were used.
- *
- * @class
- * @extends Component
+ *  @param {object} props
+ *   @returns {function}
  */
-class BackButton extends Component
+const backCallBack = (props) =>
 {
-	/**
-	 * This will set the start history length.
-	 *
-	 * @param {object} props
-	 * @param {array} children
-	 */
-	constructor(props, children)
+	return () =>
 	{
-		super(props, children);
-		this.startHistoryLength = globalThis.history.length;
-	}
-
-	/**
-	 * This will handle the click event.
-	 *
-	 * @returns {void}
-	 */
-	goBack()
-	{
-		// @ts-ignore
-		if (this.props.allowHistory === true && globalThis.history.length > 1)
+		if (props.allowHistory === true && globalThis.history.length > 2)
 		{
-			const currentLength = globalThis.history.length;
-			const delta = this.startHistoryLength - currentLength - 1;
-			if (delta < -1)
-			{
-				globalThis.history.go(delta);
-				return;
-			}
-
 			globalThis.history.back();
 			return;
 		}
 
-		// @ts-ignore
-		if (this.props.backUrl)
+		if (props.backUrl)
 		{
 			// @ts-ignore
-			app.navigate(this.props.backUrl);
-			return;
+			app.navigate(props.backUrl);
 		}
-
-		globalThis.history.back();
-	}
-
-	/**
-	 * This will render the component.
-	 *
-	 * @returns {object}
-	 */
-	render()
-	{
-		// @ts-ignore
-		const props = { ...this };
-		// @ts-ignore
-		props.icon = props.icon || Icons.chevron.single.left;
-		// @ts-ignore
-		props.click = props.click || (() => this.goBack());
-
-		return IconButton(props, this.children);
-	}
-}
+	};
+};
 
 /**
  * This will create a back button variant.
@@ -135,7 +85,16 @@ class BackButton extends Component
  * @returns {object}
  */
 const BackVariant = (defaultProps) => (
-	Atom((props, children) => new BackButton({ ...defaultProps, ...props }, children))
+	Atom((props, children) =>
+	{
+		props.icon = props.icon || Icons.arrows.left;
+		props.click = props.click || backCallBack(props);
+
+		return IconButton({
+			...defaultProps,
+			...props
+		}, children);
+	})
 );
 
 /**
