@@ -73,6 +73,17 @@ export const Toggle = VeilJot(
 				onState: ['active', { 'translate-x-[22px]' : true, 'translate-x-[2px]': false }]
 			})
 		]);
+	},
+
+	/**
+	 * Cleanup before destroying the component.
+	 *
+	 * @returns {void}
+	 */
+	destroy()
+	{
+		// Clear cached references
+		this.checkbox = null;
 	}
 });
 

@@ -104,7 +104,19 @@ export const AttachmentInput = Jot(
         return {
             method: globalThis.localStorage.getItem('theme') ?? 'system'
         };
-    }
+    },
+
+    /**
+	 * Cleanup before destroying the component.
+	 *
+	 * @returns {void}
+	 */
+	destroy()
+	{
+		// Clear cached references
+        // @ts-ignore
+		this.attachment = null;
+	}
 });
 
 export default AttachmentInput;

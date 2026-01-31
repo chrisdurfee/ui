@@ -236,6 +236,19 @@ export const SearchDropdown = Jot(
 			})
 		]);
 	},
+
+	/**
+	 * This will destroy the component.
+	 *
+	 * @returns {void}
+	 */
+	destroy()
+	{
+		// @ts-ignore
+		this.dropdown = null;
+		// @ts-ignore
+		this.input = null;
+	}
 });
 
 export default SearchDropdown;

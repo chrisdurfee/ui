@@ -151,4 +151,16 @@ export class DropdownMenu extends Component
 			DropdownContainer({ onSelect: this.handleSelect.bind(this) })
 		]);
 	}
+
+	/**
+	 * Cleanup before destroying the component.
+	 *
+	 * @returns {void}
+	 */
+	beforeDestroy()
+	{
+		// Clear cached references
+		this.button = null;
+		this.dropdown = null;
+	}
 }

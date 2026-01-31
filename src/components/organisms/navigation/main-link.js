@@ -193,6 +193,16 @@ export class MainLink extends Component
 	{
 		this.link.update(selected);
 	}
+
+	/**
+	 * This will clear references before destroying the component.
+	 *
+	 * @returns {void}
+	 */
+	beforeDestroy()
+	{
+		this.link = null;
+	}
 }
 
 export default MainLink;

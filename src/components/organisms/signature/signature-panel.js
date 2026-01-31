@@ -120,6 +120,17 @@ export class SignaturePanel extends Component
 			return this.canvasLayer.reset();
 		}
 	}
+
+	/**
+	 * Cleans up references before destroying the component.
+	 *
+	 * @returns {void}
+	 */
+	beforeDestroy()
+	{
+		this.canvasLayer = null;
+		this.hiddenInput = null;
+	}
 }
 
 export default SignaturePanel;

@@ -268,5 +268,7 @@ export class DataTable extends Component
 	{
 		// @ts-ignore
 		this.data.selectedRows = [];
+
+		this.list = null;
 	}
 }
