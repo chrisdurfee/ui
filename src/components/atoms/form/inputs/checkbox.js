@@ -9,7 +9,7 @@ import { disabledClass, focusClass } from './input-classes.js';
  * @param {object} props
  * @returns {object}
  */
-const HiddenCheckox = ({ id, checked, bind, required }) => (
+const HiddenCheckbox = ({ id, checked, bind, required }) => (
 	BaseCheckbox({
 		id,
 		cache: 'checkbox',
@@ -67,7 +67,7 @@ const CustomCheckbox = ({ id, bind, checked, required, clickHandler }) => (
 		tabIndex: 0,
 		click: clickHandler,
 	}, [
-		HiddenCheckox({ bind, checked, id, required }),
+		HiddenCheckbox({ bind, checked, id, required }),
 		CheckBoxIcon(),
 	])
 );
