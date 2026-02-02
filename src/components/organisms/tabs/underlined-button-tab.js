@@ -128,6 +128,13 @@ export class UnderlinedButtonTab extends Veil
 	select(value)
 	{
 		this.state.selected = value;
+
+		// @ts-ignore
+		const onSelect = this.onSelect;
+		if (typeof onSelect === 'function')
+		{
+			onSelect(value, this.parent);
+		}
 	}
 
 	/**
