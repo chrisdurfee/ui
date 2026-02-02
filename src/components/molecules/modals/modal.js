@@ -309,9 +309,5 @@ export class Modal extends Component
 		 * This will allow the body to scroll when the modal is closed.
 		 */
 		document.documentElement.style.overflowY = 'auto';
-
-		// Clear cached references
-		this.modalContent = null;
-		this.modalBody = null;
 	}
 }

@@ -161,19 +161,5 @@ export const Combobox = Jot(
 				value: ['[[selectedValue]]', this.state]
 			})
 		]);
-	},
-
-	/**
-	 * This will run before the component is destroyed.
-	 *
-	 * @returns {void}
-	 */
-	destroy()
-	{
-		// Clear any state or references if needed
-		// @ts-ignore
-		this.dropdown = null;
-		// @ts-ignore
-		this.button = null;
 	}
 });

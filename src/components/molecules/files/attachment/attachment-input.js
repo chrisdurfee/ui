@@ -19,41 +19,41 @@ const getFileSize = (bytes) =>  (Math.round(bytes * 100 / (1024 * 1024)) / 100);
  */
 export const AttachmentInput = Jot(
 {
-    declareProps()
-    {
-        /**
-         * @member { array} files - The list of files attached.
-         */
-        // @ts-ignore
-        this.files = [];
-    },
-
-    /**
-     * This will render the component.
-     *
-     * @returns {object}
-     */
-    render()
-    {
-        return Div({ class: 'hidden' }, [
-            FileInput({
-                cache: 'attachment',
-                // @ts-ignore
-                accept: this.accept ?? '*/*',
-                // @ts-ignore
-                multiple: this.multiple ?? false,
-            })
-        ]);
-    },
-
-    /**
-     * This will open the file browse dialog.
-     *
-     * @returns {void}
-     */
-    openFileBrowse()
+	declareProps()
 	{
-        // @ts-ignore
+		/**
+		 * @member { array} files - The list of files attached.
+		 */
+		// @ts-ignore
+		this.files = [];
+	},
+
+	/**
+	 * This will render the component.
+	 *
+	 * @returns {object}
+	 */
+	render()
+	{
+		return Div({ class: 'hidden' }, [
+			FileInput({
+				cache: 'attachment',
+				// @ts-ignore
+				accept: this.accept ?? '*/*',
+				// @ts-ignore
+				multiple: this.multiple ?? false,
+			})
+		]);
+	},
+
+	/**
+	 * This will open the file browse dialog.
+	 *
+	 * @returns {void}
+	 */
+	openFileBrowse()
+	{
+		// @ts-ignore
 		const ele = this.attachment;
 		if (ele)
 		{
@@ -62,31 +62,31 @@ export const AttachmentInput = Jot(
 		}
 	},
 
-    /**
-     * This will check if the file is below the minimum size.
-     *
-     * @param {File} file - The file to check.
-     * @returns {boolean} - True if the file is below the minimum size, false otherwise.
-     */
-    isBelowMinimum(file)
+	/**
+	 * This will check if the file is below the minimum size.
+	 *
+	 * @param {File} file - The file to check.
+	 * @returns {boolean} - True if the file is below the minimum size, false otherwise.
+	 */
+	isBelowMinimum(file)
 	{
-        // @ts-ignore
+		// @ts-ignore
 		const MAX_FILE_SIZE = this.maxUploadSize || 0;
-        if (MAX_FILE_SIZE <= 0)
-        {
-            return true;
-        }
+		if (MAX_FILE_SIZE <= 0)
+		{
+			return true;
+		}
 
 		const fileSize = getFileSize(file.size);
 		return (fileSize <= MAX_FILE_SIZE);
 	},
 
-    addFile(file, type, orientation)
+	addFile(file, type, orientation)
 	{
-        // @ts-ignore
+		// @ts-ignore
 		this.files.push(option);
 
-        // @ts-ignore
+		// @ts-ignore
 		const callBack = this.afterAddFile;
 		if(typeof callBack === 'function')
 		{
@@ -94,28 +94,16 @@ export const AttachmentInput = Jot(
 		}
 	},
 
-    /**
-     * This will setup the states.
-     *
-     * @returns {object}
-     */
-    state()
-    {
-        return {
-            method: globalThis.localStorage.getItem('theme') ?? 'system'
-        };
-    },
-
-    /**
-	 * Cleanup before destroying the component.
+	/**
+	 * This will setup the states.
 	 *
-	 * @returns {void}
+	 * @returns {object}
 	 */
-	destroy()
+	state()
 	{
-		// Clear cached references
-        // @ts-ignore
-		this.attachment = null;
+		return {
+			method: globalThis.localStorage.getItem('theme') ?? 'system'
+		};
 	}
 });
 

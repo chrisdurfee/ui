@@ -268,19 +268,6 @@ export const DatePicker = VeilJot(
 				})
 			]
 		);
-	},
-
-	/**
-	 * This will run before the component is destroyed.
-	 *
-	 * @returns {void}
-	 */
-	destroy()
-	{
-		// Clear any state or references if needed
-		this.dropdown = null;
-		this.dateInput = null;
-		this.input = null;
 	}
 });
 

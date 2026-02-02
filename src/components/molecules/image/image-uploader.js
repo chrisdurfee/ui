@@ -140,17 +140,5 @@ export const ImageUploader = Jot(
 				}),
 			])
 		]);
-	},
-
-	/**
-	 * Cleanup before destroying the component.
-	 *
-	 * @returns {void}
-	 */
-	destroy()
-	{
-		// Clear cached references
-		// @ts-ignore
-		this.input = null;
 	}
 });

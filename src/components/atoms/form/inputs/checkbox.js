@@ -175,18 +175,6 @@ export const Checkbox = Jot(
 			// @ts-ignore
 			this.label && CheckboxLabel({ id, label: this.label, clickHandler: clickCallback })
 		]);
-	},
-
-	/**
-	 * This will clear cached references before destroying the component.
-	 *
-	 * @returns {void}
-	 */
-	destroy()
-	{
-		// Clear cached reference
-		// @ts-ignore
-		this.checkbox = null;
 	}
 });
 

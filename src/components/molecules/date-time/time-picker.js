@@ -449,19 +449,6 @@ export const TimePicker = VeilJot(
 				})
 			]
 		);
-	},
-
-	/**
-	 * Cleanup before destroying the component.
-	 *
-	 * @returns {void}
-	 */
-	destroy()
-	{
-		// Clear cached references
-		this.input = null;
-		this.timeInput = null;
-		this.dropdown = null;
 	}
 });
 

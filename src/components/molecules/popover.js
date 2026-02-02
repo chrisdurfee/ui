@@ -66,6 +66,7 @@ export class PopOver extends Component
 	 */
 	setData()
 	{
+		// @ts-ignore
 		const data = this.parent.data || new Data();
 		data.set({
 			position: { x: 0, y: 0 }
@@ -120,6 +121,7 @@ export class PopOver extends Component
 			popover: 'manual',
 			toggle: (e, { state }) => (e.newState === 'closed')? state.open = false : null,
 			style: 'top: [[position.y]]px; left: [[position.x]]px'
+			// @ts-ignore
 		}, this.children);
 	}
 
@@ -130,6 +132,7 @@ export class PopOver extends Component
 	 */
 	setupStates()
 	{
+		// @ts-ignore
 		const parent = this.parent;
 		const id = parent.getId();
 
@@ -138,8 +141,10 @@ export class PopOver extends Component
 				id,
 				callBack: (state) =>
 				{
+					// @ts-ignore
 					if (this.state.open === false)
 					{
+						// @ts-ignore
 						this.destroy();
 					}
 				}
@@ -156,9 +161,11 @@ export class PopOver extends Component
 	{
 		// @ts-ignore
 		const input = this.button ?? null;
+		// @ts-ignore
 		const dropdown = this.panel;
 		const position = getPosition(input, dropdown);
 
+		// @ts-ignore
 		this.data.position = position;
 	}
 
@@ -169,6 +176,7 @@ export class PopOver extends Component
 	 */
 	afterSetup()
 	{
+		// @ts-ignore
 		this.panel.showPopover();
 		this.updatePosition();
 	}
@@ -198,6 +206,7 @@ export class PopOver extends Component
 			{
 				if (this.isOutsideClick(e.target))
 				{
+					// @ts-ignore
 					this.state.open = false;
 				}
 			}],
@@ -224,6 +233,7 @@ export class PopOver extends Component
 	 */
 	beforeDestroy()
 	{
+		// @ts-ignore
 		this.panel.hidePopover();
 	}
 }

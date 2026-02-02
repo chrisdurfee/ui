@@ -143,18 +143,6 @@ export const DateRangePicker = VeilJot(
 				blockPriorDates: this.blockPriorDates || false
 			})
 		]);
-	},
-
-	/**
-	 * This will run before the component is destroyed.
-	 *
-	 * @returns {void}
-	 */
-	destroy()
-	{
-		// Clear cached references
-		this.dropdown = null;
-		this.input = null;
 	}
 });
 

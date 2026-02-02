@@ -292,8 +292,6 @@ export class DrawerGesture
 	{
 		this.reset();
 		this.modal = null;
-		this.modalContent = null;
-		this.modalBody = null;
 		this.onClose = null;
 	}
 }

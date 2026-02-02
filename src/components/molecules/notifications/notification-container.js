@@ -81,17 +81,6 @@ export class NotificationContainer extends Component
 			this.panel.hidePopover();
 		}
 	}
-
-	/**
-	 * Cleanup before destroying the component.
-	 *
-	 * @returns {void}
-	 */
-	beforeDestroy()
-	{
-		// Clear cached references
-		this.list = null;
-	}
 }
 
 export default NotificationContainer;
