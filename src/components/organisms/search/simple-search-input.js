@@ -14,15 +14,15 @@ export const SimpleSearchInput = Atom((props) =>
 	const icon = props.icon ?? Icons.magnifyingGlass.default;
 
 	return Div({
-		class: `relative flex items-center w-full rounded-full bg-muted/50 border border-border focus-within:ring-2 focus-within:ring-ring focus-within:border-transparent transition-all ${props.containerClass || ''}`
+		class: `relative flex items-center w-full rounded-xl bg-muted/30 focus-within:ring-2 focus-within:ring-ring transition-all ${props.containerClass || ''}`
 	}, [
-		Div({ class: 'absolute left-3 flex items-center pointer-events-none text-muted-foreground' }, [
-			Icon({ size: 'md' }, icon)
+		Div({ class: 'absolute left-4 flex items-center pointer-events-none text-muted-foreground' }, [
+			Icon({ size: 'sm' }, icon)
 		]),
 		BaseInput({
 			type: 'text',
 			cache: props.cache ?? 'input',
-			class: `w-full bg-transparent border-none outline-none pl-10 pr-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-0 ${props.class || ''}`,
+			class: `w-full bg-transparent border-none outline-none pl-12 pr-4 py-4 text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-0 ${props.class || ''}`,
 			placeholder: props.placeholder ?? 'Search...',
 			bind: props.bind,
 			value: props.value,
