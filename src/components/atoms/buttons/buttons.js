@@ -98,6 +98,35 @@ const BackVariant = (defaultProps) => (
 );
 
 /**
+ * This will create a circular icon button with transparent background.
+ *
+ * @param {object} props
+ * @param {array} children
+ * @returns {object}
+ */
+const CircleIconButton = Atom((props, children) =>
+{
+	const size = props.size || 'md';
+	const sizeClasses = {
+		xs: 'w-6 h-6',
+		sm: 'w-8 h-8',
+		md: 'w-10 h-10',
+		lg: 'w-12 h-12',
+		xl: 'w-14 h-14'
+	};
+
+	const backgroundClass = props.backgroundClass || 'bg-background/30 hover:bg-background/50';
+
+	return BaseButton({
+		...props,
+		class: `circle-icon-btn inline-flex items-center justify-center rounded-full ${backgroundClass} text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ring-offset-background transition-colors disabled:pointer-events-none disabled:opacity-50 cursor-pointer ${sizeClasses[size] || sizeClasses.md} ${props.class || ''}`
+	}, [
+		props.icon ? Icon({ size: size === 'xs' ? 'xs' : 'sm' }, props.icon) : null,
+		...(children || [])
+	]);
+});
+
+/**
  * This will set upt the variants for the button.
  *
  * @constant
@@ -114,6 +143,7 @@ const BUTTON_VARIANTS = {
 	icon: WithIconVariant({ class: 'icon' }),
 	withIcon: WithIconVariant({ class: 'with-icon' }),
 	back: BackVariant({ class: 'with-icon back-button' }),
+	circleIcon: CircleIconButton,
 };
 
 /**
