@@ -1,5 +1,6 @@
 import { Div, H2, Header, P } from "@base-framework/atoms";
 import { Atom } from "@base-framework/base";
+import { UniversalIcon } from "../../../ui.js";
 import { Form } from "../form/form.js";
 
 /**
@@ -15,7 +16,7 @@ export const EmptyState = Atom((props, children = []) => (
 			Div({ class: 'flex flex-auto flex-col gap-y-4' }, [
 				Div({ class: 'flex flex-auto items-center justify-center' }, [
 					props.icon && Div({ class: 'w-16 h-16 mb-2 text-primary' }, [
-						Icon(props.icon)
+						UniversalIcon({ size: 'lg' }, props.icon)
 					])
 				]),
 				Header({ class: 'py-4 text-center' }, [

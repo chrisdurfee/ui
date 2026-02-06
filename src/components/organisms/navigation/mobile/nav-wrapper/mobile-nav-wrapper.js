@@ -67,7 +67,7 @@ export const MobileNavButton = Atom((props) =>
 {
 	return Div({ cache: 'mobileNav', class: 'inline-flex relative lg:hidden' }, [
 		Div([
-			NavButton(props),
+			NavButton(),
 			MobileNav(props)
 		])
 	]);

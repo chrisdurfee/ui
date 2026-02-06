@@ -269,6 +269,18 @@ const ChildAtom = Atom((props) => (
 ### Icon Basics
 Icons come from [src/components/icons/icons.js](../src/components/icons/icons.js) (Heroicons library). They're SVG strings organized hierarchically. See [ui.wiki/02-Icons.md](../ui.wiki/02-Icons.md) for complete guide.
 
+### Universal Icon Support
+**ALL** icon-accepting components (Button, Alert, Modal, Dialog, etc.) now support BOTH icon systems automatically via `UniversalIcon`. You can pass either Heroicons (SVG) or Material Symbols - the system detects and renders accordingly.
+
+```javascript
+// Both work in any component
+Button({ variant: 'withIcon', icon: Icons.plus }, 'Add')
+Button({ variant: 'withIcon', icon: MaterialSymbols.add }, 'Add')
+
+Alert({ icon: Icons.check, title: 'Success' })
+Alert({ icon: 'check_circle', title: 'Success' })
+```
+
 ### Three Ways to Use Icons
 
 **Method 1: Icon atom (RECOMMENDED)**

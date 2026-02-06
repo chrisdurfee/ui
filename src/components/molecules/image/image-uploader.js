@@ -16,7 +16,7 @@ const isInvalidFile = (src) => (src.indexOf('.') === -1 && src.indexOf('[[') ===
  *
  * Upload button for image files, styled with a dashed circular drop zone.
  *
- * @type {typeof Component}
+ * @type {typeof Component | null}
  */
 export const ImageUploader = Jot(
 {

@@ -1,22 +1,21 @@
 import { Div, H3 } from "@base-framework/atoms";
 import { Button } from "../../../../atoms/buttons/buttons.js";
-import { Icon } from "../../../../atoms/icon.js";
+import { UniversalIcon } from "../../../../atoms/universal-icon.js";
 import { Icons } from "../../../../icons/icons.js";
 
 /**
  * This will create a navigation button.
  *
- * @param {object} props
  * @returns {object}
  */
-export const NavButton = (props) => (
+export const NavButton = () => (
 	Button({ class: 'm-2', variant: 'ghost', addState()
 		{
 			return {
 				open: false
 			};
 		}, click: (e, { state }) => state.toggle('open') }, [
-		Icon(Icons.bar.three)
+		UniversalIcon({}, Icons.bar.three)
 	])
 );
 

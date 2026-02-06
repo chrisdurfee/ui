@@ -107,7 +107,7 @@ SecondaryButton({
 
 ## Icon Systems
 
-This library supports two icon systems:
+This library supports two icon systems with **universal automatic detection**. All components automatically support both systems - just pass your icon!
 
 ### Heroicons (SVG-based)
 Default icon system using SVG strings:
@@ -116,6 +116,7 @@ import { Icon } from '@base-framework/ui/atoms';
 import { Icons } from '@base-framework/ui/icons';
 
 Icon({ size: 'md' }, Icons.home)
+Button({ variant: 'withIcon', icon: Icons.plus }, 'Add')
 ```
 
 ### Material Symbols (Font-based)
@@ -125,11 +126,24 @@ import { MaterialIcon } from '@base-framework/ui/atoms';
 import { MaterialSymbols } from '@base-framework/ui/icons';
 
 MaterialIcon({ name: MaterialSymbols.home, size: 'md', variant: 'filled' })
+Button({ variant: 'withIcon', icon: MaterialSymbols.add }, 'Add')
+```
+
+### Universal Support
+
+**All components** (Button, Alert, Modal, Dialog, Navigation, etc.) automatically detect and render both icon types:
+
+```javascript
+// Both work - no configuration needed!
+Button({ variant: 'withIcon', icon: Icons.plus }, 'Add')
+Button({ variant: 'withIcon', icon: MaterialSymbols.add }, 'Add')
+Button({ variant: 'withIcon', icon: 'add' }, 'Add')  // Material Symbol name
 ```
 
 **Style Variants**: `outlined` (default), `filled`, `rounded`, `sharp`
 
-See **[ui.wiki/09-Material-Symbols.md](./ui.wiki/09-Material-Symbols.md)** for complete documentation.
+See **[UNIVERSAL-ICON-GUIDE.md](./UNIVERSAL-ICON-GUIDE.md)** for complete documentation.
+See **[ui.wiki/09-Material-Symbols.md](./ui.wiki/09-Material-Symbols.md)** for Material Symbols guide.
 
 ## Documentation
 
