@@ -1022,3 +1022,5 @@ export const Icons =
 
 	}
 };
+
+export * from './material-symbols.js';

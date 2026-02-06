@@ -104,3 +104,33 @@ SecondaryButton({
     }
 })
 ```
+
+## Icon Systems
+
+This library supports two icon systems:
+
+### Heroicons (SVG-based)
+Default icon system using SVG strings:
+```javascript
+import { Icon } from '@base-framework/ui/atoms';
+import { Icons } from '@base-framework/ui/icons';
+
+Icon({ size: 'md' }, Icons.home)
+```
+
+### Material Symbols (Font-based)
+Google's Material Symbols with 11,000+ icons in 4 style variants:
+```javascript
+import { MaterialIcon } from '@base-framework/ui/atoms';
+import { MaterialSymbols } from '@base-framework/ui/icons';
+
+MaterialIcon({ name: MaterialSymbols.home, size: 'md', variant: 'filled' })
+```
+
+**Style Variants**: `outlined` (default), `filled`, `rounded`, `sharp`
+
+See **[ui.wiki/09-Material-Symbols.md](./ui.wiki/09-Material-Symbols.md)** for complete documentation.
+
+## Documentation
+
+For comprehensive documentation, see the **[ui.wiki](./ui.wiki/)** folder.

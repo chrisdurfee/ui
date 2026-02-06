@@ -9,6 +9,7 @@ Welcome to the comprehensive documentation for Base Framework UI - a complete UI
 
 ### Core Concepts
 - **[02-Icons.md](./02-Icons.md)** - Complete icon usage guide (CRITICAL - most common mistake area)
+- **[09-Material-Symbols.md](./09-Material-Symbols.md)** - Material Symbols integration (Google Fonts icons)
 - **[03-Reactive-Patterns.md](./03-Reactive-Patterns.md)** - Data binding, lists, state management, and reactivity
 
 ### Component Documentation

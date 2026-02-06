@@ -267,7 +267,7 @@ const ChildAtom = Atom((props) => (
 ## Working with Icons (READ THIS - Most Common Mistake Area)
 
 ### Icon Basics
-Icons come from [src/components/icons/icons.js](../src/components/icons/icons.js) (Heroicons library). They're SVG strings organized hierarchically. See [base.wiki/02-Icons.md](../base.wiki/02-Icons.md) for complete guide.
+Icons come from [src/components/icons/icons.js](../src/components/icons/icons.js) (Heroicons library). They're SVG strings organized hierarchically. See [ui.wiki/02-Icons.md](../ui.wiki/02-Icons.md) for complete guide.
 
 ### Three Ways to Use Icons
 
@@ -312,6 +312,82 @@ Button({ variant: 'withIcon', icon: Icons.arrows.right, position: 'right' }, 'Ne
 ✅ `Icon({ size: 'sm' }, Icons.home)`
 ✅ `I({ html: Icons.home })`
 ✅ `Button({ icon: Icons.plus }, 'Text')`
+
+## Working with Material Symbols (NEW)
+
+### Material Symbols Basics
+Material Symbols are font-based icons from Google (11,000+ icons). They complement Heroicons. See [ui.wiki/09-Material-Symbols.md](../ui.wiki/09-Material-Symbols.md) for complete guide.
+
+### Using Material Symbols
+
+**Basic usage:**
+```javascript
+import { MaterialIcon } from '@base-framework/ui/atoms';
+import { MaterialSymbols } from '@base-framework/ui/icons';
+
+// Using MaterialSymbols object
+MaterialIcon({ name: MaterialSymbols.home, size: 'md' })
+
+// Using icon name directly
+MaterialIcon({ name: 'home', size: 'sm' })
+
+// With variant
+MaterialIcon({ name: MaterialSymbols.favorite, variant: 'filled', size: 'lg' })
+
+// With styling
+MaterialIcon({
+  name: MaterialSymbols.star,
+  variant: 'filled',
+  class: 'text-yellow-500'
+})
+```
+
+### MaterialIcon Props
+- **name** (required): Icon ligature name (string)
+- **size** (optional): xs | sm | md | lg | xl | 2xl | 3xl (default: 'sm')
+- **variant** (optional): outlined | filled | rounded | sharp (default: 'outlined')
+- **class** (optional): Additional CSS classes
+
+### Common Material Symbols
+```javascript
+// Simple access
+MaterialSymbols.home
+MaterialSymbols.search
+MaterialSymbols.settings
+MaterialSymbols.favorite
+
+// Nested categories
+MaterialSymbols.actions.add
+MaterialSymbols.actions.edit
+MaterialSymbols.arrows.left
+MaterialSymbols.status.success
+MaterialSymbols.social.favorite
+```
+
+### Material Symbols in Buttons
+```javascript
+Button({ class: 'flex items-center gap-2' }, [
+  MaterialIcon({ name: MaterialSymbols.add, size: 'sm' }),
+  'Add Item'
+])
+
+Button({ class: 'flex items-center gap-2 bg-primary text-white px-4 py-2 rounded' }, [
+  MaterialIcon({ name: 'save', size: 'sm' }),
+  'Save'
+])
+```
+
+### When to Use Which Icon System
+
+**Use Heroicons (Icon) when:**
+- Need SVG precision
+- Prefer curated, smaller set
+- Already using Heroicons
+
+**Use Material Symbols (MaterialIcon) when:**
+- Need vast icon library (11,000+)
+- Want filled/outlined/rounded/sharp variants
+- Building Material Design interface
 
 ## Patterns by example
 
@@ -412,9 +488,13 @@ import { router, NavLink } from '@base-framework/base';
 
 ### From This Library
 ```javascript
-// Icons (ALWAYS import both)
+// Icons - Heroicons (ALWAYS import both)
 import { Icons } from '@base-framework/ui/icons';
 import { Icon } from '@base-framework/ui/atoms';
+
+// Icons - Material Symbols (ALWAYS import both)
+import { MaterialSymbols } from '@base-framework/ui/icons';
+import { MaterialIcon } from '@base-framework/ui/atoms';
 
 // Atoms
 import { Button, Badge, Alert } from '@base-framework/ui/atoms';

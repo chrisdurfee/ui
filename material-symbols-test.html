@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Icon Systems Demo - Base UI</title>
+
+    <!-- Material Symbols Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Filled:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+
+    <!-- Tailwind CSS (for demo styling) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        /* Material Symbols Base Styles */
+        .material-symbols-outlined,
+        .material-symbols-filled,
+        .material-symbols-rounded,
+        .material-symbols-sharp {
+            font-weight: normal;
+            font-style: normal;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            font-feature-settings: 'liga';
+            user-select: none;
+        }
+
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+        }
+
+        .material-symbols-filled {
+            font-family: 'Material Symbols Filled';
+        }
+
+        .material-symbols-rounded {
+            font-family: 'Material Symbols Rounded';
+        }
+
+        .material-symbols-sharp {
+            font-family: 'Material Symbols Sharp';
+        }
+
+        /* Size classes for demo */
+        .icon-xs { font-size: 16px; }
+        .icon-sm { font-size: 20px; }
+        .icon-md { font-size: 24px; }
+        .icon-lg { font-size: 30px; }
+        .icon-xl { font-size: 36px; }
+        .icon-2xl { font-size: 48px; }
+        .icon-3xl { font-size: 60px; }
+    </style>
+</head>
+<body class="bg-gray-50 p-8">
+    <div class="max-w-6xl mx-auto">
+        <header class="mb-8">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">Icon Systems Demo</h1>
+            <p class="text-lg text-gray-600">Testing Material Symbols integration in Base UI</p>
+        </header>
+
+        <!-- Material Symbols Examples -->
+        <section class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Material Symbols</h2>
+
+            <!-- Sizes -->
+            <div class="mb-6">
+                <h3 class="text-lg font-medium text-gray-700 mb-3">Sizes (Outlined)</h3>
+                <div class="flex items-center gap-4">
+                    <div class="flex flex-col items-center">
+                        <span class="material-symbols-outlined icon-xs">home</span>
+                        <span class="text-xs mt-1">xs</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <span class="material-symbols-outlined icon-sm">home</span>
+                        <span class="text-xs mt-1">sm</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <span class="material-symbols-outlined icon-md">home</span>
+                        <span class="text-xs mt-1">md</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <span class="material-symbols-outlined icon-lg">home</span>
+                        <span class="text-xs mt-1">lg</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <span class="material-symbols-outlined icon-xl">home</span>
+                        <span class="text-xs mt-1">xl</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <span class="material-symbols-outlined icon-2xl">home</span>
+                        <span class="text-xs mt-1">2xl</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Variants -->
+            <div class="mb-6">
+                <h3 class="text-lg font-medium text-gray-700 mb-3">Style Variants (Medium Size)</h3>
+                <div class="flex items-center gap-6">
+                    <div class="flex flex-col items-center">
+                        <span class="material-symbols-outlined icon-lg">favorite</span>
+                        <span class="text-xs mt-1">Outlined</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <span class="material-symbols-filled icon-lg text-red-500">favorite</span>
+                        <span class="text-xs mt-1">Filled</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <span class="material-symbols-rounded icon-lg text-pink-500">favorite</span>
+                        <span class="text-xs mt-1">Rounded</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <span class="material-symbols-sharp icon-lg text-purple-500">favorite</span>
+                        <span class="text-xs mt-1">Sharp</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Common Icons -->
+            <div>
+                <h3 class="text-lg font-medium text-gray-700 mb-3">Common Icons</h3>
+                <div class="grid grid-cols-8 gap-4">
+                    <div class="flex flex-col items-center p-2 border border-gray-200 rounded">
+                        <span class="material-symbols-outlined icon-lg">home</span>
+                        <span class="text-xs mt-1">home</span>
+                    </div>
+                    <div class="flex flex-col items-center p-2 border border-gray-200 rounded">
+                        <span class="material-symbols-outlined icon-lg">search</span>
+                        <span class="text-xs mt-1">search</span>
+                    </div>
+                    <div class="flex flex-col items-center p-2 border border-gray-200 rounded">
+                        <span class="material-symbols-outlined icon-lg">settings</span>
+                        <span class="text-xs mt-1">settings</span>
+                    </div>
+                    <div class="flex flex-col items-center p-2 border border-gray-200 rounded">
+                        <span class="material-symbols-outlined icon-lg">menu</span>
+                        <span class="text-xs mt-1">menu</span>
+                    </div>
+                    <div class="flex flex-col items-center p-2 border border-gray-200 rounded">
+                        <span class="material-symbols-outlined icon-lg">add</span>
+                        <span class="text-xs mt-1">add</span>
+                    </div>
+                    <div class="flex flex-col items-center p-2 border border-gray-200 rounded">
+                        <span class="material-symbols-outlined icon-lg">edit</span>
+                        <span class="text-xs mt-1">edit</span>
+                    </div>
+                    <div class="flex flex-col items-center p-2 border border-gray-200 rounded">
+                        <span class="material-symbols-outlined icon-lg">delete</span>
+                        <span class="text-xs mt-1">delete</span>
+                    </div>
+                    <div class="flex flex-col items-center p-2 border border-gray-200 rounded">
+                        <span class="material-symbols-outlined icon-lg">save</span>
+                        <span class="text-xs mt-1">save</span>
+                    </div>
+                    <div class="flex flex-col items-center p-2 border border-gray-200 rounded">
+                        <span class="material-symbols-outlined icon-lg text-red-500">error</span>
+                        <span class="text-xs mt-1">error</span>
+                    </div>
+                    <div class="flex flex-col items-center p-2 border border-gray-200 rounded">
+                        <span class="material-symbols-outlined icon-lg text-yellow-500">warning</span>
+                        <span class="text-xs mt-1">warning</span>
+                    </div>
+                    <div class="flex flex-col items-center p-2 border border-gray-200 rounded">
+                        <span class="material-symbols-outlined icon-lg text-green-500">check_circle</span>
+                        <span class="text-xs mt-1">success</span>
+                    </div>
+                    <div class="flex flex-col items-center p-2 border border-gray-200 rounded">
+                        <span class="material-symbols-outlined icon-lg text-blue-500">info</span>
+                        <span class="text-xs mt-1">info</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Button Examples -->
+        <section class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Icon Buttons</h2>
+            <div class="flex gap-3">
+                <button class="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+                    <span class="material-symbols-outlined icon-sm">add</span>
+                    Add Item
+                </button>
+                <button class="flex items-center gap-2 bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700">
+                    <span class="material-symbols-outlined icon-sm">edit</span>
+                    Edit
+                </button>
+                <button class="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700">
+                    <span class="material-symbols-outlined icon-sm">delete</span>
+                    Delete
+                </button>
+                <button class="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">
+                    <span class="material-symbols-outlined icon-sm">save</span>
+                    Save
+                </button>
+            </div>
+        </section>
+
+        <!-- Navigation Example -->
+        <section class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Navigation Icons</h2>
+            <nav class="flex flex-col gap-2">
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md">
+                    <span class="material-symbols-outlined icon-md">home</span>
+                    <span>Home</span>
+                </a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md">
+                    <span class="material-symbols-outlined icon-md">search</span>
+                    <span>Search</span>
+                </a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md">
+                    <span class="material-symbols-outlined icon-md">settings</span>
+                    <span>Settings</span>
+                </a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md">
+                    <span class="material-symbols-outlined icon-md">person</span>
+                    <span>Profile</span>
+                </a>
+            </nav>
+        </section>
+
+        <!-- Status Indicators -->
+        <section class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Status Indicators</h2>
+            <div class="space-y-3">
+                <div class="flex items-center gap-2 text-green-600">
+                    <span class="material-symbols-filled icon-md">check_circle</span>
+                    <span>Success - Operation completed</span>
+                </div>
+                <div class="flex items-center gap-2 text-red-600">
+                    <span class="material-symbols-filled icon-md">error</span>
+                    <span>Error - Something went wrong</span>
+                </div>
+                <div class="flex items-center gap-2 text-yellow-600">
+                    <span class="material-symbols-filled icon-md">warning</span>
+                    <span>Warning - Please review</span>
+                </div>
+                <div class="flex items-center gap-2 text-blue-600">
+                    <span class="material-symbols-filled icon-md">info</span>
+                    <span>Info - Additional information</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Code Examples -->
+        <section class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Usage in Base UI</h2>
+            <div class="space-y-4">
+                <div>
+                    <h3 class="font-medium text-gray-700 mb-2">Import statements:</h3>
+                    <pre class="bg-gray-900 text-gray-100 p-4 rounded-md overflow-x-auto"><code>import { MaterialIcon } from '@base-framework/ui/atoms';
+import { MaterialSymbols } from '@base-framework/ui/icons';</code></pre>
+                </div>
+                <div>
+                    <h3 class="font-medium text-gray-700 mb-2">Component usage:</h3>
+                    <pre class="bg-gray-900 text-gray-100 p-4 rounded-md overflow-x-auto"><code>// Basic icon
+MaterialIcon({ name: MaterialSymbols.home, size: 'md' })
+
+// With variant
+MaterialIcon({ name: 'favorite', variant: 'filled', size: 'lg' })
+
+// With styling
+MaterialIcon({
+  name: MaterialSymbols.star,
+  variant: 'filled',
+  class: 'text-yellow-500'
+})</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="mt-8 text-center text-gray-600">
+            <p>For complete documentation, see <a href="./ui.wiki/09-Material-Symbols.md" class="text-blue-600 hover:underline">Material Symbols Guide</a></p>
+        </footer>
+    </div>
+</body>
+</html>
