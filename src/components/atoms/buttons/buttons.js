@@ -1,7 +1,6 @@
 import { Button as BaseButton } from '@base-framework/atoms';
 import { Atom } from '@base-framework/base';
 import { Icons } from '../../icons/icons.js';
-import { Icon } from '../icon.js';
 import { UniversalIcon } from '../universal-icon.js';
 
 /**
@@ -32,9 +31,9 @@ const IconButton = Atom((props, children) => (
 			...props,
 			class: props.class
 		}, [
-			props.icon && props.position !== 'right' ? Icon({ size: 'sm', class: props.animation ?? null }, props.icon) : null,
+			props.icon && props.position !== 'right' ? UniversalIcon({ size: 'sm', class: props.animation ?? null }, props.icon) : null,
 			...(children || []),
-			props.icon && props.position === 'right' ? Icon({ size: 'sm', class: props.animation ?? null }, props.icon) : null
+			props.icon && props.position === 'right' ? UniversalIcon({ size: 'sm', class: props.animation ?? null }, props.icon) : null
 		])
 	)
 );
