@@ -2,6 +2,7 @@ import { A, Div, Footer, H3, Header, P } from "@base-framework/atoms";
 import { Atom, Component } from "@base-framework/base";
 import { Timer } from "@base-framework/organisms";
 import { Button } from "../../atoms/buttons/buttons.js";
+import { UniversalIcon } from "../../atoms/universal-icon.js";
 import { Icons } from "../../icons/icons.js";
 
 /**
