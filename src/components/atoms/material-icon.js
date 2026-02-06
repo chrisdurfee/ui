@@ -4,15 +4,30 @@ import { Atom } from "@base-framework/base";
 /**
  * Size classes for Material Symbols.
  * These match the Icon component sizes for consistency.
+ * Uses inline styles for font-size to ensure exact pixel matching.
  */
 const sizeClasses = {
-	xs: "w-4 h-4 text-base",      // 16px - matches Icon
-	sm: "w-6 h-6 text-2xl",       // 24px - matches Icon
-	md: "w-8 h-8 text-[2rem]",    // 32px - matches Icon
-	lg: "w-10 h-10 text-[2.5rem]", // 40px - matches Icon
-	xl: "w-12 h-12 text-5xl",     // 48px - matches Icon
-	"2xl": "w-14 h-14 text-[3.5rem]", // 56px - matches Icon
-	"3xl": "w-16 h-16 text-[4rem]",   // 64px - matches Icon
+	xs: "w-4 h-4",      // 16px - matches Icon
+	sm: "w-6 h-6",      // 24px - matches Icon
+	md: "w-8 h-8",      // 32px - matches Icon
+	lg: "w-10 h-10",    // 40px - matches Icon
+	xl: "w-12 h-12",    // 48px - matches Icon
+	"2xl": "w-14 h-14", // 56px - matches Icon
+	"3xl": "w-16 h-16", // 64px - matches Icon
+};
+
+/**
+ * Font size values in pixels for Material Symbols.
+ * These match the Icon component sizes exactly.
+ */
+const fontSizes = {
+	xs: "16px",
+	sm: "24px",
+	md: "32px",
+	lg: "40px",
+	xl: "48px",
+	"2xl": "56px",
+	"3xl": "64px",
 };
 
 /**
@@ -47,11 +62,13 @@ export const MaterialIcon = Atom((props) =>
 	const size = props.size || "sm";
 	const variant = props.variant || "outlined";
 	const sizeClass = sizeClasses[size] || sizeClasses.sm;
+	const fontSize = fontSizes[size] || fontSizes.sm;
 	const variantClass = styleVariants[variant] || styleVariants.outlined;
 
 	return Span({
 		...props,
 		class: `inline-flex items-center justify-center ${variantClass} ${sizeClass} ${props.class || ""}`,
+		style: `font-size: ${fontSize}; ${props.style || ""}`,
 		// Remove props that shouldn't be passed to the DOM element
 		size: undefined,
 		variant: undefined,
