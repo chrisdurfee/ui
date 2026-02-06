@@ -1,4 +1,4 @@
-import { A, Div, Footer, H3, Header, I, P } from "@base-framework/atoms";
+import { A, Div, Footer, H3, Header, P } from "@base-framework/atoms";
 import { Atom, Component } from "@base-framework/base";
 import { Timer } from "@base-framework/organisms";
 import { Button } from "../../atoms/buttons/buttons.js";

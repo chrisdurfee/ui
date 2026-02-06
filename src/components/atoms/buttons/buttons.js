@@ -1,6 +1,7 @@
 import { Button as BaseButton } from '@base-framework/atoms';
 import { Atom } from '@base-framework/base';
 import { Icons } from '../../icons/icons.js';
+import { Icon } from '../icon.js';
 import { UniversalIcon } from '../universal-icon.js';
 
 /**
