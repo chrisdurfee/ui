@@ -116,6 +116,7 @@ export class UnderlinedButtonTab extends Veil
 	 */
 	getFirstValue()
 	{
+		// @ts-ignore
 		return this.options[0]?.value;
 	}
 

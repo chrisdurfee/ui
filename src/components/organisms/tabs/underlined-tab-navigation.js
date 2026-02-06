@@ -125,10 +125,12 @@ export class UnderlinedTabNavigation extends Veil
 	updateLinks(value)
 	{
 		let check = false,
+		// @ts-ignore
 		firstLink = this.links[0];
 
 		this.deactivateAllLinks();
 
+		// @ts-ignore
 		for (const link of this.links)
 		{
 			if (link.rendered === false)
@@ -157,6 +159,7 @@ export class UnderlinedTabNavigation extends Veil
 	 */
 	deactivateAllLinks()
 	{
+		// @ts-ignore
 		for (const link of this.links)
 		{
 			this.updateLink(link, false);
@@ -184,6 +187,7 @@ export class UnderlinedTabNavigation extends Veil
 	addLink({ label: text, href, exact })
 	{
 		const link = UnderlinedLink({ text, href, exact });
+		// @ts-ignore
 		this.links.push(link);
 		return link;
 	}

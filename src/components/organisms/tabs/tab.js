@@ -64,13 +64,16 @@ export class Tab extends Veil
 		const switches = [];
 
 		const options = this.options;
+		// @ts-ignore
 		for (let i = 0, length = options.length; i < length; i++)
 		{
+			// @ts-ignore
 			option = options[i];
 			switches.push(
 			{
 				uri: option.uri || option.href,
-				component: option.component,
+				component: option.component || null,
+				import: option.import || null,
 				title: option.title || null,
 				persist: true
 			});

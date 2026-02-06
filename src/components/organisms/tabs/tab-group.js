@@ -129,6 +129,7 @@ export class TabGroup extends Veil
 	setupStates()
 	{
 		return {
+			// @ts-ignore
 			selected: this.options[0]?.value || null
 		};
 	}
