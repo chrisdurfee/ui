@@ -1,6 +1,6 @@
 import { Div, H2, Header, P } from "@base-framework/atoms";
 import { Atom } from "@base-framework/base";
-import { Icon } from "../../atoms/icon.js";
+import { UniversalIcon } from "../../atoms/universal-icon.js";
 import { Form } from "../form/form.js";
 
 /**

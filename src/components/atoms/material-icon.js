@@ -3,15 +3,16 @@ import { Atom } from "@base-framework/base";
 
 /**
  * Size classes for Material Symbols.
+ * These match the Icon component sizes for consistency.
  */
 const sizeClasses = {
-	xs: "text-base",      // 16px
-	sm: "text-xl",        // 20px
-	md: "text-2xl",       // 24px
-	lg: "text-3xl",       // 30px
-	xl: "text-4xl",       // 36px
-	"2xl": "text-5xl",    // 48px
-	"3xl": "text-6xl",    // 60px
+	xs: "w-4 h-4 text-base",      // 16px - matches Icon
+	sm: "w-6 h-6 text-2xl",       // 24px - matches Icon
+	md: "w-8 h-8 text-[2rem]",    // 32px - matches Icon
+	lg: "w-10 h-10 text-[2.5rem]", // 40px - matches Icon
+	xl: "w-12 h-12 text-5xl",     // 48px - matches Icon
+	"2xl": "w-14 h-14 text-[3.5rem]", // 56px - matches Icon
+	"3xl": "w-16 h-16 text-[4rem]",   // 64px - matches Icon
 };
 
 /**
@@ -50,7 +51,7 @@ export const MaterialIcon = Atom((props) =>
 
 	return Span({
 		...props,
-		class: `${variantClass} ${sizeClass} ${props.class || ""}`,
+		class: `inline-flex items-center justify-center ${variantClass} ${sizeClass} ${props.class || ""}`,
 		// Remove props that shouldn't be passed to the DOM element
 		size: undefined,
 		variant: undefined,

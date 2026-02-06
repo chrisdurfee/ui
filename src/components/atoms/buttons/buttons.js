@@ -1,7 +1,7 @@
 import { Button as BaseButton } from '@base-framework/atoms';
 import { Atom } from '@base-framework/base';
 import { Icons } from '../../icons/icons.js';
-import { Icon } from '../icon.js';
+import { UniversalIcon } from '../universal-icon.js';
 
 /**
  * This will create a button.
@@ -121,7 +121,7 @@ const CircleIconButton = Atom((props, children) =>
 		...props,
 		class: `circle-icon-btn inline-flex items-center justify-center rounded-full ${backgroundClass} text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ring-offset-background transition-colors disabled:pointer-events-none disabled:opacity-50 cursor-pointer ${sizeClasses[size] || sizeClasses.md} ${props.class || ''}`
 	}, [
-		props.icon ? Icon({ size: size === 'xs' ? 'xs' : 'sm' }, props.icon) : null,
+		props.icon ? UniversalIcon({ size: size === 'xs' ? 'xs' : 'sm' }, props.icon) : null,
 		...(children || [])
 	]);
 });

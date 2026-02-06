@@ -232,7 +232,9 @@ export class Notification extends Component
 	{
 		return [
 			Div({ class: 'flex items-start' }, [
-				this.icon && I({ class: `mr-4 ${iconColor}`, html: this.icon }),
+				this.icon && Div({ class: `mr-4 ${iconColor}` }, [
+					UniversalIcon({ size: 'md' }, this.icon)
+				]),
 				Div({ class: 'flex flex-auto flex-col' }, [
 					Div({ class: 'flex flex-auto flex-row items-center w-full pr-12' }, [
 						this.title && TitleBar(this.title)

@@ -1,5 +1,6 @@
-import { Div, H5, I, P } from '@base-framework/atoms';
+import { Div, H5, P } from '@base-framework/atoms';
 import { Atom } from '@base-framework/base';
+import { UniversalIcon } from '../atoms/universal-icon.js';
 
 /**
  * Type styles mapping
@@ -41,7 +42,7 @@ const typeStyles = {
  */
 const AlertIcon = (icon, iconColor) => (
 	Div({ class: `flex items-center justify-center h-6 w-6 mr-3 ${iconColor}` }, [
-		I({ html: icon })
+		UniversalIcon({ size: 'sm' }, icon)
 	])
 );
 

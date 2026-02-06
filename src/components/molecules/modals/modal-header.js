@@ -1,7 +1,7 @@
 import { Div, H2, Header } from "@base-framework/atoms";
 import { Atom } from "@base-framework/base";
 import { Button } from "../../atoms/buttons/buttons.js";
-import { Icon } from "../../atoms/icon.js";
+import { UniversalIcon } from "../../atoms/universal-icon.js";
 import { Icons } from "../../icons/icons.js";
 
 /**
@@ -35,11 +35,7 @@ export const ModalHeader = Atom(({ title, description, back, icon, options = [] 
 		 * Icon Container
 		 */
 		icon && Div({ class: 'mr-2 w-12 h-12 rounded-full bg-muted flex flex-none items-center justify-center' }, [
-			Icon({ size: 'md' }, icon)
-		]),
-
-		/**
-		 * Title and Description Container
+		UniversalIcon({ size: 'md' }, icon)
 		 */
 		Div({ class: 'flex flex-auto flex-row justify-between ml-2 gap-2 min-w-0' }, [
 			Div({ class: 'flex flex-auto flex-col min-w-0' }, [

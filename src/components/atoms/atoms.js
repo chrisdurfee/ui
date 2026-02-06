@@ -11,6 +11,7 @@ export * from "./form/select.js";
 export * from "./icon.js";
 export * from "./image.js";
 export * from "./material-icon.js";
+export * from "./universal-icon.js";
 export * from "./progress/circle-graph.js";
 export * from "./progress/progress-bar.js";
 export * from "./skeleton.js";

@@ -1,6 +1,6 @@
 import { Input as BaseInput, Div } from '@base-framework/atoms';
 import { Atom } from '@base-framework/base';
-import { Icon } from "../../atoms/icon.js";
+import { UniversalIcon } from "../../atoms/universal-icon.js";
 import { Icons } from '../../icons/icons.js';
 
 /**
@@ -17,7 +17,7 @@ export const SimpleSearchInput = Atom((props) =>
 		class: `relative flex items-center w-full rounded-xl bg-muted/30 focus-within:ring-2 focus-within:ring-ring transition-all ${props.containerClass || ''}`
 	}, [
 		Div({ class: 'absolute left-4 flex items-center pointer-events-none text-muted-foreground' }, [
-			Icon({ size: 'sm' }, icon)
+			UniversalIcon({ size: 'sm' }, icon)
 		]),
 		BaseInput({
 			type: 'text',

@@ -1,6 +1,6 @@
-import { I, Label, Span } from '@base-framework/atoms';
+import { Div, Label, Span } from '@base-framework/atoms';
 import { Atom, Component, NavLink } from '@base-framework/base';
-import { Icon } from '../../atoms/icon.js';
+import { UniversalIcon } from '../../atoms/universal-icon.js';
 import { Icons } from '../../icons/icons.js';
 import { NavButtonLink } from './nav-button-link.js';
 
@@ -34,13 +34,14 @@ const Li = Atom(({ options, click }, children) =>
  * @returns {array}
  */
 const LinkContent = (label, icon = null, hasChildren = false) => [
-	icon && I({
+	icon && Div({
 		class: 'icon w-12 rounded-md flex items-center justify-center min-w-12',
 		onState: ['selected', {
 			selected: true
-		}],
-		html: icon
-	}),
+		}]
+	}, [
+		UniversalIcon({ size: 'sm' }, icon)
+	]),
 	Label({ class: 'label flex flex-auto text-sm items-center cursor-pointer whitespace-nowrap' }, label),
 	hasChildren && Span(
 		{
@@ -54,7 +55,7 @@ const LinkContent = (label, icon = null, hasChildren = false) => [
 				}]
 			]
 		}, [
-		Icon({ size: 'xs' }, Icons.chevron.single.down)
+		UniversalIcon({ size: 'xs' }, Icons.chevron.single.down)
 	])
 ];
 

@@ -1,6 +1,6 @@
 import { Div, Footer, H2, Header, Dialog as MainDialog, P } from "@base-framework/atoms";
 import { Atom } from "@base-framework/base";
-import { Icon } from "../../atoms/icon.js";
+import { UniversalIcon } from "../../atoms/universal-icon.js";
 
 /**
  * Alert Icon Atom
@@ -11,7 +11,7 @@ import { Icon } from "../../atoms/icon.js";
  */
 const DialogIcon = (icon, iconColor) => (
 	Div({ class: `hidden md:flex items-start justify-center w-6 h-6 mr-3 ${iconColor}` }, [
-		Icon({ size: 'lg' }, icon)
+		UniversalIcon({ size: 'lg' }, icon)
 	])
 );
 
