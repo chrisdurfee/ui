@@ -1,6 +1,6 @@
 import { A, Div, Nav, Span } from '@base-framework/atoms';
 import { Component, Data, Jot } from '@base-framework/base';
-import { Icon } from '../../atoms/icon.js';
+import { UniversalIcon } from '../../atoms/universal-icon.js';
 import { Icons } from '../../icons/icons.js';
 
 /**
@@ -27,7 +27,7 @@ const BreadcrumbLink = (href, label) => (
  * @returns {object}
  */
 const BreadcrumbSeparator = () => (
-	Icon({
+	UniversalIcon({
 		class: 'mx-3 text-muted-foreground',
 		'aria-hidden': true,
 		size: 'xs'

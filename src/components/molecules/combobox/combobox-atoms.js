@@ -1,5 +1,5 @@
-import { Button, Div, I, Li, OnState, Span, Ul } from '@base-framework/atoms';
-import { Icon } from '../../atoms/icon.js';
+import { Button, Div, Li, OnState, Span, Ul } from '@base-framework/atoms';
+import { UniversalIcon } from '../../atoms/universal-icon.js';
 import { Icons } from '../../icons/icons.js';
 import { PopOver } from '../popover.js';
 
@@ -17,7 +17,7 @@ export const DropdownButton = ({ toggleDropdown }) => (
 	},
 	[
 		Span({ onState: ['selectedLabel', (value) => value || 'Select item...'] }),
-		I({ html: Icons.chevron.upDown })
+		UniversalIcon({ size: 'sm' }, Icons.chevron.upDown)
 	])
 );
 
@@ -34,7 +34,7 @@ export const ComboboxItem = (item, onSelect, state) => {
 		click: () => onSelect(item),
 		onState: [state, 'selectedValue', { 'bg-secondary': item.value }]
 	}, [
-		item.icon && Span({ class: 'mr-2 flex items-baseline' }, [ Icon({ size: 'xs' }, item.icon)]),
+		item.icon && Span({ class: 'mr-2 flex items-baseline' }, [ UniversalIcon({ size: 'xs' }, item.icon)]),
 		Span({ class: 'text-base font-normal' }, item.label),
 	]);
 };

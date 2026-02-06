@@ -1,6 +1,6 @@
 import { Button, Div, Span } from "@base-framework/atoms";
 import { Atom, Jot } from "@base-framework/base";
-import { Icon } from "../atoms/icon.js";
+import { UniversalIcon } from "../atoms/universal-icon.js";
 import { Icons } from "../icons/icons.js";
 
 const match = globalThis.matchMedia;
@@ -28,7 +28,7 @@ const ThemeButton = Atom(({ value, label, icon }) => (
 			checkTheme(value);
 		}
 	}, [
-		Icon(icon),
+		UniversalIcon({}, icon),
 		Span(label)
 	])
 ));
