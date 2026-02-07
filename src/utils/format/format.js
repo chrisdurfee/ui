@@ -92,9 +92,10 @@ export const Format =
 	 * @param {string|number|object|array} watcher
 	 * @param {string} currency - Currency symbol.
 	 * @param {*} defaultValue - Value if original is invalid.
+	 * @param {boolean} round - Whether to round to nearest whole number (no decimals).
 	 * @returns {object|array}
 	 */
-	money(watcher, currency = '$', defaultValue = null)
+	money(watcher, currency = '$', defaultValue = null, round = false)
 	{
 		const callBack = (value) =>
 		{
@@ -105,7 +106,32 @@ export const Format =
 			}
 
 			const pattern = /\B(?=(\d{3})+(?!\d))/g;
-			return currency + numeric.toFixed(2).toString().replace(pattern, ',');
+			return currency + (round ? Math.round(numeric) : numeric.toFixed(2)).toString().replace(pattern, ',');
+		};
+
+		return createWatcherCallback(watcher, callBack);
+	},
+
+	/**
+	 * Formats a value as money with no decimals (rounded).
+	 *
+	 * @param {string|number|object|array} watcher
+	 * @param {string} currency - Currency symbol.
+	 * @param {*} defaultValue - Value if original is invalid.
+	 * @returns {object|array}
+	 */
+	roundMoney(watcher, currency = '$', defaultValue = null)
+	{
+		const callBack = (value) =>
+		{
+			const numeric = parseFloat(value);
+			if (isNaN(numeric))
+			{
+				return currency + defaultValue || '';
+			}
+
+			const pattern = /\B(?=(\d{3})+(?!\d))/g;
+			return currency + Math.round(numeric).toString().replace(pattern, ',');
 		};
 
 		return createWatcherCallback(watcher, callBack);
@@ -374,7 +400,7 @@ export const Format =
 	 *
 	 * @param {string|number|object|array} watcher
 	 * @param {string} singular - Singular form of the word.
-	 * @param {string} plural - Plural form of the word (optional, adds 's' by default).
+	 * @param {string|null} plural - Plural form of the word (optional, adds 's' by default).
 	 * @param {boolean} includeCount - Whether to include the count in output.
 	 * @returns {object|array}
 	 */
