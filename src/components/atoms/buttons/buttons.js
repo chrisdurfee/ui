@@ -31,9 +31,9 @@ const IconButton = Atom((props, children) => (
 			...props,
 			class: props.class
 		}, [
-			props.icon && props.position !== 'right' ? UniversalIcon({ size: 'sm', class: props.animation ?? null }, props.icon) : null,
+			props.icon && props.position !== 'right' ? UniversalIcon({ size: props.size || 'sm', class: props.animation ?? null }, props.icon) : null,
 			...(children || []),
-			props.icon && props.position === 'right' ? UniversalIcon({ size: 'sm', class: props.animation ?? null }, props.icon) : null
+			props.icon && props.position === 'right' ? UniversalIcon({ size: props.size || 'sm', class: props.animation ?? null }, props.icon) : null
 		])
 	)
 );
