@@ -115,6 +115,7 @@ export class DropdownMenu extends Component
 	 */
 	toggleDropdown()
 	{
+		// @ts-ignore
 		this.state.toggle('open');
 	}
 
@@ -126,7 +127,9 @@ export class DropdownMenu extends Component
 	 */
 	handleSelect(item)
 	{
+		// @ts-ignore
 		this.state.selectedItem = item;
+		// @ts-ignore
 		this.state.open = false;
 
 		if (typeof this.onSelect === 'function')

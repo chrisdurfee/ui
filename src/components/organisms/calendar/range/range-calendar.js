@@ -110,10 +110,14 @@ export class RangeCalendar extends Component
 	 */
 	handleClick(isoDate)
 	{
+		// @ts-ignore
 		if (this.data.selecting === 'start')
 		{
+			// @ts-ignore
 			this.data.current.start = isoDate;
+			// @ts-ignore
 			this.data.current.end = null;
+			// @ts-ignore
 			this.data.selecting = 'end';
 
 			const date = new Date(isoDate + 'T00:00:00');
@@ -128,16 +132,21 @@ export class RangeCalendar extends Component
 		else
 		{
 			// If end date is before start date, swap them
+			// @ts-ignore
 			if (this.data.current.start && isoDate < this.data.current.start)
 			{
+				// @ts-ignore
 				this.data.current.end = this.data.current.start;
+				// @ts-ignore
 				this.data.current.start = isoDate;
 			}
 			else
 			{
+				// @ts-ignore
 				this.data.current.end = isoDate;
 			}
 
+			// @ts-ignore
 			this.data.selecting = 'start';
 
 			// set current date to end date
@@ -150,6 +159,7 @@ export class RangeCalendar extends Component
 
 			if (typeof this.onRangeSelect === 'function')
 			{
+				// @ts-ignore
 				this.onRangeSelect(this.data.current.start, this.data.current.end);
 			}
 		}
@@ -163,6 +173,7 @@ export class RangeCalendar extends Component
 	 */
 	setCurrent({ month, year, date = null })
 	{
+		// @ts-ignore
 		const d = this.data.current;
 		d.month = (month + 12) % 12;
 		d.year = year + (month < 0 ? -1 : month > 11 ? 1 : 0);
@@ -172,7 +183,9 @@ export class RangeCalendar extends Component
 			d.date = date;
 		}
 
+		// @ts-ignore
 		this.data.monthName = this.getMonthName(d.month);
+		// @ts-ignore
 		this.data.currentDate = `${year}-${pad(month + 1)}-${pad(d.date)}`;
 	}
 
@@ -183,6 +196,7 @@ export class RangeCalendar extends Component
 	 */
 	render()
 	{
+		// @ts-ignore
 		const { today, current, selecting } = this.data;
 		const { start, end } = current;
 
@@ -195,12 +209,14 @@ export class RangeCalendar extends Component
 				{
 					e.preventDefault();
 					e.stopPropagation();
+					// @ts-ignore
 					this.data.selecting = 'start';
 				},
 				onSelectEnd: (e) =>
 				{
 					e.preventDefault();
 					e.stopPropagation();
+					// @ts-ignore
 					this.data.selecting = 'end';
 				}
 			}),
@@ -216,6 +232,7 @@ export class RangeCalendar extends Component
 									onSelect: (m) =>
 									{
 										this.setCurrent({ month: m, year: current.year });
+										// @ts-ignore
 										this.state.view = 'calendar';
 									}
 								}
@@ -227,12 +244,14 @@ export class RangeCalendar extends Component
 									onSelect: (y) =>
 									{
 										this.setCurrent({ month: current.month, year: y });
+										// @ts-ignore
 										this.state.view = 'calendar';
 									}
 								}
 							);
 						default:
 							return MonthCalendar({
+								// @ts-ignore
 								monthName: this.data.monthName,
 								year: current.year,
 								today,
@@ -243,22 +262,26 @@ export class RangeCalendar extends Component
 								{
 									e.preventDefault();
 									e.stopPropagation();
+									// @ts-ignore
 									this.state.view = 'months';
 								},
 								onYearClick: (e) =>
 								{
 									e.preventDefault();
 									e.stopPropagation();
+									// @ts-ignore
 									this.state.view = 'years';
 								},
 								next: () =>
 								{
+									// @ts-ignore
 									const current = this.data.current;
 									const selectingDate = (current.month === 11)? { month: 0, year: current.year + 1 } : { month: current.month + 1, year: current.year };
 									this.setCurrent(selectingDate);
 								},
 								previous: () =>
 								{
+									// @ts-ignore
 									const current = this.data.current;
 									const selectingDate = (current.month === 0)? { month: 11, year: current.year - 1 } : { month: current.month - 1, year: current.year };
 									this.setCurrent(selectingDate);

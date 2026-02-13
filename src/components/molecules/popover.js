@@ -134,6 +134,7 @@ export class PopOver extends Component
 	{
 		// @ts-ignore
 		const parent = this.parent;
+		// @ts-ignore
 		const id = parent.getId();
 
 		return {

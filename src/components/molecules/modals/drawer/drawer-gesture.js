@@ -87,11 +87,16 @@ export class DrawerGesture
 		}
 
 		const touch = e.touches[0];
+
+		// @ts-ignore
 		this.state.startY = touch.clientY;
+		// @ts-ignore
 		this.state.currentY = touch.clientY;
+		// @ts-ignore
 		this.state.startScrollTop = this.modalBody.scrollTop;
 
 		// Can drag only if at the top of scroll
+		// @ts-ignore
 		this.state.canDrag = this.modalBody.scrollTop === 0;
 	}
 
@@ -109,20 +114,24 @@ export class DrawerGesture
 		}
 
 		const touch = e.touches[0];
+		// @ts-ignore
 		this.state.currentY = touch.clientY;
 		const deltaY = this.getDeltaY();
 
 		// Check if we should start dragging
+		// @ts-ignore
 		if (!this.state.isDragging && this.state.canDrag && deltaY > 0)
 		{
 			// User is pulling down and we're at top of scroll
 			if (this.modalBody.scrollTop === 0)
 			{
+				// @ts-ignore
 				this.state.isDragging = true;
 			}
 		}
 
 		// If dragging, move the drawer
+		// @ts-ignore
 		if (this.state.isDragging && deltaY > 0)
 		{
 			e.preventDefault();
@@ -139,6 +148,7 @@ export class DrawerGesture
 		else if (this.modalBody.scrollTop > 0)
 		{
 			// Content is scrolling, disallow drag
+			// @ts-ignore
 			this.state.canDrag = false;
 		}
 	}
@@ -158,6 +168,7 @@ export class DrawerGesture
 
 		const deltaY = this.getDeltaY();
 
+		// @ts-ignore
 		if (this.state.isDragging)
 		{
 			this.modalContent.style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out';
@@ -175,7 +186,9 @@ export class DrawerGesture
 		}
 
 		// Reset drag state
+		// @ts-ignore
 		this.state.isDragging = false;
+		// @ts-ignore
 		this.state.canDrag = false;
 	}
 
@@ -186,6 +199,7 @@ export class DrawerGesture
 	 */
 	getDeltaY()
 	{
+		// @ts-ignore
 		return this.state.currentY - this.state.startY;
 	}
 
@@ -280,6 +294,7 @@ export class DrawerGesture
 	 */
 	isDragging()
 	{
+		// @ts-ignore
 		return this.state.isDragging;
 	}
 

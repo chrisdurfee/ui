@@ -182,6 +182,7 @@ export class Modal extends Component
 	 */
 	isOutsideClick(element)
 	{
+		// @ts-ignore
 		return (!this.panel.contains(element));
 	}
 
@@ -280,7 +281,9 @@ export class Modal extends Component
 		 * it is added to the DOM.
 		 */
 		const DELAY = 10;
+		// @ts-ignore
 		globalThis.setTimeout(() => this.panel.showPopover(), DELAY);
+		// @ts-ignore
 		this.state.open = true;
 
 		/**
@@ -297,7 +300,9 @@ export class Modal extends Component
 	 */
 	beforeDestroy()
 	{
+		// @ts-ignore
 		this.panel.hidePopover();
+		// @ts-ignore
 		this.state.open = false;
 
 		if (typeof this.onClose === 'function')

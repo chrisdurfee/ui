@@ -1,6 +1,6 @@
 import { Button, Div, I, Input, OnStateOpen } from '@base-framework/atoms';
 import { Events } from '@base-framework/base';
-import { Veil, VeilJot } from '../../atoms/veil.js';
+import { VeilJot } from '../../atoms/veil.js';
 import { Icons } from '../../icons/icons.js';
 import { PopOver } from '../popover.js';
 
@@ -123,7 +123,7 @@ function TimeInputContainer({ bind, required, toggleOpen, handleInputChange, han
 			TimeInput({ placeholder, handleInputChange, handleInputFocus }),
 			Button(
 				{
-					class: 'flex-shrink-0 hover:bg-muted/50 rounded p-1 cursor-pointer',
+					class: 'shrink-0 hover:bg-muted/50 rounded p-1 cursor-pointer',
 					click: toggleOpen,
 				},
 				[
@@ -295,7 +295,7 @@ function parseAndSetTime(time)
  *
  * This will create a time picker component.
  *
- * @type {typeof Veil}
+ * @returns {Component|null}
  */
 export const TimePicker = VeilJot(
 {

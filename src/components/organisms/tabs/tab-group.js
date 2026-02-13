@@ -113,6 +113,7 @@ export class TabGroup extends Veil
 	 */
 	select(value)
 	{
+		// @ts-ignore
 		this.state.selected = value;
 
 		if (typeof this.onSelect === 'function')

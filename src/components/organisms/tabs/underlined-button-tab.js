@@ -128,6 +128,7 @@ export class UnderlinedButtonTab extends Veil
 	 */
 	select(value)
 	{
+		// @ts-ignore
 		this.state.selected = value;
 
 		// @ts-ignore

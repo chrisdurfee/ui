@@ -115,7 +115,9 @@ export class Calendar extends Component
 	goToPreviousMonth()
 	{
 		const data = this.data;
+		// @ts-ignore
 		let month = data.current.month;
+		// @ts-ignore
 		let year = data.current.year;
 		if (month === 0)
 		{
@@ -138,7 +140,9 @@ export class Calendar extends Component
 	goToNextMonth()
 	{
 		const data = this.data;
+		// @ts-ignore
 		let month = data.current.month;
+		// @ts-ignore
 		let year = data.current.year;
 		if (month === 11)
 		{
@@ -158,24 +162,29 @@ export class Calendar extends Component
 	 *
 	 * @param {number} month
 	 * @param {number} year
-	 * @param {number} [date=null]
+	 * @param {number|null} [date=null]
 	 * @returns {void}
 	 */
 	setCurrentDate(month, year, date = null)
 	{
 		const data = this.data;
+		// @ts-ignore
 		data.current.month = month;
+		// @ts-ignore
 		data.current.year = year;
 
 		if (typeof date === 'number')
 		{
+			// @ts-ignore
 			data.current.date = pad(date);
 		}
 
 		/**
 		 * Set the active date and month name.
 		 */
+		// @ts-ignore
 		data.currentDate = `${year}-${pad(month + 1)}-${data.current.date}`;
+		// @ts-ignore
 		data.monthName = this.getMonthName(month);
 	}
 
@@ -192,6 +201,7 @@ export class Calendar extends Component
 
 		if (typeof this.selectedCallBack === 'function')
 		{
+			// @ts-ignore
 			this.selectedCallBack(this.data.currentDate);
 		}
 	}
@@ -211,11 +221,15 @@ export class Calendar extends Component
 					case 'months':
 						return MonthSelector(
 							{
+								// @ts-ignore
 								currentMonth: this.data.current.month,
+								// @ts-ignore
 								currentYear: this.data.current.year,
 								onSelect: (m) =>
 								{
+									// @ts-ignore
 									this.setCurrentDate(m, this.data.current.year);
+									// @ts-ignore
 									this.state.view = 'calendar';
 								}
 							}
@@ -223,18 +237,24 @@ export class Calendar extends Component
 					case 'years':
 						return YearSelector(
 							{
+								// @ts-ignore
 								currentMonth: this.data.current.month,
+								// @ts-ignore
 								currentYear: this.data.current.year,
 								onSelect: (y) =>
 								{
+									// @ts-ignore
 									this.setCurrentDate(this.data.current.month, y);
+									// @ts-ignore
 									this.state.view = 'calendar';
 								}
 							}
 						);
 					default:
 						return MonthCalendar({
+							// @ts-ignore
 							current: this.data.current,
+							// @ts-ignore
 							today: this.data.today,
 							select: (date) => this.selectDate(date),
 							next: () => this.goToNextMonth(),
@@ -245,6 +265,7 @@ export class Calendar extends Component
 								e.preventDefault();
 								e.stopPropagation();
 
+								// @ts-ignore
 								this.state.view = 'months';
 							},
 							onYearClick: (e) =>
@@ -252,6 +273,7 @@ export class Calendar extends Component
 								e.preventDefault();
 								e.stopPropagation();
 
+								// @ts-ignore
 								this.state.view = 'years';
 							}
 						});

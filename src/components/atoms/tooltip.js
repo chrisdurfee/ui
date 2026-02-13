@@ -22,7 +22,7 @@ const POSITION_CLASSES = {
  * @param {string|null} position
  * @returns {string}
  */
-const getPositionClass = (position) => POSITION_CLASSES[position] || POSITION_CLASSES.top;
+const getPositionClass = (position) => POSITION_CLASSES[String(position)] || POSITION_CLASSES.top;
 
 /**
  * Tooltip Component

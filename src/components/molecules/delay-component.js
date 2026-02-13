@@ -40,10 +40,12 @@ export class DelayComponent extends Component
 		className = this.removingClass;
 		if (!className)
 		{
+			// @ts-ignore
 			Html.removeElement(panel);
 			return;
 		}
 
+		// @ts-ignore
 		Dom.addClass(panel, className);
 		// @ts-ignore
 		base.on('animationend', panel, (e) => Html.removeElement(panel));

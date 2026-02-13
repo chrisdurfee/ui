@@ -117,6 +117,7 @@ export class WeekCalendar extends Component
 	goToPreviousMonth()
 	{
 		const data = this.data;
+		// @ts-ignore
 		let { year, month } = data;
 
 		if (month === 0)
@@ -140,6 +141,7 @@ export class WeekCalendar extends Component
 	goToNextMonth()
 	{
 		const data = this.data;
+		// @ts-ignore
 		let { year, month } = data;
 
 		if (month === 11)
@@ -165,6 +167,7 @@ export class WeekCalendar extends Component
 	 */
 	setDate(month, year, date)
 	{
+		// @ts-ignore
 		this.data.set({
 			year,
 			month,
@@ -173,6 +176,7 @@ export class WeekCalendar extends Component
 
 		if (date)
 		{
+			// @ts-ignore
 			this.data.currentDate = date;
 		}
 	}
@@ -185,6 +189,7 @@ export class WeekCalendar extends Component
 	 */
 	selectWeek(weekNumber, year)
 	{
+		// @ts-ignore
 		this.data.currentWeek = weekNumber;
 		const currentDate = getDateFromWeek(weekNumber, year);
 		this.setDate(currentDate.getMonth(), currentDate.getFullYear(), currentDate.getDate());

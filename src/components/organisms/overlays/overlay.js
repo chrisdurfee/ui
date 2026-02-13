@@ -51,6 +51,10 @@ export class Overlay extends Component
 		return Div(
 			{
 				class: this.getClassName(),
+				// @ts-ignore
+				// animateIn: this.animateIn ?? null,
+				// // @ts-ignore
+				// animateOut: this.animateOut ?? null,
 				onSet: ['loading', {
 					loading: true
 				}]
@@ -106,6 +110,7 @@ export class Overlay extends Component
 	 */
 	addLoading()
 	{
+		// @ts-ignore
 		this.state.loading = true;
 	}
 
@@ -116,6 +121,7 @@ export class Overlay extends Component
 	 */
 	removeLoading()
 	{
+		// @ts-ignore
 		this.state.loading = false;
 	}
 

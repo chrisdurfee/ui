@@ -148,7 +148,7 @@ const getFontSizeClass = (size) => fontSizeMap[size] || fontSizeMap.default;
  */
 const AvatarFallback = (fallbackText, watcherFallback = null, size = 'md') =>
 {
-	const finalText = checkFallbackLength(fallbackText);
+	const finalText = checkFallbackLength(String(fallbackText));
 	const fontSizeClass = getFontSizeClass(size);
 
 	return Div({

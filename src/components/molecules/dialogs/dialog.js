@@ -108,6 +108,7 @@ export class Dialog extends Component
 	render()
 	{
 		const click = (event) => { if (event.target === this.panel) this.close() };
+		// @ts-ignore
 		const { borderColor, bgColor, iconColor } = typeStyles[this.type] || typeStyles.default;
 		const className = `${this.getMainClass()} ${bgColor} ${borderColor}`;
 		const title = this.title || 'Dialog Title';
@@ -126,7 +127,7 @@ export class Dialog extends Component
 	/**
 	 * This will get the buttons for the modal.
 	 *
-	 * @returns {array}
+	 * @returns {array|null}
 	 */
 	getButtons()
 	{
@@ -175,7 +176,9 @@ export class Dialog extends Component
 	open()
 	{
 		render(this);
+		// @ts-ignore
 		this.panel.showModal();
+		// @ts-ignore
 		this.state.open = true;
 	}
 
@@ -186,7 +189,9 @@ export class Dialog extends Component
 	 */
 	close()
 	{
+		// @ts-ignore
 		this.state.open = false;
+		// @ts-ignore
 		this.panel.close();
 
 		if (typeof this.onClose === 'function')

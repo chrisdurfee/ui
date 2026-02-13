@@ -69,7 +69,7 @@ const getDots = (count, size) => Array.from({ length: count }, (_, index) => Dot
  *
  * Renders a row of circular dots, one of which is "active."
  *
- * @type {typeof Component}
+ * @returns {Component|null}
  * @example
  *   new DotsIndicator({ count: 4, activeIndex: 0 })
  */

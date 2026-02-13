@@ -75,6 +75,7 @@ export class SignatureCanvas extends Component
 	afterSetup()
 	{
 		this.canvas = this.panel;
+		// @ts-ignore
 		this.ctx = this.canvas.getContext("2d");
 
 		// Resize and draw after the parent has fully rendered
@@ -119,7 +120,9 @@ export class SignatureCanvas extends Component
 		let eX, eY;
 
 		const canvas = this.canvas,
+		// @ts-ignore
 		scale = canvas.width / parseInt(canvas.style.width),
+		// @ts-ignore
 		rect = canvas.getBoundingClientRect();
 
 		// @ts-ignore
@@ -144,7 +147,9 @@ export class SignatureCanvas extends Component
 		// @ts-ignore
 		const y = parseInt((eY - rect.top) * scale);
 
+		// @ts-ignore
 		this.mouse.x = x;
+		// @ts-ignore
 		this.mouse.y = y;
 	}
 
@@ -164,7 +169,9 @@ export class SignatureCanvas extends Component
 		const { ctx, mouse } = this;
 
 		ctx.beginPath();
+		// @ts-ignore
 		ctx.moveTo(mouse.x, mouse.y);
+		// @ts-ignore
 		mouse.status = 'down';
 
 		this.startTimer();
@@ -183,6 +190,7 @@ export class SignatureCanvas extends Component
 		e.stopPropagation();
 
 		this.ctx.closePath();
+		// @ts-ignore
 		this.mouse.status = 'up';
 		this.stopTimer();
 	}
@@ -197,6 +205,7 @@ export class SignatureCanvas extends Component
 	{
 		this.getEventPosition(e);
 
+		// @ts-ignore
 		if (this.mouse.status === 'down')
 		{
 			e.preventDefault();
@@ -213,6 +222,7 @@ export class SignatureCanvas extends Component
 	resize()
 	{
 		const { canvas, ctx } = this;
+		// @ts-ignore
 		const canvasData = canvas.toDataURL();
 
 		this.scale();
@@ -244,6 +254,7 @@ export class SignatureCanvas extends Component
 	{
 		// compress image for smaller data
 		const quality = 0.7;
+		// @ts-ignore
 		return this.canvas.toDataURL('image/jpeg', quality);
 	}
 
@@ -273,6 +284,7 @@ export class SignatureCanvas extends Component
 	{
 		const canvas = this.canvas,
 		container = this.container,
+		// @ts-ignore
 		size = Dom.getSize(container),
 		targetSize = this.targetSize,
 		width = targetSize.width,
@@ -281,7 +293,9 @@ export class SignatureCanvas extends Component
 		let widthStyle = width + 'px',
 		heightStyle = height + 'px';
 
+		// @ts-ignore
 		this.width = canvas.width = width;
+		// @ts-ignore
 		this.height = canvas.height = height;
 
 		// @ts-ignore
@@ -298,7 +312,10 @@ export class SignatureCanvas extends Component
 			widthStyle = width * optimalRatio + "px";
 			heightStyle = height * optimalRatio + "px";
 		}
+
+		// @ts-ignore
 		canvas.style.width = widthStyle;
+		// @ts-ignore
 		canvas.style.height = heightStyle;
 	}
 
@@ -310,8 +327,10 @@ export class SignatureCanvas extends Component
 	 */
 	draw()
 	{
+		// @ts-ignore
 		if (this.mouse.status === 'down')
 		{
+			// @ts-ignore
 			this.addLine(this.ctx, this.mouse.x, this.mouse.y, this.lineColor);
 		}
 	}
@@ -334,6 +353,7 @@ export class SignatureCanvas extends Component
 
 		ctx.beginPath();
 		ctx.moveTo(gridLineX, gridLineY);
+		// @ts-ignore
 		ctx.lineTo(canvas.width - this.margin.x, gridLineY);
 		ctx.lineWidth = this.baseLineWidth;
 		ctx.strokeStyle = this.baseStrokeColor;
@@ -404,6 +424,7 @@ export class SignatureCanvas extends Component
 	{
 		this.stopTimer();
 		this.draw();
+		// @ts-ignore
 		this.timer.start();
 		this.status = 'started';
 	}
@@ -415,6 +436,7 @@ export class SignatureCanvas extends Component
 	 */
 	stopTimer()
 	{
+		// @ts-ignore
 		this.timer.stop();
 		this.status = 'stopped';
 	}

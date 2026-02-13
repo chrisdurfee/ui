@@ -1,6 +1,6 @@
 import { Button, Div, I, Input, OnStateOpen } from '@base-framework/atoms';
 import { DateTime, Events } from '@base-framework/base';
-import { Veil, VeilJot } from '../../atoms/veil.js';
+import { VeilJot } from '../../atoms/veil.js';
 import { Icons } from '../../icons/icons.js';
 import { Calendar } from '../../organisms/calendar/calendar.js';
 import { PopOver } from '../popover.js';
@@ -102,7 +102,7 @@ const DateInputContainer = ({ bind, required, toggleOpen, handleInputChange, han
 			DateInput({ placeholder, handleInputChange, handleInputFocus }),
 			Button(
 				{
-					class: 'flex-shrink-0 hover:bg-muted/50 rounded p-1 cursor-pointer',
+					class: 'shrink-0 hover:bg-muted/50 rounded p-1 cursor-pointer',
 					click: toggleOpen,
 				},
 				[
@@ -141,7 +141,7 @@ const CalendarContainer = ({ handleDateSelect, blockPriorDates }) => (
  *
  * This will create a date picker component.
  *
- * @type {typeof Veil}
+ * @returns {Component|null}
  */
 export const DatePicker = VeilJot(
 {

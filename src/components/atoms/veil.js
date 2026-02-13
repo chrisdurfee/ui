@@ -41,6 +41,6 @@ export class Veil extends Component
  * This will create a Veil component.
  *
  * @param  {*} props
- * @returns {typeof Veil}
+ * @returns {Component|null}
  */
 export const VeilJot = (props) => Jot(props, Veil);

@@ -60,7 +60,9 @@ export class NotificationContainer extends Component
 		 * multiple notifications at the same time to show it
 		 * all content.
 		 */
+		// @ts-ignore
 		this.panel.hidePopover();
+		// @ts-ignore
 		this.panel.showPopover();
 	}
 
@@ -78,6 +80,7 @@ export class NotificationContainer extends Component
 		// @ts-ignore
 		if (this.list.isEmpty())
 		{
+			// @ts-ignore
 			this.panel.hidePopover();
 		}
 	}

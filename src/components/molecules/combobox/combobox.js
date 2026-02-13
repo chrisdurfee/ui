@@ -15,7 +15,7 @@ import { DropdownButton, DropdownContainer } from './combobox-atoms.js';
  * @property {boolean} required
  * @property {boolean} selectFirst
  * @property {function} onSelect
- * @type {typeof Component}
+ * @returns {Component|null}
  */
 export const Combobox = Jot(
 {
@@ -152,7 +152,7 @@ export const Combobox = Jot(
 			// @ts-ignore
 			this.required &&
 			Input({
-				class: 'opacity-0 absolute top-0 left-0 z-[1]',
+				class: 'opacity-0 absolute top-0 left-0 z-1',
 				type: 'text',
 				// @ts-ignore
 				name: this.name,

@@ -127,6 +127,7 @@ export class ButtonTab extends Veil
 	 */
 	update()
 	{
+		// @ts-ignore
 		const selected = this.state.get('selected');
 		this.select(null);
 		this.select(selected);
@@ -140,6 +141,7 @@ export class ButtonTab extends Veil
 	 */
 	select(value)
 	{
+		// @ts-ignore
 		this.state.selected = value;
 
 		// @ts-ignore

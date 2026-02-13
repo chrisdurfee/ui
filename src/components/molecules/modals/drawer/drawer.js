@@ -150,8 +150,11 @@ export class Drawer extends Modal
 		if (this.swipeToClose && !this.gesture)
 		{
 			this.gesture = new DrawerGesture({
+				// @ts-ignore
 				modal: this.panel,
+				// @ts-ignore
 				modalContent: this.modalContent,
+				// @ts-ignore
 				modalBody: this.modalBody,
 				closeThreshold: this.closeThreshold,
 				snapThreshold: this.snapThreshold,
