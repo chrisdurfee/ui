@@ -5,8 +5,6 @@ import { Veil, VeilJot } from '../../atoms/veil.js';
  * Toggle
  *
  * This will create a toggle switch component.
- *
- * @type {typeof Veil}
  */
 export const Toggle = VeilJot(
 {

@@ -211,8 +211,7 @@ export class SubNavigation extends InlineNavigation
 	 * @returns {void}
 	 */
 	afterSetup()
-	{
-		const path = router.data.get('path');
+	{		// @ts-ignore - router.data is from @base-framework/base		const path = router.data.path;
 		this.updateLinks(path);
 	}
 

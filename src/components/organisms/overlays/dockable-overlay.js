@@ -54,6 +54,7 @@ export class DockableOverlay extends Overlay
 	 */
 	render()
 	{
+		// @ts-ignore - container is set via setup() and is an HTMLElement
 		const originalContainer = this.container;
 
 		return Div(
@@ -67,6 +68,7 @@ export class DockableOverlay extends Overlay
 						if (docked)
 						{
 							ele.className = this.getDockedClassName();
+							// @ts-ignore - originalContainer is HTMLElement
 							originalContainer.appendChild(ele);
 						}
 						else
@@ -167,6 +169,7 @@ export class DockableOverlay extends Overlay
 	 */
 	onResize()
 	{
+		// @ts-ignore - docked is declared in setupStates
 		this.state.docked = this.canDock();
 	}
 }

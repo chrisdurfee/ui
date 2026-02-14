@@ -38,9 +38,29 @@ export class Veil extends Component
 }
 
 /**
- * This will create a Veil component.
+ * This will create a Veil component using Jot.
  *
- * @param  {*} props
- * @returns {Component|null}
+ * @param  {*} config - The component configuration object
+ * @returns {*}
  */
-export const VeilJot = (props) => Jot(props, Veil);
+export const VeilJot = (config) => {
+	// Merge Veil's setContext method with the provided config
+	const merged = {
+		setContext(context) {
+			// @ts-ignore
+			if (this.data) {
+				return null;
+			}
+
+			// @ts-ignore
+			const data = (this?.parent?.data ?? this?.parent?.context?.data ?? this?.parent?.state ?? null);
+			if (!data) {
+				return null;
+			}
+
+			return { data };
+		},
+		...config
+	};
+// @ts-ignore - Jot creates a component from the merged configreturn Jot(merged);
+};

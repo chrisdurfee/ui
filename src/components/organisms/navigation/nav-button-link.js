@@ -61,6 +61,7 @@ export class NavButtonLink extends Component
 					return;
 				}
 
+				// @ts-ignore - state.active is declared in setupStates
 				const active = (state.active)? this : null;
 				this.checkCallBack(active);
 			}
