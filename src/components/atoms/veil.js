@@ -1,4 +1,4 @@
-import { Component } from "@base-framework/base";
+import { Component, Jot } from "@base-framework/base";
 
 /**
  * Veil Component
