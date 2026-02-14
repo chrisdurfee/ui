@@ -1,5 +1,5 @@
 import { Button, Checkbox, Span } from '@base-framework/atoms';
-import { Veil, VeilJot } from '../../atoms/veil.js';
+import { VeilJot } from '../../atoms/veil.js';
 
 /**
  * Toggle

@@ -1,5 +1,5 @@
 import { Div } from "@base-framework/atoms";
-import { Veil, VeilJot } from "../../atoms/veil.js";
+import { VeilJot } from "../../atoms/veil.js";
 import { FormDescription, FormItem, FormLabel, FormMessage } from "./form-atoms.js";
 import { FormControl } from "./form-control.js";
 
