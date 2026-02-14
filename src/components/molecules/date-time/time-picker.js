@@ -295,7 +295,7 @@ function parseAndSetTime(time)
  *
  * This will create a time picker component.
  *
- * @returns {Component|null}
+ * @returns {Component}
  */
 export const TimePicker = VeilJot(
 {

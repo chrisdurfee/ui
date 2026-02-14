@@ -52,9 +52,9 @@ export class Overlay extends Component
 			{
 				class: this.getClassName(),
 				// @ts-ignore
-				// animateIn: this.animateIn ?? null,
-				// // @ts-ignore
-				// animateOut: this.animateOut ?? null,
+				animateIn: this.animateIn ?? null,
+				// @ts-ignore
+				animateOut: this.animateOut ?? null,
 				onSet: ['loading', {
 					loading: true
 				}]

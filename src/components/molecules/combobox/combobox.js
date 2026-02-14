@@ -15,7 +15,7 @@ import { DropdownButton, DropdownContainer } from './combobox-atoms.js';
  * @property {boolean} required
  * @property {boolean} selectFirst
  * @property {function} onSelect
- * @returns {Component|null}
+ * @returns {Component}
  */
 export const Combobox = Jot(
 {

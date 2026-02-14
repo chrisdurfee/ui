@@ -7,7 +7,7 @@ import { disabledClass, focusClass } from './input-classes.js';
  *
  * Creates a range slider with a custom style matching the provided design.
  *
- * @returns {Component|null}
+ * @returns {Component}
  */
 export const RangeSlider = VeilJot(
 {

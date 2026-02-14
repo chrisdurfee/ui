@@ -141,7 +141,7 @@ const CalendarContainer = ({ handleDateSelect, blockPriorDates }) => (
  *
  * This will create a date picker component.
  *
- * @returns {Component|null}
+ * @returns {Component}
  */
 export const DatePicker = VeilJot(
 {

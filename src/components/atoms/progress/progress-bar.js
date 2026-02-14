@@ -20,7 +20,7 @@ const Progress = () => (
  *
  * This will create a progress bar component.
  *
- * @returns {Component|null}
+ * @returns {Component}
  */
 export const ProgressBar = VeilJot(
 {

@@ -59,6 +59,10 @@ export class DockableOverlay extends Overlay
 
 		return Div(
 			{
+				// @ts-ignore
+				animateIn: this.animateIn ?? null,
+				// @ts-ignore
+				animateOut: this.animateOut ?? null,
 				onState: [
 					['loading', {
 						loading: true,
@@ -132,6 +136,7 @@ export class DockableOverlay extends Overlay
 		 * This will add the dockable overlay to the data tracker
 		 * so we can keep track of it.
 		 */
+		// @ts-ignore
 		DataTracker.add(this.container, 'dockableOverlay',
 		{
 			component: this
