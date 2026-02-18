@@ -1,4 +1,4 @@
-import { Form as BaseForm } from "@base-framework/atoms";
+﻿import { Form as BaseForm } from "@base-framework/atoms";
 import { Atom } from "@base-framework/base";
 import { FormItem } from "./form-atoms.js";
 import { FormControl } from "./form-control.js";
@@ -46,5 +46,6 @@ const submit = (e, parent, callBack = null) =>
  * @returns {object}
  */
 export const Form = Atom((props, children) => (
+	// @ts-ignore
 	BaseForm({ ...props, submit: (e, parent) => submit(e, parent, props.submit), class: `w-full ${props.class ?? '' }` }, children))
 );

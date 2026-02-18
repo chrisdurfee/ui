@@ -75,6 +75,9 @@ export class NavigationMenu extends Component
 	 */
 	beforeSetup()
 	{
+		/**
+		 * @type {array} links - This will hold the links for the navigation.
+		 */
 		this.links = [];
 	}
 
@@ -121,6 +124,7 @@ export class NavigationMenu extends Component
 		let activeLinkSet = false;
 		this.deactivateAllLinks();
 
+		// @ts-ignore
 		for (const link of this.links)
 		{
 			if (!link.rendered)
@@ -141,9 +145,11 @@ export class NavigationMenu extends Component
 		}
 
 		// Fallback to set the first link active if none match
-		if (!activeLinkSet && this.links[0])
+		// @ts-ignore
+		const firstLink = this?.links[0] ?? null;
+		if (!activeLinkSet && firstLink)
 		{
-			this.updateLink(this.links[0], true);
+			this.updateLink(firstLink, true);
 		}
 	}
 
@@ -154,6 +160,7 @@ export class NavigationMenu extends Component
 	 */
 	deactivateAllLinks()
 	{
+		// @ts-ignore
 		for (const link of this.links)
 		{
 			this.updateLink(link, false);
@@ -181,6 +188,8 @@ export class NavigationMenu extends Component
 	addLink({ label: text, href, exact, hidden })
 	{
 		const link = Link({ text, href, exact, hidden });
+
+		// @ts-ignore
 		this.links.push(link);
 		return link;
 	}

@@ -1,4 +1,4 @@
-import { H1, Header } from "@base-framework/atoms";
+﻿import { H1, Header } from "@base-framework/atoms";
 import { Atom } from "@base-framework/base";
 
 /**
@@ -11,6 +11,7 @@ import { Atom } from "@base-framework/base";
 export const TopBar = Atom((props, children) =>
 {
 	return Header([
+		// @ts-ignore
 		H1({ watch: props.watch }, props.text)
 	], children);
 });
@@ -24,7 +25,9 @@ export const TopBar = Atom((props, children) =>
  */
 export const MainColumn = Atom((props, children) =>
 {
+	// @ts-ignore
 	const flex = (!props.flex) ? "flex flex-auto flex-col" : "flex flex-none";
+	// @ts-ignore
 	props.class = 'col ' + flex + ' ' + (props.class || '');
 
 	return {

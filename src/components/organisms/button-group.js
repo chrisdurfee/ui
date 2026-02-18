@@ -1,4 +1,4 @@
-import { Button, Div, P } from '@base-framework/atoms';
+﻿import { Button, Div, P } from '@base-framework/atoms';
 import { Atom, Component } from '@base-framework/base';
 
 /**
@@ -20,6 +20,7 @@ const Buttons = Atom((props, children) => ({
  * @param {object} props
  * @returns {object}
  */
+// @ts-ignore
 const StateButton = Atom(({ value, label }) => (
 	Button({
 		class: 'inline-flex flex-auto items-center justify-center whitespace-nowrap rounded-md px-8 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow',

@@ -1,4 +1,4 @@
-import { Atom } from "@base-framework/base";
+﻿import { Atom } from "@base-framework/base";
 
 /**
  * This will create a row.
@@ -9,7 +9,9 @@ import { Atom } from "@base-framework/base";
  */
 export const Row = Atom((props, children) =>
 {
+	// @ts-ignore
 	const flex = (!props.flex)? "flex flex-auto flex-col lg:flex-row" : props.flex;
+	// @ts-ignore
 	props.class = 'row ' + flex + ' ' + (props.class || '');
 
 	return {

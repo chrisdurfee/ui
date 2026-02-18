@@ -1,4 +1,4 @@
-import { Fieldset as BaseFieldset, Div } from '@base-framework/atoms';
+﻿import { Fieldset as BaseFieldset, Div } from '@base-framework/atoms';
 import { Atom } from '@base-framework/base';
 import { Legend } from './legend.js';
 
@@ -11,11 +11,14 @@ import { Legend } from './legend.js';
  */
 export const Fieldset = Atom((props, children) =>
 {
+	// @ts-ignore
 	const border = props.border === 'full' ? 'border rounded-md' : 'border-t';
 	return BaseFieldset({
 		...props,
+		// @ts-ignore
 		class: `p-6 ${border} ${props.class || ''}`,
 	}, [
+		// @ts-ignore
 		props.legend && Legend(props.legend),
 		Div({ class: 'flex flex-auto flex-col gap-y-6' }, children)
 	])

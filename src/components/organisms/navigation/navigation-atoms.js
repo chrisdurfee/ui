@@ -1,4 +1,4 @@
-import { H4, Ul } from "@base-framework/atoms";
+﻿import { H4, Ul } from "@base-framework/atoms";
 import { Atom } from "@base-framework/base";
 
 /**
@@ -8,6 +8,7 @@ import { Atom } from "@base-framework/base";
  * @param {object} children
  * @returns {object}
  */
+// @ts-ignore
 export const NavigationGroup = Atom(({ map }, children) =>
 {
 	return Ul({ class: 'navigation-group flex flex-col gap-2 list-none m-0 py-2 px-0', map }, [

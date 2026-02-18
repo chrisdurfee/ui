@@ -235,6 +235,6 @@ export class PopOver extends Component
 	beforeDestroy()
 	{
 		// @ts-ignore
-		this.panel.hidePopover();
+		this?.panel?.hidePopover();
 	}
 }

@@ -7,6 +7,7 @@ import { Atom } from '@base-framework/base';
  * @param {object} props - The properties of the component.
  * @returns {object} - The list item component.
  */
+// @ts-ignore
 const ListItem = Atom(({ index, click, state }, children) => (
 	Li({
 		class: `p-2 cursor-pointer hover:bg-muted/50`,
@@ -26,6 +27,7 @@ const ListItem = Atom(({ index, click, state }, children) => (
  * @param {object} props - The properties of the component.
  * @returns {object} - The dropdown component.
  */
+// @ts-ignore
 export const Dropdown = Atom(({ selectOption, state }) => (
 	Ul({
 		class: 'border rounded-md list-none m-0 p-0 max-h-[400px] overflow-y-auto',

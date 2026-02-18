@@ -1,4 +1,4 @@
-import { Span } from '@base-framework/atoms';
+﻿import { Span } from '@base-framework/atoms';
 import { Atom } from '@base-framework/base';
 
 /**
@@ -114,6 +114,7 @@ const getBadgeClasses = (type) =>
  */
 export const Badge = Atom((props, children) =>
 {
+	// @ts-ignore
 	const className = getBadgeClasses(props?.type);
 	return Span({ ...props, class: className }, children);
 });

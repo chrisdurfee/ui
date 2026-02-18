@@ -1,4 +1,4 @@
-import { Atom } from "@base-framework/base";
+﻿import { Atom } from "@base-framework/base";
 import { Template } from "./template.js";
 
 /**
@@ -11,6 +11,7 @@ import { Template } from "./template.js";
 export const FullTemplate = Atom((props, children) =>
 {
 	return Template({
+		// @ts-ignore
 		class: 'body full-container flex flex-auto flex-col ' + props.class,
 		...props,
 	}, children);

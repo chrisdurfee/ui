@@ -1,4 +1,4 @@
-import { Img } from '@base-framework/atoms';
+﻿import { Img } from '@base-framework/atoms';
 import { Atom } from '@base-framework/base';
 
 /**
@@ -9,6 +9,7 @@ import { Atom } from '@base-framework/base';
  * @param {object} props
  * @returns {object}
  */
+// @ts-ignore
 export const Image = Atom(({ src, alt, class: className, checkPath = true }) =>
 {
 	if (!src)

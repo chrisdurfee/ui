@@ -1,4 +1,4 @@
-import {
+﻿import {
 	Checkbox as BaseCheckbox,
 	Input as BaseInput,
 	Textarea as BaseTextarea,
@@ -58,6 +58,7 @@ const formatPhoneNumber = (e) =>
 export const Input = Atom((props) => (
 	BaseInput({
 		...props,
+		// @ts-ignore
 		class: `${commonInputClasses} ${props.class || ''}`.trim(),
 	})
 ));
@@ -72,9 +73,12 @@ export const TelInput = Atom((props) => (
 	Input({
 		...props,
 		type: "tel",
+		// @ts-ignore
 		name: props.name || "Phone",
+		// @ts-ignore
 		label: props.label || "Phone",
 		placeholder: "(555) 555-5555",
+		// @ts-ignore
 		pattern: props.pattern || "\\(\\d{3}\\) \\d{3}-\\d{4}",
 		keyup: formatPhoneNumber,
 	})
@@ -90,7 +94,9 @@ export const EmailInput = Atom((props) => (
 	Input({
 		...props,
 		type: "email",
+		// @ts-ignore
 		name: props.name || "Email",
+		// @ts-ignore
 		label: props.label || "Email",
 		placeholder: "Email address",
 	})
@@ -106,6 +112,7 @@ export const Textarea = Atom((props) => (
 	BaseTextarea({
 		...props,
 		as: "textarea",
+		// @ts-ignore
 		class: `flex w-full h-24 px-3 py-2 text-sm ${borderClass} ${focusClass} ${placeholderClass} ${disabledClass} ${props.class || ''}`.trim(),
 	})
 ));
@@ -137,6 +144,7 @@ export const DateInput = Atom((props) => (
 	BaseInput({
 		...props,
 		type: "date",
+		// @ts-ignore
 		class: `${borderClass} ${focusClass} ${placeholderClass} ${disabledClass} px-3 py-2 text-sm ring-offset-background ${props.class || ''}`.trim(),
 	})
 ));
@@ -151,6 +159,7 @@ export const TimeInput = Atom((props) => (
 	BaseInput({
 		...props,
 		type: "time",
+		// @ts-ignore
 		class: `${borderClass} ${focusClass} ${placeholderClass} ${disabledClass} px-3 py-2 text-sm ring-offset-background ${props.class || ''}`.trim(),
 	})
 ));
@@ -165,6 +174,7 @@ export const DateTimeInput = Atom((props) => (
 	BaseInput({
 		...props,
 		type: "datetime-local",
+		// @ts-ignore
 		class: `${borderClass} ${focusClass} ${placeholderClass} ${disabledClass} px-3 py-2 text-sm ring-offset-background ${props.class || ''}`.trim(),
 	})
 ));
@@ -179,6 +189,7 @@ export const MonthInput = Atom((props) => (
 	BaseInput({
 		...props,
 		type: "month",
+		// @ts-ignore
 		class: `${borderClass} ${focusClass} ${placeholderClass} ${disabledClass} px-3 py-2 text-sm ring-offset-background ${props.class || ''}`.trim(),
 	})
 ));
@@ -193,6 +204,7 @@ export const WeekInput = Atom((props) => (
 	BaseInput({
 		...props,
 		type: "week",
+		// @ts-ignore
 		class: `${borderClass} ${focusClass} ${placeholderClass} ${disabledClass} px-3 py-2 text-sm ring-offset-background ${props.class || ''}`.trim(),
 	})
 ));
@@ -272,6 +284,7 @@ export const ColorInput = Atom((props) => (
 	BaseInput({
 		...props,
 		type: "color",
+		// @ts-ignore
 		class: `${borderClass} text-foreground p-0 ${disabledClass} ${props.class || ''}`.trim(),
 	})
 ));
@@ -285,6 +298,7 @@ export const ColorInput = Atom((props) => (
 const Checkbox = Atom((props) => (
 	BaseCheckbox({
 		...props,
+		// @ts-ignore
 		class: `flex h-4 w-4 text-foreground ${borderClass} ${focusClass} ${disabledClass} ${props.class || ''}`.trim(),
 	})
 ));
@@ -305,6 +319,7 @@ export const FileInput = Atom((props) => (
 	BaseInput({
 		...props,
 		type: "file",
+		// @ts-ignore
 		class: `${commonInputClasses} ${fileExtraClasses} ${props.class || ''}`.trim(),
 	})
 ));

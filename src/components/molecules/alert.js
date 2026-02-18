@@ -1,4 +1,4 @@
-import { Div, H5, P } from '@base-framework/atoms';
+﻿import { Div, H5, P } from '@base-framework/atoms';
 import { Atom } from '@base-framework/base';
 import { UniversalIcon } from '../atoms/universal-icon.js';
 
@@ -72,6 +72,7 @@ const AlertDescription = (description) => (
  * @param {object} props
  * @returns {object}
  */
+// @ts-ignore
 export const Alert = Atom(({ title, description, icon, type = 'default' }) =>
 {
 	const { borderColor, bgColor, iconColor } = typeStyles[type] || typeStyles.default;

@@ -1,4 +1,4 @@
-import { A, Div, Footer, H3, Header, P } from "@base-framework/atoms";
+﻿import { A, Div, Footer, H3, Header, P } from "@base-framework/atoms";
 import { Atom, Component } from "@base-framework/base";
 import { Timer } from "@base-framework/organisms";
 import { Button } from "../../atoms/buttons/buttons.js";
@@ -58,6 +58,7 @@ const TitleBar = (title) => (
  * @param {object} props
  * @returns {object}
  */
+// @ts-ignore
 const NotificationLink = Atom(({ href, class: customClass }, children) => (
 	A({
 		class: `bg-popover text-popover-foreground relative flex flex-auto flex-col justify-start shadow-lg pointer-events-auto p-4 border rounded-md min-w-[340px] max-w-[450px] mt-4 ${customClass}`,
@@ -74,6 +75,7 @@ const NotificationLink = Atom(({ href, class: customClass }, children) => (
  * @param {object} props
  * @returns {object}
  */
+// @ts-ignore
 const NotificationButton = Atom(({ close, class: customClass }, children) => (
 	Div({
 		class: `pullRightIn bg-popover text-popover-foreground relative flex flex-auto flex-col justify-start shadow-lg pointer-events-auto p-4 border rounded-md min-w-[340px] max-w-[450px] mt-4 ${customClass}`,

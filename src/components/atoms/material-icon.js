@@ -1,4 +1,4 @@
-import { Span } from "@base-framework/atoms";
+﻿import { Span } from "@base-framework/atoms";
 import { Atom } from "@base-framework/base";
 
 /**
@@ -59,7 +59,9 @@ const styleVariants = {
  */
 export const MaterialIcon = Atom((props) =>
 {
+	// @ts-ignore
 	const size = props.size || "sm";
+	// @ts-ignore
 	const variant = props.variant || "outlined";
 	const sizeClass = sizeClasses[size] || sizeClasses.sm;
 	const fontSize = fontSizes[size] || fontSizes.sm;
@@ -67,11 +69,14 @@ export const MaterialIcon = Atom((props) =>
 
 	return Span({
 		...props,
+		// @ts-ignore
 		class: `inline-flex items-center justify-center ${variantClass} ${sizeClass} ${props.class || ""}`,
+		// @ts-ignore
 		style: `font-size: ${fontSize}; ${props.style || ""}`,
 		// Remove props that shouldn't be passed to the DOM element
 		size: undefined,
 		variant: undefined,
 		name: undefined,
+	// @ts-ignore
 	}, props.name);
 });

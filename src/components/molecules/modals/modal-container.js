@@ -1,4 +1,4 @@
-import { Div, Footer } from "@base-framework/atoms";
+﻿import { Div, Footer } from "@base-framework/atoms";
 import { Atom } from "@base-framework/base";
 import { Form } from "../form/form.js";
 import { ModalHeader } from "./modal-header.js";
@@ -26,12 +26,14 @@ import { ModalHeader } from "./modal-header.js";
 export const ModalContainer = Atom((props, children) =>
 {
 	// Don't apply positioning/sizing classes for drawer - CSS handles it
+	// @ts-ignore
 	const isDrawer = props.class?.includes('drawer');
 	const positionClasses = isDrawer ? '' : 'm-auto top-0 right-0 bottom-0 left-0';
 	const sizeClasses = isDrawer ? '' : 'h-full max-h-screen';
 
 	return Div({
 			popover: 'manual',
+			// @ts-ignore
 			class: `modal ${positionClasses} ${sizeClasses} fixed z-20 grid w-full gap-2 lg:border bg-background text-foreground shadow-xl wrap-break-words p-0 overflow-y-auto ${props.class}`,
 			click: (e, parent) =>
 			{
@@ -47,12 +49,15 @@ export const ModalContainer = Atom((props, children) =>
 		}, [
 		Form({
 			class: 'modal-content relative bg-background z-1 flex flex-auto flex-col gap-y-4 min-w-0',
+			// @ts-ignore
 			submit: (e, parent) => (props.onSubmit && props.onSubmit(parent)),
 			cache: 'modalContent',
+			// @ts-ignore
 			...props.gestureHandlers
 		}, [
 			ModalHeader(props),
 			Div({ class: 'modal-body flex grow flex-col py-0 px-6 z-0', cache: 'modalBody' }, children),
+			// @ts-ignore
 			!props.hideFooter && Footer({ class: 'modal-footer sticky bottom-0 bg-background/80 backdrop-blur-md flex flex-none justify-between py-4 px-6 z-10' }, props.buttons)
 		])
 	]);

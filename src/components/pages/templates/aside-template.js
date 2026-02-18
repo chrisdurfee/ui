@@ -1,4 +1,4 @@
-import { Atom } from "@base-framework/base";
+﻿import { Atom } from "@base-framework/base";
 import { Row } from "./row.js";
 import { MainColumn } from "./template-atoms.js";
 import { Template } from "./template.js";
@@ -18,9 +18,11 @@ export const AsideTemplate = Atom((props, children) =>
 				class: 'drawer control w-full md:max-w-[320px]',
 				flex: 'flex flex-none md:flex-auto flex-col'
 			}, [
+				// @ts-ignore
 				props.left
 			]),
 			MainColumn([
+				// @ts-ignore
 				props.right
 			])
 		])

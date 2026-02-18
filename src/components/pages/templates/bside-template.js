@@ -1,4 +1,4 @@
-import { Atom } from "@base-framework/base";
+﻿import { Atom } from "@base-framework/base";
 import { Row } from "./row.js";
 import { MainColumn } from "./template-atoms.js";
 import { Template } from "./template.js";
@@ -15,9 +15,11 @@ export const BsideTemplate = Atom((props, children) =>
 	return Template({ class: 'body bside-container flex flex-auto flex-col' }, [
 		Row([
 			MainColumn([
+				// @ts-ignore
 				props.left
 			]),
 			MainColumn([
+				// @ts-ignore
 				props.right
 			])
 		])

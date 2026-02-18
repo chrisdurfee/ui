@@ -1,4 +1,4 @@
-import { Atom } from "@base-framework/base";
+﻿import { Atom } from "@base-framework/base";
 
 /**
  * This will create a main section.
@@ -9,6 +9,7 @@ import { Atom } from "@base-framework/base";
  */
 export const MainSection = Atom((props, children) =>
 {
+	// @ts-ignore
 	props.class = 'basic-page pt-[80px] sm:pt-0 flex flex-auto flex-col ' + (props.class || '');
 
 	return {

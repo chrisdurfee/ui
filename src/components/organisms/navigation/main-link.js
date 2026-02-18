@@ -1,4 +1,4 @@
-import { Div, Label, Span } from '@base-framework/atoms';
+﻿import { Div, Label, Span } from '@base-framework/atoms';
 import { Atom, Component, NavLink } from '@base-framework/base';
 import { UniversalIcon } from '../../atoms/universal-icon.js';
 import { Icons } from '../../icons/icons.js';
@@ -11,6 +11,7 @@ import { NavButtonLink } from './nav-button-link.js';
  * @param {array} children
  * @returns {object}
  */
+// @ts-ignore
 const Li = Atom(({ options, click }, children) =>
 {
 	const settings = {
@@ -29,7 +30,7 @@ const Li = Atom(({ options, click }, children) =>
  * This will get the link content.
  *
  * @param {string} label
- * @param {string} icon
+ * @param {?string} icon
  * @param {boolean} hasChildren
  * @returns {array}
  */
@@ -159,7 +160,7 @@ export class MainLink extends Component
 	addLink()
 	{
 		const hasChildren = this.options && this.options.length > 0;
-		const children = this.content || LinkContent(this.label, this.icon, hasChildren);
+		const children = this.content || LinkContent(String(this.label), this.icon, hasChildren);
 
 		if (this.href)
 		{

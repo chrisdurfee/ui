@@ -1,4 +1,4 @@
-import { Button, Div, Span } from "@base-framework/atoms";
+﻿import { Button, Div, Span } from "@base-framework/atoms";
 import { Atom, Jot } from "@base-framework/base";
 import { UniversalIcon } from "../atoms/universal-icon.js";
 import { Icons } from "../icons/icons.js";
@@ -11,6 +11,7 @@ const match = globalThis.matchMedia;
  * @param {object} props
  * @returns {object}
  */
+// @ts-ignore
 const ThemeButton = Atom(({ value, label, icon }) => (
 	Button({
 		class: 'text-sm gap-1 font-medium leading-none disabled:cursor-not-allowed disabled:opacity-70 flex flex-col items-center justify-between rounded-md border-2 bg-popover p-4 hover:bg-accent hover:text-accent-foreground data-[state="active"]:border-primary [&:has([data-state="active"])]:border-primary',

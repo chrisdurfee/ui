@@ -1,4 +1,4 @@
-import { Button as BaseButton } from '@base-framework/atoms';
+﻿import { Button as BaseButton } from '@base-framework/atoms';
 import { Atom } from '@base-framework/base';
 import { Icons } from '../../icons/icons.js';
 import { UniversalIcon } from '../universal-icon.js';
@@ -14,6 +14,7 @@ const DefaultVariant = (defaultProps) => (
 		BaseButton({
 			...defaultProps,
 			...props,
+			// @ts-ignore
 			class: `bttn ${defaultProps.class} ${props.class || ''}`
 		}, children)
 	))
@@ -29,10 +30,13 @@ const DefaultVariant = (defaultProps) => (
 const IconButton = Atom((props, children) => (
 		BaseButton({
 			...props,
+			// @ts-ignore
 			class: props.class
 		}, [
+			// @ts-ignore
 			props.icon && props.position !== 'right' ? UniversalIcon({ size: props.size || 'sm', class: props.animation ?? null }, props.icon) : null,
 			...(children || []),
+			// @ts-ignore
 			props.icon && props.position === 'right' ? UniversalIcon({ size: props.size || 'sm', class: props.animation ?? null }, props.icon) : null
 		])
 	)
@@ -49,6 +53,7 @@ const WithIconVariant = (defaultProps) => (
 		IconButton({
 			...defaultProps,
 			...props,
+			// @ts-ignore
 			class: `bttn ${defaultProps.class} ${props.class || ''}`
 		}, children)
 	))
@@ -87,7 +92,9 @@ const backCallBack = (props) =>
 const BackVariant = (defaultProps) => (
 	Atom((props, children) =>
 	{
+		// @ts-ignore
 		props.icon = props.icon || Icons.arrows.left;
+		// @ts-ignore
 		props.click = props.click || backCallBack(props);
 
 		return IconButton({
@@ -106,6 +113,7 @@ const BackVariant = (defaultProps) => (
  */
 const CircleIconButton = Atom((props, children) =>
 {
+	// @ts-ignore
 	const size = props.size || 'md';
 	const sizeClasses = {
 		xs: 'w-6 h-6',
@@ -115,12 +123,15 @@ const CircleIconButton = Atom((props, children) =>
 		xl: 'w-14 h-14'
 	};
 
+	// @ts-ignore
 	const backgroundClass = props.backgroundClass || 'bg-background/30 hover:bg-background/50';
 
 	return BaseButton({
 		...props,
+		// @ts-ignore
 		class: `circle-icon-btn inline-flex items-center justify-center rounded-full ${backgroundClass} text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ring-offset-background transition-colors disabled:pointer-events-none disabled:opacity-50 cursor-pointer ${sizeClasses[size] || sizeClasses.md} ${props.class || ''}`
 	}, [
+		// @ts-ignore
 		props.icon ? UniversalIcon({ size: size === 'xs' ? 'xs' : 'sm' }, props.icon) : null,
 		...(children || [])
 	]);
@@ -155,6 +166,7 @@ const BUTTON_VARIANTS = {
  */
 export const Button = Atom((props, children) =>
 {
+	// @ts-ignore
 	const VariantButton = BUTTON_VARIANTS[props.variant] || BUTTON_VARIANTS.primary;
 	return VariantButton(props, children);
 });

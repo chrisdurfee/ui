@@ -1,4 +1,4 @@
-import { H1, Header, P } from "@base-framework/atoms";
+﻿import { H1, Header, P } from "@base-framework/atoms";
 import { Atom } from '@base-framework/base';
 import { BasicPage } from './basic-page.js';
 import { MainSection } from "./main-section.js";
@@ -10,6 +10,7 @@ import { FullTemplate } from './templates/full-template.js';
  * @param {object} props
  * @returns {object}
  */
+// @ts-ignore
 const PageHeader = Atom(({ title, description}) => (
 	Header({ class: 'sm:py-8 px-6 md:px-5 flex flex-col' }, [
 		H1({ class: 'scroll-m-20 text-3xl font-bold tracking-tight' }, title),

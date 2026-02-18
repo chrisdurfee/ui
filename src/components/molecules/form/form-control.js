@@ -1,4 +1,4 @@
-import { Div } from "@base-framework/atoms";
+﻿import { Div } from "@base-framework/atoms";
 import { Atom } from "@base-framework/base";
 
 /**
@@ -78,6 +78,7 @@ export const FormControl = Atom((props, children) =>
 	 */
 	const handleInvalid = (e) =>
 	{
+		// @ts-ignore
 		props.setError(e.target.validationMessage);
 	};
 
@@ -92,6 +93,7 @@ export const FormControl = Atom((props, children) =>
 		const isValid = e.target.checkValidity();
 		if (isValid)
 		{
+			// @ts-ignore
 			props.setError(null);
 		}
 	};

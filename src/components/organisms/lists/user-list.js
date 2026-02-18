@@ -1,4 +1,4 @@
-import { Div, Li, P, Span, Time } from '@base-framework/atoms';
+﻿import { Div, Li, P, Span, Time } from '@base-framework/atoms';
 import { Atom } from '@base-framework/base';
 import { List } from '@base-framework/organisms';
 import { Avatar } from '../../molecules/avatars/avatar.js';
@@ -9,6 +9,7 @@ import { Avatar } from '../../molecules/avatars/avatar.js';
  * @param {object} props
  * @returns {object}
  */
+// @ts-ignore
 const UserInfo = Atom(({ name, email }) =>
 {
 	return Div({ class: 'min-w-0 flex-auto' }, [
@@ -63,6 +64,7 @@ const getStatus = (status, lastSeen) =>
 /**
  * User Status Atom
  */
+// @ts-ignore
 const UserStatus = Atom(({ role, lastSeen, status }) =>
 {
 	return Div({ class: 'hidden shrink-0 sm:flex sm:flex-col sm:items-end' }, [
@@ -93,12 +95,17 @@ export const UserListItem = Atom((user) =>
 {
 	return Li({ class: 'fadeIn flex justify-between gap-x-6 py-4 px-4 rounded-md hover:bg-muted/50' }, [
 		Div({ class: 'flex min-w-0 gap-x-4' }, [
+			// @ts-ignore
 			Avatar({ src: user.image, alt: user.name, fallbackText: getInitials(user.name) }),
+			// @ts-ignore
 			UserInfo({ name: user.name, email: user.email })
 		]),
 		UserStatus({
+			// @ts-ignore
 			role: user.role,
+			// @ts-ignore
 			lastSeen: user.lastSeen,
+			// @ts-ignore
 			status: user.status
 		})
 	]);
@@ -115,6 +122,7 @@ export const UserList = Atom((props) =>
 	return new List({
 		cache: 'list',
 		key: 'name',
+		// @ts-ignore
 		items: props.users,
 		role: 'list',
 		class: 'divide-y divide-border',

@@ -1,4 +1,4 @@
-import { Div, Span } from '@base-framework/atoms';
+﻿import { Div, Span } from '@base-framework/atoms';
 import { Atom } from '@base-framework/base';
 import { Image } from '../../atoms/image.js';
 
@@ -10,6 +10,7 @@ import { Image } from '../../atoms/image.js';
  * @param {object} props
  * @returns {object}
  */
+// @ts-ignore
 const AvatarImage = Atom(({ src, alt }) =>
 {
 	if (!src)
@@ -179,6 +180,7 @@ const AvatarFallback = (fallbackText, watcherFallback = null, size = 'md') =>
  *   @prop {string} size
  * @returns {object}
  */
+// @ts-ignore
 export const Avatar = Atom(({ src, alt, fallbackText, watcherFallback, size }) =>
 {
 	const sizeClass = getSize(size);

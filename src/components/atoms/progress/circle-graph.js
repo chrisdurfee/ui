@@ -1,4 +1,4 @@
-import { Div } from "@base-framework/atoms";
+﻿import { Div } from "@base-framework/atoms";
 import { Atom } from "@base-framework/base";
 
 /**
@@ -78,13 +78,16 @@ const CircleProgress = (progress, className) =>
  * @returns {object}
  */
 export const CircleGraph = Atom((props) => {
+	// @ts-ignore
 	const startingValue = props.progress || 0;
+	// @ts-ignore
 	const className = props.class || "";
 	const empty = CircleProgress(startingValue, className);
 
 	return Div({
 		class: "circle-graph-wrap",
 		onSet: [
+			// @ts-ignore
 			props.prop,
 			(val) =>
 			{

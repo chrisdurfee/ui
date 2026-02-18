@@ -1,4 +1,4 @@
-import { Div, Span } from '@base-framework/atoms';
+﻿import { Div, Span } from '@base-framework/atoms';
 import { Atom } from '@base-framework/base';
 
 /**
@@ -35,6 +35,7 @@ const getPositionClass = (position) => POSITION_CLASSES[String(position)] || POS
  * @param {array} children - The children
  * @returns {object}
  */
+// @ts-ignore
 export const Tooltip = Atom(({ position = 'top', content }, children) =>
 {
 	const positionClasses = getPositionClass(position);

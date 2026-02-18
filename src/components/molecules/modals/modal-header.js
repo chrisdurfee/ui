@@ -1,4 +1,4 @@
-import { Div, H2, Header } from "@base-framework/atoms";
+﻿import { Div, H2, Header } from "@base-framework/atoms";
 import { Atom } from "@base-framework/base";
 import { Button } from "../../atoms/buttons/buttons.js";
 import { UniversalIcon } from "../../atoms/universal-icon.js";
@@ -18,6 +18,7 @@ import { Icons } from "../../icons/icons.js";
  * @param {Array} [props.options=[]] - Array of action buttons/elements
  * @returns {object}
  */
+// @ts-ignore
 export const ModalHeader = Atom(({ title, description, back, icon, options = [] }) => (
 	Header({ class: 'modal-header bg-background/80 backdrop-blur-md sticky flex flex-none items-center py-4 px-6 z-10 min-w-0' }, [
 

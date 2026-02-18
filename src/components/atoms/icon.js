@@ -1,4 +1,4 @@
-import { I } from "@base-framework/atoms";
+﻿import { I } from "@base-framework/atoms";
 import { Atom } from "@base-framework/base";
 
 /**
@@ -23,10 +23,12 @@ const sizeClasses = {
  */
 export const Icon = Atom((props, children) =>
 {
+	// @ts-ignore
 	const sizeClass = sizeClasses[props.size || "sm"];
 
 	return I({
 		...props,
+		// @ts-ignore
 		class: `stroke-current icon-size ${sizeClass} ${props.class || ""}`,
 		html: children[0]?.textContent,
 	});

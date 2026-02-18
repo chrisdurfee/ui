@@ -53,7 +53,7 @@ export class NotificationContainer extends Component
 		 */
 		props.callBack = () => this.removeNotice(props);
 		// @ts-ignore
-		this.list.append([ props ]);
+		this?.list?.append([ props ]);
 
 		/**
 		 * The popup needs to be hidden first incase we have
@@ -61,9 +61,9 @@ export class NotificationContainer extends Component
 		 * all content.
 		 */
 		// @ts-ignore
-		this.panel.hidePopover();
+		this?.panel?.hidePopover();
 		// @ts-ignore
-		this.panel.showPopover();
+		this?.panel?.showPopover();
 	}
 
 	/**
@@ -75,13 +75,13 @@ export class NotificationContainer extends Component
 	removeNotice(notice)
 	{
 		// @ts-ignore
-		this.list.delete(notice.id);
+		this?.list?.delete(notice.id);
 
 		// @ts-ignore
-		if (this.list.isEmpty())
+		if (this?.list?.isEmpty())
 		{
 			// @ts-ignore
-			this.panel.hidePopover();
+			this?.panel?.hidePopover();
 		}
 	}
 }

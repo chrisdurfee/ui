@@ -1,4 +1,4 @@
-import { Div } from '@base-framework/atoms';
+﻿import { Div } from '@base-framework/atoms';
 import { Atom } from '@base-framework/base';
 import { Input } from "../../atoms/form/inputs/inputs.js";
 import { UniversalIcon } from "../../atoms/universal-icon.js";
@@ -11,12 +11,16 @@ const CLOSE_DELAY = 100;
  * @param {object} props - The properties of the component.
  * @returns {object} - The search input component.
  */
+// @ts-ignore
 export const SearchInput = Atom((props) => (
 	Div({ class: 'relative flex flex-auto items-center' }, [
 		Input({
 			cache: 'input',
+			// @ts-ignore
 			class: props.class ?? '',
+			// @ts-ignore
 			placeholder: props.placeholder ?? 'Search...',
+			// @ts-ignore
 			bind: (props.bind ?? [props.state, 'searchQuery']),
 			keyup: (e, parent) =>
 			{
@@ -25,8 +29,10 @@ export const SearchInput = Atom((props) => (
 					parent.state.open = false;
 				}
 
+				// @ts-ignore
 				if (typeof props.filterOptions === 'function')
 				{
+					// @ts-ignore
 					props.filterOptions();
 				}
 
@@ -35,8 +41,10 @@ export const SearchInput = Atom((props) => (
 					parent.dropdown.updatePosition();
 				}
 
+				// @ts-ignore
 				if (props.keyup)
 				{
+					// @ts-ignore
 					props.keyup(e, parent);
 				}
 			},
@@ -49,10 +57,13 @@ export const SearchInput = Atom((props) => (
 			},
 			keydown: (e) =>
 			[
+				// @ts-ignore
 				(typeof props.handleKeyDown === 'function') && props.handleKeyDown(e)
 			],
 		}),
+		// @ts-ignore
 		props.icon && Div({ class: 'absolute flex right-0 mr-2' }, [
+			// @ts-ignore
 			UniversalIcon({ size: 'sm' }, props.icon)
 		])
 	])

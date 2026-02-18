@@ -17,6 +17,9 @@ export class InlineNavigation extends Navigation
 {
 	onCreated()
 	{
+		/**
+		 * @type {array} links - This will hold the links for the navigation.
+		 */
 		this.links = [];
 	}
 
@@ -61,6 +64,8 @@ export class InlineNavigation extends Navigation
 	addLink(option)
 	{
 		const link = new MainLink(option);
+
+		// @ts-ignore
 		this.links.push(link);
 
 		if (!link.options)
@@ -211,7 +216,9 @@ export class SubNavigation extends InlineNavigation
 	 * @returns {void}
 	 */
 	afterSetup()
-	{		// @ts-ignore - router.data is from @base-framework/base		const path = router.data.path;
+	{
+		// @ts-ignore - router.data is from @base-framework/base
+		const path = router.data.path;
 		this.updateLinks(path);
 	}
 
@@ -225,6 +232,7 @@ export class SubNavigation extends InlineNavigation
 	{
 		let check = false;
 
+		// @ts-ignore
 		for (const link of this.links)
 		{
 			if (!link.rendered)

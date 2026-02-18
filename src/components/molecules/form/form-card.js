@@ -1,4 +1,4 @@
-import { Div, H2, P } from "@base-framework/atoms";
+﻿import { Div, H2, P } from "@base-framework/atoms";
 import { Atom } from "@base-framework/base";
 import { Card } from "../../atoms/cards/card.js";
 import { FormGroup } from "../../atoms/form/form-group.js";
@@ -15,7 +15,9 @@ import { FormGroup } from "../../atoms/form/form-group.js";
  */
 export const FormCard = Atom((props, children = []) => (
 	Card({ class: 'flex flex-auto flex-col gap-y-0', margin: 'm-0', padding: 'p-0' }, [
+		// @ts-ignore
 		props.title && H2({ class: 'text-lg font-semibold py-4 px-6' }, props.title),
+		// @ts-ignore
 		props.description && P({ class: 'text-sm text-muted-foreground pb-4 px-6 max-w-[700px]' }, props.description),
 		...children
 	])
@@ -31,6 +33,7 @@ export const FormCard = Atom((props, children = []) => (
  * @returns {object} The rendered form card group component.
  */
 export const FormCardGroup = Atom((props, children = []) => (
+	// @ts-ignore
 	FormGroup({ label: props.label, description: props.description, class: 'py-4 px-6', border: props.border }, [
 		Div({ class: 'flex flex-col gap-y-6' }, children)
 	])
@@ -47,6 +50,8 @@ export const FormCardGroup = Atom((props, children = []) => (
  */
 export const FormCardContent = Atom((props, children = []) =>
 {
+	// @ts-ignore
 	const border = props.border ? 'border-t' : '';
+	// @ts-ignore
 	return Div({ ...props, class: `flex flex-col pb-4 px-6 gap-y-4 ${border} ${props.class || ''}` }, children);
 });

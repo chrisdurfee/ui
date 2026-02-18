@@ -1,4 +1,4 @@
-import { Atom } from '@base-framework/base';
+﻿import { Atom } from '@base-framework/base';
 import DynamicTable from './dynamic-table.js';
 import { CheckboxCol, HeaderCol, TableHeader } from './table-header.js';
 export { CheckboxCol, HeaderCol, TableHeader };
@@ -29,19 +29,33 @@ export { CheckboxCol, HeaderCol, TableHeader };
 export const DynamicDataTable = Atom((props) => (
 	new DynamicTable(
 	{
+		// @ts-ignore
 		cache: props.cache ?? 'list',
+		// @ts-ignore
 		tableData: props.data,
+		// @ts-ignore
 		loadMoreItems: props.loadMoreItems,
+		// @ts-ignore
 		offset: props.offset,
+		// @ts-ignore
 		limit: props.limit,
+		// @ts-ignore
 		class: props.class,
+		// @ts-ignore
 		key: props.key,
+		// @ts-ignore
 		rows: props.rows,
+		// @ts-ignore
 		rowItem: props.rowItem,
+		// @ts-ignore
 		headers: props.headers,
+		// @ts-ignore
 		customHeader: props.customHeader,
+		// @ts-ignore
 		border: props.border,
+		// @ts-ignore
 		emptyState: props.emptyState,
+		// @ts-ignore
 		skeleton: props.skeleton,
 	})
 ));

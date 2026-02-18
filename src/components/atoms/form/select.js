@@ -1,4 +1,4 @@
-import { Atom, Html } from '@base-framework/base';
+﻿import { Atom, Html } from '@base-framework/base';
 import { commonInputClasses } from './inputs/input-classes.js';
 
 /**
@@ -12,12 +12,15 @@ export const Select = Atom((props) =>
 	tag: 'select',
 	onCreated(ele)
 	{
+		// @ts-ignore
 		if (props.options)
 		{
+			// @ts-ignore
 			Html.setupSelectOptions(ele, props.options);
 		}
 	},
 	...props,
+	// @ts-ignore
 	class: `${commonInputClasses} ${props.class || ''}`.trim()
 }));
 

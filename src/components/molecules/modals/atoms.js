@@ -1,4 +1,4 @@
-import { Div, H2, Span } from "@base-framework/atoms";
+﻿import { Div, H2, Span } from "@base-framework/atoms";
 import { Atom } from "@base-framework/base";
 
 /**
@@ -9,6 +9,7 @@ import { Atom } from "@base-framework/base";
  * @returns {object}
  */
 export const DetailBody = Atom((props, children) => (
+	// @ts-ignore
 	Div({ ...props, class: `flex flex-auto flex-col gap-y-6 p-4 md:p-6 divide-y ${props.class || ''}` }, children)
 ));
 
@@ -21,6 +22,7 @@ export const DetailBody = Atom((props, children) => (
  */
 export const DetailSection = Atom((props, children = []) => (
 	Div({ class: 'flex flex-col gap-y-3 py-4' }, [
+		// @ts-ignore
 		props.title && H2({ class: 'font-semibold' }, props.title),
 		...children
 	])

@@ -1,4 +1,4 @@
-import { Div } from '@base-framework/atoms';
+﻿import { Div } from '@base-framework/atoms';
 import { Atom } from '@base-framework/base';
 import CalendarHeader from './calendar-header.js';
 import { DaysOfWeekHeader } from './days-of-week-header.js';
@@ -23,9 +23,13 @@ import { RangeDaysGrid } from './range-days-grid.js';
 export const MonthCalendar = Atom((props, children) => (
 	Div({ class: 'flex flex-auto flex-col' }, [
 		CalendarHeader({
+			// @ts-ignore
 			onMonthClick: props.onMonthClick,
+			// @ts-ignore
 			onYearClick: props.onYearClick,
+			// @ts-ignore
 			next: props.next,
+			// @ts-ignore
 			previous: props.previous
 		}),
 		Div({
@@ -36,9 +40,13 @@ export const MonthCalendar = Atom((props, children) => (
 				[
 					DaysOfWeekHeader(),
 					RangeDaysGrid({
+						// @ts-ignore
 						today: props.today,
+						// @ts-ignore
 						current: props.current,
+						// @ts-ignore
 						blockPriorDates: props.blockPriorDates,
+						// @ts-ignore
 						onDateClick: props.onDateClick
 					})
 				]

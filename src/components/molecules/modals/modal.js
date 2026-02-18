@@ -301,7 +301,7 @@ export class Modal extends Component
 	beforeDestroy()
 	{
 		// @ts-ignore
-		this.panel.hidePopover();
+		this?.panel?.hidePopover();
 		// @ts-ignore
 		this.state.open = false;
 
