@@ -1,6 +1,10 @@
 import { Component, Jot } from "@base-framework/base";
 
 /**
+ * @typedef {((...args: any[]) => Component) & (new (...args: any[]) => Component)} VeilComponentConstructor
+ */
+
+/**
  * Veil Component
  *
  * This will create a component that can accept data from a parent component
@@ -41,7 +45,6 @@ export class Veil extends Component
  * This will create a Veil component.
  *
  * @param  {*} props
- * @returns {Component}
+ * @returns {VeilComponentConstructor} A class constructor that extends Veil.
  */
-// @ts-ignore
-export const VeilJot = (props) => Jot(props, Veil);
+export const VeilJot = (props) => /** @type {VeilComponentConstructor} */ (Jot(props, Veil));
