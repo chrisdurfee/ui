@@ -184,3 +184,6 @@ export const LoadingButton = Atom((props, children) =>
 {
 	return Button({ ...props, variant: 'withIcon', icon: Icons.loading, animation: 'animate-spin' }, children);
 });
+
+export { CircleButton, CircleToggleButton, ToggleButton } from './toggle-button.js';
+

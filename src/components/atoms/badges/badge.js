@@ -1,5 +1,6 @@
 ﻿import { Span } from '@base-framework/atoms';
 import { Atom } from '@base-framework/base';
+import { UniversalIcon } from '../universal-icon.js';
 
 /**
  * This will set the badge styles.
@@ -82,6 +83,11 @@ const BADGE_STYLES = {
 		backgroundColor: 'bg-background',
 		textColor: 'text-primary',
 		ringColor: 'ring-background'
+	},
+	blur: {
+		backgroundColor: 'bg-background/40 backdrop-blur-sm',
+		textColor: 'text-foreground',
+		ringColor: 'ring-white/10'
 	}
 };
 
@@ -97,11 +103,15 @@ const getBadgeStyle = (type) => BADGE_STYLES[type] || BADGE_STYLES.gray;
  * This will get the badge classes.
  *
  * @param {string} type
+ * @param {object} [custom]
  * @returns {string}
  */
-const getBadgeClasses = (type) =>
+const getBadgeClasses = (type, custom = {}) =>
 {
-	const { backgroundColor, textColor, ringColor } = getBadgeStyle(type);
+	const base = getBadgeStyle(type);
+	const backgroundColor = custom.backgroundColor ?? base.backgroundColor;
+	const textColor = custom.textColor ?? base.textColor;
+	const ringColor = custom.ringColor ?? base.ringColor;
 	return `inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors ${backgroundColor} ${textColor} ${ringColor}`;
 };
 
@@ -115,6 +125,10 @@ const getBadgeClasses = (type) =>
 export const Badge = Atom((props, children) =>
 {
 	// @ts-ignore
-	const className = getBadgeClasses(props?.type);
-	return Span({ ...props, class: className }, children);
+	const { type, icon, size = 'xs', backgroundColor, textColor, ringColor, ...rest } = props;
+	const className = getBadgeClasses(type, { backgroundColor, textColor, ringColor });
+	return Span({ ...rest, class: className }, [
+		icon ? UniversalIcon({ size, class: 'mr-1' }, icon) : null,
+		...(children || [])
+	]);
 });
