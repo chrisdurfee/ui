@@ -48,34 +48,42 @@
 	"exports": {
 		"./package.json": "./package.json",
 		".": {
+			"types": "./dist/types/**/*.d.ts",
 			"import": "./dist/index.es.js",
 			"require": "./dist/index.cjs"
 		},
 		"./atoms": {
+			"types": "./dist/types/atoms/**/*.d.ts",
 			"import": "./dist/atoms.es.js",
 			"require": "./dist/atoms.cjs"
 		},
 		"./icons": {
+			"types": "./dist/types/icons/**/*.d.ts",
 			"import": "./dist/icons.es.js",
 			"require": "./dist/icons.cjs"
 		},
 		"./molecules": {
+			"types": "./dist/types/molecules/**/*.d.ts",
 			"import": "./dist/molecules.es.js",
 			"require": "./dist/molecules.cjs"
 		},
 		"./organisms": {
+			"types": "./dist/types/organisms/**/*.d.ts",
 			"import": "./dist/organisms.es.js",
 			"require": "./dist/organisms.cjs"
 		},
 		"./utils": {
+			"types": "./dist/types/utils/**/*.d.ts",
 			"import": "./dist/utils.es.js",
 			"require": "./dist/utils.cjs"
 		},
 		"./pages": {
+			"types": "./dist/types/pages/**/*.d.ts",
 			"import": "./dist/pages.es.js",
 			"require": "./dist/pages.cjs"
 		},
 		"./templates": {
+			"types": "./dist/types/templates/**/*.d.ts",
 			"import": "./dist/templates.es.js",
 			"require": "./dist/templates.cjs"
 		},
