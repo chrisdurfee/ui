@@ -13,6 +13,7 @@ export * from "./image.js";
 export * from "./material-icon.js";
 export * from "./progress/circle-graph.js";
 export * from "./progress/progress-bar.js";
+export * from "./safe-zone-top.js";
 export * from "./skeleton.js";
 export * from "./tooltip.js";
 export * from "./universal-icon.js";
