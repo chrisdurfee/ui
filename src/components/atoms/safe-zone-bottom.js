@@ -2,16 +2,16 @@ import { Div } from "@base-framework/atoms";
 import { Atom } from "@base-framework/base";
 
 /**
- * SafeZoneTop
+ * SafeZoneBottom
  *
- * A fixed overlay atom that fills the top safe area inset on mobile devices
- * (e.g. iOS notch / Dynamic Island).
+ * A fixed overlay atom that fills the bottom safe area inset on mobile devices
+ * (e.g. iOS home indicator area).
  *
  * Usage:
- *   SafeZoneTop()
+ *   SafeZoneBottom()
  *
- * Then offset sticky/fixed headers with `pt-[env(safe-area-inset-top)]`
- * or use the companion CSS variable `--safe-area-inset-top`.
+ * Then offset sticky/fixed footers with `pb-[env(safe-area-inset-bottom)]`
+ * or use the companion CSS variable `--safe-area-inset-bottom`.
  *
  * @param {object} [props]
  * @param {string} [props.class]
@@ -23,7 +23,7 @@ import { Atom } from "@base-framework/base";
  * @param {string} [props.style]
  * @returns {object}
  */
-export const SafeZoneTop = Atom((props = {}) =>
+export const SafeZoneBottom = Atom((props = {}) =>
 {
 	const {
 		class: className = '',
@@ -36,14 +36,14 @@ export const SafeZoneTop = Atom((props = {}) =>
 	} = props;
 
 	const classes = [
-		'sticky top-0 left-0 right-0 w-full',
+		'sticky bottom-0 left-0 right-0 w-full',
 		zIndexClass,
 		background ? backgroundClass : '',
 		blur ? blurClass : '',
 		className
 	].filter(Boolean).join(' ');
 
-	const inlineStyle = `height: env(safe-area-inset-top, 0px);${style ? ` ${style}` : ''}`;
+	const inlineStyle = `height: env(safe-area-inset-bottom, 0px);${style ? ` ${style}` : ''}`;
 
 	return Div({
 		class: classes,
@@ -52,4 +52,4 @@ export const SafeZoneTop = Atom((props = {}) =>
 	});
 });
 
-export default SafeZoneTop;
+export default SafeZoneBottom;
