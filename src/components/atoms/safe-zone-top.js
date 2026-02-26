@@ -36,7 +36,7 @@ export const SafeZoneTop = Atom((props = {}) =>
 	} = props;
 
 	const classes = [
-		'sticky top-0 left-0 right-0 w-full',
+		'fixed top-0 left-0 right-0 w-full',
 		zIndexClass,
 		background ? backgroundClass : '',
 		blur ? blurClass : '',
