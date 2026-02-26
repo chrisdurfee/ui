@@ -105,6 +105,80 @@ const BackVariant = (defaultProps) => (
 );
 
 /**
+ * Creates a click handler that records the history length when the
+ * page first renders and skips past any in-page navigations (tabs,
+ * sub-routes) that were pushed after arrival.
+ *
+ * - If prior history exists it calls `history.go(-(stepsAdded + 1))`
+ *   to jump past every in-page entry AND the initial navigation to
+ *   this page, landing you back on the originating page.
+ * - Falls back to `props.backUrl` when the user arrived via a direct
+ *   link (no prior history).
+ *
+ * @param {object} props
+ * @param {string} [props.backUrl] - Fallback URL when no history exists.
+ * @returns {function}
+ */
+const smartBackCallBack = (props) =>
+{
+	// Snapshot taken once, at button-creation time (page landing).
+	const entryHistoryLength = globalThis.history.length;
+
+	return () =>
+	{
+		const currentLength = globalThis.history.length;
+		const stepsAdded = currentLength - entryHistoryLength;
+		const stepsBack = stepsAdded + 1;
+
+		// entryHistoryLength > 1 means there was at least one page
+		// in the session before we landed here.
+		if (entryHistoryLength > 1)
+		{
+			globalThis.history.go(-stepsBack);
+			return;
+		}
+
+		if (props.backUrl)
+		{
+			// @ts-ignore
+			app.navigate(props.backUrl);
+		}
+	};
+};
+
+/**
+ * SmartBack button variant.
+ *
+ * Unlike the regular `back` variant (which calls `history.back()` and
+ * can get trapped by in-page tab / sub-route navigations), SmartBack
+ * captures the browser history length when the button is first created
+ * and uses that snapshot to jump all the way back to the originating
+ * page.
+ *
+ * Props:
+ * - `backUrl` {string}  – Fallback URL used when there is no prior
+ *    session history (e.g. a direct link or new tab).
+ * - `icon`    {string}  – Override the default left-arrow icon.
+ *
+ * @param {object} defaultProps
+ * @returns {object}
+ */
+const SmartBackVariant = (defaultProps) => (
+	Atom((props, children) =>
+	{
+		// @ts-ignore
+		props.icon = props.icon || Icons.arrows.left;
+		// @ts-ignore
+		props.click = props.click || smartBackCallBack(props);
+
+		return IconButton({
+			...defaultProps,
+			...props
+		}, children);
+	})
+);
+
+/**
  * This will create a circular icon button with transparent background.
  *
  * @param {object} props
@@ -154,6 +228,7 @@ const BUTTON_VARIANTS = {
 	icon: WithIconVariant({ class: 'icon' }),
 	withIcon: WithIconVariant({ class: 'with-icon' }),
 	back: BackVariant({ class: 'with-icon back-button' }),
+	smartBack: SmartBackVariant({ class: 'with-icon back-button' }),
 	circleIcon: CircleIconButton,
 };
 
