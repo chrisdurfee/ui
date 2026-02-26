@@ -211,13 +211,17 @@ export class CircleToggleButton extends Component
 		const sizeClass = SIZE_CLASSES[this.size] || SIZE_CLASSES.md;
 		// @ts-ignore
 		const iconSize = ['xs', 'sm'].includes(this.size) ? 'xs' : 'sm';
-		const defaultClass = `bg-background/40 backdrop-blur-sm text-foreground`;
+		// @ts-ignore
+		const buttonClass = this.class ?? 'bg-background/40 backdrop-blur-sm';
+		const defaultClass = `text-foreground`;
 		const activeClass = this.activeClass || defaultClass;
+		// @ts-ignore
+		const isCircle = this.circle ?? false;
 
 		return BaseButton({
 			click: () => this.handleToggle(),
 			// @ts-ignore
-			class: `circle-toggle-btn inline-flex items-center justify-center rounded-full border-0 cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 ${sizeClass} ${this.class || ''}`
+			class: `circle-toggle-btn inline-flex items-center justify-center rounded-full border-0 cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 ${sizeClass} ${buttonClass}${isCircle ? ' rounded-full w-[40px] h-[40px] max-w-[40px]' : ''}`
 		}, [
 			OnState('active', (active) => [
 				UniversalIcon({
