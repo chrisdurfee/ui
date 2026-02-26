@@ -1,6 +1,8 @@
-import { Button as BaseButton, On, OnState, Span } from '@base-framework/atoms';
+import { Button as BaseButton, OnState, Span } from '@base-framework/atoms';
 import { Atom, Component } from '@base-framework/base';
+import { Format } from '../../../ui.js';
 import { UniversalIcon } from '../universal-icon.js';
+import { Veil } from '../veil.js';
 
 /**
  * ToggleButton
@@ -18,7 +20,7 @@ import { UniversalIcon } from '../universal-icon.js';
  * // Reactive value from parent data (watches `likeCount` key)
  * new ToggleButton({ icon: Icons.heart, dataKey: 'likeCount', toggle: (active) => {} })
  */
-export class ToggleButton extends Component
+export class ToggleButton extends Veil
 {
 	/**
 	 * Declare public props and their defaults.
@@ -45,6 +47,9 @@ export class ToggleButton extends Component
 
 		/** @type {string} Icon size: xs | sm | md | lg */
 		this.size = 'sm';
+
+		/** @type {string} the format type for the value: 'number' | 'string' */
+		this.formatType = 'number';
 	}
 
 	/**
@@ -91,9 +96,25 @@ export class ToggleButton extends Component
 		{
 			if (this.dataKey)
 			{
-				return Span({ class: 'toggle-btn-value text-sm tabular-nums' }, [
-					On(this.dataKey, (val) => String(val))
-				]);
+				let value = `[[${this.dataKey}]]`;
+				if (this.formatType === 'number')
+				{
+					value = Format.number(value, '0');
+				}
+				else if (this.formatType === 'money')
+				{
+					value = Format.roundMoney(value);
+				}
+				else if (this.formatType === 'date')
+				{
+					value = Format.date(value);
+				}
+				else if (this.formatType === 'percent')
+				{
+					value = Format.percentage(value);
+				}
+
+				return Span({ class: 'toggle-btn-value text-sm tabular-nums capitalize' }, value);
 			}
 
 			if (this.value !== null && this.value !== undefined)
