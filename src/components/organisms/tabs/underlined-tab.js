@@ -32,6 +32,13 @@ export class UnderlinedTab extends Veil
 		 * @default ''
 		 */
 		this.class = '';
+
+		/**
+		 * Whether the tab navigation is scrollable.
+		 * @member {boolean} scrollable
+		 * @default false
+		 */
+		this.scrollable = false;
 	}
 
 	/**
@@ -44,7 +51,8 @@ export class UnderlinedTab extends Veil
 		return Div({ class: 'underlined-tab-panel flex flex-auto flex-col' }, [
 			new UnderlinedTabNavigation({
 				class: this.class,
-				options: this.options
+				options: this.options,
+				scrollable: this.scrollable
 			}),
 			Section({
 				class: 'tab-content pt-6 flex flex-auto flex-col',

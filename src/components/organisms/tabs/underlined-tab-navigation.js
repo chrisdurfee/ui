@@ -75,6 +75,15 @@ export class UnderlinedTabNavigation extends Veil
 		 * @member {function} callBack
 		 */
 		this.onSelect = null;
+
+		/**
+		 * Whether the tab navigation is scrollable.
+		 * When true, the nav becomes horizontally scrollable
+		 * and the active tab scrolls into view.
+		 * @member {boolean} scrollable
+		 * @default false
+		 */
+		this.scrollable = false;
 	}
 
 	/**
@@ -92,9 +101,12 @@ export class UnderlinedTabNavigation extends Veil
 	 */
 	render()
 	{
-		return Nav({ class: `border-b border-border ${this.class}` }, [
+		const scrollableClass = this.scrollable ? 'overflow-x-auto no-scrollbar' : '';
+		const listClass = this.scrollable ? 'flex flex-row items-center min-w-max' : 'flex flex-row items-center';
+
+		return Nav({ class: `border-b border-border ${scrollableClass} ${this.class}` }, [
 			Ul({
-				class: 'flex flex-row items-center',
+				class: listClass,
 				map: [this.options, (option) => this.addLink(option)],
 				watch: {
 					value: ['[[path]]', router.data],
@@ -176,6 +188,11 @@ export class UnderlinedTabNavigation extends Veil
 	updateLink(link, selected)
 	{
 		link.update(selected);
+
+		if (selected && this.scrollable && link.panel)
+		{
+			link.panel.scrollIntoView({ behavior: 'smooth', inline: 'nearest', block: 'nearest' });
+		}
 	}
 
 	/**
