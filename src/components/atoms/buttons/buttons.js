@@ -69,6 +69,9 @@ const backCallBack = (props) =>
 {
 	// Snapshot taken once, at button-creation time (page landing).
 	const entryHistoryLength = globalThis.history.length;
+	// A new tab opened via a direct link has no referrer; in that case
+	// history.go would exit the app, so we gate on this flag.
+	const hasReferrer = globalThis.document?.referrer !== '';
 
 	return () =>
 	{
@@ -77,8 +80,10 @@ const backCallBack = (props) =>
 		const stepsBack = stepsAdded + 1;
 
 		// entryHistoryLength > 1 means there was at least one page
-		// in the session before we landed here.
-		if (props.allowHistory === true && entryHistoryLength > 1)
+		// in the session before we landed here. hasReferrer guards
+		// against new-tab direct links where history.go(-n) would
+		// leave the app entirely.
+		if (props.allowHistory === true && ((entryHistoryLength > 1 && hasReferrer) || stepsAdded > 0))
 		{
 			globalThis.history.go(-stepsBack);
 			return;
@@ -132,6 +137,9 @@ const smartBackCallBack = (props) =>
 {
 	// Snapshot taken once, at button-creation time (page landing).
 	const entryHistoryLength = globalThis.history.length;
+	// A new tab opened via a direct link has no referrer; in that case
+	// history.go would exit the app, so we gate on this flag.
+	const hasReferrer = globalThis.document?.referrer !== '';
 
 	return () =>
 	{
@@ -139,9 +147,14 @@ const smartBackCallBack = (props) =>
 		const stepsAdded = currentLength - entryHistoryLength;
 		const stepsBack = stepsAdded + 1;
 
-		// entryHistoryLength > 1 means there was at least one page
-		// in the session before we landed here.
-		if (entryHistoryLength > 1)
+		// Use history navigation only when:
+		//  - Prior real history exists AND the tab wasn't opened via a
+		//    direct link (hasReferrer), OR
+		//  - The user has actually navigated within the app since
+		//    landing (stepsAdded > 0).
+		// This prevents history.go from escaping the app when a link
+		// is pasted / opened in a fresh tab with no referrer.
+		if ((entryHistoryLength > 1 && hasReferrer) || stepsAdded > 0)
 		{
 			globalThis.history.go(-stepsBack);
 			return;
