@@ -67,11 +67,20 @@ const WithIconVariant = (defaultProps) => (
  */
 const backCallBack = (props) =>
 {
+	// Snapshot taken once, at button-creation time (page landing).
+	const entryHistoryLength = globalThis.history.length;
+
 	return () =>
 	{
-		if (props.allowHistory === true && globalThis.history.length > 2)
+		const currentLength = globalThis.history.length;
+		const stepsAdded = currentLength - entryHistoryLength;
+		const stepsBack = stepsAdded + 1;
+
+		// entryHistoryLength > 1 means there was at least one page
+		// in the session before we landed here.
+		if (props.allowHistory === true && entryHistoryLength > 1)
 		{
-			globalThis.history.back();
+			globalThis.history.go(-stepsBack);
 			return;
 		}
 
