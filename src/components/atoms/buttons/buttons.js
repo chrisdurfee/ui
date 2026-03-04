@@ -4,11 +4,10 @@ import { Icons } from '../../icons/icons.js';
 import { UniversalIcon } from '../universal-icon.js';
 
 /**
- * Counts history.pushState calls observed since the module loaded.
- * The Base Framework router uses replaceState for the initial route
- * and pushState for every subsequent in-app navigation, so this
- * counter reliably tracks real user navigations regardless of when
- * the module is first imported (eager or lazy).
+ * Tracks the number of history.pushState calls since the module loaded.
+ * Each pushState adds exactly one entry to the browser's session history,
+ * making this counter a reliable way to measure the number of in-app
+ * navigations (tabs, sub-routes, page transitions) between two points.
  *
  * @type {number}
  */
@@ -19,17 +18,19 @@ let _appPushCount = 0;
  * closures survive OnRoute-driven re-creation (which rebuilds the
  * DOM tree — including the back button — on every route change).
  *
- * Each entry records the history.length and _appPushCount at the time
- * the back button was first created for that page visit, plus the
- * route path at that moment so we can detect stale entries.
+ * Snapshots are validated lazily: when `_getPageEntrySnapshot` is
+ * called, the current route is compared against the stored basePath.
+ * If the route has left the original page, the snapshot is stale and
+ * is replaced automatically.
  *
- * @type {Map<string, { historyLength: number, pushCount: number, basePath: string }>}
+ * @type {Map<string, { pushCount: number, basePath: string }>}
  */
 const _pageEntrySnapshots = new Map();
 
 /**
  * Returns the current route path, normalised for comparison.
- * Works with both hash-based and path-based routing.
+ * Strips leading/trailing slashes and hash prefixes so that
+ * comparisons work consistently across hash- and path-based routing.
  *
  * @returns {string}
  */
@@ -39,7 +40,21 @@ const _getRoutePath = () =>
 	const raw = hash
 		? hash.replace(/^#\/?/, '')
 		: (globalThis.location?.pathname || '/');
-	return raw.replace(/^\/+/, '');
+	return raw.replace(/^\/+/, '').replace(/\/+$/, '');
+};
+
+/**
+ * Checks whether `currentPath` is the same page as `basePath`
+ * (either an exact match or a sub-path like a tab route).
+ *
+ * @param {string} currentPath
+ * @param {string} basePath
+ * @returns {boolean}
+ */
+const _isSamePage = (currentPath, basePath) =>
+{
+	if (!basePath) return false;
+	return currentPath === basePath || currentPath.startsWith(basePath + '/');
 };
 
 /* istanbul ignore else -- SSR / non-browser guard */
@@ -49,49 +64,37 @@ if (typeof globalThis.history?.pushState === 'function')
 	globalThis.history.pushState = function (...args)
 	{
 		_appPushCount++;
-
-		// Proactively clear snapshots when navigating AWAY from a
-		// stored page.  This prevents stale data if the user leaves
-		// via a link (instead of the back button) and later returns.
-		const pushedUrl = String(args[2] || '').replace(/^[#/]+/, '');
-		for (const [key, snap] of _pageEntrySnapshots)
-		{
-			if (
-				snap.basePath &&
-				pushedUrl !== snap.basePath &&
-				!pushedUrl.startsWith(snap.basePath + '/')
-			)
-			{
-				_pageEntrySnapshots.delete(key);
-			}
-		}
-
 		return _origPushState.apply(this, args);
 	};
 }
 
 /**
  * Returns the snapshot for the given backUrl, creating one if it
- * doesn't exist yet.  Re-calls with the same backUrl (button
- * re-creation caused by OnRoute) return the original snapshot so
- * that history-step calculations remain correct across tab switches.
+ * doesn’t exist yet.  If an existing snapshot is stale (the current
+ * route has left the original basePath), it is replaced with a fresh
+ * snapshot.
+ *
+ * Re-calls with the same backUrl while still on the same page (e.g.
+ * button re-creation caused by OnRoute after a tab switch) return
+ * the *original* snapshot so that step calculations remain correct.
  *
  * @param {string} [backUrl]
- * @returns {{ historyLength: number, pushCount: number, basePath: string }}
+ * @returns {{ pushCount: number, basePath: string }}
  */
 const _getPageEntrySnapshot = (backUrl) =>
 {
 	const key = backUrl || '';
+	const currentPath = _getRoutePath();
 
-	if (_pageEntrySnapshots.has(key))
+	const existing = _pageEntrySnapshots.get(key);
+	if (existing && _isSamePage(currentPath, existing.basePath))
 	{
-		return /** @type {{ historyLength: number, pushCount: number, basePath: string }} */ (_pageEntrySnapshots.get(key));
+		return existing;
 	}
 
 	const snapshot = {
-		historyLength: globalThis.history.length,
 		pushCount: _appPushCount,
-		basePath: _getRoutePath()
+		basePath: currentPath
 	};
 	_pageEntrySnapshots.set(key, snapshot);
 	return snapshot;
@@ -183,13 +186,14 @@ const backCallBack = (props) =>
 		// Clean up — we're leaving this page.
 		_clearPageEntrySnapshot(props.backUrl);
 
-		const stepsAdded = globalThis.history.length - entry.historyLength;
-		const stepsBack = stepsAdded + 1;
+		// Count pushState calls since the page was entered.  Each call is
+		// exactly one history entry (tab switches, sub-route changes).
+		const pushesSinceEntry = _appPushCount - entry.pushCount;
+		// +1 to also skip the page entry itself.
+		const stepsBack = pushesSinceEntry + 1;
 
 		// entry.pushCount > 0 means the user navigated here via in-app
 		// routing (at least one pushState before this page was entered).
-		// stepsBack accounts for tab / sub-route switches that happened
-		// since the page was entered, plus the page entry itself.
 		if (props.allowHistory === true && entry.pushCount > 0)
 		{
 			globalThis.history.go(-stepsBack);
@@ -230,13 +234,13 @@ const BackVariant = (defaultProps) => (
  * to skip past any in-page navigations (tabs, sub-routes) that were
  * pushed after arrival.
  *
- * The snapshot is stored in a module-level map keyed by backUrl so it
- * survives OnRoute-driven button re-creation.  The pushState
- * interceptor proactively clears stale snapshots when it detects
- * navigation away from the tracked page.
+ * The snapshot is stored in a module-level map keyed by backUrl and
+ * validated lazily: on each retrieval the current route is compared
+ * against the stored basePath.  If the route has left the page the
+ * snapshot is stale and is transparently replaced.
  *
  * - If entry.pushCount > 0 (real in-app history exists), it calls
- *   `history.go(-(stepsAdded + 1))` to jump past every in-page
+ *   `history.go(-(pushesSinceEntry + 1))` to jump past every in-page
  *   entry AND the initial navigation to this page.
  * - Falls back to `props.backUrl` when no in-app navigation existed
  *   before the page was entered (e.g. a direct link / new tab).
@@ -253,8 +257,8 @@ const smartBackCallBack = (props) =>
 	{
 		_clearPageEntrySnapshot(props.backUrl);
 
-		const stepsAdded = globalThis.history.length - entry.historyLength;
-		const stepsBack = stepsAdded + 1;
+		const pushesSinceEntry = _appPushCount - entry.pushCount;
+		const stepsBack = pushesSinceEntry + 1;
 
 		// entry.pushCount > 0 means the user navigated here via in-app
 		// routing.  stepsBack accounts for tab / sub-route switches
