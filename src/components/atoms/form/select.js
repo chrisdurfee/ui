@@ -21,7 +21,7 @@ export const Select = Atom((props) =>
 	},
 	...props,
 	// @ts-ignore
-	class: `${commonInputClasses} ${props.class || ''}`.trim()
+	class: `[&>option]:text-foreground [&>option]:bg-background ${commonInputClasses} ${props.class || ''}`.trim()
 }));
 
 export default Select;

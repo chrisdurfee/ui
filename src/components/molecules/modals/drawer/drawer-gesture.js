@@ -136,10 +136,10 @@ export class DrawerGesture
 		{
 			e.preventDefault();
 
-			// Apply transform with rubber band effect
+			// Apply transform with rubber band effect to the entire modal
 			const translateY = this.calculateTranslateY(deltaY);
-			this.modalContent.style.transform = `translateY(${translateY}px)`;
-			this.modalContent.style.transition = 'none';
+			this.modal.style.transform = `translateY(${translateY}px)`;
+			this.modal.style.transition = 'none';
 
 			// Calculate and update backdrop opacity
 			const opacity = this.calculateBackdropOpacity(deltaY);
@@ -161,7 +161,7 @@ export class DrawerGesture
 	 */
 	handleTouchEnd(e)
 	{
-		if (!this.modalContent)
+		if (!this.modal)
 		{
 			return;
 		}
@@ -171,7 +171,7 @@ export class DrawerGesture
 		// @ts-ignore
 		if (this.state.isDragging)
 		{
-			this.modalContent.style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out';
+			this.modal.style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out';
 
 			// Close if dragged past threshold
 			if (deltaY > this.closeThreshold)
@@ -249,14 +249,10 @@ export class DrawerGesture
 	 */
 	animateClose()
 	{
-		if (!this.modal || !this.modalContent)
+		if (!this.modal)
 		{
 			return;
 		}
-
-		// Reset content transform
-		this.modalContent.style.transform = 'translateY(0)';
-		this.modalContent.style.transition = 'none';
 
 		// Animate entire modal sliding down
 		this.modal.style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out';
@@ -278,12 +274,12 @@ export class DrawerGesture
 	 */
 	snapBack()
 	{
-		if (!this.modalContent)
+		if (!this.modal)
 		{
 			return;
 		}
 
-		this.modalContent.style.transform = 'translateY(0)';
+		this.modal.style.transform = 'translateY(0)';
 		this.updateBackdropOpacity(1);
 	}
 

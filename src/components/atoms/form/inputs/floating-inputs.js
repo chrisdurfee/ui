@@ -356,7 +356,7 @@ export const FloatingSelect = Atom((props) =>
 			tag: 'select',
 			...props,
 			id,
-			class: `${FLOATING_SELECT_CLASSES} ${props.class || ''}`.trim(),
+			class: `[&>option]:text-foreground [&>option]:bg-background ${FLOATING_SELECT_CLASSES} ${props.class || ''}`.trim(),
 			onCreated(ele)
 			{
 				if (props.options)
