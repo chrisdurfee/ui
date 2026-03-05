@@ -350,23 +350,24 @@ export const FloatingTextarea = Atom((props) =>
 export const FloatingSelect = Atom((props) =>
 {
 	const id = getFloatingId(props);
+	const { options, onCreated: userOnCreated, ...attrs } = props;
 
 	return Div({ class: 'relative' }, [
 		{
 			tag: 'select',
-			...props,
+			...attrs,
 			id,
-			class: `[&>option]:text-foreground [&>option]:bg-background ${FLOATING_SELECT_CLASSES} ${props.class || ''}`.trim(),
+			class: `[&>option]:text-foreground [&>option]:bg-background ${FLOATING_SELECT_CLASSES} ${attrs.class || ''}`.trim(),
 			onCreated(ele)
 			{
-				if (props.options)
+				if (options)
 				{
-					Html.setupSelectOptions(ele, props.options);
+					Html.setupSelectOptions(ele, options);
 				}
 
-				if (typeof props.onCreated === 'function')
+				if (typeof userOnCreated === 'function')
 				{
-					props.onCreated(ele);
+					userOnCreated(ele);
 				}
 			},
 		},

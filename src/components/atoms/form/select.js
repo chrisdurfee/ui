@@ -8,20 +8,25 @@ import { commonInputClasses } from './inputs/input-classes.js';
  * @returns {object}
  */
 export const Select = Atom((props) =>
-({
-	tag: 'select',
-	onCreated(ele)
-	{
-		// @ts-ignore
-		if (props.options)
+{
+	const { options, onCreated: userOnCreated, ...attrs } = props;
+	return {
+		tag: 'select',
+		onCreated(ele)
 		{
-			// @ts-ignore
-			Html.setupSelectOptions(ele, props.options);
-		}
-	},
-	...props,
-	// @ts-ignore
-	class: `[&>option]:text-foreground [&>option]:bg-background ${commonInputClasses} ${props.class || ''}`.trim()
-}));
+			if (options)
+			{
+				Html.setupSelectOptions(ele, options);
+			}
+
+			if (userOnCreated)
+			{
+				userOnCreated(ele);
+			}
+		},
+		...attrs,
+		class: `[&>option]:text-foreground [&>option]:bg-background ${commonInputClasses} ${attrs.class || ''}`.trim()
+	};
+});
 
 export default Select;
