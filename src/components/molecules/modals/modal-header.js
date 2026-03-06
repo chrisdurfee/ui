@@ -19,7 +19,7 @@ import { Icons } from "../../icons/icons.js";
  * @returns {object}
  */
 // @ts-ignore
-export const ModalHeader = Atom(({ title, description, back, icon, options = [] }) => (
+export const ModalHeader = Atom(({ title, description, back, icon, options = [], titleCenter = false }) => (
 	Header({ class: 'modal-header bg-background/80 backdrop-blur-md sticky flex flex-none items-center py-4 px-6 z-10 min-w-0' }, [
 
 		/**
@@ -38,9 +38,9 @@ export const ModalHeader = Atom(({ title, description, back, icon, options = [] 
 		icon && Div({ class: 'mr-2 w-12 h-12 rounded-full bg-muted flex flex-none items-center justify-center' }, [
 			UniversalIcon({ size: 'md' }, icon)
 		]),
-		Div({ class: 'flex flex-auto flex-row justify-between ml-2 gap-2 min-w-0' }, [
+		Div({ class: `flex flex-auto flex-row justify-between ml-2 gap-2 min-w-0 ${titleCenter ? 'items-center' : ''}` }, [
 			Div({ class: 'flex flex-auto flex-col min-w-0' }, [
-				H2({ class: 'text-lg font-semibold m-0 truncate' }, title),
+				H2({ class: `text-lg font-semibold m-0 truncate` }, title),
 				description && Div({ class: 'text-sm text-muted-foreground truncate' }, description)
 			]),
 			Div({ class: 'flex flex-none items-center gap-2' }, options)
