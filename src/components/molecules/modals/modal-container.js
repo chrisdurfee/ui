@@ -20,6 +20,7 @@ import { ModalHeader } from "./modal-header.js";
  * @param {boolean} [props.hideFooter=false] - Hide footer section
  * @param {Function} [props.onSubmit] - Form submission handler
  * @param {object} [props.gestureHandlers] - Touch gesture handlers for drawer
+ * @param {boolean} [props.titleCenter=false] - Center title and description vertically in header
  * @param {Array} children - Modal body content
  * @returns {object}
  */

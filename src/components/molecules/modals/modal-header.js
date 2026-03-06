@@ -16,6 +16,7 @@ import { Icons } from "../../icons/icons.js";
  * @param {boolean} [props.back=false] - Show back button on mobile
  * @param {string} [props.icon] - SVG icon string to display
  * @param {Array} [props.options=[]] - Array of action buttons/elements
+ * @param {boolean} [props.titleCenter=false] - Center title and description vertically
  * @returns {object}
  */
 // @ts-ignore
