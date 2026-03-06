@@ -39,8 +39,8 @@ export const ModalHeader = Atom(({ title, description, back, icon, options = [],
 		icon && Div({ class: 'mr-2 w-12 h-12 rounded-full bg-muted flex flex-none items-center justify-center' }, [
 			UniversalIcon({ size: 'md' }, icon)
 		]),
-		Div({ class: `flex flex-auto flex-row justify-between ml-2 gap-2 min-w-0 ${titleCenter ? 'items-center' : ''}` }, [
-			Div({ class: 'flex flex-auto flex-col min-w-0' }, [
+		Div({ class: `flex flex-auto flex-row justify-between ml-2 gap-2 min-w-0` }, [
+			Div({ class: `flex flex-auto flex-col min-w-0 ${titleCenter ? 'items-center' : ''}` }, [
 				H2({ class: `text-lg font-semibold m-0 truncate` }, title),
 				description && Div({ class: 'text-sm text-muted-foreground truncate' }, description)
 			]),
