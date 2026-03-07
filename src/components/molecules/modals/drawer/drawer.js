@@ -114,6 +114,8 @@ export class Drawer extends Modal
 				options: this.headerOptions(),
 				buttons: this.getButtons(),
 				hideFooter: this.hideFooter,
+				// @ts-ignore
+				titleCenter: this.titleCenter,
 				onSubmit: (parent) =>
 				{
 					let canClose = true;
