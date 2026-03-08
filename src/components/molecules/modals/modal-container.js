@@ -19,7 +19,6 @@ import { ModalHeader } from "./modal-header.js";
  * @param {Array} [props.buttons=[]] - Footer buttons
  * @param {boolean} [props.hideFooter=false] - Hide footer section
  * @param {Function} [props.onSubmit] - Form submission handler
- * @param {object} [props.gestureHandlers] - Touch gesture handlers for drawer
  * @param {boolean} [props.titleCenter=false] - Center title and description vertically in header
  * @param {Array} children - Modal body content
  * @returns {object}
@@ -52,9 +51,7 @@ export const ModalContainer = Atom((props, children) =>
 			class: 'modal-content relative bg-background z-1 flex flex-auto flex-col gap-y-4 min-w-0',
 			// @ts-ignore
 			submit: (e, parent) => (props.onSubmit && props.onSubmit(parent)),
-			cache: 'modalContent',
-			// @ts-ignore
-			...props.gestureHandlers
+			cache: 'modalContent'
 		}, [
 			ModalHeader(props),
 			Div({ class: 'modal-body flex grow flex-col py-0 px-6 z-0', cache: 'modalBody' }, children),

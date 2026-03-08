@@ -83,15 +83,7 @@ export class Drawer extends Modal
 	 */
 	getContainerProps()
 	{
-		const props = {};
-
-		// Add gesture handlers if enabled
-		if (this.swipeToClose)
-		{
-			props.gestureHandlers = this.getGestureHandlers();
-		}
-
-		return props;
+		return {};
 	}
 
 	/**
@@ -163,27 +155,6 @@ export class Drawer extends Modal
 				onClose: () => this.destroy()
 			});
 		}
-	}
-
-	/**
-	 * Gets gesture event handlers for modal content.
-	 * Returns event props to be spread onto the modal-content element.
-	 * Handlers are bound methods that will work once gesture is initialized.
-	 *
-	 * @returns {object}
-	 */
-	getGestureHandlers()
-	{
-		if (!this.swipeToClose)
-		{
-			return {};
-		}
-
-		return {
-			touchstart: (e) => this.gesture?.handleTouchStart(e),
-			touchmove: (e) => this.gesture?.handleTouchMove(e),
-			touchend: (e) => this.gesture?.handleTouchEnd(e)
-		};
 	}
 
 	/**

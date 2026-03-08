@@ -44,7 +44,34 @@ export class DrawerGesture
 		this.snapThreshold = snapThreshold;
 		this.onClose = onClose;
 
+		this._boundTouchStart = this.handleTouchStart.bind(this);
+		this._boundTouchMove = this.handleTouchMove.bind(this);
+		this._boundTouchEnd = this.handleTouchEnd.bind(this);
+
 		this.reset();
+
+		if (this.modalContent)
+		{
+			this._bindListeners();
+		}
+	}
+
+	/**
+	 * Registers touch event listeners on the modal content element.
+	 * touchmove uses { passive: false } so preventDefault() can block scroll
+	 * while the drawer is being dragged.
+	 *
+	 * @private
+	 * @returns {void}
+	 */
+	_bindListeners()
+	{
+		// @ts-ignore
+		this.modalContent.addEventListener('touchstart', this._boundTouchStart, { passive: true });
+		// @ts-ignore
+		this.modalContent.addEventListener('touchmove', this._boundTouchMove, { passive: false });
+		// @ts-ignore
+		this.modalContent.addEventListener('touchend', this._boundTouchEnd, { passive: true });
 	}
 
 	/**
@@ -329,8 +356,16 @@ export class DrawerGesture
 	 */
 	destroy()
 	{
+		if (this.modalContent)
+		{
+			this.modalContent.removeEventListener('touchstart', this._boundTouchStart);
+			this.modalContent.removeEventListener('touchmove', this._boundTouchMove);
+			this.modalContent.removeEventListener('touchend', this._boundTouchEnd);
+		}
+
 		this.reset();
 		this.modal = null;
+		this.modalContent = null;
 		this.onClose = null;
 	}
 }
