@@ -35,7 +35,7 @@ export const ModalContainer = Atom((props, children) =>
 	return Div({
 			popover: 'manual',
 			// @ts-ignore
-			class: `modal ${positionClasses} ${sizeClasses} fixed z-20 grid w-full gap-2 lg:border bg-background text-foreground shadow-xl wrap-break-words p-0 overflow-y-auto ${props.class}`,
+			class: `modal ${positionClasses} ${sizeClasses} fixed z-20 grid w-full gap-2 lg:border bg-background text-foreground shadow-xl wrap-break-words p-0 overflow-y-auto overscroll-y-contain ${props.class}`,
 			click: (e, parent) =>
 			{
 				const isClickOutside = (e.target === parent.panel);

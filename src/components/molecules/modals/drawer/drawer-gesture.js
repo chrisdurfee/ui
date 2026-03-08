@@ -59,7 +59,14 @@ export class DrawerGesture
 			startY: 0,
 			currentY: 0,
 			startScrollTop: 0,
-			canDrag: false
+			canDrag: false,
+			/**
+			 * True if the body has scrolled during this gesture.
+			 * Prevents drag from starting mid-gesture on iOS when rubber-band
+			 * overscroll briefly resets scrollTop to 0 at the bottom boundary.
+			 * @type {boolean}
+			 */
+			hasScrolled: false
 		};
 	}
 
@@ -81,23 +88,29 @@ export class DrawerGesture
 	 */
 	handleTouchStart(e)
 	{
-		if (!this.modalBody)
+		if (!this.modal)
 		{
 			return;
 		}
 
 		const touch = e.touches[0];
+		// @ts-ignore
+		const scrollTop = this.modal.scrollTop;
 
 		// @ts-ignore
 		this.state.startY = touch.clientY;
 		// @ts-ignore
 		this.state.currentY = touch.clientY;
 		// @ts-ignore
-		this.state.startScrollTop = this.modalBody.scrollTop;
-
-		// Can drag only if at the top of scroll
+		this.state.startScrollTop = scrollTop;
 		// @ts-ignore
-		this.state.canDrag = this.modalBody.scrollTop === 0;
+		this.state.hasScrolled = false;
+
+		// Allow drag only when at the very top of the scroll.
+		// Use a small tolerance (<=1) to handle iOS sub-pixel scroll values
+		// and rubber-band bounce that can leave a fractional scrollTop.
+		// @ts-ignore
+		this.state.canDrag = scrollTop <= 1;
 	}
 
 	/**
@@ -108,7 +121,7 @@ export class DrawerGesture
 	 */
 	handleTouchMove(e)
 	{
-		if (!this.modalContent || !this.modalBody)
+		if (!this.modal || !this.modalContent)
 		{
 			return;
 		}
@@ -117,13 +130,28 @@ export class DrawerGesture
 		// @ts-ignore
 		this.state.currentY = touch.clientY;
 		const deltaY = this.getDeltaY();
+		// @ts-ignore
+		const currentScrollTop = this.modal.scrollTop;
+
+		// Track if the body has scrolled at any point during this gesture.
+		// On iOS, rubber-band bounce at the bottom boundary can briefly
+		// reset scrollTop to 0 on the next touchstart. Once scrolling has
+		// occurred we must not convert this gesture into a drag.
+		// @ts-ignore
+		if (currentScrollTop !== this.state.startScrollTop)
+		{
+			// @ts-ignore
+			this.state.hasScrolled = true;
+		}
 
 		// Check if we should start dragging
 		// @ts-ignore
-		if (!this.state.isDragging && this.state.canDrag && deltaY > 0)
+		const canStartDrag = this.state.canDrag && !this.state.hasScrolled;
+		// @ts-ignore
+		if (!this.state.isDragging && canStartDrag && deltaY > 0)
 		{
-			// User is pulling down and we're at top of scroll
-			if (this.modalBody.scrollTop === 0)
+			// User is pulling down and we're at top of scroll (tolerance <=1 for iOS)
+			if (currentScrollTop <= 1)
 			{
 				// @ts-ignore
 				this.state.isDragging = true;
@@ -145,9 +173,9 @@ export class DrawerGesture
 			const opacity = this.calculateBackdropOpacity(deltaY);
 			this.updateBackdropOpacity(opacity);
 		}
-		else if (this.modalBody.scrollTop > 0)
+		else if (currentScrollTop > 1)
 		{
-			// Content is scrolling, disallow drag
+			// Content is scrolling, disallow drag for the remainder of this gesture
 			// @ts-ignore
 			this.state.canDrag = false;
 		}
