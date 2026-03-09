@@ -21,7 +21,7 @@ export const LogoUploader = Jot(
 	{
 		return {
 			// @ts-ignore
-			loaded: Boolean(this.src)
+			loaded: Boolean(this.src) && !this.src.includes('[[')
 		};
 	},
 
