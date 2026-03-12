@@ -48,6 +48,9 @@ export class ToggleButton extends Veil
 		/** @type {string} Icon size: xs | sm | md | lg */
 		this.size = 'sm';
 
+		/** @type {boolean} When true, renders the icon with variant: 'filled' in the active state (Material Symbols) */
+		this.fill = false;
+
 		/** @type {string} the format type for the value: 'number' | 'string' */
 		this.formatType = 'number';
 	}
@@ -125,13 +128,15 @@ export class ToggleButton extends Veil
 			return null;
 		})();
 
+		const fill = this.fill;
+
 		return BaseButton({
 			click: () => this.handleToggle(),
 			// @ts-ignore
 			class: `toggle-btn inline-flex items-center gap-1.5 bg-transparent border-0 p-0 cursor-pointer text-foreground/70 hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${this.class || ''}`
 		}, [
 			OnState('active', (active) =>
-				UniversalIcon({ size }, active ? activeIcon : inactiveIcon)
+				UniversalIcon({ size, variant: active && fill ? 'filled' : 'outlined' }, active ? activeIcon : inactiveIcon)
 			),
 			valueNode
 		]);
@@ -186,6 +191,9 @@ export class CircleToggleButton extends Component
 		/** @type {string} Extra Tailwind classes applied when active */
 		this.activeClass = '';
 
+		/** @type {boolean} When true, renders the icon with variant: 'filled' in the active state (Material Symbols) */
+		this.fill = false;
+
 		/** @type {Function|null} Called with the new boolean state on each click */
 		this.toggle = null;
 	}
@@ -239,6 +247,8 @@ export class CircleToggleButton extends Component
 		// @ts-ignore
 		const isCircle = this.circle ?? false;
 
+		const fill = this.fill;
+
 		return BaseButton({
 			click: () => this.handleToggle(),
 			// @ts-ignore
@@ -247,6 +257,7 @@ export class CircleToggleButton extends Component
 			OnState('active', (active) => [
 				UniversalIcon({
 					size: iconSize,
+					variant: active && fill ? 'filled' : 'outlined',
 					class: `transition-colors ${active ? activeClass : defaultClass}`
 				}, active ? activeIcon : inactiveIcon)
 			])
