@@ -12,8 +12,6 @@ export const BackButton = Atom((props) =>
 {
 	// @ts-ignore
 	const margin = props.margin || 'm-4 ml-0';
-	// @ts-ignore
-	props.allowHistory = (props.allowHistory === true);
 	return Div({ class: `flex-none ${margin}` }, [
 		Button({ variant: 'back', class: 'ghost', ...props })
 	]);

@@ -1,51 +1,50 @@
-﻿import { Button as BaseButton } from '@base-framework/atoms';
-import { Atom } from '@base-framework/base';
+import { Button as BaseButton } from '@base-framework/atoms';
+import { Atom, router } from '@base-framework/base';
 import { Icons } from '../../icons/icons.js';
 import { UniversalIcon } from '../universal-icon.js';
 
 /**
- * Tracks the number of history.pushState calls since the module loaded.
- * Each pushState adds exactly one entry to the browser's session history,
- * making this counter a reliable way to measure the number of in-app
- * navigations (tabs, sub-routes, page transitions) between two points.
+ * Tracks the actual browser history position by embedding a monotonic
+ * `_pos` counter into every `history.pushState` state object, then
+ * syncing via `popstate` when the user navigates with browser back/forward.
+ *
+ * Unlike an increment-only counter, this value stays accurate across
+ * browser back/forward clicks, making `history.go(-N)` calculations
+ * reliable regardless of in-page tab or sub-route navigations.
+ *
+ * Initialised from `history.state._pos` when available so that the
+ * correct position is restored after a hard page refresh.
  *
  * @type {number}
  */
-let _appPushCount = 0;
+let _navPosition = globalThis.history?.state?._pos ?? 0;
 
 /**
- * Stores entry-point snapshots keyed by backUrl so that back-button
- * closures survive OnRoute-driven re-creation (which rebuilds the
- * DOM tree — including the back button — on every route change).
+ * Stores per-page source entries keyed by backUrl so that back-button
+ * closures survive OnRoute-driven re-creation (which rebuilds the DOM
+ * tree — including the back button — on every route change).
  *
- * Snapshots are validated lazily: when `_getPageEntrySnapshot` is
- * called, the current route is compared against the stored basePath.
- * If the route has left the original page, the snapshot is stale and
- * is replaced automatically.
+ * Each entry captures:
+ *  - `pos`        — the history position when the page was entered
+ *  - `sourcePath` — `router.lastPath` at entry time (the page you came from)
+ *  - `basePath`   — the current page's root path (used for same-page validation)
  *
- * @type {Map<string, { pushCount: number, basePath: string }>}
+ * @type {Map<string, { pos: number, sourcePath: string|null, basePath: string }>}
  */
-const _pageEntrySnapshots = new Map();
+const _sourceCache = new Map();
 
 /**
- * Returns the current route path, normalised for comparison.
- * Strips leading/trailing slashes and hash prefixes so that
- * comparisons work consistently across hash- and path-based routing.
+ * Normalises a route path for same-page comparisons by stripping
+ * leading and trailing slashes.
  *
+ * @param {string} path
  * @returns {string}
  */
-const _getRoutePath = () =>
-{
-	const hash = globalThis.location?.hash || '';
-	const raw = hash
-		? hash.replace(/^#\/?/, '')
-		: (globalThis.location?.pathname || '/');
-	return raw.replace(/^\/+/, '').replace(/\/+$/, '');
-};
+const _normPath = (path) => (path || '').replace(/^\/+/, '').replace(/\/+$/, '');
 
 /**
- * Checks whether `currentPath` is the same page as `basePath`
- * (either an exact match or a sub-path like a tab route).
+ * Returns true when `currentPath` still belongs to the same page as
+ * `basePath` (exact match or sub-path, e.g. a tab route).
  *
  * @param {string} currentPath
  * @param {string} basePath
@@ -54,62 +53,102 @@ const _getRoutePath = () =>
 const _isSamePage = (currentPath, basePath) =>
 {
 	if (!basePath) return false;
-	return currentPath === basePath || currentPath.startsWith(basePath + '/');
+	const cur = _normPath(currentPath);
+	const base = _normPath(basePath);
+	return cur === base || cur.startsWith(base + '/');
 };
 
 /* istanbul ignore else -- SSR / non-browser guard */
 if (typeof globalThis.history?.pushState === 'function')
 {
 	const _origPushState = globalThis.history.pushState;
-	globalThis.history.pushState = function (...args)
+	const _origReplaceState = globalThis.history.replaceState;
+
+	/**
+	 * Wrap pushState to embed the current position counter into every
+	 * state object.  The router's own state fields (location, uri,
+	 * scrollPosition) are preserved via object spread.
+	 */
+	globalThis.history.pushState = function (state, title, url)
 	{
-		_appPushCount++;
-		return _origPushState.apply(this, args);
+		_navPosition++;
+		const augmented = (state !== null && typeof state === 'object')
+			? { ...state, _pos: _navPosition }
+			: { _pos: _navPosition };
+		return _origPushState.call(this, augmented, title, url);
 	};
+
+	/**
+	 * Wrap replaceState to preserve the current _pos value so that
+	 * states created with replaceState (e.g. the initial navigation)
+	 * can still be read back correctly on popstate.
+	 */
+	globalThis.history.replaceState = function (state, title, url)
+	{
+		const currentPos = globalThis.history.state?._pos ?? _navPosition;
+		const augmented = (state !== null && typeof state === 'object')
+			? { ...state, _pos: currentPos }
+			: { _pos: currentPos };
+		return _origReplaceState.call(this, augmented, title, url);
+	};
+
+	/**
+	 * Sync _navPosition whenever the user navigates with the browser's
+	 * own back/forward controls.  Reading _pos from the restored state
+	 * object gives the exact history position, keeping step calculations
+	 * accurate after any number of browser back/forward clicks.
+	 */
+	globalThis.addEventListener('popstate', (evt) =>
+	{
+		const pos = /** @type {any} */ (evt.state)?._pos;
+		if (typeof pos === 'number')
+		{
+			_navPosition = pos;
+		}
+	});
 }
 
 /**
- * Returns the snapshot for the given backUrl, creating one if it
- * doesn’t exist yet.  If an existing snapshot is stale (the current
- * route has left the original basePath), it is replaced with a fresh
- * snapshot.
+ * Returns the source entry for the given backUrl, creating one if
+ * it doesn't exist yet.  If an existing entry is stale (the router
+ * has moved to a different page), it is transparently replaced.
  *
- * Re-calls with the same backUrl while still on the same page (e.g.
- * button re-creation caused by OnRoute after a tab switch) return
- * the *original* snapshot so that step calculations remain correct.
+ * Re-calls while still on the same page (e.g. button re-creation
+ * caused by OnRoute after a tab switch) return the *original* entry
+ * so that step calculations remain correct.
  *
  * @param {string} [backUrl]
- * @returns {{ pushCount: number, basePath: string }}
+ * @returns {{ pos: number, sourcePath: string|null, basePath: string }}
  */
-const _getPageEntrySnapshot = (backUrl) =>
+const _getSourceEntry = (backUrl) =>
 {
 	const key = backUrl || '';
-	const currentPath = _getRoutePath();
+	const currentPath = router.path || '';
 
-	const existing = _pageEntrySnapshots.get(key);
+	const existing = _sourceCache.get(key);
 	if (existing && _isSamePage(currentPath, existing.basePath))
 	{
 		return existing;
 	}
 
-	const snapshot = {
-		pushCount: _appPushCount,
+	const entry = {
+		pos: _navPosition,
+		sourcePath: router.lastPath || null,
 		basePath: currentPath
 	};
-	_pageEntrySnapshots.set(key, snapshot);
-	return snapshot;
+	_sourceCache.set(key, entry);
+	return entry;
 };
 
 /**
- * Removes the snapshot for backUrl (called after the back button
- * successfully navigates away).
+ * Removes the source entry for backUrl (called when the back button fires).
  *
  * @param {string} [backUrl]
  * @returns {void}
  */
-const _clearPageEntrySnapshot = (backUrl) =>
+const _clearSourceEntry = (backUrl) =>
 {
-	_pageEntrySnapshots.delete(backUrl || '');
+	_sourceCache.delete(backUrl || '');
 };
 
 /**
@@ -169,41 +208,48 @@ const WithIconVariant = (defaultProps) => (
 );
 
 /**
- *  This will create a back button that navigates to the previous page or a specified URL.
+ * Creates a click handler that navigates back past all in-page
+ * navigations (tabs, sub-routes) to the page the user came from.
  *
- *  @param {object} props
- *   @returns {function}
+ * Strategy:
+ *  - On page entry the handler captures `_navPosition` (the actual
+ *    browser history position, accurate across back/forward usage)
+ *    and `router.lastPath` (the source page path).
+ *  - On click it calculates how many entries were pushed while on
+ *    this page and calls `history.go(-steps)` to jump back in one
+ *    step, restoring browser scroll state via the popstate handler.
+ *  - If no preceding in-app history exists (direct link / new tab),
+ *    it falls back to `app.navigate(sourcePath || backUrl)`.
+ *
+ * @param {object} props
+ * @param {string} [props.backUrl] - Fallback URL when no in-app history exists.
+ * @returns {function}
  */
 const backCallBack = (props) =>
 {
-	// Retrieve (or create) the entry-point snapshot for this page.
-	// The snapshot survives button re-creation caused by OnRoute re-fires
-	// (which rebuild the DOM tree on every route change, including tabs).
-	const entry = _getPageEntrySnapshot(props.backUrl);
+	const entry = _getSourceEntry(props.backUrl);
 
 	return () =>
 	{
-		// Clean up — we're leaving this page.
-		_clearPageEntrySnapshot(props.backUrl);
+		_clearSourceEntry(props.backUrl);
 
-		// Count pushState calls since the page was entered.  Each call is
-		// exactly one history entry (tab switches, sub-route changes).
-		const pushesSinceEntry = _appPushCount - entry.pushCount;
-		// +1 to also skip the page entry itself.
-		const stepsBack = pushesSinceEntry + 1;
+		const stepsSinceEntry = _navPosition - entry.pos;
+		const stepsBack = stepsSinceEntry + 1;
 
-		// entry.pushCount > 0 means the user navigated here via in-app
-		// routing (at least one pushState before this page was entered).
-		if (props.allowHistory === true && entry.pushCount > 0)
+		// entry.pos > 0 means the user arrived via in-app routing.
+		// history.go is accurate because _navPosition tracks the true
+		// browser history position (synced via popstate).
+		if (entry.pos > 0)
 		{
 			globalThis.history.go(-stepsBack);
 			return;
 		}
 
-		if (props.backUrl)
+		const fallback = entry.sourcePath || props.backUrl;
+		if (fallback)
 		{
 			// @ts-ignore
-			app.navigate(props.backUrl);
+			app.navigate(fallback);
 		}
 	};
 };
@@ -221,86 +267,6 @@ const BackVariant = (defaultProps) => (
 		props.icon = props.icon || Icons.arrows.left;
 		// @ts-ignore
 		props.click = props.click || backCallBack(props);
-
-		return IconButton({
-			...defaultProps,
-			...props
-		}, children);
-	})
-);
-
-/**
- * Creates a click handler that uses a persistent entry-point snapshot
- * to skip past any in-page navigations (tabs, sub-routes) that were
- * pushed after arrival.
- *
- * The snapshot is stored in a module-level map keyed by backUrl and
- * validated lazily: on each retrieval the current route is compared
- * against the stored basePath.  If the route has left the page the
- * snapshot is stale and is transparently replaced.
- *
- * - If entry.pushCount > 0 (real in-app history exists), it calls
- *   `history.go(-(pushesSinceEntry + 1))` to jump past every in-page
- *   entry AND the initial navigation to this page.
- * - Falls back to `props.backUrl` when no in-app navigation existed
- *   before the page was entered (e.g. a direct link / new tab).
- *
- * @param {object} props
- * @param {string} [props.backUrl] - Fallback URL when no history exists.
- * @returns {function}
- */
-const smartBackCallBack = (props) =>
-{
-	const entry = _getPageEntrySnapshot(props.backUrl);
-
-	return () =>
-	{
-		_clearPageEntrySnapshot(props.backUrl);
-
-		const pushesSinceEntry = _appPushCount - entry.pushCount;
-		const stepsBack = pushesSinceEntry + 1;
-
-		// entry.pushCount > 0 means the user navigated here via in-app
-		// routing.  stepsBack accounts for tab / sub-route switches
-		// plus the page entry itself.
-		if (entry.pushCount > 0)
-		{
-			globalThis.history.go(-stepsBack);
-			return;
-		}
-
-		if (props.backUrl)
-		{
-			// @ts-ignore
-			app.navigate(props.backUrl);
-		}
-	};
-};
-
-/**
- * SmartBack button variant.
- *
- * Unlike the regular `back` variant (which calls `history.back()` and
- * can get trapped by in-page tab / sub-route navigations), SmartBack
- * captures the browser history length when the button is first created
- * and uses that snapshot to jump all the way back to the originating
- * page.
- *
- * Props:
- * - `backUrl` {string}  – Fallback URL used when there is no prior
- *    session history (e.g. a direct link or new tab).
- * - `icon`    {string}  – Override the default left-arrow icon.
- *
- * @param {object} defaultProps
- * @returns {object}
- */
-const SmartBackVariant = (defaultProps) => (
-	Atom((props, children) =>
-	{
-		// @ts-ignore
-		props.icon = props.icon || Icons.arrows.left;
-		// @ts-ignore
-		props.click = props.click || smartBackCallBack(props);
 
 		return IconButton({
 			...defaultProps,
@@ -359,7 +325,6 @@ const BUTTON_VARIANTS = {
 	icon: WithIconVariant({ class: 'icon' }),
 	withIcon: WithIconVariant({ class: 'with-icon' }),
 	back: BackVariant({ class: 'with-icon back-button' }),
-	smartBack: SmartBackVariant({ class: 'with-icon back-button' }),
 	circleIcon: CircleIconButton,
 };
 
@@ -392,4 +357,3 @@ export const LoadingButton = Atom((props, children) =>
 });
 
 export { CircleButton, CircleToggleButton, ToggleButton } from './toggle-button.js';
-
