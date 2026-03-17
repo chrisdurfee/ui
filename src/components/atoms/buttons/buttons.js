@@ -20,6 +20,18 @@ import { UniversalIcon } from '../universal-icon.js';
 let _navPosition = globalThis.history?.state?._pos ?? 0;
 
 /**
+ * The history position at the time this script first ran (i.e. at page load).
+ * After a browser refresh the browser restores `history.state._pos` from the
+ * previous session, so `_navPosition` starts at a non-zero value even though
+ * there is no real in-app back-history yet.  Comparing `entry.pos` against
+ * `_restoredPos` lets the back-button detect this case and fall back to
+ * `app.navigate()` instead of calling `history.go()` into stale history.
+ *
+ * @type {number}
+ */
+const _restoredPos = _navPosition;
+
+/**
  * Stores per-page source entries keyed by backUrl so that back-button
  * closures survive OnRoute-driven re-creation (which rebuilds the DOM
  * tree — including the back button — on every route change).
@@ -56,6 +68,40 @@ const _isSamePage = (currentPath, basePath) =>
 	const cur = _normPath(currentPath);
 	const base = _normPath(basePath);
 	return cur === base || cur.startsWith(base + '/');
+};
+
+/**
+ * Derives the stable "page root" from the current route path and the
+ * backUrl.  The page root is the path prefix shared by ALL tabs and
+ * sub-routes on this page.
+ *
+ * Algorithm: take `backUrl` as the known parent, then append exactly
+ * one additional path segment from `currentPath`.
+ *
+ * Examples:
+ *   backUrl='/members', path='/members/123/garage' → 'members/123'
+ *   backUrl='/settings', path='/settings/profile'   → 'settings/profile'
+ *
+ * @param {string} currentPath
+ * @param {string} [backUrl]
+ * @returns {string}
+ */
+const _derivePageRoot = (currentPath, backUrl) =>
+{
+	const cur = _normPath(currentPath);
+	if (!backUrl) return cur;
+
+	const back = _normPath(backUrl);
+	if (!cur.startsWith(back)) return cur;
+
+	const rest = cur.substring(back.length);
+	if (!rest || rest === '/') return cur;
+
+	const afterSlash = rest.startsWith('/') ? rest.substring(1) : rest;
+	const nextSlash = afterSlash.indexOf('/');
+	if (nextSlash < 0) return cur;
+
+	return back + '/' + afterSlash.substring(0, nextSlash);
 };
 
 /* istanbul ignore else -- SSR / non-browser guard */
@@ -134,7 +180,7 @@ const _getSourceEntry = (backUrl) =>
 	const entry = {
 		pos: _navPosition,
 		sourcePath: router.lastPath || null,
-		basePath: currentPath
+		basePath: _derivePageRoot(currentPath, backUrl)
 	};
 	_sourceCache.set(key, entry);
 	return entry;
@@ -219,7 +265,7 @@ const WithIconVariant = (defaultProps) => (
  *    this page and calls `history.go(-steps)` to jump back in one
  *    step, restoring browser scroll state via the popstate handler.
  *  - If no preceding in-app history exists (direct link / new tab),
- *    it falls back to `app.navigate(sourcePath || backUrl)`.
+ *    it falls back to `router.navigate(sourcePath || backUrl)`.
  *
  * @param {object} props
  * @param {string} [props.backUrl] - Fallback URL when no in-app history exists.
@@ -236,20 +282,26 @@ const backCallBack = (props) =>
 		const stepsSinceEntry = _navPosition - entry.pos;
 		const stepsBack = stepsSinceEntry + 1;
 
-		// entry.pos > 0 means the user arrived via in-app routing.
-		// history.go is accurate because _navPosition tracks the true
-		// browser history position (synced via popstate).
-		if (entry.pos > 0)
+		// Only use history.go() when real in-app history exists for this
+		// session.  entry.pos > _restoredPos means at least one pushState
+		// was called after this page loaded, so we have genuine back-history.
+		// When entry.pos === _restoredPos the page was either refreshed or
+		// opened directly — history.go() would replay stale pre-refresh
+		// entries, so we navigate programmatically instead.
+		if (entry.pos > _restoredPos)
 		{
 			globalThis.history.go(-stepsBack);
 			return;
 		}
 
-		const fallback = entry.sourcePath || props.backUrl;
+		// Programmatic fallback: prefer the captured source path (the page
+		// the user came from), then the explicit backUrl prop.  backUrl is
+		// always the reliable last resort (e.g. after a refresh where
+		// router.lastPath is null).
+		const fallback = props.backUrl;
 		if (fallback)
 		{
-			// @ts-ignore
-			app.navigate(fallback);
+			router.navigate(fallback);
 		}
 	};
 };
@@ -357,3 +409,4 @@ export const LoadingButton = Atom((props, children) =>
 });
 
 export { CircleButton, CircleToggleButton, ToggleButton } from './toggle-button.js';
+
