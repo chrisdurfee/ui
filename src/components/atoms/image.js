@@ -10,7 +10,7 @@ import { Atom } from '@base-framework/base';
  * @returns {object}
  */
 // @ts-ignore
-export const Image = Atom(({ src, alt, class: className, checkPath = true }) =>
+export const Image = Atom(({ src, alt, class: className, checkPath = true, loading = 'lazy', decoding = 'async', fetchPriority = 'auto' }) =>
 {
 	if (!src)
 	{
@@ -32,6 +32,9 @@ export const Image = Atom(({ src, alt, class: className, checkPath = true }) =>
 		class: `absolute w-full h-full object-cover fadeIn ${className}`,
 		src,
 		alt,
+		loading,
+		decoding,
+		fetchPriority,
 
 		load: (event) => event.target.style.visibility = 'visible',
 
