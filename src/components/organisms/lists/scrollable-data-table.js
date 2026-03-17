@@ -22,6 +22,7 @@ export { CheckboxCol, HeaderCol, TableHeader };
  * @property {function} [props.selectRow] - The function to select a row.
  * @property {string} [props.border] - The border to add to the table.
  * @property {object} [props.data] - The table data.
+ * @property {string} [props.xhrMethod='all'] - The method name to call on data.xhr.
  * @property {string} [props.cache] - The table cache identifier.
  * @property {object|null} [props.emptyState] - The empty state to show when there are no items.
  * @property {boolean|object} [props.skeleton] - Skeleton configuration. Can be true for default or object with { number: 5, row: customRowFunction }
@@ -56,6 +57,8 @@ export const ScrollableDataTable = Atom((props) => (
 		customHeader: props.customHeader,
 		// @ts-ignore
 		border: props.border,
+		// @ts-ignore
+		xhrMethod: props.xhrMethod,
 		// @ts-ignore
 		emptyState: props.emptyState,
 		// @ts-ignore

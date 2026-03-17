@@ -18,6 +18,7 @@ export const DynamicTableBody = (props) => (
 		limit: props.limit,
 		key: props.key,
 		tableData: props.tableData,
+		xhrMethod: props.xhrMethod,
 		items: props.items,
 		rowItem: (row) => props.rowItem(row, props.selectRow),
 		class: 'divide-y divide-border',
@@ -38,6 +39,7 @@ export const DynamicTableBody = (props) => (
  * @property {string} [props.class] - The class to add to the list.
  * @property {string} [props.key] - The key to use to identify the items.
  * @property {object} [props.tableData] - The table data.
+ * @property {string} [props.xhrMethod='all'] - The method name to call on data.xhr.
  * @property {array} [props.rows] - The initial rows.
  * @property {function} [props.rowItem] - The row item.
  * @property {string} [props.containerClass] - The class to add to the scroll container.
@@ -82,6 +84,8 @@ export class DynamicTable extends DataTable
 						class: this.class,
 						// @ts-ignore
 						tableData: this.tableData,
+						// @ts-ignore
+						xhrMethod: this.xhrMethod,
 						// @ts-ignore
 						key: this.key,
 						// @ts-ignore
