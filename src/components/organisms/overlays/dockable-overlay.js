@@ -3,10 +3,9 @@ import { DataTracker } from "@base-framework/base";
 import { Overlay } from "./overlay.js";
 
 /**
- * This will register the dockable overlay type
- * to the data tracker to track if the
- * container is being removed and the component
- * is not docked.
+ * This will register the dockable overlay type to the data tracker.
+ * When the container is removed, if the component is not docked it
+ * will be destroyed.
  */
 DataTracker.addType('dockableOverlay', (data) =>
 {
@@ -15,10 +14,6 @@ DataTracker.addType('dockableOverlay', (data) =>
 		return;
 	}
 
-	/**
-	 * This will check if the component is rendered and not docked
-	 * and then destroy it.
-	 */
 	const component = data.component;
 	if (component && component.rendered === true && component.state.docked === false)
 	{
@@ -29,7 +24,8 @@ DataTracker.addType('dockableOverlay', (data) =>
 /**
  * DockableOverlay
  *
- * This will create an dockable overlay.
+ * A dockable overlay that renders inline when the viewport is wide enough
+ * and as a full-screen overlay when it is not.
  *
  * @class
  * @extends Overlay
@@ -37,14 +33,41 @@ DataTracker.addType('dockableOverlay', (data) =>
 export class DockableOverlay extends Overlay
 {
 	/**
-	 * This will stop presistence.
+	 * This will declare the props for the component.
+	 *
+	 * @returns {void}
+	 */
+	declareProps()
+	{
+		super.declareProps();
+
+		/**
+		 * @member {string|null} animateIn
+		 * @default null
+		 */
+		this.animateIn = null;
+
+		/**
+		 * @member {string|null} animateOut
+		 * @default null
+		 */
+		this.animateOut = null;
+
+		/**
+		 * @member {number} maxSize - Viewport width threshold at which the overlay docks.
+		 * @default 1024
+		 */
+		this.maxSize = 1024;
+	}
+
+	/**
+	 * This will set the dock size threshold from the maxSize prop.
 	 *
 	 * @returns {void}
 	 */
 	onCreated()
 	{
-		// @ts-ignore
-		this.dockSize = this.maxSize || 1024;
+		this.dockSize = this.maxSize;
 	}
 
 	/**
@@ -54,14 +77,11 @@ export class DockableOverlay extends Overlay
 	 */
 	render()
 	{
-		// @ts-ignore - container is set via setup() and is an HTMLElement
 		const originalContainer = this.container;
 
 		return Div(
 			{
-				// @ts-ignore
 				animateIn: this.animateIn ?? null,
-				// @ts-ignore
 				animateOut: this.animateOut ?? null,
 				onState: [
 					['loading', {
@@ -72,14 +92,13 @@ export class DockableOverlay extends Overlay
 						if (docked)
 						{
 							ele.className = this.getDockedClassName();
-							// @ts-ignore - originalContainer is HTMLElement
+							// @ts-ignore
 							originalContainer.appendChild(ele);
 						}
 						else
 						{
 							ele.className = this.getClassName();
-							// @ts-ignore
-							app.root.appendChild(ele);
+							globalThis.app.root.appendChild(ele);
 						}
 					}]
 				]
@@ -97,13 +116,13 @@ export class DockableOverlay extends Overlay
 	 */
 	getDockedClassName()
 	{
-		return 'flex flex-auto flex-col bg-background flex will-change-contents ' + (this.class || '');
+		return `flex flex-auto flex-col bg-background will-change-contents ${this.class || ''}`.trim();
 	}
 
 	/**
-	 * This will setup and render the component.
+	 * This will set up and render the component inside the given container.
 	 *
-	 * @param {object} container
+	 * @param {HTMLElement} container
 	 * @returns {void}
 	 */
 	setup(container)
@@ -126,22 +145,15 @@ export class DockableOverlay extends Overlay
 	}
 
 	/**
-	 * This will check the dock size.
+	 * This will register this overlay with the data tracker and
+	 * perform an initial dock-state check.
 	 *
 	 * @returns {void}
 	 */
 	afterSetup()
 	{
-		/**
-		 * This will add the dockable overlay to the data tracker
-		 * so we can keep track of it.
-		 */
 		// @ts-ignore
-		DataTracker.add(this.container, 'dockableOverlay',
-		{
-			component: this
-		});
-
+		DataTracker.add(this.container, 'dockableOverlay', { component: this });
 		this.onResize();
 	}
 
@@ -158,23 +170,24 @@ export class DockableOverlay extends Overlay
 	}
 
 	/**
-	 * This will check if the overlay can dock.
+	 * This will check if the viewport is wide enough to dock the overlay.
 	 *
 	 * @returns {boolean}
 	 */
 	canDock()
 	{
-		return (globalThis.innerWidth >= this.dockSize);
+		// @ts-ignore
+		return globalThis.innerWidth >= this.dockSize;
 	}
 
 	/**
-	 * This will handle the overlay resize.
+	 * This will update the docked state when the viewport is resized.
 	 *
 	 * @returns {void}
 	 */
 	onResize()
 	{
-		// @ts-ignore - docked is declared in setupStates
+		// @ts-ignore
 		this.state.docked = this.canDock();
 	}
 }
