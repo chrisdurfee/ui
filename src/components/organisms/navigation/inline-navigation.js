@@ -89,7 +89,16 @@ export class InlineNavigation extends Navigation
  * @param {string} url
  * @returns {boolean}
  */
-const isPathActive = (path, url) => new RegExp(`${path}($|/|\\.).*`).test(url);
+const pathRegexCache = new Map();
+
+const isPathActive = (path, url) =>
+{
+	if (!pathRegexCache.has(path))
+	{
+		pathRegexCache.set(path, new RegExp(`${path}($|/|\\.).*`));
+	}
+	return pathRegexCache.get(path).test(url);
+};
 
 /**
  * This will check if a link is active.

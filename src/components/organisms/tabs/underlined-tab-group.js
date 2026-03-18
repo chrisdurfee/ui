@@ -33,8 +33,7 @@ const UnderlinedTabButton = (props) => (
  */
 const addOption = (option, callBack) =>
 {
-	option.callBack = callBack;
-	return UnderlinedTabButton(option);
+	return UnderlinedTabButton({ ...option, callBack });
 };
 
 /**

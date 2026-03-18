@@ -9,22 +9,18 @@ import { NavButton, TitleHeader } from "./title-header.js";
  *
  * @param {array} options
  * @param {function} callBack
- * @returns {void}
+ * @returns {Array<object>}
  */
 const mapCloseCallBack = (options, callBack) =>
 {
-	options.forEach(option =>
+	return options.map(option =>
 	{
 		if (option.options)
 		{
-			mapCloseCallBack(option.options, callBack);
-			return;
+			return { ...option, options: mapCloseCallBack(option.options, callBack) };
 		}
 
-		/**
-		 * We also want to add a callBack to ignore the hover to the main options.
-		 */
-		option.callBack = callBack;
+		return { ...option, callBack };
 	});
 };
 
@@ -44,11 +40,11 @@ const MobileNav = (props) =>
 					UseParent(({ state }) =>
 					{
 						const closeCallBack = (e) => state.open = false;
-						mapCloseCallBack(props.options, closeCallBack);
+						const mappedOptions = mapCloseCallBack(props.options, closeCallBack);
 
 						return new InlineNavigation(
 						{
-							options: props.options
+							options: mappedOptions
 						});
 					})
 				])

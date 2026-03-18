@@ -9,7 +9,16 @@ import { Veil } from "../../../components/atoms/veil.js";
  * @param {string} url
  * @returns {boolean}
  */
-const isPathActive = (path, url) => new RegExp(`${path}($|/|\\.).*`).test(url);
+const pathRegexCache = new Map();
+
+const isPathActive = (path, url) =>
+{
+	if (!pathRegexCache.has(path))
+	{
+		pathRegexCache.set(path, new RegExp(`${path}($|/|\\.).*`));
+	}
+	return pathRegexCache.get(path).test(url);
+};
 
 /**
  * This will check if a link is active.
@@ -83,6 +92,7 @@ export class TabNavigation extends Veil
 	beforeSetup()
 	{
 		this.links = [];
+		this.activeLink = null;
 	}
 
 	/**
@@ -124,11 +134,9 @@ export class TabNavigation extends Veil
 	 */
 	updateLinks(value)
 	{
-		let check = false,
 		// @ts-ignore
-		firstLink = this.links[0];
-
-		this.deactivateAllLinks();
+		const firstLink = this.links[0];
+		let newActiveLink = null;
 
 		// @ts-ignore
 		for (const link of this.links)
@@ -138,32 +146,33 @@ export class TabNavigation extends Veil
 				continue;
 			}
 
-			check = isLinkActive(link, value);
-			if (check === true)
+			if (isLinkActive(link, value))
 			{
-				this.updateLink(link, true);
+				newActiveLink = link;
 				break;
 			}
 		}
 
-		if (check !== true && firstLink)
+		if (newActiveLink === null && firstLink)
 		{
-			this.updateLink(firstLink, true);
+			newActiveLink = firstLink;
 		}
-	}
 
-	/**
-	 * This will deactivate all links.
-	 *
-	 * @returns {void}
-	 */
-	deactivateAllLinks()
-	{
+		// Only update the two links that actually change state
 		// @ts-ignore
-		for (const link of this.links)
+		if (this.activeLink && this.activeLink !== newActiveLink)
 		{
-			this.updateLink(link, false);
+			// @ts-ignore
+			this.updateLink(this.activeLink, false);
 		}
+
+		if (newActiveLink && newActiveLink !== this.activeLink)
+		{
+			this.updateLink(newActiveLink, true);
+		}
+
+		// @ts-ignore
+		this.activeLink = newActiveLink;
 	}
 
 	/**
@@ -200,6 +209,7 @@ export class TabNavigation extends Veil
 	beforeDestroy()
 	{
 		this.links = [];
+		this.activeLink = null;
 	}
 }
 

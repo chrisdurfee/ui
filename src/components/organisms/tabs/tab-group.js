@@ -33,8 +33,7 @@ const TabButton = (props) => (
  */
 const addOption = (option, callBack) =>
 {
-	option.callBack = callBack;
-	return TabButton(option);
+	return TabButton({ ...option, callBack });
 };
 
 /**

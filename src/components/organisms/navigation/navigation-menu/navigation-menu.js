@@ -1,6 +1,8 @@
 import { Nav, Ul } from "@base-framework/atoms";
 import { Component, NavLink, router } from "@base-framework/base";
 
+const pathRegexCache = new Map();
+
 /**
  * This will validate if a path is active.
  *
@@ -8,7 +10,14 @@ import { Component, NavLink, router } from "@base-framework/base";
  * @param {string} url
  * @returns {boolean}
  */
-const isPathActive = (path, url) => url.includes(path);
+const isPathActive = (path, url) =>
+{
+	if (!pathRegexCache.has(path))
+	{
+		pathRegexCache.set(path, new RegExp(`${path}($|/|\\.).*`));
+	}
+	return pathRegexCache.get(path).test(url);
+};
 
 /**
  * This will check if a link is active.
@@ -79,6 +88,7 @@ export class NavigationMenu extends Component
 		 * @type {array} links - This will hold the links for the navigation.
 		 */
 		this.links = [];
+		this.activeLink = null;
 	}
 
 	/**
@@ -121,8 +131,9 @@ export class NavigationMenu extends Component
 	 */
 	updateLinks(path)
 	{
-		let activeLinkSet = false;
-		this.deactivateAllLinks();
+		// @ts-ignore
+		const firstLink = this.links[0] ?? null;
+		let newActiveLink = null;
 
 		// @ts-ignore
 		for (const link of this.links)
@@ -132,39 +143,33 @@ export class NavigationMenu extends Component
 				continue;
 			}
 
-			const isActive = isLinkActive(link, link.getLinkPath(), path);
-			if (isActive)
+			if (isLinkActive(link, link.getLinkPath(), path))
 			{
-				this.updateLink(link, true);
-				activeLinkSet = true;
-			}
-			else
-			{
-				this.updateLink(link, false);
+				newActiveLink = link;
+				break;
 			}
 		}
 
-		// Fallback to set the first link active if none match
-		// @ts-ignore
-		const firstLink = this?.links[0] ?? null;
-		if (!activeLinkSet && firstLink)
+		if (newActiveLink === null && firstLink)
 		{
-			this.updateLink(firstLink, true);
+			newActiveLink = firstLink;
 		}
-	}
 
-	/**
-	 * This will deactivate all links.
-	 *
-	 * @returns {void}
-	 */
-	deactivateAllLinks()
-	{
+		// Only update the two links that actually change state
 		// @ts-ignore
-		for (const link of this.links)
+		if (this.activeLink && this.activeLink !== newActiveLink)
 		{
-			this.updateLink(link, false);
+			// @ts-ignore
+			this.updateLink(this.activeLink, false);
 		}
+
+		if (newActiveLink && newActiveLink !== this.activeLink)
+		{
+			this.updateLink(newActiveLink, true);
+		}
+
+		// @ts-ignore
+		this.activeLink = newActiveLink;
 	}
 
 	/**
@@ -202,7 +207,9 @@ export class NavigationMenu extends Component
 	beforeDestroy()
 	{
 		this.links = [];
+		this.activeLink = null;
 	}
+
 }
 
 export default NavigationMenu;
