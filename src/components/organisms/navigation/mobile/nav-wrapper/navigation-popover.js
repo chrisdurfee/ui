@@ -78,6 +78,7 @@ export class NavigationPopover extends Component
 	setupStates()
 	{
 		const parent = this.parent;
+		// @ts-ignore
 		const id = parent.getId();
 
 		return {

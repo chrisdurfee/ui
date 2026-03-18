@@ -26,7 +26,7 @@ let _navPosition = globalThis.history?.state?._pos ?? 0;
  *  - `sourcePath` — `router.lastPath` at entry time (the page you came from)
  *  - `basePath`   — the current page's root path (used for same-page validation)
  *
- * @type {Map<string, { pos: number, sourcePath: string|null, basePath: string }>}
+ * @type {Map<string, { key: string, pos: number, sourcePath: string|null, basePath: string }>}
  */
 const _sourceCache = new Map();
 
@@ -89,6 +89,24 @@ const _derivePageRoot = (currentPath, backUrl) =>
 	return back + '/' + afterSlash.substring(0, nextSlash);
 };
 
+/**
+ * Returns true when the current page load is a browser reload.
+ *
+ * @returns {boolean}
+ */
+const _isReload = () =>
+{
+	try
+	{
+		const nav = /** @type {any} */ (globalThis.performance?.getEntriesByType?.('navigation')?.[0]);
+		return nav?.type === 'reload';
+	}
+	catch (e)
+	{
+		return false;
+	}
+};
+
 /* istanbul ignore else -- SSR / non-browser guard */
 if (typeof globalThis.history?.pushState === 'function')
 {
@@ -140,23 +158,36 @@ if (typeof globalThis.history?.pushState === 'function')
 }
 
 /**
- * Embeds `_entryPos` into the current `history.state` via replaceState
- * so that the entry position survives a page refresh.  Called whenever
- * an entry is created or retrieved from the cache (on every render of
- * the back button, including after tab switches that cause a pushState).
+ * Persists entry metadata into `history.state` so it survives refresh and
+ * browser back/forward revisits.
  *
- * @param {number} pos
+ * @param {{ key: string, pos: number, sourcePath: string|null, basePath: string }} entry
  * @returns {void}
  */
-const _persistEntryPos = (pos) =>
+const _persistEntryState = (entry) =>
 {
-	const state = globalThis.history?.state;
-	if (state?._entryPos === pos) return;
+	const state = globalThis.history?.state || {};
+
+	if (
+		state._entryKey === entry.key
+		&& state._entryPos === entry.pos
+		&& state._entrySourcePath === entry.sourcePath
+		&& state._entryBasePath === entry.basePath
+	)
+	{
+		return;
+	}
 
 	try
 	{
 		globalThis.history.replaceState(
-			{ ...(state || {}), _entryPos: pos },
+			{
+				...state,
+				_entryKey: entry.key,
+				_entryPos: entry.pos,
+				_entrySourcePath: entry.sourcePath,
+				_entryBasePath: entry.basePath
+			},
 			'',
 			globalThis.location?.href
 		);
@@ -173,38 +204,54 @@ const _persistEntryPos = (pos) =>
  * caused by OnRoute after a tab switch) return the *original* entry
  * so that step calculations remain correct.
  *
- * The entry's `pos` is also persisted in `history.state._entryPos`
- * via replaceState so that it survives page refreshes.  After a
- * refresh the persisted value is read back, giving `history.go()`
- * the correct step count even though the in-memory cache was lost.
+ * Entry metadata is persisted into `history.state` so refreshes and
+ * popstate revisits can restore the original source/position context.
  *
  * @param {string} [backUrl]
- * @returns {{ pos: number, sourcePath: string|null, basePath: string }}
+ * @returns {{ key: string, pos: number, sourcePath: string|null, basePath: string }}
  */
 const _getSourceEntry = (backUrl) =>
 {
-	const key = backUrl || '';
+	const state = globalThis.history?.state || {};
 	const currentPath = router.path || '';
+	const basePath = _derivePageRoot(currentPath, backUrl);
+	const persistedBasePath = state._entryBasePath;
+	const canReusePersisted = typeof persistedBasePath === 'string'
+		&& persistedBasePath.length > 0
+		&& _isSamePage(currentPath, persistedBasePath);
+
+	const stateKey = (canReusePersisted && typeof state._entryKey === 'string' && state._entryKey)
+		? state._entryKey
+		: `${backUrl || ''}|${basePath}|${_navPosition}`;
+
+	const key = stateKey;
 
 	const existing = _sourceCache.get(key);
 	if (existing && _isSamePage(currentPath, existing.basePath))
 	{
-		_persistEntryPos(existing.pos);
+		_persistEntryState(existing);
 		return existing;
 	}
 
-	// After a refresh the in-memory cache is empty, but the entry
-	// position may have been persisted in history.state._entryPos.
-	const persistedPos = globalThis.history?.state?._entryPos;
+	const persistedPos = canReusePersisted ? state._entryPos : undefined;
+	const persistedSourcePath = canReusePersisted ? state._entrySourcePath : undefined;
+
 	const pos = (typeof persistedPos === 'number') ? persistedPos : _navPosition;
+	const sourcePath = (typeof persistedSourcePath === 'string' || persistedSourcePath === null)
+		? persistedSourcePath
+		: (router.lastPath || null);
+	const restoredBasePath = (canReusePersisted && typeof persistedBasePath === 'string' && persistedBasePath)
+		? persistedBasePath
+		: basePath;
 
 	const entry = {
+		key,
 		pos,
-		sourcePath: router.lastPath || null,
-		basePath: _derivePageRoot(currentPath, backUrl)
+		sourcePath,
+		basePath: restoredBasePath
 	};
 
-	_persistEntryPos(pos);
+	_persistEntryState(entry);
 	_sourceCache.set(key, entry);
 	return entry;
 };
@@ -217,7 +264,16 @@ const _getSourceEntry = (backUrl) =>
  */
 const _clearSourceEntry = (backUrl) =>
 {
-	_sourceCache.delete(backUrl || '');
+	const stateKey = globalThis.history?.state?._entryKey;
+	if (typeof stateKey === 'string' && stateKey)
+	{
+		_sourceCache.delete(stateKey);
+	}
+
+	if (backUrl)
+	{
+		_sourceCache.delete(backUrl);
+	}
 };
 
 /**
@@ -243,6 +299,7 @@ const _clearSourceEntry = (backUrl) =>
  */
 export const backCallBack = (props) =>
 {
+	const reloaded = _isReload();
 	const entry = _getSourceEntry(props.backUrl);
 
 	return () =>
@@ -250,19 +307,29 @@ export const backCallBack = (props) =>
 		_clearSourceEntry(props.backUrl);
 
 		const stepsBack = (_navPosition - entry.pos) + 1;
+		const sourcePath = entry.sourcePath;
+		const hasValidSource = typeof sourcePath === 'string'
+			&& sourcePath.length > 0
+			&& !_isSamePage(sourcePath, entry.basePath);
 
 		// entry.pos > 0 means the user arrived here via at least one
 		// in-app pushState — real backward history exists.  The entry
 		// position may have been restored from history.state._entryPos
 		// after a page refresh, so this works across refreshes too.
-		if (entry.pos > 0)
+		if (!reloaded && entry.pos > 0)
 		{
 			globalThis.history.go(-stepsBack);
 			return;
 		}
 
-		// No in-app history before this page (direct link, new tab,
-		// or first page in the session).  Navigate programmatically.
+		// On reload (or when no backward history exists), prefer the
+		// captured source area when available; otherwise use backUrl.
+		if (hasValidSource)
+		{
+			router.navigate(sourcePath);
+			return;
+		}
+
 		if (props.backUrl)
 		{
 			router.navigate(props.backUrl);

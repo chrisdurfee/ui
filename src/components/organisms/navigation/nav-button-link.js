@@ -54,6 +54,7 @@ export class NavButtonLink extends Component
 			],
 			click: () =>
 			{
+				// @ts-ignore
 				state.toggle('active');
 
 				if (!this.checkCallBack)
@@ -91,6 +92,7 @@ export class NavButtonLink extends Component
 	 */
 	update(selected)
 	{
+		// @ts-ignore
 		this.state.set({
 			selected,
 			active: selected
