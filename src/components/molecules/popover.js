@@ -116,8 +116,13 @@ export class PopOver extends Component
 	render()
 	{
 		const size = this.getSize();
+		// @ts-ignore
+		const customClass = this.class || '';
+		const bgClass = (customClass.includes('bg-')) ? '' : 'bg-popover';
+		const roundedClass = (customClass.includes('rounded')) ? '' : 'rounded-md';
+
 		return Div({
-			class: `absolute inset-auto fadeIn mt-2 rounded-md p-0 shadow-lg bg-popover min-h-12 backdrop:bg-transparent text-inherit r z-30 ${size}`,
+			class: `absolute inset-auto fadeIn mt-2 p-0 shadow-lg ${bgClass} ${roundedClass} min-h-12 backdrop:bg-transparent text-inherit r z-30 ${size} ${customClass}`,
 			popover: 'manual',
 			toggle: (e, { state }) => (e.newState === 'closed')? state.open = false : null,
 			style: 'top: [[position.y]]px; left: [[position.x]]px'

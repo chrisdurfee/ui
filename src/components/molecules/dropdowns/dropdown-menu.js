@@ -1,5 +1,6 @@
-import { Button, Div, OnState, Span } from '@base-framework/atoms';
+import { Button as BaseButton, Div, OnState, Span } from '@base-framework/atoms';
 import { Component, Data } from '@base-framework/base';
+import { Button } from '../../atoms/buttons/buttons.js';
 import { UniversalIcon } from '../../atoms/universal-icon.js';
 import { PopOver } from '../popover.js';
 import { Dropdown } from './dropdown.js';
@@ -10,18 +11,32 @@ import { Dropdown } from './dropdown.js';
  * @param {object} props
  * @returns {object}
  */
-const DropdownButton = ({ label, icon, toggleDropdown }) => (
-	Button({
+const DropdownButton = ({ label, icon, toggleDropdown, variant, btnClass }) =>
+{
+	if (variant !== null && variant !== undefined)
+	{
+		return Button({
+			cache: 'button',
+			variant,
+			class: btnClass || '',
+			click: toggleDropdown
+		}, [
+			label && Span(label),
+			icon && UniversalIcon({}, icon)
+		]);
+	}
+
+	return BaseButton({
 		cache: 'button',
 		class: `inline-flex items-center justify-between rounded-md border
 			px-2 py-2 text-sm font-medium hover:bg-muted
-			focus:outline-none transition duration-150 ease-in-out`,
+			focus:outline-none transition duration-150 ease-in-out ${btnClass || ''}`,
 		click: toggleDropdown
 	}, [
 		label && Span(label),
 		icon && UniversalIcon({}, icon)
-	])
-);
+	]);
+};
 
 /**
  * This will render a dropdown container.
@@ -29,12 +44,13 @@ const DropdownButton = ({ label, icon, toggleDropdown }) => (
  * @param {object} props
  * @returns {object}
  */
-const DropdownContainer = ({ onSelect }) => (
+const DropdownContainer = ({ onSelect, class: popoverClass }) => (
 	Div([
 		OnState('open', (isOpen, ele, parent) => (!isOpen)
 			? null
 			: new PopOver({
 				cache: 'dropdown',
+				class: popoverClass || '',
 				parent: parent,
 				button: parent.button,
 			}, [
@@ -82,6 +98,21 @@ export class DropdownMenu extends Component
 		 * @member {array} groups
 		 */
 		this.groups = [];
+
+		/**
+		 * @member {string|null} variant - Button variant (e.g. 'ghost', 'outline', 'primary').
+		 */
+		this.variant = null;
+
+		/**
+		 * @member {string|null} btnClass - Additional CSS classes for the button.
+		 */
+		this.btnClass = null;
+
+		/**
+		 * @member {string|null} class - Additional CSS classes for the dropdown container.
+		 */
+		this.popoverClass = null;
 	}
 
 	/**
@@ -150,9 +181,11 @@ export class DropdownMenu extends Component
 			DropdownButton({
 				label: this.label,
 				icon: this.icon,
-				toggleDropdown: this.toggleDropdown.bind(this)
+				toggleDropdown: this.toggleDropdown.bind(this),
+				variant: this.variant,
+				btnClass: this.btnClass
 			}),
-			DropdownContainer({ onSelect: this.handleSelect.bind(this) })
+			DropdownContainer({ class: this.popoverClass, onSelect: this.handleSelect.bind(this) })
 		]);
 	}
 }
