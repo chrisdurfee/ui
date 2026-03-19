@@ -15,8 +15,9 @@ DataTracker.addType('dockableOverlay', (data) =>
 	}
 
 	const component = data.component;
-	if (component && component.rendered === true && component.state.docked === false)
+	if (component && component.rendered === true)
 	{
+		component.state.docked = false;
 		component.destroy();
 	}
 });
@@ -58,6 +59,12 @@ export class DockableOverlay extends Overlay
 		 * @default 1024
 		 */
 		this.maxSize = 1024;
+
+		/**
+		 * @member {string} class
+		 * @default ''
+		 */
+		this.zIndex = 'z-30';
 	}
 
 	/**

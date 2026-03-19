@@ -60,7 +60,7 @@ const formatPhoneNumber = (e) =>
  * actual placeholder so the label serves as a visual placeholder.
  */
 const FLOATING_INPUT_CLASSES = [
-	'peer w-full h-14 px-3 pt-5 pb-1',
+	'peer w-full min-w-0 h-14 px-3 pt-5 pb-1',
 	'text-base text-foreground',
 	borderClass,
 	focusClass,

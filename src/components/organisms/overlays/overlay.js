@@ -39,6 +39,12 @@ export class Overlay extends Component
 		 * @default ''
 		 */
 		this.class = '';
+
+		/**
+		 * @member {string} class
+		 * @default ''
+		 */
+		this.zIndex = 'z-20';
 	}
 
 	/**
@@ -72,7 +78,7 @@ export class Overlay extends Component
 	 */
 	getClassName()
 	{
-		return `absolute flex flex-auto flex-col overlay left-0 top-0 right-0 z-20
+		return `absolute flex flex-auto flex-col overlay left-0 top-0 right-0 ${this.zIndex}
 			h-svh max-h-svh min-h-svh
 			bg-background pointer-events-auto
 			lg:left-16
