@@ -190,6 +190,17 @@ export class DockableOverlay extends Overlay
 		// @ts-ignore
 		this.state.docked = this.canDock();
 	}
+
+	/**
+	 * docks the overlay before the component is destroyed to ensure it is in the correct container
+	 *
+	 * @returns {void}
+	 */
+	beforeDestroy()
+	{
+		// @ts-ignore
+		this.state.docked = false;
+	}
 }
 
 export default DockableOverlay;
