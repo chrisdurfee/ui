@@ -1,4 +1,5 @@
 import { Li, Span } from '@base-framework/atoms';
+import { UniversalIcon } from '../../atoms/universal-icon';
 
 /**
  * This will create a shortcut span.
@@ -39,7 +40,7 @@ export const DropdownItem = (props, onClick) =>
 		class: `relative flex cursor-pointer hover:bg-muted/50 select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0`,
 		click: () => onClick(props),
 	}, [
-		props.icon && Icon(props.icon),
+		props.icon && UniversalIcon({ class: 'sm' }, props.icon),
 		Label(props.label),
 		props.shortcut && Shortcut(props.shortcut),
 	]);

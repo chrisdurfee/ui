@@ -1,5 +1,6 @@
-import { Button, Div, I, OnState, Span } from '@base-framework/atoms';
+import { Button, Div, OnState, Span } from '@base-framework/atoms';
 import { Component, Data } from '@base-framework/base';
+import { UniversalIcon } from '../../atoms/universal-icon.js';
 import { PopOver } from '../popover.js';
 import { Dropdown } from './dropdown.js';
 
@@ -18,7 +19,7 @@ const DropdownButton = ({ label, icon, toggleDropdown }) => (
 		click: toggleDropdown
 	}, [
 		label && Span(label),
-		icon && I({ html: icon })
+		icon && UniversalIcon({}, icon)
 	])
 );
 
