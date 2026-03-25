@@ -54,15 +54,25 @@ export const Format =
 	 */
 	number(watcher, defaultValue = null)
 	{
+		const formatter = (typeof Intl !== 'undefined')
+			? new Intl.NumberFormat()
+			: null;
+
 		const callBack = (value) =>
 		{
-			if (!isNaN(value))
+			const numeric = Number(value);
+			if (isNaN(numeric))
 			{
-				const pattern = /\B(?=(\d{3})+(?!\d))/g;
-				return value.toString().replace(pattern, ',');
+				return defaultValue || '';
 			}
 
-			return defaultValue || '';
+			if (formatter)
+			{
+				return formatter.format(numeric);
+			}
+
+			const pattern = /\B(?=(\d{3})+(?!\d))/g;
+			return numeric.toString().replace(pattern, ',');
 		};
 
 		return createWatcherCallback(watcher, callBack);
@@ -97,12 +107,24 @@ export const Format =
 	 */
 	money(watcher, currency = '$', defaultValue = null, round = false)
 	{
+		const formatter = (typeof Intl !== 'undefined')
+			? new Intl.NumberFormat(undefined, {
+				minimumFractionDigits: round ? 0 : 2,
+				maximumFractionDigits: round ? 0 : 2
+			})
+			: null;
+
 		const callBack = (value) =>
 		{
 			const numeric = parseFloat(value);
 			if (isNaN(numeric))
 			{
 				return currency + defaultValue || '';
+			}
+
+			if (formatter)
+			{
+				return currency + formatter.format(numeric);
 			}
 
 			const pattern = /\B(?=(\d{3})+(?!\d))/g;
@@ -122,12 +144,24 @@ export const Format =
 	 */
 	roundMoney(watcher, currency = '$', defaultValue = null)
 	{
+		const formatter = (typeof Intl !== 'undefined')
+			? new Intl.NumberFormat(undefined, {
+				minimumFractionDigits: 0,
+				maximumFractionDigits: 0
+			})
+			: null;
+
 		const callBack = (value) =>
 		{
 			const numeric = parseFloat(value);
 			if (isNaN(numeric))
 			{
 				return currency + defaultValue || '';
+			}
+
+			if (formatter)
+			{
+				return currency + formatter.format(Math.round(numeric));
 			}
 
 			const pattern = /\B(?=(\d{3})+(?!\d))/g;
@@ -188,9 +222,27 @@ export const Format =
 	 */
 	date(watcher, defaultValue = null)
 	{
+		const formatter = (typeof Intl !== 'undefined')
+			? new Intl.DateTimeFormat(undefined, {
+				year: 'numeric',
+				month: '2-digit',
+				day: '2-digit'
+			})
+			: null;
+
 		const callBack = (value) =>
 		{
-			return (value)? DateTime.format('standard', value) : (defaultValue || '');
+			if (!value)
+			{
+				return defaultValue || '';
+			}
+
+			if (formatter)
+			{
+				return formatter.format(new Date(value));
+			}
+
+			return DateTime.format('standard', value);
 		};
 
 		return createWatcherCallback(watcher, callBack);
@@ -205,9 +257,30 @@ export const Format =
 	 */
 	dateTime(watcher, defaultValue = null)
 	{
+		const formatter = (typeof Intl !== 'undefined')
+			? new Intl.DateTimeFormat(undefined, {
+				year: 'numeric',
+				month: '2-digit',
+				day: '2-digit',
+				hour: 'numeric',
+				minute: '2-digit',
+				hour12: true
+			})
+			: null;
+
 		const callBack = (value) =>
 		{
-			return (value)? DateTime.format('standard', value) + ' ' + DateTime.formatTime(value, 12) : (defaultValue || '');
+			if (!value)
+			{
+				return defaultValue || '';
+			}
+
+			if (formatter)
+			{
+				return formatter.format(new Date(value));
+			}
+
+			return DateTime.format('standard', value) + ' ' + DateTime.formatTime(value, 12);
 		};
 
 		return createWatcherCallback(watcher, callBack);
@@ -222,9 +295,27 @@ export const Format =
 	 */
 	time(watcher, defaultValue = null)
 	{
+		const formatter = (typeof Intl !== 'undefined')
+			? new Intl.DateTimeFormat(undefined, {
+				hour: 'numeric',
+				minute: '2-digit',
+				hour12: true
+			})
+			: null;
+
 		const callBack = (value) =>
 		{
-			return (value)? DateTime.formatTime(value, 12) : (defaultValue || '');
+			if (!value)
+			{
+				return defaultValue || '';
+			}
+
+			if (formatter)
+			{
+				return formatter.format(new Date(value));
+			}
+
+			return DateTime.formatTime(value, 12);
 		};
 
 		return createWatcherCallback(watcher, callBack);
@@ -254,12 +345,27 @@ export const Format =
 	 */
 	percentage(watcher, decimals = 0, isDecimal = false, defaultValue = null)
 	{
+		const formatter = (typeof Intl !== 'undefined')
+			? new Intl.NumberFormat(undefined, {
+				style: 'percent',
+				minimumFractionDigits: decimals,
+				maximumFractionDigits: decimals
+			})
+			: null;
+
 		const callBack = (value) =>
 		{
 			const numeric = parseFloat(value);
 			if (isNaN(numeric))
 			{
 				return defaultValue || '';
+			}
+
+			if (formatter)
+			{
+				// Intl percent expects decimal form (0.85 = 85%)
+				const decimalValue = isDecimal ? numeric : numeric / 100;
+				return formatter.format(decimalValue);
 			}
 
 			const percentage = isDecimal ? numeric * 100 : numeric;
@@ -406,6 +512,10 @@ export const Format =
 	 */
 	plural(watcher, singular, plural = null, includeCount = true)
 	{
+		const rules = (typeof Intl !== 'undefined' && Intl.PluralRules)
+			? new Intl.PluralRules()
+			: null;
+
 		const callBack = (value) =>
 		{
 			const count = parseInt(value, 10);
@@ -414,7 +524,11 @@ export const Format =
 				return '';
 			}
 
-			const word = count === 1 ? singular : (plural || singular + 's');
+			const isOne = rules
+				? rules.select(count) === 'one'
+				: count === 1;
+
+			const word = isOne ? singular : (plural || singular + 's');
 			return includeCount ? `${count} ${word}` : word;
 		};
 
