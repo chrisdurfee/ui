@@ -60,7 +60,7 @@ const formatPhoneNumber = (e) =>
  * actual placeholder so the label serves as a visual placeholder.
  */
 const FLOATING_INPUT_CLASSES = [
-	'peer w-full min-w-0 h-14 px-3 pt-5 pb-1',
+	'peer w-full min-w-0 max-w-full h-14 px-3 pt-5 pb-1',
 	'text-base text-foreground',
 	borderClass,
 	focusClass,
@@ -213,7 +213,7 @@ export const FloatingInput = Atom((props) =>
 {
 	const id = getFloatingId(props);
 
-	return Div({ class: 'relative' }, [
+	return Div({ class: 'relative min-w-0' }, [
 		BaseInput({
 			...props,
 			id,
@@ -319,7 +319,7 @@ export const FloatingTextarea = Atom((props) =>
 {
 	const id = getFloatingId(props);
 
-	return Div({ class: 'relative' }, [
+	return Div({ class: 'relative min-w-0' }, [
 		BaseTextarea({
 			...props,
 			id,
@@ -352,7 +352,7 @@ export const FloatingSelect = Atom((props) =>
 	const id = getFloatingId(props);
 	const { options, onCreated: userOnCreated, ...attrs } = props;
 
-	return Div({ class: 'relative' }, [
+	return Div({ class: 'relative min-w-0' }, [
 		{
 			tag: 'select',
 			...attrs,
