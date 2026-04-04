@@ -11,7 +11,22 @@ export const createWatcherCallback = (watcher, callBack) =>
 {
 	if (typeof watcher === 'string')
 	{
-		watcher = [watcher];
+		const templateRegex = /^(.*?)\[\[([^\]]+)\]\](.*?)$/;
+		const match = watcher.match(templateRegex);
+		if (match)
+		{
+			const [, prefix, path, suffix] = match;
+			if (prefix || suffix)
+			{
+				const originalCallback = callBack;
+				callBack = (value) => `${prefix}${originalCallback(value)}${suffix}`;
+			}
+			watcher = [path];
+		}
+		else
+		{
+			watcher = [watcher];
+		}
 	}
 
 	if (Array.isArray(watcher))

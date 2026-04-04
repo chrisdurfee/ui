@@ -204,6 +204,12 @@ const _persistEntryState = (entry) =>
  * caused by OnRoute after a tab switch) return the *original* entry
  * so that step calculations remain correct.
  *
+ * The cache key is stable across in-page navigations (tabs /
+ * sub-routes) so that the original entry position is preserved no
+ * matter how many pushState calls happen within the page.  A fresh
+ * visit to the same page from a *different* source is detected by
+ * checking whether `router.lastPath` belongs to this page.
+ *
  * Entry metadata is persisted into `history.state` so refreshes and
  * popstate revisits can restore the original source/position context.
  *
@@ -215,44 +221,67 @@ const _getSourceEntry = (backUrl) =>
 	const state = globalThis.history?.state || {};
 	const currentPath = router.path || '';
 	const basePath = _derivePageRoot(currentPath, backUrl);
+	const stableKey = `${backUrl || ''}|${basePath}`;
+
+	/* ── 1. Restore from persisted history.state ───────────────
+	 * After a popstate (browser back/forward, or returning from a
+	 * child overlay) the current history entry already carries the
+	 * original entry metadata written by _persistEntryState during
+	 * a previous render on this page.
+	 */
 	const persistedBasePath = state._entryBasePath;
 	const canReusePersisted = typeof persistedBasePath === 'string'
 		&& persistedBasePath.length > 0
 		&& _isSamePage(currentPath, persistedBasePath);
 
-	const stateKey = (canReusePersisted && typeof state._entryKey === 'string' && state._entryKey)
-		? state._entryKey
-		: `${backUrl || ''}|${basePath}|${_navPosition}`;
-
-	const key = stateKey;
-
-	const existing = _sourceCache.get(key);
-	if (existing && _isSamePage(currentPath, existing.basePath))
+	if (canReusePersisted && typeof state._entryPos === 'number')
 	{
-		_persistEntryState(existing);
-		return existing;
+		const key = (typeof state._entryKey === 'string' && state._entryKey)
+			? state._entryKey
+			: stableKey;
+
+		const entry = {
+			key,
+			pos: state._entryPos,
+			sourcePath: (typeof state._entrySourcePath === 'string' || state._entrySourcePath === null)
+				? state._entrySourcePath
+				: (router.lastPath || null),
+			basePath: persistedBasePath || basePath
+		};
+
+		_sourceCache.set(key, entry);
+		_persistEntryState(entry);
+		return entry;
 	}
 
-	const persistedPos = canReusePersisted ? state._entryPos : undefined;
-	const persistedSourcePath = canReusePersisted ? state._entrySourcePath : undefined;
+	/* ── 2. Look up in-memory cache (stable key) ──────────────
+	 * On a tab/sub-route click the new pushState entry has no
+	 * persisted metadata yet, but the in-memory cache still holds
+	 * the original entry.  We detect that this is a *same-page*
+	 * re-render (rather than a brand-new visit) by checking whether
+	 * `router.lastPath` is within the same basePath.
+	 */
+	const existing = _sourceCache.get(stableKey);
+	if (existing && _isSamePage(currentPath, existing.basePath))
+	{
+		const lastPath = router.lastPath || '';
+		if (_isSamePage(lastPath, existing.basePath))
+		{
+			_persistEntryState(existing);
+			return existing;
+		}
+	}
 
-	const pos = (typeof persistedPos === 'number') ? persistedPos : _navPosition;
-	const sourcePath = (typeof persistedSourcePath === 'string' || persistedSourcePath === null)
-		? persistedSourcePath
-		: (router.lastPath || null);
-	const restoredBasePath = (canReusePersisted && typeof persistedBasePath === 'string' && persistedBasePath)
-		? persistedBasePath
-		: basePath;
-
+	/* ── 3. Create a new entry ────────────────────────────────── */
 	const entry = {
-		key,
-		pos,
-		sourcePath,
-		basePath: restoredBasePath
+		key: stableKey,
+		pos: _navPosition,
+		sourcePath: router.lastPath || null,
+		basePath
 	};
 
 	_persistEntryState(entry);
-	_sourceCache.set(key, entry);
+	_sourceCache.set(stableKey, entry);
 	return entry;
 };
 
@@ -272,7 +301,9 @@ const _clearSourceEntry = (backUrl) =>
 
 	if (backUrl)
 	{
-		_sourceCache.delete(backUrl);
+		const currentPath = router.path || '';
+		const basePath = _derivePageRoot(currentPath, backUrl);
+		_sourceCache.delete(`${backUrl}|${basePath}`);
 	}
 };
 
