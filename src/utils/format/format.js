@@ -9,6 +9,12 @@ import { DateTime } from "@base-framework/base";
  */
 export const createWatcherCallback = (watcher, callBack) =>
 {
+	// If watcher is a direct value (not a path or template), format immediately and return the string
+	if (typeof watcher === 'number' || typeof watcher === 'boolean' || watcher === null || watcher === undefined)
+	{
+		return callBack(watcher);
+	}
+
 	if (typeof watcher === 'string')
 	{
 		const templateRegex = /^(.*?)\[\[([^\]]+)\]\](.*?)$/;
@@ -21,7 +27,7 @@ export const createWatcherCallback = (watcher, callBack) =>
 				const originalCallback = callBack;
 				callBack = (value) => `${prefix}${originalCallback(value)}${suffix}`;
 			}
-			watcher = [path];
+			watcher = [`[[${path}]]`];
 		}
 		else
 		{

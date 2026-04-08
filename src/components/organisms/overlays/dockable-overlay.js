@@ -123,7 +123,7 @@ export class DockableOverlay extends Overlay
 	 */
 	getDockedClassName()
 	{
-		return `flex flex-auto flex-col bg-background will-change-contents ${this.class || ''}`.trim();
+		return `flex flex-auto flex-col bg-background ${this.class || ''}`.trim();
 	}
 
 	/**

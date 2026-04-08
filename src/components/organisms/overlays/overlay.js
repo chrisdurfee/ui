@@ -78,11 +78,13 @@ export class Overlay extends Component
 	 */
 	getClassName()
 	{
-		return `absolute flex flex-auto flex-col overlay left-0 top-0 right-0 ${this.zIndex}
+		// @ts-ignore
+		const positioning = this.fixed ? 'fixed' : 'absolute';
+		return `${positioning} flex flex-auto flex-col overlay left-0 top-0 right-0 ${this.zIndex}
 			h-svh max-h-svh min-h-svh
 			bg-background pointer-events-auto
 			lg:left-16
-			will-change-contents ${this.class || ''}`;
+			 ${this.class || ''}`;
 	}
 
 	/**
