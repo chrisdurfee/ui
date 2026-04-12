@@ -39,11 +39,12 @@ const isLinkActive = (link, url) =>
  * @param {object} props
  * @returns {object}
  */
-const UnderlinedLink = ({ text, href, exact }) => (
+const UnderlinedLink = ({ text, href, exact, replace }) => (
 	new NavLink({
 		text,
 		href,
 		exact,
+		replace,
 		dataSet: ['selected', ['state', true, 'active']],
 		class: 'relative inline-flex items-center justify-center whitespace-nowrap px-4 py-3 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:text-foreground after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-primary after:transition-all after:duration-200 after:scale-x-0 data-[state=active]:after:scale-x-100'
 	})
@@ -93,6 +94,13 @@ export class UnderlinedTabNavigation extends Veil
 		 * @default false
 		 */
 		this.scrollable = false;
+
+		/**
+		 * Whether to replace the history state instead of pushing.
+		 * @member {boolean} replace
+		 * @default false
+		 */
+		this.replace = false;
 	}
 
 	/**
@@ -223,7 +231,7 @@ export class UnderlinedTabNavigation extends Veil
 	 */
 	addLink({ label: text, href, exact })
 	{
-		const link = UnderlinedLink({ text, href, exact });
+		const link = UnderlinedLink({ text, href, exact, replace: this.replace });
 		// @ts-ignore
 		this.links.push(link);
 		return link;

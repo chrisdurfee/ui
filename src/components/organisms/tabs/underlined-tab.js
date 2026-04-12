@@ -39,6 +39,13 @@ export class UnderlinedTab extends Veil
 		 * @default false
 		 */
 		this.scrollable = false;
+
+		/**
+		 * Whether to replace the history state instead of pushing.
+		 * @member {boolean} replace
+		 * @default false
+		 */
+		this.replace = false;
 	}
 
 	/**
@@ -52,7 +59,8 @@ export class UnderlinedTab extends Veil
 			new UnderlinedTabNavigation({
 				class: this.class,
 				options: this.options,
-				scrollable: this.scrollable
+				scrollable: this.scrollable,
+				replace: this.replace
 			}),
 			Section({
 				class: 'tab-content pt-6 flex flex-auto flex-col',
