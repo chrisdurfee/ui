@@ -213,7 +213,7 @@ export const FloatingInput = Atom((props) =>
 {
 	const id = getFloatingId(props);
 
-	return Div({ class: 'relative min-w-0' }, [
+	return Div({ class: 'flex relative min-w-0' }, [
 		BaseInput({
 			...props,
 			id,
@@ -319,7 +319,7 @@ export const FloatingTextarea = Atom((props) =>
 {
 	const id = getFloatingId(props);
 
-	return Div({ class: 'relative min-w-0' }, [
+	return Div({ class: 'flex relative min-w-0' }, [
 		BaseTextarea({
 			...props,
 			id,
@@ -352,7 +352,7 @@ export const FloatingSelect = Atom((props) =>
 	const id = getFloatingId(props);
 	const { options, onCreated: userOnCreated, ...attrs } = props;
 
-	return Div({ class: 'relative min-w-0' }, [
+	return Div({ class: 'flex relative min-w-0' }, [
 		{
 			tag: 'select',
 			...attrs,

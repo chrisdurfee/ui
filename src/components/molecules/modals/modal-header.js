@@ -21,7 +21,7 @@ import { Icons } from "../../icons/icons.js";
  */
 // @ts-ignore
 export const ModalHeader = Atom(({ title, description, back, icon, options = [], titleCenter = false }) => (
-	Header({ class: 'modal-header bg-background/80 backdrop-blur-md sticky flex flex-none items-center py-4 px-6 z-10 min-w-0' }, [
+	Header({ class: 'modal-header bg-background/80 backdrop-blur-md sticky top-0 flex flex-none items-center py-4 px-6 z-10 min-w-0' }, [
 
 		/**
 		 * Back Button (Mobile Only)

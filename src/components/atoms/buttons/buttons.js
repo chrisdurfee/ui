@@ -1,8 +1,8 @@
 import { Button as BaseButton } from '@base-framework/atoms';
-import { Atom } from '@base-framework/base';
+import { Atom, Data } from '@base-framework/base';
 import { Icons } from '../../icons/icons.js';
 import { UniversalIcon } from '../universal-icon.js';
-import { backCallBack } from './back-navigation.js';
+import { getNavPosition, isBackCycle, navigateBack, navigateBackToUrl } from './back-navigation.js';
 
 /**
  * This will create a button.
@@ -61,7 +61,10 @@ const WithIconVariant = (defaultProps) => (
 );
 
 /**
- * This will create a back button variant.
+ * This will create a back button variant as a hybrid atom.
+ * Uses Data to persist the entry position and cycle state so
+ * re-renders (e.g. tab switches) keep the original values and
+ * chained back-button presses don't create navigation cycles.
  *
  * @param {object} defaultProps
  * @returns {object}
@@ -70,13 +73,34 @@ const BackVariant = (defaultProps) => (
 	Atom((props, children) =>
 	{
 		// @ts-ignore
+		const backUrl = props.backUrl;
+		const cycle = isBackCycle();
+
+		const data = new Data({
+			entryPos: getNavPosition(),
+			isCycle: cycle,
+			reloaded: /** @type {any} */ (globalThis.performance?.getEntriesByType?.('navigation')?.[0])?.type === 'reload'
+		});
+
+		// @ts-ignore
 		props.icon = props.icon || Icons.arrows.left;
 		// @ts-ignore
-		props.click = props.click || backCallBack(props);
+		props.click = props.click || (() =>
+		{
+			if (data.isCycle)
+			{
+				navigateBackToUrl(backUrl);
+			}
+			else
+			{
+				navigateBack(data.entryPos, backUrl, data.reloaded);
+			}
+		});
 
 		return IconButton({
 			...defaultProps,
-			...props
+			...props,
+			data
 		}, children);
 	})
 );
