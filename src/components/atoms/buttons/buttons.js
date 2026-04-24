@@ -125,7 +125,7 @@ const CircleIconButton = Atom((props, children) =>
 	};
 
 	// @ts-ignore
-	const backgroundClass = props.backgroundClass || 'bg-background/30 hover:bg-background/50';
+	const backgroundClass = props.class || 'bg-background/30 hover:bg-background/50';
 
 	return BaseButton({
 		...props,

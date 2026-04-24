@@ -280,11 +280,12 @@ export const CircleButton = Atom((props, children) =>
 	const size = props.size || 'md';
 	const sizeClass = SIZE_CLASSES[size] || SIZE_CLASSES.md;
 	const iconSize = ['xs', 'sm'].includes(size) ? 'xs' : 'sm';
+	const buttonClass = props.class ?? 'bg-background/40 backdrop-blur-sm';
 
 	return BaseButton({
 		...props,
 		// @ts-ignore
-		class: `circle-btn inline-flex items-center justify-center rounded-full border-0 bg-background/40 backdrop-blur-sm text-foreground cursor-pointer transition-colors hover:bg-background/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 ${sizeClass} ${props.class || ''}`
+		class: `circle-btn inline-flex items-center justify-center rounded-full border-0 ${buttonClass} text-foreground cursor-pointer transition-colors hover:bg-background/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 ${sizeClass} ${props.class || ''}`
 	}, [
 		// @ts-ignore
 		props.icon ? UniversalIcon({ size: iconSize }, props.icon) : null,
