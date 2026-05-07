@@ -3,6 +3,79 @@ import { Button } from "../../atoms/buttons/buttons.js";
 import { ModalContainer } from "./modal-container.js";
 
 /**
+ * Body scroll lock with refcount.
+ *
+ * iOS Safari does not honor `overflow:hidden` on html/body when a
+ * popover/modal is open, so the page underneath still scrolls. The
+ * common workaround of pinning `body { position: fixed }` causes any
+ * `position: fixed` UI (e.g. an installed PWA's bottom navigation that
+ * sits above the safe-area inset) to visibly jump on open/close.
+ *
+ * Instead we leave layout alone and block `touchmove` on anything that
+ * isn't inside a scrollable region of the modal. The modal's own
+ * scroll container still works because we walk up from the touch
+ * target and allow the gesture if a scrollable ancestor is found
+ * inside `[data-scroll-lock-allow]`.
+ */
+let scrollLockCount = 0;
+let savedOverflow = '';
+
+const isScrollable = (el) =>
+{
+	if (!el || el.nodeType !== 1) return false;
+	const style = getComputedStyle(el);
+	const overflowY = style.overflowY;
+	const canScroll = (overflowY === 'auto' || overflowY === 'scroll');
+	return canScroll && el.scrollHeight > el.clientHeight;
+};
+
+const onTouchMove = (e) =>
+{
+	// Allow the gesture if it originates inside a scrollable region
+	// that opted in via [data-scroll-lock-allow].
+	let node = e.target;
+	while (node && node !== document.body)
+	{
+		if (node.nodeType === 1 && node.hasAttribute && node.hasAttribute('data-scroll-lock-allow'))
+		{
+			if (isScrollable(node)) return;
+		}
+		node = node.parentNode;
+	}
+
+	if (e.cancelable)
+	{
+		e.preventDefault();
+	}
+};
+
+const lockBodyScroll = () =>
+{
+	if (typeof document === 'undefined') return;
+	if (scrollLockCount === 0)
+	{
+		savedOverflow = document.documentElement.style.overflow;
+		// overflow:hidden on <html> is enough on desktop and Android.
+		// iOS needs the touchmove guard below.
+		document.documentElement.style.overflow = 'hidden';
+		document.addEventListener('touchmove', onTouchMove, { passive: false });
+	}
+	scrollLockCount++;
+};
+
+const unlockBodyScroll = () =>
+{
+	if (typeof document === 'undefined') return;
+	if (scrollLockCount === 0) return;
+	scrollLockCount--;
+	if (scrollLockCount === 0)
+	{
+		document.documentElement.style.overflow = savedOverflow;
+		document.removeEventListener('touchmove', onTouchMove);
+	}
+};
+
+/**
  * This will render the modal component.
  *
  * @param {object} component
@@ -287,9 +360,13 @@ export class Modal extends Component
 		this.state.open = true;
 
 		/**
-		 * This will prevent the body from scrolling when the modal is open.
+		 * Lock background scroll. iOS Safari ignores `overflow:hidden`
+		 * on html/body, so the page underneath still scrolls when the
+		 * user pans on the drawer/modal. We pin the body in place and
+		 * restore the scroll position on close. A refcount keeps things
+		 * sane when nested modals are opened.
 		 */
-		document.documentElement.style.overflowY = 'hidden';
+		lockBodyScroll();
 	}
 
 	/**
@@ -313,6 +390,6 @@ export class Modal extends Component
 		/**
 		 * This will allow the body to scroll when the modal is closed.
 		 */
-		document.documentElement.style.overflowY = 'auto';
+		unlockBodyScroll();
 	}
 }

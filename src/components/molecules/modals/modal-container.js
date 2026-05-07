@@ -31,10 +31,29 @@ export const ModalContainer = Atom((props, children) =>
 	const positionClasses = isDrawer ? '' : 'm-auto top-0 right-0 bottom-0 left-0';
 	const sizeClasses = isDrawer ? '' : 'h-full max-h-screen';
 
+	/**
+	 * For drawer the body owns the scroll instead of the modal itself.
+	 * This makes max-height actually clamp on iOS Safari (popovers + dvh
+	 * are unreliable when the inner content drives height) and removes the
+	 * 1px subpixel gap caused by a sticky header inside a rounded scroller.
+	 */
+	const modalScrollClasses = isDrawer
+		? 'flex flex-col overflow-hidden overscroll-contain'
+		: 'grid overflow-y-auto overscroll-y-contain';
+	const contentClasses = isDrawer
+		? 'modal-content relative bg-background z-1 flex flex-auto flex-col gap-y-4 min-w-0 min-h-0 overflow-hidden'
+		: 'modal-content relative bg-background z-1 flex flex-auto flex-col gap-y-4 min-w-0';
+	const bodyClasses = isDrawer
+		? 'modal-body flex grow flex-col py-0 px-6 z-0 min-h-0 overflow-y-auto overscroll-contain'
+		: 'modal-body flex grow flex-col py-0 px-6 z-0';
+	const footerClasses = isDrawer
+		? 'modal-footer bg-background/80 backdrop-blur-md flex flex-none justify-between py-4 px-6 z-10'
+		: 'modal-footer sticky bottom-0 bg-background/80 backdrop-blur-md flex flex-none justify-between py-4 px-6 z-10';
+
 	return Div({
 			popover: 'manual',
 			// @ts-ignore
-			class: `modal ${positionClasses} ${sizeClasses} fixed z-20 grid w-full gap-2 lg:border bg-background text-foreground shadow-xl wrap-break-words p-0 overflow-y-auto overscroll-y-contain ${props.class}`,
+			class: `modal ${positionClasses} ${sizeClasses} fixed z-20 w-full gap-2 lg:border bg-background text-foreground shadow-xl wrap-break-words p-0 ${modalScrollClasses} ${props.class}`,
 			click: (e, parent) =>
 			{
 				const isClickOutside = (e.target === parent.panel);
@@ -48,15 +67,15 @@ export const ModalContainer = Atom((props, children) =>
 			}
 		}, [
 		Form({
-			class: 'modal-content relative bg-background z-1 flex flex-auto flex-col gap-y-4 min-w-0',
+			class: contentClasses,
 			// @ts-ignore
 			submit: (e, parent) => (props.onSubmit && props.onSubmit(parent)),
 			cache: 'modalContent'
 		}, [
 			ModalHeader(props),
-			Div({ class: 'modal-body flex grow flex-col py-0 px-6 z-0', cache: 'modalBody' }, children),
+			Div({ class: bodyClasses, cache: 'modalBody', 'data-scroll-lock-allow': '' }, children),
 			// @ts-ignore
-			!props.hideFooter && Footer({ class: 'modal-footer sticky bottom-0 bg-background/80 backdrop-blur-md flex flex-none justify-between py-4 px-6 z-10' }, props.buttons)
+			!props.hideFooter && Footer({ class: footerClasses }, props.buttons)
 		])
 	]);
 });
