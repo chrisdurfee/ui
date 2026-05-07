@@ -28,7 +28,7 @@ export const RangeDayCell = ({ day, iso, disabled, isStart, isEnd, isBetween, is
 	}
 	else if (isBetween)
 	{
-		additionalClasses = 'bg-accent text-accent-foreground hover:bg-accent/80';
+		additionalClasses = 'bg-muted text-foreground hover:bg-muted/80';
 	}
 
 	if (disabled)

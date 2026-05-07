@@ -14,29 +14,34 @@ import { Icons } from "../../icons/icons.js";
 const typeStyles =
 {
 	info: {
-		bgColor: 'bg-muted/10',
-		borderColor: 'border-blue-500',
-		iconColor: 'text-blue-500'
+		bgColor: '',
+		borderColor: 'border-border',
+		iconColor: 'text-blue-500',
+		iconBg: 'bg-blue-500/10'
 	},
 	warning: {
-		bgColor: 'bg-muted/10',
-		borderColor: 'border-warning',
-		iconColor: 'text-warning'
+		bgColor: '',
+		borderColor: 'border-border',
+		iconColor: 'text-warning',
+		iconBg: 'bg-warning/10'
 	},
 	destructive: {
-		bgColor: 'bg-muted/10',
-		borderColor: 'border-destructive',
-		iconColor: 'text-red-500'
+		bgColor: '',
+		borderColor: 'border-border',
+		iconColor: 'text-destructive',
+		iconBg: 'bg-destructive/10'
 	},
 	success: {
-		bgColor: 'bg-muted/10',
-		borderColor: 'border-emerald-500',
-		iconColor: 'text-emerald-500'
+		bgColor: '',
+		borderColor: 'border-border',
+		iconColor: 'text-emerald-500',
+		iconBg: 'bg-emerald-500/10'
 	},
 	default: {
-		bgColor: 'bg-muted/10',
-		borderColor: 'border',
-		iconColor: 'text-muted-foreground'
+		bgColor: '',
+		borderColor: 'border-border',
+		iconColor: 'text-muted-foreground',
+		iconBg: 'bg-muted/40'
 	}
 };
 
@@ -47,8 +52,8 @@ const typeStyles =
  * @returns Header
  */
 const TitleBar = (title) => (
-	Header({ class: 'flex justify-center' }, [
-		H3({ class: 'text-lg font-bold mb-0' }, title)
+	Header({ class: 'flex' }, [
+		H3({ class: 'text-sm font-semibold leading-tight m-0 text-foreground' }, title)
 	])
 );
 
@@ -61,7 +66,7 @@ const TitleBar = (title) => (
 // @ts-ignore
 const NotificationLink = Atom(({ href, class: customClass }, children) => (
 	A({
-		class: `bg-popover text-popover-foreground relative flex flex-auto flex-col justify-start shadow-lg pointer-events-auto p-4 border rounded-md min-w-[340px] max-w-[450px] mt-4 ${customClass}`,
+		class: `bg-popover/95 backdrop-blur-md text-popover-foreground relative flex flex-auto flex-col justify-start shadow-lg shadow-black/5 pointer-events-auto p-3 border rounded-xl w-full sm:min-w-[320px] sm:max-w-[400px] mt-2 sm:mt-3 transition-shadow hover:shadow-xl ${customClass}`,
 		href: href,
 		animateIn: 'pullRightIn',
 		animateOut: 'pullRight',
@@ -78,7 +83,7 @@ const NotificationLink = Atom(({ href, class: customClass }, children) => (
 // @ts-ignore
 const NotificationButton = Atom(({ close, class: customClass }, children) => (
 	Div({
-		class: `pullRightIn bg-popover text-popover-foreground relative flex flex-auto flex-col justify-start shadow-lg pointer-events-auto p-4 border rounded-md min-w-[340px] max-w-[450px] mt-4 ${customClass}`,
+		class: `pullRightIn bg-popover/95 backdrop-blur-md text-popover-foreground relative flex flex-auto flex-col justify-start shadow-lg shadow-black/5 pointer-events-auto p-3 border rounded-xl w-full sm:min-w-[320px] sm:max-w-[400px] mt-2 sm:mt-3 transition-shadow hover:shadow-xl ${customClass}`,
 		click: () => close(),
 		animateIn: 'pullRightIn',
 		animateOut: 'pullRight',
@@ -161,10 +166,10 @@ export class Notification extends Component
 	 */
 	render()
 	{
-		const { bgColor, borderColor, iconColor } = this.getTypeStyles();
+		const { bgColor, borderColor, iconColor, iconBg } = this.getTypeStyles();
 		// @ts-ignore
 		const href = this.href || null;
-		const notificationContent = this.getChildren(iconColor);
+		const notificationContent = this.getChildren(iconColor, iconBg);
 
 		/**
 		 * The notification can be either a link or a button.
@@ -218,7 +223,7 @@ export class Notification extends Component
 	getButtons()
 	{
 		return [
-			Div({ class: 'flex flex-row mt-6 gap-2' }, [
+			Div({ class: 'flex flex-row mt-3 gap-2' }, [
 				this.secondary && Button({ variant: 'outline', click: () => this.secondaryAction && this.secondaryAction() }, this.secondary),
 				this.primary && Button({ click: () => this.primaryAction && this.primaryAction() }, this.primary)
 			])
@@ -231,23 +236,21 @@ export class Notification extends Component
 	 * @param {string} iconColor
 	 * @returns {array}
 	 */
-	getChildren(iconColor)
+	getChildren(iconColor, iconBg)
 	{
 		return [
-			Div({ class: 'flex items-start' }, [
-				this.icon && Div({ class: `mr-4 ${iconColor}` }, [
-					UniversalIcon({ size: 'md' }, this.icon)
+			Div({ class: 'flex items-start gap-3' }, [
+				this.icon && Div({ class: `flex shrink-0 items-center justify-center w-8 h-8 rounded-full ${iconBg} ${iconColor}` }, [
+					UniversalIcon({ size: 'sm' }, this.icon)
 				]),
-				Div({ class: 'flex flex-auto flex-col' }, [
-					Div({ class: 'flex flex-auto flex-row items-center w-full pr-12' }, [
-						this.title && TitleBar(this.title)
-					]),
-					P({ class: 'text-base text-muted-foreground m-0 pr-12' }, this.description),
-					(this.primary || this.secondary) && Footer({ class: 'margin-top-24 flex align-center' }, this.getButtons())
+				Div({ class: 'flex flex-auto flex-col min-w-0 gap-0.5 pr-7' }, [
+					this.title && TitleBar(this.title),
+					this.description && P({ class: 'text-xs sm:text-sm text-muted-foreground leading-snug m-0' }, this.description),
+					(this.primary || this.secondary) && Footer({ class: 'flex items-center' }, this.getButtons())
 				])
 			]),
 			Button({
-				class: 'absolute top-[12px] right-[12px]',
+				class: 'absolute top-2 right-2 h-7 w-7 text-muted-foreground hover:text-foreground',
 				variant: 'icon',
 				icon: Icons.x,
 				click: this.close.bind(this)

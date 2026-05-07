@@ -6,7 +6,7 @@ import { Button } from '@base-framework/atoms';
  * @param {boolean} isToday - Indicates if the day is today.
  * @returns {string}
  */
-const getTodayClass = (isToday) => (isToday ? 'bg-accent text-primary' : '');
+const getTodayClass = (isToday) => (isToday ? 'bg-muted text-foreground' : '');
 
 /**
  * This will get the class for outside month.

@@ -31,7 +31,7 @@ export const WeekCell = ({ day, month, year, weekNumber, selectWeek }) =>
 		disabled: !day,
 		class: `
 			px-2 py-1 text-center rounded-md
-			${isCurrentDay ? 'bg-accent text-accent-foreground' : ''}
+			${isCurrentDay ? 'bg-muted text-foreground' : ''}
 			hover:bg-primary hover:text-primary-foreground
 		`,
 		click: () => selectWeek(weekNumber, year),
