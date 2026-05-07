@@ -66,7 +66,7 @@ const TitleBar = (title) => (
 // @ts-ignore
 const NotificationLink = Atom(({ href, class: customClass }, children) => (
 	A({
-		class: `bg-popover/95 backdrop-blur-md text-popover-foreground relative flex flex-col justify-start shadow-lg shadow-black/5 pointer-events-auto p-3 sm:p-4 border rounded-xl w-full sm:max-w-[420px] sm:ml-auto mt-2 sm:mt-3 transition-shadow hover:shadow-xl ${customClass}`,
+		class: `bg-popover/95 backdrop-blur-md text-popover-foreground relative flex flex-col justify-start shadow-lg shadow-black/5 pointer-events-auto p-3 sm:p-4 border rounded-xl sm:max-w-[420px] sm:ml-auto mt-2 sm:mt-3 transition-shadow hover:shadow-xl ${customClass}`,
 		href: href,
 		animateIn: 'pullRightIn',
 		animateOut: 'pullRight',
@@ -83,7 +83,7 @@ const NotificationLink = Atom(({ href, class: customClass }, children) => (
 // @ts-ignore
 const NotificationButton = Atom(({ close, class: customClass }, children) => (
 	Div({
-		class: `pullRightIn bg-popover/95 backdrop-blur-md text-popover-foreground relative flex flex-col justify-start shadow-lg shadow-black/5 pointer-events-auto p-3 sm:p-4 border rounded-xl w-full sm:max-w-[420px] sm:ml-auto mt-2 sm:mt-3 transition-shadow hover:shadow-xl ${customClass}`,
+		class: `pullRightIn bg-popover/95 backdrop-blur-md text-popover-foreground relative flex flex-col justify-start shadow-lg shadow-black/5 pointer-events-auto p-3 sm:p-4 border rounded-xl sm:max-w-[420px] sm:ml-auto mt-2 sm:mt-3 transition-shadow hover:shadow-xl ${customClass}`,
 		click: () => close(),
 		animateIn: 'pullRightIn',
 		animateOut: 'pullRight',
