@@ -166,6 +166,7 @@ export class Notification extends Component
 	 */
 	render()
 	{
+		// @ts-ignore
 		const { bgColor, borderColor, iconColor, iconBg } = this.getTypeStyles();
 		// @ts-ignore
 		const href = this.href || null;
@@ -212,6 +213,7 @@ export class Notification extends Component
 	{
 		// @ts-ignore
 		const type = this.type || 'default';
+		// @ts-ignore
 		return typeStyles[type] || typeStyles.default;
 	}
 
@@ -252,6 +254,7 @@ export class Notification extends Component
 			Button({
 				class: 'absolute top-2 right-2 h-7 w-7 text-muted-foreground hover:text-foreground',
 				variant: 'icon',
+				// @ts-ignore
 				icon: Icons.x,
 				click: this.close.bind(this)
 			})
@@ -261,7 +264,7 @@ export class Notification extends Component
 	/**
 	 * This will close the notification.
 	 *
-	 * @param {object} e The event object.
+	 * @param {Event} e The event object.
 	 * @returns {void}
 	 */
 	close(e)

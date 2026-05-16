@@ -183,6 +183,7 @@ export default Button;
  */
 export const LoadingButton = Atom((props, children) =>
 {
+	// @ts-ignore
 	return Button({ ...props, variant: 'withIcon', icon: Icons.loading, animation: 'animate-spin' }, children);
 });
 

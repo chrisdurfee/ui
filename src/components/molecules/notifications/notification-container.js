@@ -25,7 +25,7 @@ export class NotificationContainer extends Component
 		 * The container needs to be set as a popover to allow it
 		 * to be shown over modals and popups.
 		 */
-		return Div({ class: 'notification-container pointer-events-none inset-auto bg-transparent backdrop:bg-transparent overflow-visible fixed bottom-[80px] left-0 right-0 sm:left-auto z-50 px-2 sm:px-5 pb-2 sm:pb-5 flex flex-col items-stretch sm:items-end', popover: 'manual', }, [
+		return Div({ class: 'notification-container pointer-events-none inset-auto bg-transparent backdrop:bg-transparent overflow-visible fixed bottom-[80px] left-0 right-0 w-full sm:w-auto sm:left-auto z-50 px-2 sm:px-5 pb-2 sm:pb-5 flex flex-col items-stretch sm:items-end', popover: 'manual', }, [
 			new List({
 				cache: 'list',
 				key: 'id',
@@ -47,11 +47,13 @@ export class NotificationContainer extends Component
 		/**
 		 * The list requires an id on the itme to keep track of the items.
 		 */
+		// @ts-ignore
 		props.id = id++;
 
 		/**
 		 * The notice needs to have the remove callback set to remove the notice.
 		 */
+		// @ts-ignore
 		props.callBack = () => this.removeNotice(props);
 		// @ts-ignore
 		this?.list?.append([ props ]);
