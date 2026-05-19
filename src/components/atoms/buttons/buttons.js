@@ -2,7 +2,7 @@ import { Button as BaseButton } from '@base-framework/atoms';
 import { Atom, Data } from '@base-framework/base';
 import { Icons } from '../../icons/icons.js';
 import { UniversalIcon } from '../universal-icon.js';
-import { getNavPosition, isBackCycle, navigateBack, navigateBackToUrl } from './back-navigation.js';
+import { getNavPosition, navigateBack } from './back-navigation.js';
 
 /**
  * This will create a button.
@@ -74,28 +74,17 @@ const BackVariant = (defaultProps) => (
 	{
 		// @ts-ignore
 		const backUrl = props.backUrl;
-		const cycle = isBackCycle();
 
+		// Capture entry position once and persist across re-renders so
+		// back navigation stays anchored to where the page was entered.
 		const data = new Data({
-			entryPos: getNavPosition(),
-			isCycle: cycle,
-			reloaded: /** @type {any} */ (globalThis.performance?.getEntriesByType?.('navigation')?.[0])?.type === 'reload'
+			entryPos: getNavPosition()
 		});
 
 		// @ts-ignore
 		props.icon = props.icon || Icons.arrows.left;
 		// @ts-ignore
-		props.click = props.click || (() =>
-		{
-			if (data.isCycle)
-			{
-				navigateBackToUrl(backUrl);
-			}
-			else
-			{
-				navigateBack(data.entryPos, backUrl, data.reloaded);
-			}
-		});
+		props.click = props.click || (() => navigateBack(data.entryPos, backUrl));
 
 		return IconButton({
 			...defaultProps,
