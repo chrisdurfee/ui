@@ -12,6 +12,30 @@ import { ModalContainer } from "./modal-container.js";
 const render = (component) => { return Builder.render(component, app.root); };
 
 /**
+ * Guard against rapid repeated `.open()` calls that would otherwise stack
+ * multiple identical modals/drawers on top of each other (e.g. a user
+ * tapping a button several times before the open animation completes).
+ *
+ * The lock is module-scoped so it covers every Modal subclass (Drawer,
+ * etc.). It releases when the in-flight overlay is torn down or after a
+ * short safety timeout, whichever comes first.
+ */
+const OPEN_LOCK_TIMEOUT_MS = 700;
+let openingLock = false;
+let openingLockTimer = null;
+
+const releaseOpenLock = () =>
+{
+	openingLock = false;
+	if (openingLockTimer)
+	{
+		// @ts-ignore
+		globalThis.clearTimeout(openingLockTimer);
+		openingLockTimer = null;
+	}
+};
+
+/**
  * Modal
  *
  * This will create a modal component.
@@ -254,6 +278,15 @@ export class Modal extends Component
 	 */
 	open()
 	{
+		if (openingLock)
+		{
+			return;
+		}
+
+		openingLock = true;
+		// @ts-ignore
+		openingLockTimer = globalThis.setTimeout(releaseOpenLock, OPEN_LOCK_TIMEOUT_MS);
+
 		render(this);
 		this.showModal();
 	}
@@ -300,6 +333,8 @@ export class Modal extends Component
 	 */
 	beforeDestroy()
 	{
+		releaseOpenLock();
+
 		// @ts-ignore
 		this?.panel?.hidePopover();
 		// @ts-ignore

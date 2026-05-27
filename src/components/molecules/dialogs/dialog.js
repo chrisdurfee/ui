@@ -12,6 +12,27 @@ import { DialogContainer } from "./dialog-container.js";
 const render = (component) => { return Builder.render(component, app.root); };
 
 /**
+ * Guard against rapid repeated `.open()` calls that would otherwise stack
+ * multiple identical dialogs (e.g. a user tapping a button several times
+ * before the open animation completes). The lock releases when the
+ * in-flight dialog closes or after a short safety timeout.
+ */
+const OPEN_LOCK_TIMEOUT_MS = 700;
+let openingLock = false;
+let openingLockTimer = null;
+
+const releaseOpenLock = () =>
+{
+	openingLock = false;
+	if (openingLockTimer)
+	{
+		// @ts-ignore
+		globalThis.clearTimeout(openingLockTimer);
+		openingLockTimer = null;
+	}
+};
+
+/**
  * Type styles mapping for Confirmation.
  *
  * @type {object}
@@ -175,6 +196,15 @@ export class Dialog extends Component
 	 */
 	open()
 	{
+		if (openingLock)
+		{
+			return;
+		}
+
+		openingLock = true;
+		// @ts-ignore
+		openingLockTimer = globalThis.setTimeout(releaseOpenLock, OPEN_LOCK_TIMEOUT_MS);
+
 		render(this);
 		// @ts-ignore
 		this.panel.showModal();
@@ -189,6 +219,8 @@ export class Dialog extends Component
 	 */
 	close()
 	{
+		releaseOpenLock();
+
 		// @ts-ignore
 		this.state.open = false;
 		// @ts-ignore
