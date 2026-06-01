@@ -9,6 +9,11 @@ import { Dropdown } from './dropdown.js';
  * This will render a dropdown button.
  *
  * @param {object} props
+ * @param {string} props.label - The label for the dropdown button
+ * @param {string} props.icon - The icon for the dropdown button
+ * @param {function} props.toggleDropdown - Function to toggle the dropdown visibility
+ * @param {string|null} props.variant - Button variant (e.g. 'ghost', 'outline', 'primary')
+ * @param {string|null} props.btnClass - Additional CSS classes for the button
  * @returns {object}
  */
 const DropdownButton = ({ label, icon, toggleDropdown, variant, btnClass }) =>
@@ -42,6 +47,8 @@ const DropdownButton = ({ label, icon, toggleDropdown, variant, btnClass }) =>
  * This will render a dropdown container.
  *
  * @param {object} props
+ * @param {function} props.onSelect - Callback function when an item is selected
+ * @param {string} props.class - Additional CSS classes for the dropdown container
  * @returns {object}
  */
 const DropdownContainer = ({ onSelect, class: popoverClass }) => (
