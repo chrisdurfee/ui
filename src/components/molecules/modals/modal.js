@@ -1,6 +1,8 @@
 import { Builder, Component } from "@base-framework/base";
 import { Button } from "../../atoms/buttons/buttons.js";
 import { ModalContainer } from "./modal-container.js";
+import { popOverlayHistory, pushOverlayHistory } from "./overlay-history.js";
+import { lockBodyScroll, unlockBodyScroll } from "./scroll-lock.js";
 
 /**
  * This will render the modal component.
@@ -287,6 +289,14 @@ export class Modal extends Component
 		// @ts-ignore
 		openingLockTimer = globalThis.setTimeout(releaseOpenLock, OPEN_LOCK_TIMEOUT_MS);
 
+		/**
+		 * Push a neutral history entry so a mobile back-swipe (or the back
+		 * button) closes this overlay instead of navigating away.
+		 */
+		pushOverlayHistory(this);
+		// @ts-ignore
+		this.overlayHistoryPushed = true;
+
 		render(this);
 		this.showModal();
 	}
@@ -320,9 +330,14 @@ export class Modal extends Component
 		this.state.open = true;
 
 		/**
-		 * This will prevent the body from scrolling when the modal is open.
+		 * This will lock the body (including iOS Safari / installed PWAs) so the
+		 * page behind the overlay cannot scroll or rubber-band. The panel is
+		 * passed so the overlay's own content can still scroll internally.
 		 */
-		document.documentElement.style.overflowY = 'hidden';
+		// @ts-ignore
+		lockBodyScroll(this.panel);
+		// @ts-ignore
+		this.overlayScrollLocked = true;
 	}
 
 	/**
@@ -340,14 +355,32 @@ export class Modal extends Component
 		// @ts-ignore
 		this.state.open = false;
 
+		/**
+		 * This will allow the body to scroll again once the overlay is closed.
+		 */
+		// @ts-ignore
+		if (this.overlayScrollLocked)
+		{
+			unlockBodyScroll();
+			// @ts-ignore
+			this.overlayScrollLocked = false;
+		}
+
+		/**
+		 * This will remove the history entry added on open (unless the close was
+		 * itself triggered by a back navigation).
+		 */
+		// @ts-ignore
+		if (this.overlayHistoryPushed)
+		{
+			// @ts-ignore
+			this.overlayHistoryPushed = false;
+			popOverlayHistory(this);
+		}
+
 		if (typeof this.onClose === 'function')
 		{
 			this.onClose(this);
 		}
-
-		/**
-		 * This will allow the body to scroll when the modal is closed.
-		 */
-		document.documentElement.style.overflowY = 'auto';
 	}
 }
