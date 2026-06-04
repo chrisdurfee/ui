@@ -57,6 +57,36 @@ let pendingPops = 0;
 let pendingRestore = null;
 
 /**
+ * A callback to invoke once a self-triggered (programmatic) back has landed on
+ * the neutralized entry and its router state has been restored. Lets callers
+ * defer work (e.g. `app.navigate`) until the overlay's history unwind settles,
+ * so a navigation pushed afterwards is not reverted by the back()'s popstate.
+ *
+ * @type {(function():void)|null}
+ */
+let pendingAfter = null;
+
+/**
+ * Runs an afterSettle callback on the next tick. Used for close paths that do
+ * not drive a programmatic `history.back()` (no pushed entry, non-top overlay,
+ * or a close already triggered by a back navigation) so the callback contract
+ * holds uniformly regardless of how the overlay closed.
+ *
+ * @param {(function():void)|null} after
+ * @returns {void}
+ */
+const runAfterSettle = (after) =>
+{
+	if (typeof after !== 'function')
+	{
+		return;
+	}
+
+	// @ts-ignore
+	globalThis.setTimeout(after, 0);
+};
+
+/**
  * Closes the supplied overlay instance using whichever teardown method it
  * exposes.
  *
@@ -112,6 +142,18 @@ const onPopState = () =>
 		pendingPops--;
 		restoreState(pendingRestore);
 		pendingRestore = null;
+
+		/**
+		 * The history unwind has settled on the restored entry. Fire any
+		 * deferred callback now so navigation performed inside it lands on
+		 * top of this entry instead of being reverted by this popstate.
+		 */
+		const after = pendingAfter;
+		pendingAfter = null;
+		if (typeof after === 'function')
+		{
+			after();
+		}
 		return;
 	}
 
@@ -195,9 +237,11 @@ export const pushOverlayHistory = (instance) =>
  * popped and the neutralized fall-back entry restored.
  *
  * @param {object} instance - The Modal/Drawer instance being closed.
+ * @param {(function():void)|null} [afterSettle] - Optional callback invoked once
+ *     the overlay's history unwind has settled (see `pendingAfter`).
  * @returns {void}
  */
-export const popOverlayHistory = (instance) =>
+export const popOverlayHistory = (instance, afterSettle = null) =>
 {
 	if (instance.__overlayFromHistory)
 	{
@@ -206,12 +250,14 @@ export const popOverlayHistory = (instance) =>
 		 * `onPopState` (entry popped, state restored).
 		 */
 		instance.__overlayFromHistory = false;
+		runAfterSettle(afterSettle);
 		return;
 	}
 
 	const index = stack.findIndex((entry) => entry.instance === instance);
 	if (index === -1)
 	{
+		runAfterSettle(afterSettle);
 		return;
 	}
 
@@ -226,10 +272,12 @@ export const popOverlayHistory = (instance) =>
 	const wasTop = (index === stack.length);
 	if (!wasTop)
 	{
+		runAfterSettle(afterSettle);
 		return;
 	}
 
 	pendingRestore = entry.realState;
+	pendingAfter = (typeof afterSettle === 'function') ? afterSettle : null;
 	pendingPops++;
 	window.history.back();
 };

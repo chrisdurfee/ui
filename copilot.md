@@ -29,7 +29,7 @@ This is NOT React, Vue, or standard JSX. This uses Base Framework's declarative 
 - Dev: npm run dev → Vite dev server with Tailwind plugin (@tailwindcss/vite)
 - Build: npm run build → Vite library build (ES modules only) + `tsc` to emit `.d.ts` from JS via JSDoc
 - Preview: npm run preview
-- Outputs land in `dist/*.es.js` and `dist/types/**`. Rollup marks `@base-framework/*` externals, so do not import those files directly.
+- Outputs land in `dist/**` (one file per source module, mirroring `src/`) and `dist/types/**`. Rollup marks `@base-framework/*` externals, so do not import those files directly.
 
 ## Authoring components (project conventions)
 - Prefer functional atoms via `Atom((props, children) => ...)` for small UI pieces. Example: `AlertIcon`, `AlertTitle`, etc.

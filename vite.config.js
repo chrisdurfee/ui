@@ -30,18 +30,29 @@ export default defineConfig({
 
 			// If you only want ES modules, specify just ["es"].
 			formats: ["es"],
-
-			// Customize filenames, e.g. "index.es.js", "atoms.es.js", etc.
-			fileName: (format, entryName) => {
-				return `${entryName}.es.js`;
-			},
 		},
+
+		// Keep readable output so consumer bundlers can tree-shake; final apps minify themselves.
+		minify: false,
+
+		// Avoid inlining shared modules into a few large chunks. Emitting one file per
+		// source module lets consumer bundlers (with "sideEffects": false) drop everything
+		// an app doesn't actually import, producing much smaller app bundles.
 		rollupOptions: {
 			external: [
 				'@base-framework/base',
 				'@base-framework/atoms',
 				'@base-framework/organisms'
 			],
+			output: {
+				preserveModules: true,
+				preserveModulesRoot: 'src',
+				entryFileNames: '[name].js'
+			},
+			treeshake: {
+				moduleSideEffects: false,
+				propertyReadSideEffects: false
+			}
 		}
 	}
 });

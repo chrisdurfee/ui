@@ -1,8 +1,8 @@
 {
 	"name": "@base-framework/ui",
-	"version": "1.2.99",
+	"version": "1.2.101",
 	"description": "This is a UI package that adds components and atoms that use Tailwind CSS and a theme based on Shadcn.",
-	"main": "./dist/index.es.js",
+	"main": "./dist/index.js",
 	"scripts": {
 		"dev": "vite",
 		"build": "vite build && tsc",
@@ -30,12 +30,9 @@
 		"@base-framework/atoms": "^1.0.41",
 		"@base-framework/base": "^3.0.295",
 		"@base-framework/organisms": "^1.0.69",
-		"esbuild": "^0.25.0",
-		"tailwindcss": "^4.1.12"
-	},
-	"dependencies": {
 		"@tailwindcss/vite": "^4.1.12",
-		"d3": "^7.9.0",
+		"esbuild": "^0.25.0",
+		"tailwindcss": "^4.1.12",
 		"typescript": "^5.7.3",
 		"vite": "^7.1.0"
 	},
@@ -55,35 +52,35 @@
 		"./package.json": "./package.json",
 		".": {
 			"types": "./dist/types/ui.d.ts",
-			"import": "./dist/index.es.js"
+			"import": "./dist/index.js"
 		},
 		"./atoms": {
 			"types": "./dist/types/components/atoms/atoms.d.ts",
-			"import": "./dist/atoms.es.js"
+			"import": "./dist/atoms.js"
 		},
 		"./icons": {
 			"types": "./dist/types/components/icons/icons.d.ts",
-			"import": "./dist/icons.es.js"
+			"import": "./dist/icons.js"
 		},
 		"./molecules": {
 			"types": "./dist/types/components/molecules/molecules.d.ts",
-			"import": "./dist/molecules.es.js"
+			"import": "./dist/molecules.js"
 		},
 		"./organisms": {
 			"types": "./dist/types/components/organisms/organisms.d.ts",
-			"import": "./dist/organisms.es.js"
+			"import": "./dist/organisms.js"
 		},
 		"./utils": {
 			"types": "./dist/types/utils/utils.d.ts",
-			"import": "./dist/utils.es.js"
+			"import": "./dist/utils.js"
 		},
 		"./pages": {
 			"types": "./dist/types/components/pages/pages.d.ts",
-			"import": "./dist/pages.es.js"
+			"import": "./dist/pages.js"
 		},
 		"./templates": {
 			"types": "./dist/types/components/pages/templates/templates.d.ts",
-			"import": "./dist/templates.es.js"
+			"import": "./dist/templates.js"
 		},
 		"./copilot.md": "./copilot.md"
 	},

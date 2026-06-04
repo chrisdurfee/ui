@@ -304,10 +304,16 @@ export class Modal extends Component
 	/**
 	 * This will destroy the modal.
 	 *
+	 * @param {(function():void)|null} [afterSettle] - Optional callback invoked
+	 *     once the overlay's history unwind has settled. Use this to navigate
+	 *     (e.g. `app.navigate`) after closing so the pushed route is not reverted
+	 *     by the close's own `history.back()` popstate.
 	 * @returns {void}
 	 */
-	close()
+	close(afterSettle = null)
 	{
+		// @ts-ignore
+		this.__afterOverlaySettle = (typeof afterSettle === 'function') ? afterSettle : null;
 		this.destroy();
 	}
 
@@ -375,7 +381,24 @@ export class Modal extends Component
 		{
 			// @ts-ignore
 			this.overlayHistoryPushed = false;
-			popOverlayHistory(this);
+			// @ts-ignore
+			popOverlayHistory(this, this.__afterOverlaySettle);
+			// @ts-ignore
+			this.__afterOverlaySettle = null;
+		}
+		// @ts-ignore
+		else if (typeof this.__afterOverlaySettle === 'function')
+		{
+			/**
+			 * No history entry was pushed for this overlay, so there is no
+			 * unwind to wait on. Honour the callback contract on the next tick.
+			 */
+			// @ts-ignore
+			const after = this.__afterOverlaySettle;
+			// @ts-ignore
+			this.__afterOverlaySettle = null;
+			// @ts-ignore
+			globalThis.setTimeout(after, 0);
 		}
 
 		if (typeof this.onClose === 'function')
