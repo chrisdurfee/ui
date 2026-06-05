@@ -76,9 +76,20 @@ export const canGoBackInApp = (entryPos) => entryPos > 0;
 
 /**
  * Navigates back. If in-app history exists prior to `entryPos`, uses
- * the browser's native back (`history.go`) so the user stays inside
- * the app. Otherwise falls back to `router.navigate(backUrl)` when a
- * fallback URL is provided.
+ * the browser's native single-step back (`history.back()`) so the user
+ * returns to the entry they arrived from and stays inside the app.
+ * Otherwise falls back to `router.navigate(backUrl)` when a fallback
+ * URL is provided.
+ *
+ * A single step is used deliberately. In-page sub-navigation (tabs,
+ * sub-sections) is expected to use `replaceState` rather than
+ * `pushState`, so a detail page occupies exactly one history entry and
+ * one step back reliably exits it. The previous multi-step approach
+ * (`history.go(-(navPosition - entryPos + 1))`) over-popped whenever a
+ * routed component was resumed for an unchanged route param: the cached
+ * button kept the `entryPos` from the first visit, so reopening the same
+ * page from a different origin jumped back to the original origin instead
+ * of the most recent one.
  *
  * @param {number} entryPos - The `_navPosition` captured when the page was entered.
  * @param {string} [backUrl] - Fallback URL when no in-app history exists.
@@ -87,8 +98,7 @@ export const navigateBack = (entryPos, backUrl) =>
 {
 	if (canGoBackInApp(entryPos))
 	{
-		const steps = (_navPosition - entryPos) + 1;
-		globalThis.history.go(-steps);
+		globalThis.history.back();
 		return;
 	}
 
