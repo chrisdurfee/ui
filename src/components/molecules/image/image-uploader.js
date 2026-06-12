@@ -69,6 +69,23 @@ export const ImageUploader = Jot(
 	},
 
 	/**
+	 * Revoke any outstanding object URL when the component is removed.
+	 *
+	 * @returns {void}
+	 */
+	destroy()
+	{
+		// @ts-ignore
+		if (this.url)
+		{
+			// @ts-ignore
+			URL.revokeObjectURL(this.url);
+			// @ts-ignore
+			this.url = null;
+		}
+	},
+
+	/**
 	 * Render the component.
 	 *
 	 * @returns {object} Rendered component

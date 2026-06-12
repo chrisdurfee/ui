@@ -64,6 +64,12 @@ export class SignatureCanvas extends Component
 	beforeDestroy()
 	{
 		this.stopTimer();
+
+		if (this.setupTimer)
+		{
+			globalThis.clearTimeout(this.setupTimer);
+			this.setupTimer = null;
+		}
 	}
 
 	/**
@@ -79,8 +85,9 @@ export class SignatureCanvas extends Component
 		this.ctx = this.canvas.getContext("2d");
 
 		// Resize and draw after the parent has fully rendered
-		globalThis.setTimeout(() =>
+		this.setupTimer = globalThis.setTimeout(() =>
 		{
+			this.setupTimer = null;
 			this.resize();
 			this.draw();
 		}, 1);

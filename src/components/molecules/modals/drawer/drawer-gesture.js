@@ -314,7 +314,8 @@ export class DrawerGesture
 		this.modal.style.transform = 'translateY(100%)';
 		this.updateBackdropOpacity(0);
 
-		setTimeout(() => {
+		this._closeTimer = setTimeout(() => {
+			this._closeTimer = null;
 			if (this.onClose)
 			{
 				this.onClose();
@@ -356,6 +357,12 @@ export class DrawerGesture
 	 */
 	destroy()
 	{
+		if (this._closeTimer)
+		{
+			clearTimeout(this._closeTimer);
+			this._closeTimer = null;
+		}
+
 		if (this.modalContent)
 		{
 			this.modalContent.removeEventListener('touchstart', this._boundTouchStart);

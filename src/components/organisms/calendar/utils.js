@@ -23,7 +23,7 @@ export const addTime = (date) =>
 		date += 'T00:00:01';
 	}
 
-	date.replace(' ', 'T');
+	date = date.replace(' ', 'T');
 	return date;
 };
 

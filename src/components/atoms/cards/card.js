@@ -16,17 +16,12 @@ export const Card = Atom((props, children) =>
 	const padding = props.padding ?? 'p-4';
 	// @ts-ignore
 	const border = props.border ?? 'border-border';
-
 	// @ts-ignore
-	if (props.hover)
-	{
-		// @ts-ignore
-		props.class += ' hover:shadow-lg hover:bg-muted/50';
-	}
+	const hover = props.hover ? ' hover:shadow-lg hover:bg-muted/50' : '';
 
 	return Div({
 		...props,
 		// @ts-ignore
-		class: `rounded-lg ${border} bg-card text-card-foreground shadow-md min-w-[120px] min-h-[80px] ${margin} ${padding} ${props.class || ''}`
+		class: `rounded-lg ${border} bg-card text-card-foreground shadow-md min-w-[120px] min-h-[80px] ${margin} ${padding} ${props.class || ''}${hover}`
 	}, children);
 });

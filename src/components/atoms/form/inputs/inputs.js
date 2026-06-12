@@ -123,16 +123,26 @@ export const Textarea = Atom((props) => (
  * @param {object} [props={}] Props passed to the BaseInput.
  * @returns {object} A Div containing a radio input and label.
  */
-export const Radio = (props = {}) => (
-	Div({ class: 'flex items-center gap-x-2' }, [
+export const Radio = (props = {}) =>
+{
+	const id = props.id || `radio-${radioId++}`;
+	return Div({ class: 'flex items-center gap-x-2' }, [
 		BaseInput({
 			...props,
+			id,
 			type: 'radio',
 			class: `cursor-pointer appearance-none h-4 w-4 border rounded-full checked:border-primary checked:bg-primary focus:ring focus:ring-primary`.trim(),
 		}),
-		props.label && Label({ forHTML: props.value, class: 'cursor-pointer' }, props.label),
-	])
-);
+		props.label && Label({ htmlFor: id, class: 'cursor-pointer' }, props.label),
+	]);
+};
+
+/**
+ * Counter used to generate unique radio input ids when none is provided.
+ *
+ * @type {number}
+ */
+let radioId = 0;
 
 /**
  * Input component specifically for dates.

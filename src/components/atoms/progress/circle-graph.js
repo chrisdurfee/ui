@@ -2,13 +2,20 @@
 import { Atom } from "@base-framework/base";
 
 /**
- * This will get the value.
+ * This will get the value. Zero is a valid progress value.
  *
  * @param {*} val
  * @returns {number|null}
  */
-const getValue = (val) => {
-	return !val || isNaN(val) ? null : val;
+export const getValue = (val) =>
+{
+	if (val === null || val === undefined || val === '')
+	{
+		return null;
+	}
+
+	const num = Number(val);
+	return isNaN(num) ? null : num;
 };
 
 /**
@@ -46,11 +53,10 @@ const CircleProgress = (progress, className) =>
 			fill="none"
 			stroke="currentColor"
 			stroke-width="4"
-			class="stroke-primary"
 			stroke-dasharray="${circumference}"
 			stroke-dashoffset="${circumference - bar}"
 			stroke-linecap="round"
-			class="${className}"
+			class="stroke-primary ${className}"
 		/>
 		<!-- Percentage Text -->
 		<text
@@ -92,7 +98,7 @@ export const CircleGraph = Atom((props) => {
 			(val) =>
 			{
 				val = getValue(val);
-				if (!val)
+				if (val === null)
 				{
 					return empty;
 				}

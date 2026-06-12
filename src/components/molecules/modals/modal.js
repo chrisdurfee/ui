@@ -1,6 +1,7 @@
 import { Builder, Component } from "@base-framework/base";
 import { Button } from "../../atoms/buttons/buttons.js";
 import { ModalContainer } from "./modal-container.js";
+import { acquireOpenLock, releaseOpenLock } from "./open-lock.js";
 import { popOverlayHistory, pushOverlayHistory } from "./overlay-history.js";
 import { lockBodyScroll, unlockBodyScroll } from "./scroll-lock.js";
 
@@ -12,30 +13,6 @@ import { lockBodyScroll, unlockBodyScroll } from "./scroll-lock.js";
  */
 // @ts-ignore
 const render = (component) => { return Builder.render(component, app.root); };
-
-/**
- * Guard against rapid repeated `.open()` calls that would otherwise stack
- * multiple identical modals/drawers on top of each other (e.g. a user
- * tapping a button several times before the open animation completes).
- *
- * The lock is module-scoped so it covers every Modal subclass (Drawer,
- * etc.). It releases when the in-flight overlay is torn down or after a
- * short safety timeout, whichever comes first.
- */
-const OPEN_LOCK_TIMEOUT_MS = 700;
-let openingLock = false;
-let openingLockTimer = null;
-
-const releaseOpenLock = () =>
-{
-	openingLock = false;
-	if (openingLockTimer)
-	{
-		// @ts-ignore
-		globalThis.clearTimeout(openingLockTimer);
-		openingLockTimer = null;
-	}
-};
 
 /**
  * Modal
@@ -168,7 +145,8 @@ export class Modal extends Component
 				state: false,
 				callBack: (state) =>
 				{
-					if (!state)
+					// @ts-ignore
+					if (!state && !this.__destroying)
 					{
 						this.destroy();
 					}
@@ -280,14 +258,10 @@ export class Modal extends Component
 	 */
 	open()
 	{
-		if (openingLock)
+		if (!acquireOpenLock())
 		{
 			return;
 		}
-
-		openingLock = true;
-		// @ts-ignore
-		openingLockTimer = globalThis.setTimeout(releaseOpenLock, OPEN_LOCK_TIMEOUT_MS);
 
 		/**
 		 * Push a neutral history entry so a mobile back-swipe (or the back
@@ -297,8 +271,16 @@ export class Modal extends Component
 		// @ts-ignore
 		this.overlayHistoryPushed = true;
 
-		render(this);
-		this.showModal();
+		try
+		{
+			render(this);
+			this.showModal();
+		}
+		catch (error)
+		{
+			releaseOpenLock();
+			throw error;
+		}
 	}
 
 	/**
@@ -354,6 +336,8 @@ export class Modal extends Component
 	 */
 	beforeDestroy()
 	{
+		// @ts-ignore
+		this.__destroying = true;
 		releaseOpenLock();
 
 		// @ts-ignore
@@ -367,7 +351,8 @@ export class Modal extends Component
 		// @ts-ignore
 		if (this.overlayScrollLocked)
 		{
-			unlockBodyScroll();
+			// @ts-ignore
+			unlockBodyScroll(this.panel);
 			// @ts-ignore
 			this.overlayScrollLocked = false;
 		}

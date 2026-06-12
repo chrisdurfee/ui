@@ -67,4 +67,4 @@ export const Attachment = Jot(
     }
 });
 
-export default AttachmentInput;
+export default Attachment;

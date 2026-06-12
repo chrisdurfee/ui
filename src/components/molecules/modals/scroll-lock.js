@@ -221,16 +221,34 @@ export const lockBodyScroll = (panel) =>
  * Releases a previously acquired scroll lock. Only the final release restores
  * the original styles and detaches the guards.
  *
+ * @param {HTMLElement} [panel] - The panel passed to `lockBodyScroll`. When
+ *     provided, that specific panel is removed from the allow-list so
+ *     out-of-order closes don't strip the wrong overlay's scroll permission.
  * @returns {void}
  */
-export const unlockBodyScroll = () =>
+export const unlockBodyScroll = (panel) =>
 {
 	if (lockCount === 0)
 	{
 		return;
 	}
 
-	allowedPanels.pop();
+	if (panel)
+	{
+		const index = allowedPanels.indexOf(panel);
+		if (index !== -1)
+		{
+			allowedPanels.splice(index, 1);
+		}
+		else
+		{
+			allowedPanels.pop();
+		}
+	}
+	else
+	{
+		allowedPanels.pop();
+	}
 
 	lockCount--;
 	if (lockCount > 0 || !savedStyles)

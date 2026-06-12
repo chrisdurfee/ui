@@ -79,7 +79,7 @@ export const FormControl = Atom((props, children) =>
 	const handleInvalid = (e) =>
 	{
 		// @ts-ignore
-		props.setError(e.target.validationMessage);
+		props.setError?.(e.target.validationMessage);
 	};
 
 	/**
@@ -94,7 +94,7 @@ export const FormControl = Atom((props, children) =>
 		if (isValid)
 		{
 			// @ts-ignore
-			props.setError(null);
+			props.setError?.(null);
 		}
 	};
 

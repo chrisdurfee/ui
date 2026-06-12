@@ -1,5 +1,6 @@
 import { Builder, Component } from "@base-framework/base";
 import { Button } from "../../atoms/buttons/buttons.js";
+import { acquireOpenLock, releaseOpenLock } from "../modals/open-lock.js";
 import { DialogContainer } from "./dialog-container.js";
 
 /**
@@ -10,27 +11,6 @@ import { DialogContainer } from "./dialog-container.js";
  */
 // @ts-ignore
 const render = (component) => { return Builder.render(component, app.root); };
-
-/**
- * Guard against rapid repeated `.open()` calls that would otherwise stack
- * multiple identical dialogs (e.g. a user tapping a button several times
- * before the open animation completes). The lock releases when the
- * in-flight dialog closes or after a short safety timeout.
- */
-const OPEN_LOCK_TIMEOUT_MS = 700;
-let openingLock = false;
-let openingLockTimer = null;
-
-const releaseOpenLock = () =>
-{
-	openingLock = false;
-	if (openingLockTimer)
-	{
-		// @ts-ignore
-		globalThis.clearTimeout(openingLockTimer);
-		openingLockTimer = null;
-	}
-};
 
 /**
  * Type styles mapping for Confirmation.
@@ -196,20 +176,24 @@ export class Dialog extends Component
 	 */
 	open()
 	{
-		if (openingLock)
+		if (!acquireOpenLock())
 		{
 			return;
 		}
 
-		openingLock = true;
-		// @ts-ignore
-		openingLockTimer = globalThis.setTimeout(releaseOpenLock, OPEN_LOCK_TIMEOUT_MS);
-
-		render(this);
-		// @ts-ignore
-		this.panel.showModal();
-		// @ts-ignore
-		this.state.open = true;
+		try
+		{
+			render(this);
+			// @ts-ignore
+			this.panel.showModal();
+			// @ts-ignore
+			this.state.open = true;
+		}
+		catch (error)
+		{
+			releaseOpenLock();
+			throw error;
+		}
 	}
 
 	/**

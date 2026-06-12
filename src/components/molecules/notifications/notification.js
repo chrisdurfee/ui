@@ -277,7 +277,7 @@ export class Notification extends Component
 		if (this.duration !== 'infinite')
 		{
 			// @ts-ignore
-			this.timer.stop();
+			this.timer?.stop();
 		}
 
 		if (this.onClick)

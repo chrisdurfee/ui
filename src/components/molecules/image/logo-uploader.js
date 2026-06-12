@@ -134,5 +134,15 @@ export const LogoUploader = Jot(
 		// Clear cached references
 		// @ts-ignore
 		this.input = null;
+
+		// Revoke any outstanding object URL
+		// @ts-ignore
+		if (this.url)
+		{
+			// @ts-ignore
+			URL.revokeObjectURL(this.url);
+			// @ts-ignore
+			this.url = null;
+		}
 	}
 });

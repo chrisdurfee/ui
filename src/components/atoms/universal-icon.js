@@ -43,8 +43,8 @@ export const UniversalIcon = (props = {}, iconData) =>
 		});
 	}
 
-	// Fallback: treat as SVG string
-	return Icon(props, iconData);
+	// Unknown icon data type; render nothing rather than risk injecting it as HTML.
+	return null;
 };
 
 /**

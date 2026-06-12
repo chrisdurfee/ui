@@ -154,6 +154,6 @@ export const MaterialSymbols = {
 		warning: 'warning',
 		info: 'info',
 		success: 'check_circle',
-		help: 'help_outline',
+		help: 'help',
 	},
 };

@@ -1,61 +1,49 @@
 ﻿import { Div } from "@base-framework/atoms";
 import { Atom } from "@base-framework/base";
+import { getValue } from "./circle-graph.js";
 
 /**
- * This will get the value.
- *
- * @param {*} val
- * @returns {number|null}
- */
-const getValue = (val) => {
-	return !val || isNaN(val) ? null : val;
-};
-
-/**
- * This will get the progress bar with Tailwind styling.
+ * This will get the semi-circle progress graph with Tailwind styling.
  *
  * @param {number} progress
  * @param {string} className
  * @returns {object}
  */
-const CircleProgress = (progress, className) =>
+const SemiCircleProgress = (progress, className) =>
 {
 	const percent = progress;
-	const radius = 16; // Radius of the circle
-	const circumference = 2 * Math.PI * radius;
-	const bar = (percent / 100) * circumference;
+	const radius = 16; // Radius of the arc
+	const arcLength = Math.PI * radius; // Half circumference
+	const bar = (percent / 100) * arcLength;
+	const arcPath = "M 2 20 A 16 16 0 0 1 34 20";
 
 	const startSvg = `
-	<svg class="w-40 h-40 mx-auto" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
-		<!-- Background Circle -->
-		<circle
-			cx="18"
-			cy="18"
-			r="${radius}"
+	<svg class="w-40 h-auto mx-auto" viewBox="0 0 36 22" xmlns="http://www.w3.org/2000/svg">
+		<!-- Background Arc -->
+		<path
+			d="${arcPath}"
 			fill="none"
 			stroke="currentColor"
 			stroke-width="4"
 			class="bg-muted"
 			stroke-opacity="0.2"
+			stroke-linecap="round"
 		/>
-		<!-- Progress Circle -->
-		<circle
-			cx="18"
-			cy="18"
-			r="${radius}"
+		<!-- Progress Arc -->
+		<path
+			d="${arcPath}"
 			fill="none"
 			stroke="currentColor"
 			stroke-width="4"
-			class="stroke-primary"
-			stroke-dasharray="${circumference}"
-			stroke-dashoffset="${circumference - bar}"
+			stroke-dasharray="${arcLength}"
+			stroke-dashoffset="${arcLength - bar}"
 			stroke-linecap="round"
-			class="${className}"
+			class="stroke-primary ${className}"
 		/>
 		<!-- Percentage Text -->
 		<text
 			x="18"
-			y="20"
+			y="18"
 			class="text-[0.25em] font-medium fill-primary"
 			text-anchor="middle"
 			dominant-baseline="middle">
@@ -65,7 +53,7 @@ const CircleProgress = (progress, className) =>
 	`;
 
 	return Div({
-		class: `circle-graph text-inherit`,
+		class: `semi-circle-graph text-inherit`,
 		html: startSvg,
 	});
 };
@@ -82,22 +70,22 @@ export const SemiCircleGraph = Atom((props) => {
 	const startingValue = props.progress || 0;
 	// @ts-ignore
 	const className = props.class || "";
-	const empty = CircleProgress(startingValue, className);
+	const empty = SemiCircleProgress(startingValue, className);
 
 	return Div({
-		class: "circle-graph-wrap",
+		class: "semi-circle-graph-wrap",
 		onSet: [
 			// @ts-ignore
 			props.prop,
 			(val) =>
 			{
 				val = getValue(val);
-				if (!val)
+				if (val === null)
 				{
 					return empty;
 				}
 
-				return CircleProgress(val, className);
+				return SemiCircleProgress(val, className);
 			},
 		],
 	}, [empty]);

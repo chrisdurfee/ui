@@ -81,10 +81,16 @@ export const AttachmentInput = Jot(
 		return (fileSize <= MAX_FILE_SIZE);
 	},
 
-	addFile(file, type, orientation)
+	/**
+	 * This will add a file to the list.
+	 *
+	 * @param {File} file - The file to add.
+	 * @returns {void}
+	 */
+	addFile(file)
 	{
 		// @ts-ignore
-		this.files.push(option);
+		this.files.push(file);
 
 		// @ts-ignore
 		const callBack = this.afterAddFile;
@@ -92,18 +98,6 @@ export const AttachmentInput = Jot(
 		{
 			callBack(file);
 		}
-	},
-
-	/**
-	 * This will setup the states.
-	 *
-	 * @returns {object}
-	 */
-	state()
-	{
-		return {
-			method: globalThis.localStorage.getItem('theme') ?? 'system'
-		};
 	}
 });
 
