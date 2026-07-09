@@ -1,6 +1,6 @@
 import { Div, H3 } from "@base-framework/atoms";
 import { Button } from "../../../../atoms/buttons/buttons.js";
-import { Icons } from "../../../../icons/icons.js";
+import { MaterialSymbols } from "../../../../icons/material-symbols.js";
 
 /**
  * This will create a title element.
@@ -22,7 +22,7 @@ export const PopupHeader = (props) => (
 			variant: 'icon',
 			class: 'm-2',
 			click: (e, { state }) => state.toggle('open'),
-			icon: Icons.arrows.left,
+			icon: MaterialSymbols.arrow_back,
 		}),
         props.title && Title(props.title)
     ])

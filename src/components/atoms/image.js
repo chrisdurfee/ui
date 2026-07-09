@@ -29,14 +29,24 @@ export const Image = Atom(({ src, alt, class: className, checkPath = true, loadi
 	}
 
 	return Img({
-		class: `absolute w-full h-full object-cover fadeIn ${className}`,
+		class: `absolute w-full h-full object-cover opacity-0 ${className}`,
 		src,
 		alt,
 		loading,
 		decoding,
 		fetchPriority,
 
-		load: (event) => event.target.style.visibility = 'visible',
+		/**
+		 * Defer the fadeIn animation until the image is actually loaded
+		 * to avoid running animations on lazy images that haven't loaded
+		 * yet (and to reduce the number of concurrent animations on screen).
+		 */
+		load: (event) =>
+		{
+			event.target.classList.remove('opacity-0');
+			event.target.classList.add('fadeIn');
+			event.target.style.visibility = 'visible';
+		},
 
 		/**
 		 * If there's an error loading the image, hide it.

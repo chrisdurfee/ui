@@ -1,6 +1,6 @@
 import { Input, UseParent } from '@base-framework/atoms';
 import { Button } from '../../atoms/buttons/buttons.js';
-import { Icons } from '../../icons/icons.js';
+import { MaterialSymbols } from '../../icons/material-symbols.js';
 
 /**
  * This will create an icon button.
@@ -24,7 +24,7 @@ const IconButton = ({ icon, click, ariaLabel }) => Button({
  */
 export const MinusButton = ({ click }) => (
 	IconButton({
-		icon: Icons.circleMinus,
+		icon: MaterialSymbols.remove_circle,
 		click,
 		ariaLabel: 'Decrement'
 	})
@@ -38,7 +38,7 @@ export const MinusButton = ({ click }) => (
  */
 export const PlusButton = ({ click }) => (
 	IconButton({
-		icon: Icons.circlePlus,
+		icon: MaterialSymbols.add_circle,
 		click,
 		ariaLabel: 'Increment'
 	})

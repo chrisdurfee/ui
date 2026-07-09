@@ -1,6 +1,7 @@
 import { ModalContainer } from '../modal-container.js';
 import { Modal } from '../modal.js';
 import { DrawerGesture } from './drawer-gesture.js';
+import { KeyboardInset } from './keyboard-inset.js';
 
 /**
  * Drawer
@@ -62,6 +63,13 @@ export class Drawer extends Modal
 		 * @private
 		 */
 		this.gesture = null;
+
+		/**
+		 * KeyboardInset instance that lifts the drawer above the iOS keyboard
+		 * @type {KeyboardInset|null}
+		 * @private
+		 */
+		this.keyboardInset = null;
 
 		/**
 		 * Cached reference to modal content element (set via cache property)
@@ -155,6 +163,16 @@ export class Drawer extends Modal
 				onClose: () => this.destroy()
 			});
 		}
+
+		// Track the visual viewport so the drawer lifts above the iOS keyboard
+		if (!this.keyboardInset)
+		{
+			this.keyboardInset = new KeyboardInset({
+				// @ts-ignore
+				panel: this.panel
+			});
+			this.keyboardInset.start();
+		}
 	}
 
 	/**
@@ -169,6 +187,12 @@ export class Drawer extends Modal
 		{
 			this.gesture.destroy();
 			this.gesture = null;
+		}
+
+		if (this.keyboardInset)
+		{
+			this.keyboardInset.destroy();
+			this.keyboardInset = null;
 		}
 
 		super.beforeDestroy();

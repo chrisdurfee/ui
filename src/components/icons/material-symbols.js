@@ -93,6 +93,13 @@ export const MaterialSymbols = {
 	lock_open: 'lock_open',
 	login: 'login',
 	logout: 'logout',
+	unfold_more: 'unfold_more',
+	tune: 'tune',
+	light_mode: 'light_mode',
+	dark_mode: 'dark_mode',
+	progress_activity: 'progress_activity',
+	add_circle: 'add_circle',
+	remove_circle: 'remove_circle',
 
 	// Time & Date
 	schedule: 'schedule',

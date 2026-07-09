@@ -1,7 +1,7 @@
 import { Div, Img, Input, Label, OnState } from '@base-framework/atoms';
 import { Component, Events, Jot } from '@base-framework/base';
 import { UniversalIcon } from '../../atoms/universal-icon.js';
-import { Icons } from '../../icons/icons.js';
+import { MaterialSymbols } from '../../icons/material-symbols.js';
 
 /**
  * LogoUploader
@@ -116,7 +116,7 @@ export const LogoUploader = Jot(
 							htmlFor: id,
 							class: 'z-10 flex flex-col items-center justify-center text-sm text-muted-foreground group-hover:text-primary'
 						}, [
-						UniversalIcon({}, Icons.upload),
+					UniversalIcon({}, MaterialSymbols.upload),
 						Div('Upload logo')
 					])
 				),

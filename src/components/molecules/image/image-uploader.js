@@ -1,7 +1,7 @@
 import { Div, Img, Input, Label, OnState } from '@base-framework/atoms';
 import { Component, Events, Jot } from '@base-framework/base';
-import { Icon } from '../../atoms/icon.js';
-import { Icons } from '../../icons/icons.js';
+import { MaterialIcon } from '../../atoms/material-icon.js';
+import { MaterialSymbols } from '../../icons/material-symbols.js';
 
 /**
  * Checks if the provided source is an invalid file.
@@ -144,7 +144,7 @@ export const ImageUploader = Jot(
 								htmlFor: id,
 								class: 'z-10 flex flex-col items-center justify-center text-sm text-muted-foreground group-hover:text-primary'
 							}, [
-							Icon(Icons.upload),
+							MaterialIcon({ name: MaterialSymbols.upload, size: 'md' }),
 							Div('Upload Image')
 						]);
 					}

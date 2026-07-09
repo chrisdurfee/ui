@@ -2,12 +2,12 @@ import {
 	Input as BaseInput,
 	Textarea as BaseTextarea,
 	Div,
-	I,
 	Label,
 	Span,
 } from '@base-framework/atoms';
 import { Atom, Html } from '@base-framework/base';
-import { Icons } from '../../../icons/icons.js';
+import { MaterialSymbols } from '../../../icons/material-symbols.js';
+import { MaterialIcon } from '../../material-icon.js';
 import { borderClass, disabledClass, focusClass } from './input-classes.js';
 
 /**
@@ -185,9 +185,10 @@ const createFloatingLabel = (label, required, id, classes) =>
  * @returns {object} An absolutely-positioned chevron icon.
  */
 const SelectArrow = () =>
-	I({
-		class: 'absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none w-4 h-4 text-foreground-secondary',
-		html: Icons.chevron.single.down,
+	MaterialIcon({
+		name: MaterialSymbols.expand_more,
+		size: 'xs',
+		class: 'absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-foreground-secondary',
 	});
 
 // ---- Floating Input ----

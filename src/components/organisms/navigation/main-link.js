@@ -1,7 +1,7 @@
 ﻿import { Div, Label, Span } from '@base-framework/atoms';
 import { Atom, Component, NavLink } from '@base-framework/base';
 import { UniversalIcon } from '../../atoms/universal-icon.js';
-import { Icons } from '../../icons/icons.js';
+import { MaterialSymbols } from '../../icons/material-symbols.js';
 import { NavButtonLink } from './nav-button-link.js';
 
 /**
@@ -56,7 +56,7 @@ const LinkContent = (label, icon = null, hasChildren = false) => [
 				}]
 			]
 		}, [
-		UniversalIcon({ size: 'xs' }, Icons.chevron.single.down)
+		UniversalIcon({ size: 'xs' }, MaterialSymbols.expand_more)
 	])
 ];
 

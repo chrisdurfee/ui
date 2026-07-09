@@ -1,5 +1,6 @@
-import { Div, I, Span, Th } from '@base-framework/atoms';
-import { Icons } from '../../icons/icons.js';
+import { Div, Span, Th } from '@base-framework/atoms';
+import { MaterialSymbols } from '../../icons/material-symbols.js';
+import { MaterialIcon } from '../../atoms/material-icon.js';
 
 /**
  * HeaderCol Atom
@@ -18,7 +19,7 @@ export const HeaderCol = ({ align, sortable, key, label, sort, class: className}
 	}, [
 		Div({ class: `flex flex-auto w-full items-center ${alignClass}` }, [
 			Span(label),
-			sortable && I({ class: 'ml-2', html: Icons.arrows.upDown })
+			sortable && MaterialIcon({ name: MaterialSymbols.unfold_more, size: 'xs', class: 'ml-2' })
 		])
 	]);
 };

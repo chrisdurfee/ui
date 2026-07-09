@@ -1,7 +1,7 @@
 import { A, Div, Nav, Span } from '@base-framework/atoms';
 import { Component, Data, Jot } from '@base-framework/base';
 import { UniversalIcon } from '../../atoms/universal-icon.js';
-import { Icons } from '../../icons/icons.js';
+import { MaterialSymbols } from '../../icons/material-symbols.js';
 
 /**
  * BreadcrumbLink Atom
@@ -31,7 +31,7 @@ const BreadcrumbSeparator = () => (
 		class: 'mx-3 text-muted-foreground',
 		'aria-hidden': true,
 		size: 'xs'
-	}, Icons.chevron.single.right)
+	}, MaterialSymbols.chevron_right)
 );
 
 /**
