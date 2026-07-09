@@ -3,7 +3,6 @@ import { Atom, Component } from "@base-framework/base";
 import { Timer } from "@base-framework/organisms";
 import { Button } from "../../atoms/buttons/buttons.js";
 import { UniversalIcon } from "../../atoms/universal-icon.js";
-import { MaterialSymbols } from "../../icons/material-symbols.js";
 
 /**
  * Type styles mapping (reusing from Alert component style)
@@ -255,7 +254,7 @@ export class Notification extends Component
 				class: 'absolute top-2 right-2 h-7 w-7 text-muted-foreground hover:text-foreground',
 				variant: 'icon',
 				// @ts-ignore
-				icon: MaterialSymbols.close,
+				icon: 'close',
 				click: this.close.bind(this)
 			})
 		];

@@ -1,7 +1,6 @@
 import { Button, Div, Input, OnStateOpen } from '@base-framework/atoms';
 import { DateTime, Events } from '@base-framework/base';
 import { VeilJot } from '../../atoms/veil.js';
-import { MaterialSymbols } from '../../icons/material-symbols.js';
 import { MaterialIcon } from '../../atoms/material-icon.js';
 import { Calendar } from '../../organisms/calendar/calendar.js';
 import { PopOver } from '../popover.js';
@@ -107,7 +106,7 @@ const DateInputContainer = ({ bind, required, toggleOpen, handleInputChange, han
 					click: toggleOpen,
 				},
 				[
-					MaterialIcon({ name: MaterialSymbols.calendar_today, size: 'sm' })
+					MaterialIcon({ name: 'calendar_today', size: 'sm' })
 				]
 			)
 		]

@@ -6,7 +6,6 @@ import {
 	Span,
 } from '@base-framework/atoms';
 import { Atom, Html } from '@base-framework/base';
-import { MaterialSymbols } from '../../../icons/material-symbols.js';
 import { MaterialIcon } from '../../material-icon.js';
 import { borderClass, disabledClass, focusClass } from './input-classes.js';
 
@@ -186,7 +185,7 @@ const createFloatingLabel = (label, required, id, classes) =>
  */
 const SelectArrow = () =>
 	MaterialIcon({
-		name: MaterialSymbols.expand_more,
+		name: 'expand_more',
 		size: 'xs',
 		class: 'absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-foreground-secondary',
 	});

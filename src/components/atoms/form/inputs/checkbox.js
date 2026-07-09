@@ -1,6 +1,5 @@
 import { Checkbox as BaseCheckbox, Div, Label, OnState, Span } from '@base-framework/atoms';
 import { Jot } from '@base-framework/base';
-import { MaterialSymbols } from '../../../icons/material-symbols.js';
 import { MaterialIcon } from '../../material-icon.js';
 import { disabledClass, focusClass } from './input-classes.js';
 
@@ -34,7 +33,7 @@ const CheckBoxIcon = () => (
 		OnState('checked', (value) => !value
 			? null
 			: MaterialIcon({
-				name: MaterialSymbols.check,
+				name: 'check',
 				size: 'xs',
 				class: 'pointer-events-none',
 			})

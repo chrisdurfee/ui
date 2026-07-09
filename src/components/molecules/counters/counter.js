@@ -34,12 +34,17 @@ export const Counter = VeilJot(
 	render()
 	{
 		const className = this.class ?? '';
+		const min = this.nonNegative ? Math.max(this.min ?? 0, 0) : this.min;
 		return Div({ class: `flex flex-auto items-center justify-between gap-x-4 p-4 ${className}` }, [
-			MinusButton({ click: () => this.state.decrement('count') }),
+			MinusButton({ click: () =>
+			{
+				if (min !== undefined && this.state.count <= min) return;
+				this.state.decrement('count');
+			}}),
 			CountDisplay({
 				bind: this.bind,
 				readonly: this.readonly,
-				min: this.min,
+				min,
 				max: this.max
 			}),
 			PlusButton({ click: () => this.state.increment('count') })

@@ -2,7 +2,6 @@
 import { Atom } from "@base-framework/base";
 import { Button } from "../../atoms/buttons/buttons.js";
 import { UniversalIcon } from "../../atoms/universal-icon.js";
-import { MaterialSymbols } from "../../icons/material-symbols.js";
 
 /**
  * ModalHeader
@@ -28,7 +27,7 @@ export const ModalHeader = Atom(({ title, description, back, icon, options = [],
 		 */
 		back && Button({
 			variant: 'icon',
-			icon: MaterialSymbols.arrow_back,
+			icon: 'arrow_back',
 			class: 'mr-2 p-0 flex sm:hidden',
 			click: (e, parent) => parent.close()
 		}),

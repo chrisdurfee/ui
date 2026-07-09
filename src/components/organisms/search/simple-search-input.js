@@ -1,7 +1,6 @@
 ﻿import { Input as BaseInput, Div } from '@base-framework/atoms';
 import { Atom } from '@base-framework/base';
 import { UniversalIcon } from "../../atoms/universal-icon.js";
-import { MaterialSymbols } from '../../icons/material-symbols.js';
 
 /**
  * This will create a simple search input with icon on left and pill shape.
@@ -13,7 +12,7 @@ import { MaterialSymbols } from '../../icons/material-symbols.js';
 export const SimpleSearchInput = Atom((props) =>
 {
 	// @ts-ignore
-	const icon = props.icon ?? MaterialSymbols.search;
+	const icon = props.icon ?? 'search';
 
 	return Div({
 		// @ts-ignore

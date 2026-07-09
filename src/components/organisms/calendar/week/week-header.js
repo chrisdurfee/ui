@@ -1,6 +1,5 @@
 import { Div, Span } from '@base-framework/atoms';
 import { Button } from '../../../atoms/buttons/buttons.js';
-import { MaterialSymbols } from '../../../icons/material-symbols.js';
 
 /**
  * This will create a navigation button for the calendar.
@@ -20,7 +19,7 @@ const NavigationButton = ({ label, click }) => (
 			click,
 			'aria-label': `${label} month`,
 			variant: 'icon',
-			icon: (label === 'Previous' ? MaterialSymbols.chevron_left : MaterialSymbols.chevron_right),
+			icon: (label === 'Previous' ? 'chevron_left' : 'chevron_right'),
 		}
 	)
 );

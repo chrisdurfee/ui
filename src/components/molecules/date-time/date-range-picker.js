@@ -2,7 +2,6 @@ import { Button, Div, Input, OnStateOpen, Span, UseParent } from '@base-framewor
 import { Events } from '@base-framework/base';
 import { Format } from '../../../utils/format/format.js';
 import { VeilJot } from '../../atoms/veil.js';
-import { MaterialSymbols } from '../../icons/material-symbols.js';
 import { MaterialIcon } from '../../atoms/material-icon.js';
 import { RangeCalendar } from '../../organisms/calendar/range/range-calendar.js';
 import { PopOver } from '../popover.js';
@@ -42,7 +41,7 @@ const CalendarButton = ({ bind, required, toggleOpen }) => (
                 Span(Format.date(['[[end]]', state], 'End Date')),
             ];
         }),
-		MaterialIcon({ name: MaterialSymbols.calendar_today, size: 'sm' })
+		MaterialIcon({ name: 'calendar_today', size: 'sm' })
 	])
 );
 

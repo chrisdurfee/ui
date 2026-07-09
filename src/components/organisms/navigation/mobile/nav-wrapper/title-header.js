@@ -1,7 +1,6 @@
 import { Div, H3 } from "@base-framework/atoms";
 import { Button } from "../../../../atoms/buttons/buttons.js";
 import { UniversalIcon } from "../../../../atoms/universal-icon.js";
-import { MaterialSymbols } from "../../../../icons/material-symbols.js";
 
 /**
  * This will create a navigation button.
@@ -15,7 +14,7 @@ export const NavButton = () => (
 				open: false
 			};
 		}, click: (e, { state }) => state.toggle('open') }, [
-		UniversalIcon({}, MaterialSymbols.menu)
+		UniversalIcon({}, 'menu')
 	])
 );
 

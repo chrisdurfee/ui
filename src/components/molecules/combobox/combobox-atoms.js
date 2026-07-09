@@ -1,6 +1,5 @@
 import { Button, Div, Li, OnState, Span, Ul } from '@base-framework/atoms';
 import { UniversalIcon } from '../../atoms/universal-icon.js';
-import { MaterialSymbols } from '../../icons/material-symbols.js';
 import { PopOver } from '../popover.js';
 
 /**
@@ -17,7 +16,7 @@ export const DropdownButton = ({ toggleDropdown }) => (
 	},
 	[
 		Span({ onState: ['selectedLabel', (value) => value || 'Select item...'] }),
-		UniversalIcon({ size: 'sm' }, MaterialSymbols.unfold_more)
+		UniversalIcon({ size: 'sm' }, 'unfold_more')
 	])
 );
 

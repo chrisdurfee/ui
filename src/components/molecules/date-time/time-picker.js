@@ -1,7 +1,6 @@
 import { Button, Div, Input, OnStateOpen } from '@base-framework/atoms';
 import { Events } from '@base-framework/base';
 import { VeilJot } from '../../atoms/veil.js';
-import { MaterialSymbols } from '../../icons/material-symbols.js';
 import { MaterialIcon } from '../../atoms/material-icon.js';
 import { PopOver } from '../popover.js';
 
@@ -128,7 +127,7 @@ function TimeInputContainer({ bind, required, toggleOpen, handleInputChange, han
 					click: toggleOpen,
 				},
 				[
-					MaterialIcon({ name: MaterialSymbols.schedule, size: 'sm' })
+					MaterialIcon({ name: 'schedule', size: 'sm' })
 				]
 			)
 		]

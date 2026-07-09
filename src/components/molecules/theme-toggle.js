@@ -1,7 +1,6 @@
 ﻿import { Button, Div, Span } from "@base-framework/atoms";
 import { Atom, Jot } from "@base-framework/base";
 import { UniversalIcon } from "../atoms/universal-icon.js";
-import { MaterialSymbols } from "../icons/material-symbols.js";
 
 const match = globalThis.matchMedia;
 
@@ -77,9 +76,9 @@ export const ThemeToggle = Jot(
 	{
 		return Div({ class: 'flex flex-auto flex-col' }, [
 			Div({ class: 'grid grid-cols-3 gap-4'}, [
-				ThemeButton({ label: 'System', value: 'system', icon: MaterialSymbols.tune }),
-				ThemeButton({ label: 'Light', value: 'light', icon: MaterialSymbols.light_mode }),
-				ThemeButton({ label: 'Dark', value: 'dark', icon: MaterialSymbols.dark_mode })
+				ThemeButton({ label: 'System', value: 'system', icon: 'tune' }),
+				ThemeButton({ label: 'Light', value: 'light', icon: 'light_mode' }),
+				ThemeButton({ label: 'Dark', value: 'dark', icon: 'dark_mode' })
 			])
 		]);
 	},

@@ -1,6 +1,5 @@
 import { Button as BaseButton } from '@base-framework/atoms';
 import { Atom, Data } from '@base-framework/base';
-import { MaterialSymbols } from '../../icons/material-symbols.js';
 import { UniversalIcon } from '../universal-icon.js';
 import { getNavPosition, navigateBack } from './back-navigation.js';
 
@@ -82,7 +81,7 @@ const BackVariant = (defaultProps) => (
 		});
 
 		// @ts-ignore
-		props.icon = props.icon || MaterialSymbols.arrow_back;
+		props.icon = props.icon || 'arrow_back';
 		// @ts-ignore
 		props.click = props.click || (() => navigateBack(data.entryPos, backUrl));
 
@@ -173,7 +172,7 @@ export default Button;
 export const LoadingButton = Atom((props, children) =>
 {
 	// @ts-ignore
-	return Button({ ...props, variant: 'withIcon', icon: MaterialSymbols.progress_activity, animation: 'animate-spin' }, children);
+	return Button({ ...props, variant: 'withIcon', icon: 'progress_activity', animation: 'animate-spin' }, children);
 });
 
 export { CircleButton, CircleToggleButton, ToggleButton } from './toggle-button.js';

@@ -2,7 +2,6 @@ import { Div } from "@base-framework/atoms";
 import { Component } from "@base-framework/base";
 import { Button } from "../../atoms/buttons/buttons.js";
 import { HiddenInput } from "../../atoms/form/inputs/inputs.js";
-import { MaterialSymbols } from "../../icons/material-symbols.js";
 import { SignatureCanvas } from "./signature-canvas.js";
 
 /**
@@ -54,7 +53,7 @@ export class SignaturePanel extends Component
 			Div({ class: 'absolute top-2 right-2' }, [
 				Button({
 					variant: 'icon',
-					icon: MaterialSymbols.cancel,
+					icon: 'cancel',
 					click: this.reset.bind(this)
 				})
 			]),
