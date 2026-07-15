@@ -53,7 +53,7 @@ export const ModalContainer = Atom((props, children) =>
 			submit: (e, parent) => (props.onSubmit && props.onSubmit(parent)),
 			cache: 'modalContent'
 		}, [
-			ModalHeader(props),
+			ModalHeader({ ...props, isDrawer }),
 			Div({ class: 'modal-body flex grow flex-col py-0 px-6 z-0', cache: 'modalBody' }, children),
 			// @ts-ignore
 			!props.hideFooter && Footer({ class: 'modal-footer sticky bottom-0 bg-background/80 backdrop-blur-md flex flex-none justify-between py-4 px-6 z-10' }, props.buttons)

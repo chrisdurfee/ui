@@ -16,10 +16,11 @@ import { UniversalIcon } from "../../atoms/universal-icon.js";
  * @param {string} [props.icon] - SVG icon string to display
  * @param {Array} [props.options=[]] - Array of action buttons/elements
  * @param {boolean} [props.titleCenter=false] - Center title and description vertically
+ * @param {boolean} [props.isDrawer=false] - Whether the header belongs to a drawer (adds a tablet/desktop close button)
  * @returns {object}
  */
 // @ts-ignore
-export const ModalHeader = Atom(({ title, description, back, icon, options = [], titleCenter = false }) => (
+export const ModalHeader = Atom(({ title, description, back, icon, options = [], titleCenter = false, isDrawer = false }) => (
 	Header({ class: 'modal-header bg-background/80 backdrop-blur-md sticky flex flex-none items-center py-4 px-6 z-10 min-w-0' }, [
 
 		/**
@@ -43,7 +44,24 @@ export const ModalHeader = Atom(({ title, description, back, icon, options = [],
 				H2({ class: `text-lg font-semibold m-0 truncate` }, title),
 				description && Div({ class: 'text-sm text-muted-foreground truncate' }, description)
 			]),
-			Div({ class: 'flex flex-none items-center gap-2' }, options)
+			Div({ class: 'flex flex-none items-center gap-2' }, [
+				...options,
+
+				/**
+				 * Close Button (Tablet / Desktop)
+				 *
+				 * On mobile a drawer is a bottom sheet dismissed via its drag
+				 * handle / swipe-to-close, so this affordance is hidden below
+				 * the `md` breakpoint where the drawer becomes a centered modal.
+				 */
+				isDrawer && Button({
+					variant: 'icon',
+					type: 'button',
+					icon: 'close',
+					class: 'modal-close-button hidden md:flex p-0',
+					click: (e, parent) => parent.close()
+				})
+			])
 		])
 	])
 ));
