@@ -14,7 +14,6 @@
  * ```
  *
  * @link https://fonts.google.com/icons
- * @type {object}
  */
 export const MaterialSymbols = {
 	// Common actions
