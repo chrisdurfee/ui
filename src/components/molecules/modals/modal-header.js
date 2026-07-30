@@ -58,7 +58,8 @@ export const ModalHeader = Atom(({ title, description, back, icon, options = [],
 					variant: 'icon',
 					type: 'button',
 					icon: 'close',
-					class: 'modal-close-button hidden md:flex p-0',
+					// `!` forces these to win over any host-app CSS of equal specificity
+					class: 'modal-close-button !hidden md:!flex p-0',
 					click: (e, parent) => parent.close()
 				})
 			])
