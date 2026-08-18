@@ -14,7 +14,7 @@ import { NavButtonLink } from './nav-button-link.js';
 const Li = Atom(({ options, click }, children) =>
 {
 	const settings = {
-		class: `relative flex flex-row w-auto text-left p-0 transition-all cursor-pointer min-w-[48px] option${options ? ' sub' : ''}`,
+		class: `relative flex flex-row w-auto text-left p-0 transition-colors duration-100 cursor-pointer min-w-[48px] option${options ? ' sub' : ''}`,
 		click
 	};
 
@@ -45,7 +45,7 @@ const LinkContent = (label, icon = null, hasChildren = false) => [
 	Label({ class: 'label flex flex-auto text-sm items-center cursor-pointer whitespace-nowrap' }, label),
 	hasChildren && Span(
 		{
-			class: 'flex justify-center items-center px-1 transition-all text-muted-foreground mr-2',
+			class: 'flex justify-center items-center px-1 transition-transform duration-100 text-muted-foreground mr-2',
 			onState: [
 				['selected', {
 					rotate: true
@@ -165,7 +165,7 @@ export class MainLink extends Component
 		{
 			return new NavLink(
 			{
-				class: 'flex flex-auto flex-row rounded-md transition-all overflow-x-hidden',
+				class: 'flex flex-auto flex-row rounded-md transition-colors duration-100 overflow-x-hidden',
 				cache: 'link',
 				href: this.href,
 				activeClass: 'selected',
@@ -174,7 +174,7 @@ export class MainLink extends Component
 		}
 
 		return new NavButtonLink({
-			class: 'flex flex-auto flex-row rounded-md transition-all overflow-x-hidden',
+			class: 'flex flex-auto flex-row rounded-md transition-colors duration-100 overflow-x-hidden',
 			cache: 'link',
 			checkCallBack: this.checkCallBack
 		}, children);

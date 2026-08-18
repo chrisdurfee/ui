@@ -44,7 +44,7 @@ const Link = ({ text, href, exact, hidden }) => (
 		href,
 		exact,
 		dataSet: ['selected', ['state', true, 'active']],
-		class: `${(hidden? 'hidden' : 'inline-flex')} items-center justify-center whitespace-nowrap px-3 py-1.5 text-sm font-medium transition-all rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-ring focus-visible:ring-offset-background hover:bg-primary hover:text-primary-foreground disabled:opacity-50 disabled:pointer-events-none data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-sm`
+		class: `${(hidden? 'hidden' : 'inline-flex')} items-center justify-center whitespace-nowrap px-3 py-1.5 text-sm font-medium transition-colors duration-100 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-ring focus-visible:ring-offset-background hover:bg-primary hover:text-primary-foreground disabled:opacity-50 disabled:pointer-events-none data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-sm touch-manipulation`
 	})
 );
 

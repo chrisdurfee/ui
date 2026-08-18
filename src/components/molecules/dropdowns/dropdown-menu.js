@@ -35,7 +35,7 @@ const DropdownButton = ({ label, icon, toggleDropdown, variant, btnClass }) =>
 		cache: 'button',
 		class: `inline-flex items-center justify-between rounded-md border
 			px-2 py-2 text-sm font-medium hover:bg-muted
-			focus:outline-none transition duration-150 ease-in-out ${btnClass || ''}`,
+			focus:outline-none transition-colors duration-100 ${btnClass || ''}`,
 		click: toggleDropdown
 	}, [
 		label && Span(label),
