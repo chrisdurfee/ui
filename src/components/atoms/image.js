@@ -7,10 +7,34 @@ import { Atom } from '@base-framework/base';
  * Creates an image element, hiding it on error.
  *
  * @param {object} props
+ * @param {string} props.src
+ * @param {string} [props.alt]
+ * @param {string} [props.class]
+ * @param {boolean} [props.checkPath]
+ * @param {string} [props.loading]
+ * @param {string} [props.decoding]
+ * @param {string} [props.fetchPriority]
+ * @param {string} [props.srcset] - Responsive image candidates, e.g. "small.webp 320w, large.webp 800w".
+ * @param {string} [props.sizes] - Slot-width hints for the browser, e.g. "(min-width: 768px) 280px, 100vw".
+ * @param {string|number} [props.width] - Intrinsic width, used to prevent layout shift.
+ * @param {string|number} [props.height] - Intrinsic height, used to prevent layout shift.
  * @returns {object}
  */
 // @ts-ignore
-export const Image = Atom(({ src, alt, class: className, checkPath = true, loading = 'lazy', decoding = 'async', fetchPriority = 'auto' }) =>
+export const Image = Atom(({
+	src,
+	alt,
+	class: className,
+	checkPath = true,
+	loading = 'lazy',
+	decoding = 'async',
+	fetchPriority = 'auto',
+	srcset,
+	sizes,
+	width,
+	height,
+	...rest
+}) =>
 {
 	if (!src)
 	{
@@ -29,12 +53,17 @@ export const Image = Atom(({ src, alt, class: className, checkPath = true, loadi
 	}
 
 	return Img({
+		...rest,
 		class: `absolute w-full h-full object-cover opacity-0 ${className}`,
 		src,
 		alt,
 		loading,
 		decoding,
 		fetchPriority,
+		srcset,
+		sizes,
+		width,
+		height,
 
 		/**
 		 * Defer the fadeIn animation until the image is actually loaded

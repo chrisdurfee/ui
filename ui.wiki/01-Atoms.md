@@ -434,6 +434,16 @@ Image({
   alt: 'Description',
   loading: 'lazy'
 })
+
+// With responsive sources (srcset/sizes) and intrinsic dimensions
+Image({
+  src: '/path/to/image.jpg',
+  alt: 'Description',
+  srcset: '/path/to/image-320.jpg 320w, /path/to/image-800.jpg 800w',
+  sizes: '(min-width: 768px) 280px, 100vw',
+  width: 800,
+  height: 560
+})
 ```
 
 ## Best Practices
