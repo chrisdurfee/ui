@@ -2,6 +2,7 @@ import { Nav, Ul } from '@base-framework/atoms';
 import { router } from '@base-framework/base';
 import { MainLink } from './main-link.js';
 import { Navigation } from './navigation.js';
+import { isPathActive } from '../../../utils/active-path.js';
 
 /**
  * InlineNavigation
@@ -21,6 +22,20 @@ export class InlineNavigation extends Navigation
 		 * @type {array} links - This will hold the links for the navigation.
 		 */
 		this.links = [];
+	}
+
+	/**
+	 * This will render the component.
+	 *
+	 * The links are reset so re-renders do not keep
+	 * references to links from a previous render.
+	 *
+	 * @returns {object}
+	 */
+	render()
+	{
+		this.links = [];
+		return super.render();
 	}
 
 	/**
@@ -83,24 +98,6 @@ export class InlineNavigation extends Navigation
 }
 
 /**
- * This will validate if a path is active.
- *
- * @param {string} path
- * @param {string} url
- * @returns {boolean}
- */
-const pathRegexCache = new Map();
-
-const isPathActive = (path, url) =>
-{
-	if (!pathRegexCache.has(path))
-	{
-		pathRegexCache.set(path, new RegExp(`${path}($|/|\\.).*`));
-	}
-	return pathRegexCache.get(path).test(url);
-};
-
-/**
  * This will check if a link is active.
  *
  * @param {object} link
@@ -161,6 +158,7 @@ export class SubNavigation extends InlineNavigation
 	 */
 	render()
 	{
+		this.links = [];
 		const className = `navigation flex flex-auto flex-col sub ${this.mainClassName || ''}`;
 		const map = this.mapOptions(this.options);
 

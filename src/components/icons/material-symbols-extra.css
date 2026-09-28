@@ -1,0 +1,13 @@
+/**
+ * Optional Material Symbols font families
+ *
+ * The default material-symbols.css only loads the Outlined family.
+ * Import this file after it if your app uses the "rounded" or "sharp"
+ * MaterialIcon variants.
+ */
+
+/* Material Symbols Rounded */
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block');
+
+/* Material Symbols Sharp */
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block');

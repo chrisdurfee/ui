@@ -45,6 +45,14 @@ export class Overlay extends Component
 		 * @default ''
 		 */
 		this.zIndex = 'z-20';
+
+		/**
+		 * Set to false to skip the body fade in animation.
+		 *
+		 * @member {boolean} animate
+		 * @default true
+		 */
+		this.animate = true;
 	}
 
 	/**
@@ -140,7 +148,44 @@ export class Overlay extends Component
 	 */
 	addBody()
 	{
-		return Div({ class: 'body fadeIn flex flex-auto flex-col bg-background' }, this.getContents());
+		// @ts-ignore
+		const animation = (this.animate !== false) ? 'fadeIn ' : '';
+		return Div({ class: `body ${animation}flex flex-auto flex-col bg-background`, cache: 'overlayBody' }, this.getContents());
+	}
+
+	/**
+	 * This will be called by the router when a kept-alive route
+	 * is activated. Restored overlays skip the fade in so they
+	 * don't replay the animation.
+	 *
+	 * @param {object} [params]
+	 * @param {object} [info]
+	 * @param {boolean} [info.restored]
+	 * @returns {void}
+	 */
+	onActivate(params, info)
+	{
+		if (!info?.restored)
+		{
+			return;
+		}
+
+		this.removeAnimation();
+	}
+
+	/**
+	 * This will remove the body animation class.
+	 *
+	 * @returns {void}
+	 */
+	removeAnimation()
+	{
+		// @ts-ignore
+		const body = this.overlayBody;
+		if (body && body.classList)
+		{
+			body.classList.remove('fadeIn');
+		}
 	}
 
 	/**

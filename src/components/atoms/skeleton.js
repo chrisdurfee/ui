@@ -8,8 +8,12 @@ import { Div } from '@base-framework/atoms';
  */
 export const Skeleton = ({ class: className, shape = 'rectangle', width = 'w-full', height = 'h-4'}) =>
 {
-	const rounded = className?.includes('rounded')? className.match(/rounded-(\w+)/)?.[1] : 'md';
-	const shapeClass = shape === 'circle' ? 'rounded-full' : `rounded-${rounded}`;
+	/**
+	 * A rounded class in the custom class (e.g. "rounded" or
+	 * "rounded-lg") replaces the default "rounded-md".
+	 */
+	const hasRounded = /(^|\s)rounded(-|\s|$)/.test(className || '');
+	const shapeClass = shape === 'circle' ? 'rounded-full' : (hasRounded ? '' : 'rounded-md');
 
 	return Div({
 		class: `bg-muted animate-pulse ${width} ${height} ${shapeClass} ${className || ''}`

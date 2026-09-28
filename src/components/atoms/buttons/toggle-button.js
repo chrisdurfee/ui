@@ -1,6 +1,6 @@
 import { Button as BaseButton, OnState, Span } from '@base-framework/atoms';
 import { Atom, Component } from '@base-framework/base';
-import { Format } from '../../../ui.js';
+import { Format } from '../../../utils/format/format.js';
 import { UniversalIcon } from '../universal-icon.js';
 import { Veil } from '../veil.js';
 

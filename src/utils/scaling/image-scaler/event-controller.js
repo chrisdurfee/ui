@@ -1,4 +1,4 @@
-import { base } from "@base-framework/base";
+import { base, Events } from "@base-framework/base";
 
 /**
  * EventController
@@ -69,15 +69,15 @@ export class EventController
 		this.addEvents = function()
 		{
 			// @ts-ignore
-			base.on(["mousemove", "touchmove"], container, callBackPos);
+			Events.on(["mousemove", "touchmove"], container, callBackPos);
 			// @ts-ignore
-			base.on(["mouseup", "mouseout", "touchend", "touchcancel"], container, callBackUp);
+			Events.on(["mouseup", "mouseout", "touchend", "touchcancel"], container, callBackUp);
 			// @ts-ignore
-			base.on(["mousedown", "touchstart"], container, callBackDown);
+			Events.on(["mousedown", "touchstart"], container, callBackDown);
 			// @ts-ignore
-			base.onMouseWheel(wheel, container, true);
+			Events.onMouseWheel(wheel, container, true);
 			// @ts-ignore
-			base.on("resize", globalThis, resize);
+			Events.on("resize", globalThis, resize);
 		};
 
 		// Immediately attach
@@ -87,15 +87,15 @@ export class EventController
 		this.removeEvents = function()
 		{
 			// @ts-ignore
-			base.off(["mousemove", "touchmove"], container, callBackPos);
+			Events.off(["mousemove", "touchmove"], container, callBackPos);
 			// @ts-ignore
-			base.off(["mouseup", "mouseout", "touchend", "touchcancel"], container, callBackUp);
+			Events.off(["mouseup", "mouseout", "touchend", "touchcancel"], container, callBackUp);
 			// @ts-ignore
-			base.off(["mousedown", "touchstart"], container, callBackDown);
+			Events.off(["mousedown", "touchstart"], container, callBackDown);
 			// @ts-ignore
-			base.offMouseWheel(wheel, container);
+			Events.offMouseWheel(wheel, container);
 			// @ts-ignore
-			base.off("resize", globalThis, resize);
+			Events.off("resize", globalThis, resize);
 		};
 	}
 

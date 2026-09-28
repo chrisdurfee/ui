@@ -1,24 +1,7 @@
 import { Nav, Ul } from "@base-framework/atoms";
 import { NavLink, router } from "@base-framework/base";
 import { Veil } from "../../../components/atoms/veil.js";
-
-/**
- * This will validate if a path is active.
- *
- * @param {string} path
- * @param {string} url
- * @returns {boolean}
- */
-const pathRegexCache = new Map();
-
-const isPathActive = (path, url) =>
-{
-	if (!pathRegexCache.has(path))
-	{
-		pathRegexCache.set(path, new RegExp(`${path}($|/|\\.).*`));
-	}
-	return pathRegexCache.get(path).test(url);
-};
+import { isPathActive } from "../../../utils/active-path.js";
 
 /**
  * This will check if a link is active.
@@ -84,6 +67,15 @@ export class TabNavigation extends Veil
 		 * @member {function} callBack
 		 */
 		this.onSelect = null;
+
+		/**
+		 * Whether the tab navigation is scrollable.
+		 * When true, the tabs scroll horizontally instead of
+		 * overflowing and the active tab scrolls into view.
+		 * @member {boolean} scrollable
+		 * @default true
+		 */
+		this.scrollable = true;
 	}
 
 	/**
@@ -102,9 +94,12 @@ export class TabNavigation extends Veil
 	 */
 	render()
 	{
-		return Nav({ class: `tab items-center justify-center rounded-md bg-muted p-1 text-muted-foreground ${this.class}` }, [
+		const scrollableClass = this.scrollable ? 'overflow-x-auto no-scrollbar [scrollbar-width:none] [&::-webkit-scrollbar]:hidden' : '';
+		const listClass = this.scrollable ? 'flex flex-auto flex-row min-w-max whitespace-nowrap' : 'flex flex-auto flex-row';
+
+		return Nav({ class: `tab items-center justify-center rounded-md bg-muted p-1 text-muted-foreground ${scrollableClass} ${this.class}` }, [
 			Ul({
-				class: 'flex flex-auto flex-row',
+				class: listClass,
 				map: [this.options, (option) => this.addLink(option)],
 				watch: {
 					value: ['[[path]]', router.data],
@@ -185,6 +180,22 @@ export class TabNavigation extends Veil
 	updateLink(link, selected)
 	{
 		link.update(selected);
+
+		if (selected && this.scrollable && link.panel)
+		{
+			const el = link.panel;
+			const container = el.closest('nav');
+			if (!container) return;
+
+			const elRect = el.getBoundingClientRect();
+			const containerRect = container.getBoundingClientRect();
+			const isVisible = elRect.left >= containerRect.left && elRect.right <= containerRect.right;
+
+			if (!isVisible && typeof el.scrollIntoView === 'function')
+			{
+				el.scrollIntoView({ behavior: 'smooth', inline: 'nearest', block: 'nearest' });
+			}
+		}
 	}
 
 	/**

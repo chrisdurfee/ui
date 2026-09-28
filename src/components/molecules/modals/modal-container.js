@@ -29,7 +29,7 @@ export const ModalContainer = Atom((props, children) =>
 	// @ts-ignore
 	const isDrawer = props.class?.includes('drawer');
 	const positionClasses = isDrawer ? '' : 'm-auto top-0 right-0 bottom-0 left-0';
-	const sizeClasses = isDrawer ? '' : 'h-full max-h-screen';
+	const sizeClasses = isDrawer ? '' : 'h-full max-h-dvh';
 
 	return Div({
 			popover: 'manual',

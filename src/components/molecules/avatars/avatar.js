@@ -186,7 +186,7 @@ export const Avatar = Atom(({ src, alt, fallbackText, watcherFallback, size }) =
 	const sizeClass = getSize(size);
 
 	return Div({
-		class: `relative flex items-center justify-center ${sizeClass}`
+		class: `relative flex shrink-0 items-center justify-center ${sizeClass}`
 	},
 	[
 		AvatarImage({ src, alt }),

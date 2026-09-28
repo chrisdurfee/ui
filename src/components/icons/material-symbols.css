@@ -1,20 +1,17 @@
 /**
  * Material Symbols font imports from Google Fonts
  *
- * This imports the three available font families:
- * - Outlined (default; the "filled" look is the FILL variation axis of this family)
- * - Rounded
- * - Sharp
+ * This imports the Outlined family only. It is the only family the
+ * components use (the "filled" look is the FILL variation axis of this
+ * family). The Rounded and Sharp families are in
+ * material-symbols-extra.css for apps that use those variants.
+ *
+ * display=block hides the ligature text until the font loads so the
+ * icon names don't flash as text.
  */
 
 /* Material Symbols Outlined */
-@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
-
-/* Material Symbols Rounded */
-@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
-
-/* Material Symbols Sharp */
-@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block');
 
 /*
  * Base styles for Material Symbols
@@ -38,6 +35,23 @@
 	text-rendering: optimizeLegibility;
 	font-feature-settings: 'liga';
 	user-select: none;
+	overflow: hidden;
+	flex-shrink: 0;
+}
+
+/*
+ * Fixed 1em icon box so the slot doesn't change width before the
+ * font loads. This is in a layer so size utilities (w-*, h-*) still
+ * override it.
+ */
+@layer base {
+	.material-symbols-outlined,
+	.material-symbols-filled,
+	.material-symbols-rounded,
+	.material-symbols-sharp {
+		width: 1em;
+		height: 1em;
+	}
 }
 
 .material-symbols-outlined {

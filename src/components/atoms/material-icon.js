@@ -67,10 +67,14 @@ export const MaterialIcon = Atom((props) =>
 	const fontSize = fontSizes[size] || fontSizes.sm;
 	const variantClass = styleVariants[variant] || styleVariants.outlined;
 
+	/**
+	 * The icon box is fixed to the icon size so the ligature text
+	 * doesn't change the layout before the font loads.
+	 */
 	return Span({
 		...props,
 		// @ts-ignore
-		class: `inline-flex items-center justify-center ${variantClass} ${sizeClass} ${props.class || ""}`,
+		class: `inline-flex items-center justify-center overflow-hidden leading-none shrink-0 ${variantClass} ${sizeClass} ${props.class || ""}`,
 		// @ts-ignore
 		style: `font-size: ${fontSize}; ${props.style || ""}`,
 		// Remove props that shouldn't be passed to the DOM element

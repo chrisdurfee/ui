@@ -1,4 +1,4 @@
-import { base, Component, Dom, Html } from "@base-framework/base";
+import { Component, Dom, Events, Html } from "@base-framework/base";
 
 /**
  * DelayComponent
@@ -24,6 +24,15 @@ export class DelayComponent extends Component
 		 * @default ''
 		 */
 		this.removingClass = '';
+
+		/**
+		 * The max time (ms) to wait for the removing animation
+		 * before the element is removed.
+		 *
+		 * @member {number} removeDelay
+		 * @default 1000
+		 */
+		this.removeDelay = 1000;
 	}
 
 	/**
@@ -33,8 +42,10 @@ export class DelayComponent extends Component
 	 */
 	remove()
 	{
+		/**
+		 * prepareDestroy also removes the context.
+		 */
 		this.prepareDestroy();
-		this.removeContext();
 
 		const panel = this.panel,
 		className = this.removingClass;
@@ -45,9 +56,33 @@ export class DelayComponent extends Component
 			return;
 		}
 
+		let removed = false;
+		let timer = null;
+		const removeElement = () =>
+		{
+			if (removed)
+			{
+				return;
+			}
+
+			removed = true;
+			globalThis.clearTimeout(timer);
+			// @ts-ignore
+			Events.off('animationend', panel, removeElement);
+			// @ts-ignore
+			Html.removeElement(panel);
+		};
+
 		// @ts-ignore
 		Dom.addClass(panel, className);
 		// @ts-ignore
-		base.on('animationend', panel, (e) => Html.removeElement(panel));
+		Events.on('animationend', panel, removeElement);
+
+		/**
+		 * The element is still removed if the animation never
+		 * ends (no animation, reduced motion, hidden tab).
+		 */
+		const delay = (typeof this.removeDelay === 'number' && this.removeDelay >= 0) ? this.removeDelay : 1000;
+		timer = globalThis.setTimeout(removeElement, delay);
 	}
 }

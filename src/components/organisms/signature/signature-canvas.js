@@ -1,5 +1,5 @@
 import { Canvas } from "@base-framework/atoms";
-import { base, Component, Dom } from "@base-framework/base";
+import { Component, Dom, Events } from "@base-framework/base";
 import { IntervalTimer } from "@base-framework/organisms";
 
 /**
@@ -240,11 +240,11 @@ export class SignatureCanvas extends Component
 		{
 			const img = new globalThis.Image();
 			// @ts-ignore
-			base.on('load', img, function loadImage()
+			Events.on('load', img, function loadImage()
 			{
 				ctx.drawImage(img, 0, 0);
 				// @ts-ignore
-				base.off('load', img, loadImage);
+				Events.off('load', img, loadImage);
 			});
 			img.src = canvasData;
 		}

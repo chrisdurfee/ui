@@ -160,6 +160,28 @@ export class Dialog extends Component
 	}
 
 	/**
+	 * This will set up the native dialog events.
+	 *
+	 * The native dialog can close itself (e.g. the Escape key
+	 * fires "cancel" then "close"). Those are routed through
+	 * the normal close path so the component is destroyed
+	 * and onClose runs.
+	 *
+	 * @returns {array}
+	 */
+	setupEvents()
+	{
+		return [
+			['cancel', this.panel, (e) =>
+			{
+				e.preventDefault();
+				this.close();
+			}],
+			['close', this.panel, () => this.close()]
+		];
+	}
+
+	/**
 	 * This will get the modal class.
 	 *
 	 * @returns {string}
@@ -180,6 +202,8 @@ export class Dialog extends Component
 		{
 			return;
 		}
+
+		this.closing = false;
 
 		try
 		{
@@ -203,12 +227,26 @@ export class Dialog extends Component
 	 */
 	close()
 	{
+		/**
+		 * The close path can be reached from the buttons and from the
+		 * native cancel/close events, so it only runs once.
+		 */
+		if (this.closing === true)
+		{
+			return;
+		}
+
+		this.closing = true;
 		releaseOpenLock();
 
 		// @ts-ignore
 		this.state.open = false;
 		// @ts-ignore
-		this.panel.close();
+		if (this.panel && this.panel.open)
+		{
+			// @ts-ignore
+			this.panel.close();
+		}
 
 		if (typeof this.onClose === 'function')
 		{

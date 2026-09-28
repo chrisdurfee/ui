@@ -1,23 +1,6 @@
 import { Nav, Ul } from "@base-framework/atoms";
 import { Component, NavLink, router } from "@base-framework/base";
-
-const pathRegexCache = new Map();
-
-/**
- * This will validate if a path is active.
- *
- * @param {string} path
- * @param {string} url
- * @returns {boolean}
- */
-const isPathActive = (path, url) =>
-{
-	if (!pathRegexCache.has(path))
-	{
-		pathRegexCache.set(path, new RegExp(`${path}($|/|\\.).*`));
-	}
-	return pathRegexCache.get(path).test(url);
-};
+import { isPathActive } from "../../../../utils/active-path.js";
 
 /**
  * This will check if a link is active.

@@ -38,7 +38,7 @@ const DialogHeader = ({ title }) => (
 export const DialogContainer = Atom((props, children) => (
 	MainDialog(
 		{
-			class: `fixed pullUpIn z-30 w-[98%] border md:w-full max-w-lg bg-popover text-foreground shadow-lg duration-200
+			class: `fixed pullUpIn z-30 w-[98%] border md:w-full max-w-lg max-h-[calc(100dvh-2rem)] overflow-y-auto bg-popover text-foreground shadow-lg duration-200
 				rounded-lg flex flex-auto flex-col
 				bottom-4 top-auto inset-auto m-auto md:bottom-0 md:top-0 left-0 right-0 ` +
 				// @ts-ignore

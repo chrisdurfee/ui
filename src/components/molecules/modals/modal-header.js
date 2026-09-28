@@ -29,6 +29,7 @@ export const ModalHeader = Atom(({ title, description, back, icon, options = [],
 		back && Button({
 			variant: 'icon',
 			icon: 'arrow_back',
+			'aria-label': 'Back',
 			class: 'mr-2 p-0 flex sm:hidden',
 			click: (e, parent) => parent.close()
 		}),
@@ -58,6 +59,7 @@ export const ModalHeader = Atom(({ title, description, back, icon, options = [],
 					variant: 'icon',
 					type: 'button',
 					icon: 'close',
+					'aria-label': 'Close',
 					// `!` forces these to win over any host-app CSS of equal specificity
 					class: 'modal-close-button !hidden md:!flex p-0',
 					click: (e, parent) => parent.close()

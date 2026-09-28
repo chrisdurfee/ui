@@ -10,7 +10,7 @@
 export const MainSection = Atom((props, children) =>
 {
 	// @ts-ignore
-	props.class = 'basic-page pt-[80px] sm:pt-0 flex flex-auto flex-col ' + (props.class || '');
+	props.class = 'basic-page pt-[calc(var(--header-h,80px)_+_env(safe-area-inset-top,0px))] sm:pt-0 flex flex-auto flex-col ' + (props.class || '');
 
 	return {
 		tag: 'section',

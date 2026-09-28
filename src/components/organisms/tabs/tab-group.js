@@ -44,11 +44,16 @@ const addOption = (option, callBack) =>
  * @param {object} props
  * @returns {object}
  */
-const Navigation = (props) => (
-	Nav({ class: `tab items-center justify-center rounded-md bg-muted p-1 text-muted-foreground ${props.class}` }, [
-		Ul({ class: 'flex flex-auto flex-row', map: [props.options, (option) => addOption(option, props.callBack)] })
-	])
-);
+const Navigation = (props) =>
+{
+	const scrollable = props.scrollable !== false;
+	const scrollableClass = scrollable ? 'overflow-x-auto no-scrollbar [scrollbar-width:none] [&::-webkit-scrollbar]:hidden' : '';
+	const listClass = scrollable ? 'flex flex-auto flex-row min-w-max whitespace-nowrap' : 'flex flex-auto flex-row';
+
+	return Nav({ class: `tab items-center justify-center rounded-md bg-muted p-1 text-muted-foreground ${scrollableClass} ${props.class}` }, [
+		Ul({ class: listClass, map: [props.options, (option) => addOption(option, props.callBack)] })
+	]);
+};
 
 /**
  * TabGroup
@@ -86,6 +91,13 @@ export class TabGroup extends Veil
 		 * @member {function} callBack
 		 */
 		this.onSelect = null;
+
+		/**
+		 * Whether the tabs scroll horizontally instead of overflowing.
+		 * @member {boolean} scrollable
+		 * @default true
+		 */
+		this.scrollable = true;
 	}
 
 	/**
@@ -99,6 +111,7 @@ export class TabGroup extends Veil
 
 		return Navigation({
 			class: this.class,
+			scrollable: this.scrollable,
 			options: this.options,
 			callBack
 		});

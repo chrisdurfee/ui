@@ -12,7 +12,7 @@ import { Template } from "./template.js";
  */
 export const AsideTemplate = Atom((props, children) =>
 {
-	return Template({ class: 'body aside-container flex flex-auto flex-col max-w-[100vw] h-full' }, [
+	return Template({ class: 'body aside-container flex flex-auto flex-col max-w-full h-full' }, [
 		Row([
 			MainColumn({
 				class: 'drawer control w-full md:max-w-[320px]',

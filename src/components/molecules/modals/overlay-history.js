@@ -27,9 +27,12 @@
 
 /**
  * The LIFO stack of open overlays. Each entry stores the router state that must
- * be restored to the neutralized fall-back entry when the overlay closes.
+ * be restored to the neutralized fall-back entry when the overlay closes, and
+ * the number of history entries (`depth`) the overlay must unwind. The depth is
+ * normally 1; it grows when an overlay below it closes out of order and hands
+ * its entries over (see `popOverlayHistory`).
  *
- * @type {Array<{ instance: object, realState: object|null }>}
+ * @type {Array<{ instance: object, realState: object|null, depth: number }>}
  */
 const stack = [];
 
@@ -41,30 +44,37 @@ const stack = [];
 let bound = false;
 
 /**
- * Number of `history.back()` calls we triggered ourselves and must therefore
- * ignore in the gesture branch of the popstate handler.
+ * FIFO queue of history traversals we triggered ourselves. Each popstate that
+ * results from one of them consumes the head of the queue: its `realState` is
+ * restored onto the landed-on (neutralized) entry and its `after` callback is
+ * run once the unwind has settled. A queue (rather than single variables) keeps
+ * every close's state and callback when several overlays close before the
+ * first popstate arrives.
  *
- * @type {number}
+ * `after` lets callers defer work (e.g. `app.navigate`) until the overlay's
+ * history unwind settles, so a navigation pushed afterwards is not reverted by
+ * the back()'s popstate.
+ *
+ * @type {Array<{ realState: object|null, after: (function():void)|null }>}
  */
-let pendingPops = 0;
+const pendingQueue = [];
 
 /**
- * The router state to restore after a self-triggered (programmatic) back lands
- * on the neutralized entry.
+ * Traverses back the given number of history entries.
  *
- * @type {object|null}
+ * @param {number} steps
+ * @returns {void}
  */
-let pendingRestore = null;
+const goBack = (steps) =>
+{
+	if (steps <= 1)
+	{
+		window.history.back();
+		return;
+	}
 
-/**
- * A callback to invoke once a self-triggered (programmatic) back has landed on
- * the neutralized entry and its router state has been restored. Lets callers
- * defer work (e.g. `app.navigate`) until the overlay's history unwind settles,
- * so a navigation pushed afterwards is not reverted by the back()'s popstate.
- *
- * @type {(function():void)|null}
- */
-let pendingAfter = null;
+	window.history.go(-steps);
+};
 
 /**
  * Runs an afterSettle callback on the next tick. Used for close paths that do
@@ -133,26 +143,23 @@ const restoreState = (realState) =>
  */
 const onPopState = () =>
 {
-	if (pendingPops > 0)
+	if (pendingQueue.length > 0)
 	{
 		/**
-		 * This popstate is the result of our own `history.back()` during a
+		 * This popstate is the result of our own history traversal during a
 		 * programmatic close. Restore the neutralized entry and stop.
 		 */
-		pendingPops--;
-		restoreState(pendingRestore);
-		pendingRestore = null;
+		const pending = pendingQueue.shift();
+		restoreState(pending.realState);
 
 		/**
 		 * The history unwind has settled on the restored entry. Fire any
 		 * deferred callback now so navigation performed inside it lands on
 		 * top of this entry instead of being reverted by this popstate.
 		 */
-		const after = pendingAfter;
-		pendingAfter = null;
-		if (typeof after === 'function')
+		if (typeof pending.after === 'function')
 		{
-			after();
+			pending.after();
 		}
 		return;
 	}
@@ -164,13 +171,32 @@ const onPopState = () =>
 	}
 
 	/**
-	 * The user navigated back (gesture or button). We've landed on the
-	 * neutralized fall-back entry, so the router ignored this popstate. Restore
-	 * that entry's real router state, then close the overlay. The flag tells
+	 * The user navigated back (gesture or button). The flag tells
 	 * `popOverlayHistory` the entry is already consumed (no cleanup back()).
 	 */
-	restoreState(top.realState);
 	top.instance.__overlayFromHistory = true;
+
+	if (top.depth > 1)
+	{
+		/**
+		 * This overlay also owns entries left behind by overlays below it that
+		 * closed out of order. The back landed on one of those dead entries, so
+		 * unwind the rest before restoring the real router state.
+		 */
+		const pending = { realState: top.realState, after: null };
+		top.instance.__overlayPending = pending;
+		pendingQueue.push(pending);
+		goBack(top.depth - 1);
+	}
+	else
+	{
+		/**
+		 * We've landed on the neutralized fall-back entry, so the router
+		 * ignored this popstate. Restore that entry's real router state.
+		 */
+		restoreState(top.realState);
+	}
+
 	closeInstance(top.instance);
 };
 
@@ -228,7 +254,7 @@ export const pushOverlayHistory = (instance) =>
 		// If history access fails the overlay still works; back just navigates.
 	}
 
-	stack.push({ instance, realState });
+	stack.push({ instance, realState, depth: 1 });
 };
 
 /**
@@ -238,7 +264,7 @@ export const pushOverlayHistory = (instance) =>
  *
  * @param {object} instance - The Modal/Drawer instance being closed.
  * @param {(function():void)|null} [afterSettle] - Optional callback invoked once
- *     the overlay's history unwind has settled (see `pendingAfter`).
+ *     the overlay's history unwind has settled (see `pendingQueue`).
  * @returns {void}
  */
 export const popOverlayHistory = (instance, afterSettle = null) =>
@@ -250,6 +276,19 @@ export const popOverlayHistory = (instance, afterSettle = null) =>
 		 * `onPopState` (entry popped, state restored).
 		 */
 		instance.__overlayFromHistory = false;
+
+		/**
+		 * When the back is still unwinding dead entries, the callback waits
+		 * for that traversal to settle.
+		 */
+		const pending = instance.__overlayPending;
+		instance.__overlayPending = null;
+		if (pending && pendingQueue.indexOf(pending) !== -1)
+		{
+			pending.after = (typeof afterSettle === 'function') ? afterSettle : null;
+			return;
+		}
+
 		runAfterSettle(afterSettle);
 		return;
 	}
@@ -265,19 +304,42 @@ export const popOverlayHistory = (instance, afterSettle = null) =>
 	stack.splice(index, 1);
 
 	/**
-	 * Only drive `history.back()` when this overlay owns the top entry. For the
-	 * rare non-LIFO close we just drop our record and leave the stale entry to
-	 * be cleaned up when the real top overlay closes.
+	 * Only drive a history traversal when this overlay owns the top entry.
+	 * Going back now would pop the entry of the overlay above it.
 	 */
 	const wasTop = (index === stack.length);
 	if (!wasTop)
 	{
+		/**
+		 * Non-LIFO close: this overlay's entries sit below the overlay that
+		 * was opened above it. Hand them over, so when that overlay closes it
+		 * unwinds these entries too and restores this overlay's fall-back
+		 * state (instead of leaving a dead entry and a neutralized fall-back
+		 * behind).
+		 */
+		const above = stack[index];
+		above.depth += entry.depth;
+		above.realState = entry.realState;
 		runAfterSettle(afterSettle);
 		return;
 	}
 
-	pendingRestore = entry.realState;
-	pendingAfter = (typeof afterSettle === 'function') ? afterSettle : null;
-	pendingPops++;
-	window.history.back();
+	pendingQueue.push({
+		realState: entry.realState,
+		after: (typeof afterSettle === 'function') ? afterSettle : null
+	});
+
+	try
+	{
+		goBack(entry.depth);
+	}
+	catch (e)
+	{
+		/**
+		 * History access can throw in sandboxed contexts. No popstate will
+		 * arrive, so settle now.
+		 */
+		const pending = pendingQueue.pop();
+		runAfterSettle(pending ? pending.after : null);
+	}
 };

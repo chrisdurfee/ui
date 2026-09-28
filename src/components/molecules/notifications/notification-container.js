@@ -1,6 +1,7 @@
 import { Div } from "@base-framework/atoms";
 import { Component } from "@base-framework/base";
 import { List } from "@base-framework/organisms";
+import { ensurePopoverApi, hidePopoverSafe } from "../../../utils/popover-api.js";
 import { Notification } from "./notification.js";
 
 let id = 0;
@@ -25,7 +26,7 @@ export class NotificationContainer extends Component
 		 * The container needs to be set as a popover to allow it
 		 * to be shown over modals and popups.
 		 */
-		return Div({ class: 'notification-container pointer-events-none inset-auto bg-transparent backdrop:bg-transparent overflow-visible fixed bottom-[80px] left-0 right-0 w-full sm:w-auto sm:left-auto z-50 px-2 sm:px-5 pb-2 sm:pb-5 flex flex-col items-stretch sm:items-end', popover: 'manual', }, [
+		return Div({ class: 'notification-container pointer-events-none inset-auto bg-transparent backdrop:bg-transparent overflow-visible fixed bottom-[calc(80px_+_env(safe-area-inset-bottom,0px))] left-0 right-0 w-full sm:w-auto sm:left-auto z-50 px-2 sm:px-5 pb-2 sm:pb-5 flex flex-col items-stretch sm:items-end', popover: 'manual', }, [
 			new List({
 				cache: 'list',
 				key: 'id',
@@ -64,9 +65,13 @@ export class NotificationContainer extends Component
 		 * all content.
 		 */
 		// @ts-ignore
-		this?.panel?.hidePopover();
+		hidePopoverSafe(this?.panel);
 		// @ts-ignore
-		this?.panel?.showPopover();
+		if (ensurePopoverApi(this?.panel))
+		{
+			// @ts-ignore
+			this.panel.showPopover();
+		}
 	}
 
 	/**
@@ -84,7 +89,7 @@ export class NotificationContainer extends Component
 		if (this?.list?.isEmpty())
 		{
 			// @ts-ignore
-			this?.panel?.hidePopover();
+			hidePopoverSafe(this?.panel);
 		}
 	}
 }

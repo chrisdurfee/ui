@@ -1,24 +1,7 @@
 import { Nav, Ul } from "@base-framework/atoms";
 import { NavLink, router } from "@base-framework/base";
 import { Veil } from '../../../components/atoms/veil.js';
-
-/**
- * This will validate if a path is active.
- *
- * @param {string} path
- * @param {string} url
- * @returns {boolean}
- */
-const pathRegexCache = new Map();
-
-const isPathActive = (path, url) =>
-{
-	if (!pathRegexCache.has(path))
-	{
-		pathRegexCache.set(path, new RegExp(`${path}($|/|\\.).*`));
-	}
-	return pathRegexCache.get(path).test(url);
-};
+import { isPathActive } from '../../../utils/active-path.js';
 
 /**
  * This will check if a link is active.
@@ -119,7 +102,7 @@ export class UnderlinedTabNavigation extends Veil
 	 */
 	render()
 	{
-		const scrollableClass = this.scrollable ? 'overflow-x-auto no-scrollbar' : '';
+		const scrollableClass = this.scrollable ? 'overflow-x-auto no-scrollbar [scrollbar-width:none] [&::-webkit-scrollbar]:hidden' : '';
 		const listClass = this.scrollable ? 'flex flex-row items-center min-w-max' : 'flex flex-row items-center';
 
 		return Nav({ class: `border-b border-border ${scrollableClass} ${this.class}` }, [

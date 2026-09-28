@@ -6,5 +6,4 @@ export * from "./full-page.js";
 export * from "./fullscreen-page.js";
 export * from "./main-section.js";
 export * from "./page.js";
-export * from "./pages.js";
 export * from "./sidebar-menu-page.js";

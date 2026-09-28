@@ -1,5 +1,6 @@
 import { Button as BaseButton, Div, OnState, Span } from '@base-framework/atoms';
 import { Component, Data } from '@base-framework/base';
+import { ensurePopoverApi, hidePopoverSafe } from '../../../utils/popover-api.js';
 import { Button } from '../../atoms/buttons/buttons.js';
 import { UniversalIcon } from '../../atoms/universal-icon.js';
 import { PopOver } from '../popover.js';
@@ -166,6 +167,18 @@ export class DropdownMenu extends Component
 	 */
 	handleSelect(item)
 	{
+		/**
+		 * Hide the portaled panel before flipping `open` to false.
+		 * Otherwise Base tears the PopOver down without hidePopover and
+		 * the native top layer stays painted over the next overlay.
+		 */
+		// @ts-ignore
+		const panel = this.dropdown && this.dropdown.panel;
+		if (ensurePopoverApi(panel))
+		{
+			hidePopoverSafe(panel);
+		}
+
 		// @ts-ignore
 		this.state.selectedItem = item;
 		// @ts-ignore

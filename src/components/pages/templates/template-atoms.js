@@ -26,12 +26,27 @@ export const TopBar = Atom((props, children) =>
 export const MainColumn = Atom((props, children) =>
 {
 	// @ts-ignore
-	const flex = (!props.flex) ? "flex flex-auto flex-col" : "flex flex-none";
+	const { flex: flexProp, ...rest } = props;
+
+	/**
+	 * A flex string is used as the flex classes. A truthy
+	 * non-string value keeps the legacy "flex flex-none".
+	 */
+	let flex = "flex flex-auto flex-col";
+	if (typeof flexProp === 'string' && flexProp !== '')
+	{
+		flex = flexProp;
+	}
+	else if (flexProp)
+	{
+		flex = "flex flex-none";
+	}
+
 	// @ts-ignore
-	props.class = 'col ' + flex + ' ' + (props.class || '');
+	rest.class = 'col ' + flex + ' ' + (props.class || '');
 
 	return {
-		...props,
+		...rest,
 		children
 	};
 });

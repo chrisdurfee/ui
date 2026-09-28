@@ -1,4 +1,5 @@
 import { Builder, Component } from "@base-framework/base";
+import { ensurePopoverApi, hidePopoverSafe } from "../../../utils/popover-api.js";
 import { Button } from "../../atoms/buttons/buttons.js";
 import { ModalContainer } from "./modal-container.js";
 import { acquireOpenLock, releaseOpenLock } from "./open-lock.js";
@@ -313,7 +314,15 @@ export class Modal extends Component
 		 */
 		const DELAY = 10;
 		// @ts-ignore
-		globalThis.setTimeout(() => this.panel.showPopover(), DELAY);
+		globalThis.setTimeout(() =>
+		{
+			// @ts-ignore
+			if (ensurePopoverApi(this.panel))
+			{
+				// @ts-ignore
+				this.panel.showPopover();
+			}
+		}, DELAY);
 		// @ts-ignore
 		this.state.open = true;
 
@@ -341,7 +350,7 @@ export class Modal extends Component
 		releaseOpenLock();
 
 		// @ts-ignore
-		this?.panel?.hidePopover();
+		hidePopoverSafe(this?.panel);
 		// @ts-ignore
 		this.state.open = false;
 

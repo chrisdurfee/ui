@@ -1,5 +1,6 @@
 import { Div } from "@base-framework/atoms";
 import { Component } from "@base-framework/base";
+import { lockBodyScroll, unlockBodyScroll } from "../../../../molecules/modals/scroll-lock.js";
 import { PopupHeader } from "./popup-header.js";
 
 /**
@@ -50,19 +51,18 @@ export class NavigationPopover extends Component
 	render()
 	{
 		return Div({
-			class: `fixed inset-0 z-50`,
-			style: '[[typeClass]]'
+			class: `fixed inset-0 z-50`
 		}, [
 			Backdrop(),
 
 			// Popover Content
 			Div({
 				class: `
-					absolute popIn w-auto p-0 bg-popover m-auto shadow-lg rounded-md top-0 bottom-0 left-2 right-2 max-h-[85vh] text-inherit block
+					absolute popIn w-auto p-0 bg-popover m-auto shadow-lg rounded-md top-0 bottom-0 left-2 right-2 max-h-[85dvh] text-inherit block
 				`,
 				dataSet: ['open', ['expanded', true, 'true']]
 			}, [
-				Div({ class: 'flex flex-auto flex-col w-full h-full overflow-y-auto max-h-[85vh] rounded-md bg-popover border' }, [
+				Div({ cache: 'scrollPanel', class: 'flex flex-auto flex-col w-full h-full overflow-y-auto max-h-[85dvh] rounded-md bg-popover border' }, [
 					PopupHeader({ title: this.title }),
 					Div({ class: 'flex flex-auto flex-col' }, this.children)
 				])
@@ -88,11 +88,6 @@ export class NavigationPopover extends Component
 				{
 					if (state === false)
 					{
-						/**
-						 * This will allow the body to scroll when the modal is closed.
-						 */
-						document.documentElement.style.overflowY = 'auto';
-
 						this.destroy();
 					}
 				}
@@ -108,9 +103,40 @@ export class NavigationPopover extends Component
 	afterSetup()
 	{
 		/**
-		 * This will prevent the body from scrolling when the modal is open.
+		 * This will prevent the body from scrolling when the popover is open.
+		 * The shared scroll lock is reference counted, so it is safe to use
+		 * alongside modals and drawers.
 		 */
-		document.documentElement.style.overflowY = 'hidden';
+		if (this.scrollLocked === true)
+		{
+			return;
+		}
+
+		// @ts-ignore
+		this.lockedPanel = this.scrollPanel || this.panel;
+		// @ts-ignore
+		lockBodyScroll(this.lockedPanel);
+		this.scrollLocked = true;
+	}
+
+	/**
+	 * This will release the body scroll lock. This runs for
+	 * every teardown path (closing, route changes, parent
+	 * destruction) so the page can never stay locked.
+	 *
+	 * @returns {void}
+	 */
+	beforeDestroy()
+	{
+		if (this.scrollLocked !== true)
+		{
+			return;
+		}
+
+		this.scrollLocked = false;
+		// @ts-ignore
+		unlockBodyScroll(this.lockedPanel);
+		this.lockedPanel = null;
 	}
 
 	/**

@@ -142,6 +142,16 @@ Button({ variant: 'withIcon', icon: 'add' }, 'Add')  // Material Symbol name
 
 **Style Variants**: `outlined` (default), `filled`, `rounded`, `sharp`
 
+The default `material-symbols.css` only loads the Outlined font (used by `outlined` and `filled`). If you use the `rounded` or `sharp` variants, also import `material-symbols-extra.css`.
+
+**Loading the font without layout shift**: the icon atom reserves a fixed 1em box and the font is loaded with `display=block`, so ligature names never show as text. To load the font sooner, add these tags to your page `<head>`:
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block">
+```
+
 See **[UNIVERSAL-ICON-GUIDE.md](./UNIVERSAL-ICON-GUIDE.md)** for complete documentation.
 See **[ui.wiki/09-Material-Symbols.md](./ui.wiki/09-Material-Symbols.md)** for Material Symbols guide.
 

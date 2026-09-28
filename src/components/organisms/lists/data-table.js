@@ -1,5 +1,6 @@
 import { Div, On, Table } from '@base-framework/atoms';
 import { Component, Data } from '@base-framework/base';
+import { getNextSortDirection, sortRows } from '../../../utils/sort-rows.js';
 import { DataTableBody } from './data-table-body.js';
 import { CheckboxCol, HeaderCol, TableHeader } from './table-header.js';
 export { CheckboxCol, HeaderCol, TableHeader };
@@ -131,6 +132,36 @@ export class DataTable extends Component
 	}
 
 	/**
+	 * This will sort the current rows by a key.
+	 *
+	 * Sorting the same key again toggles the direction
+	 * between ascending and descending. Only the rows that
+	 * are currently loaded in the list are sorted.
+	 *
+	 * @param {string} key
+	 * @returns {void}
+	 */
+	sortRows(key)
+	{
+		// @ts-ignore
+		const list = this.list;
+		if (!key || !list || typeof list.getRows !== 'function')
+		{
+			return;
+		}
+
+		// @ts-ignore
+		const direction = getNextSortDirection(this.sortKey ?? null, this.sortDirection ?? null, key);
+		// @ts-ignore
+		this.sortKey = key;
+		// @ts-ignore
+		this.sortDirection = direction;
+
+		const rows = list.getRows();
+		list.setRows(sortRows(rows, key, direction));
+	}
+
+	/**
 	 * Gets the number of header columns.
 	 *
 	 * @returns {number}
@@ -161,13 +192,23 @@ export class DataTable extends Component
 		// @ts-ignore
 		const columnCount = this.getHeaderColCount();
 
+		/**
+		 * Tables with a header stay visible when empty so the layout
+		 * doesn't jump. The empty state renders below the header.
+		 * Tables without a header are hidden when empty.
+		 */
+		// @ts-ignore
+		const hasHeader = Boolean(this.headers || this.customHeader);
+		const tableProps = { class: `w-full rounded-md ${border} overflow-x-auto` };
+		if (!hasHeader)
+		{
+			// @ts-ignore
+			tableProps.onSet = ['hasItems', { hidden: false }];
+		}
+
 		return Div({ class: 'w-full flex flex-auto flex-col' }, [
-			On('hasItems', (hasItems) =>
-			{
-				// @ts-ignore
-				return (hasItems === false && this.emptyState) ? this.emptyState() : null;
-			}),
-			Div({ class: `w-full rounded-md ${border} overflow-x-auto`, onSet: ['hasItems', { hidden: false }] }, [
+			!hasHeader && this.addEmptyState(),
+			Div(tableProps, [
 				Table({ class: 'w-full' }, [
 					// @ts-ignore
 					this.headers && TableHeader({ headers: this.headers, sort: (key) => this.sortRows(key) }),
@@ -189,8 +230,23 @@ export class DataTable extends Component
 						columnCount: columnCount
 					})
 				])
-			])
+			]),
+			hasHeader && this.addEmptyState()
 		]);
+	}
+
+	/**
+	 * This will add the empty state.
+	 *
+	 * @returns {object}
+	 */
+	addEmptyState()
+	{
+		return On('hasItems', (hasItems) =>
+		{
+			// @ts-ignore
+			return (hasItems === false && this.emptyState) ? this.emptyState() : null;
+		});
 	}
 
 	/**

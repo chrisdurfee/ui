@@ -213,7 +213,7 @@ export class Calendar extends Component
 	 */
 	render()
 	{
-		return Div({ class: 'calendar-container p-3 rounded-md border min-w-80' }, [
+		return Div({ class: 'calendar-container p-3 rounded-md border min-w-[min(20rem,100%)]' }, [
 			OnState('view', (view) =>
 			{
 				switch (view)

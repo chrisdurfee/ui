@@ -10,10 +10,12 @@ import { Template } from "./template.js";
  */
 export const FullTemplate = Atom((props, children) =>
 {
+	// @ts-ignore
+	const className = props.class ? ' ' + props.class : '';
+
 	return Template({
-		// @ts-ignore
-		class: 'body full-container flex flex-auto flex-col ' + props.class,
 		...props,
+		class: 'body full-container flex flex-auto flex-col' + className
 	}, children);
 });
 
